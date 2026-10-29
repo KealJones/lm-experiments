@@ -1,25 +1,34 @@
-# My Kaggle notebooks (checked 2026-10-23T02:47:55+00:00)
+# My Kaggle notebooks (checked 2026-10-29T18:01:28+00:00)
 
 ```
 ref,title,author,lastRunTime,totalVotes
-kealinit/kaggle-smoke,kaggle smoke,Keal Jones,2026-10-23 01:49:36.320000,0
-kealinit/notebook31ac90c1bd,notebook31ac90c1bd,Keal Jones,2026-10-22 22:59:42.880000,0
-kealinit/notebookd769fd1be6,notebookd769fd1be6,Keal Jones,2026-10-22 19:53:23.720000,0
-kealinit/registers,registers,Keal Jones,2026-10-22 18:39:36.307000,0
-kealinit/goals,goals,Keal Jones,2026-10-22 18:17:48.590000,0
-kealinit/notebook095e54e788,notebook095e54e788,Keal Jones,2026-10-22 05:10:57.790000,0
-kealinit/notebook4f50f027e2,notebook4f50f027e2,Keal Jones,2026-10-22 03:43:05.627000,0
-kealinit/notebookdc19f5cd95,notebookdc19f5cd95,Keal Jones,2026-10-22 03:42:09.810000,0
-kealinit/rhizome-pilot,rhizome-pilot,Keal Jones,2026-10-02 07:45:42.400000,0
-kealinit/notebook0584426247,notebook0584426247,Keal Jones,2026-10-02 06:53:08.253000,0
-kealinit/tl-gan-demo,tl-GAN demo,Keal Jones,2018-11-08 21:28:34.190000,0
+kealinit/findout2-teacher-quick,findout2 teacher quick,Keal Jones,2026-10-25 16:25:56.790000,0
+kealinit/weird-full-1,weird full 1,Keal Jones,2026-10-25 02:28:57.077000,0
+kealinit/weird-quickall-1,weird quickall 1,Keal Jones,2026-10-25 02:16:16.317000,0
+kealinit/weird-quick-1,weird quick 1,Keal Jones,2026-10-25 02:03:02.537000,0
+kealinit/findout-full-1,findout full 1,Keal Jones,2026-10-24 15:48:12.973000,0
+kealinit/findout-quick-12,findout quick 12,Keal Jones,2026-10-23 23:29:03.697000,0
+,[Private Notebook],,2010-04-01 00:00:00,0
+,[Private Notebook],,2010-04-01 00:00:00,0
+,[Private Notebook],,2010-04-01 00:00:00,0
+,[Private Notebook],,2010-04-01 00:00:00,0
+,[Private Notebook],,2010-04-01 00:00:00,0
+,[Private Notebook],,2010-04-01 00:00:00,0
+,[Private Notebook],,2010-04-01 00:00:00,0
+,[Private Notebook],,2010-04-01 00:00:00,0
+,[Private Notebook],,2010-04-01 00:00:00,0
+,[Private Notebook],,2010-04-01 00:00:00,0
+kealinit/ft-smollm2-360m,ft smollm2 360m,Keal Jones,2026-10-23 21:42:13.760000,0
+kealinit/ft-qwen3-0-6b,ft qwen3 0 6b,Keal Jones,2026-10-23 21:42:11.910000,0
+kealinit/findout-quick,findout quick,Keal Jones,2026-10-23 21:35:32.103000,0
+kealinit/registers-v2,registers v2,Keal Jones,2026-10-23 02:49:37.137000,0
 ```
 
-- kealinit/kaggle-smoke: kealinit/kaggle-smoke has status "KernelWorkerStatus.COMPLETE"
-- kealinit/notebook31ac90c1bd: To search for one, try 'kaggle search <query>'.
-- kealinit/notebookd769fd1be6: kealinit/notebookd769fd1be6 has status "KernelWorkerStatus.COMPLETE"
-- kealinit/registers: kealinit/registers has status "KernelWorkerStatus.COMPLETE"
-- kealinit/goals: kealinit/goals has status "KernelWorkerStatus.COMPLETE"
-- kealinit/notebook095e54e788: To search for one, try 'kaggle search <query>'.
-- kealinit/notebook4f50f027e2: To search for one, try 'kaggle search <query>'.
-- kealinit/notebookdc19f5cd95: To search for one, try 'kaggle search <query>'.
+- kealinit/findout2-teacher-quick: kealinit/findout2-teacher-quick has status "KernelWorkerStatus.COMPLETE"
+- kealinit/weird-full-1: kealinit/weird-full-1 has status "KernelWorkerStatus.COMPLETE"
+- kealinit/weird-quickall-1: kealinit/weird-quickall-1 has status "KernelWorkerStatus.COMPLETE"
+- kealinit/weird-quick-1: kealinit/weird-quick-1 has status "KernelWorkerStatus.COMPLETE"
+- kealinit/findout-full-1: kealinit/findout-full-1 has status "KernelWorkerStatus.COMPLETE"
+- kealinit/findout-quick-12: kealinit/findout-quick-12 has status "KernelWorkerStatus.COMPLETE"
+- kealinit/ft-smollm2-360m: kealinit/ft-smollm2-360m has status "KernelWorkerStatus.COMPLETE"
+- kealinit/ft-qwen3-0-6b: kealinit/ft-qwen3-0-6b has status "KernelWorkerStatus.COMPLETE"
