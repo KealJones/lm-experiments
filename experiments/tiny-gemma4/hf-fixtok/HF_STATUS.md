@@ -1,4 +1,8 @@
 # Hugging Face job: tiny-gemma4-fixtok
 
-Status: **running** on `cpu-basic` (started 2026-10-29T18:14:09+00:00, time limit 20m, so at most about $0.00)
+Status: **complete** after 0.3 min of work on `cpu-basic`, about $0.00 (plus a minute or two of startup)
 Job page: https://huggingface.co/jobs/kealjones/6ae38cf1ad9610e5cb31504c
+
+Files copied here:
+- JOB_LOG.txt
+- job_status.json
