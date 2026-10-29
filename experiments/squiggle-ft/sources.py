@@ -12,7 +12,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 ROWS = "https://datasets-server.huggingface.co/rows"
-UA = "squiggle-ft/1.0 (https://github.com/KealJones/tp-parse)"
+UA = "squiggle-ft/1.0 (https://github.com/KealJones/lm-experiments)"
 
 TRAIN_REPOS = ["KealJones/squiggle", "KealJones/tp-parse", "sindresorhus/slugify", "sindresorhus/p-limit", "lukeed/clsx",
                "lukeed/kleur", "developit/mitt", "ai/nanoid", "vercel/ms", "chalk/chalk", "expressjs/cors", "motdotla/dotenv",

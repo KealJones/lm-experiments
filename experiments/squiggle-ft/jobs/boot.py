@@ -2,7 +2,7 @@
 
 hf/runner.py fetches this one file into work/ and runs the job's cmd there. This script:
   1. prints the GPU (nvidia-smi)
-  2. unpacks experiments/squiggle-ft from tp-parse at the job's commit into ./sqft
+  2. unpacks experiments/squiggle-ft from lm-experiments at the job's commit into ./sqft
   3. unpacks KealJones/squiggle at the pinned commit into ./squiggle (SQUIGGLE_DIR) — the app code episodes run on
   4. installs node 22 and the experiment's npm packages (isomorphic-git, linkedom)
   5. runs `bash sqft/jobs/<script>` with outputs going to ./out (which the runner uploads)
@@ -44,7 +44,7 @@ sha = spec.get("sha", "main")
 subprocess.run("nvidia-smi || true", shell=True)
 # vLLM's torch.compile/triton and the llama.cpp build need a C compiler; the pytorch runtime image has none.
 subprocess.run("(command -v gcc && command -v cmake) || (apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq gcc g++ make cmake >/dev/null) || echo 'apt-get failed'", shell=True)
-get(f"https://codeload.github.com/KealJones/tp-parse/tar.gz/{sha}", "tp.tgz")
+get(f"https://codeload.github.com/KealJones/lm-experiments/tar.gz/{sha}", "tp.tgz")
 untar("tp.tgz", "sqft", "experiments/squiggle-ft")
 get(f"https://codeload.github.com/KealJones/squiggle/tar.gz/{SQUIGGLE_COMMIT}", "sq.tgz")
 untar("sq.tgz", "squiggle")
@@ -55,7 +55,7 @@ untar("node.tgz", "node")
 env = dict(os.environ, PATH=os.path.abspath("node/bin") + ":" + os.environ["PATH"], SQUIGGLE_DIR=os.path.abspath("squiggle"),
            NODE_NO_WARNINGS="1", PYTHONUNBUFFERED="1", TOKENIZERS_PARALLELISM="false", PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True")
 subprocess.run(["npm", "ci", "--silent", "--no-audit", "--no-fund"], cwd="sqft", env=env, check=True)
-print(f"boot: node {v}, squiggle {SQUIGGLE_COMMIT}, tp-parse {sha[:7]}, setup took {time.time() - t0:.0f} s", flush=True)
+print(f"boot: node {v}, squiggle {SQUIGGLE_COMMIT}, lm-experiments {sha[:7]}, setup took {time.time() - t0:.0f} s", flush=True)
 os.makedirs("out", exist_ok=True)
 code = subprocess.run(["bash", os.path.join("jobs", sys.argv[1]), os.path.abspath("out")], cwd="sqft", env=env).returncode
 sys.exit(code)

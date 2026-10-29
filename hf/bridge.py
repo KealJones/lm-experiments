@@ -23,7 +23,7 @@ api = HfApi(token=os.environ["HF_TOKEN"])
 USER = api.whoami()["name"]
 RESULTS = f"{USER}/tp-parse-runs"
 MAX_FILE = 50_000_000      # bigger outputs (model files) stay in the results repo; GitHub refuses >100 MB and big pushes time out
-REPO = os.environ.get("GITHUB_REPOSITORY", "KealJones/tp-parse")
+REPO = os.environ.get("GITHUB_REPOSITORY", "KealJones/lm-experiments")
 
 
 def now():

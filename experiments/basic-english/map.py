@@ -6,7 +6,7 @@ Sources:
   compounds.txt          ku translation data: how often translators rendered a
                          toki pona word or compound as each English word
                          (https://tokipona.org/compounds.txt, by jan Lipamanka)
-  ../../src/words.ts     Linku usage categories (only core + common words become hubs)
+  tp-parse/src/words.ts  (WORDS_TS) Linku usage categories (only core + common words become hubs)
   sona definitions       Linku's English definitions, as a fallback
                          (python3 map.py path/to/sona)
 
@@ -19,6 +19,7 @@ to it, then picks one hub:
 
 Outputs: mapping.json, hubs.md (readable report).
 """
+import os
 import json, re, sys, tomllib, glob
 from collections import defaultdict
 
@@ -28,7 +29,8 @@ SONA = sys.argv[1] if len(sys.argv) > 1 else "/root/sona"
 cats = json.load(open("be850_categories.json"))
 cat_of = {w: c for c, ws in cats.items() for w in ws}
 
-words_ts = open("../../src/words.ts").read()
+# The word list lives in the parser repo (KealJones/tp-parse); point WORDS_TS at its src/words.ts.
+words_ts = open(os.environ.get("WORDS_TS", "../../../tp-parse/src/words.ts")).read()
 usage = dict(re.findall(r'"([a-z]+)": \{ category: "([a-z]+)"', words_ts))
 HUB_OK = {w for w, c in usage.items() if c in ("core", "common")}
 
