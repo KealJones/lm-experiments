@@ -18,6 +18,8 @@ python to_gguf.py ckpt pkg
 git clone -q --depth 1 --branch b11364 https://github.com/ggml-org/llama.cpp
 pip install -q -e llama.cpp/gguf-py
 python llama.cpp/convert_hf_to_gguf.py pkg --outtype f16 --outfile f16.gguf 2>&1 | tail -20
+# Special tokens by text, as in the official E2B GGUF (pruning shifted ids, so the converter marked the wrong ones).
+python fix_tokens.py f16.gguf
 
 cmake -S llama.cpp -B build -DLLAMA_CURL=OFF -DGGML_NATIVE=OFF -DLLAMA_BUILD_TESTS=OFF -DLLAMA_BUILD_SERVER=OFF >/dev/null
 cmake --build build --target llama-quantize llama-simple -j "$(nproc)" 2>&1 | tail -3
