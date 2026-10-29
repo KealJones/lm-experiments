@@ -1,0 +1,19 @@
+{
+ "slug": "tiny-gemma4-fixtok",
+ "flavor": "cpu-basic",
+ "timeout": "20m",
+ "files": [
+  "experiments/tiny-gemma4/fix_tokens.py",
+  "experiments/tiny-gemma4/fix_upload.sh"
+ ],
+ "cmd": "REPO=kealjones/tiny-gemma4-test SRC=tiny-gemma4-heal3-Q4_0.gguf DST=tiny-gemma4-heal3-v2-Q4_0.gguf bash fix_upload.sh",
+ "pip": [
+  "gguf",
+  "huggingface_hub",
+  "brotli>=1.2.0"
+ ],
+ "upload_every": 600,
+ "outdir": "out",
+ "out": "experiments/tiny-gemma4/hf-fixtok",
+ "note": "Heal 3's GGUF marked <|turn>/<turn|>/<|tool>/<tool|> as plain text (pruning shifted ids, the converter flagged the wrong ones) and stopped on <eos> instead of <turn|>: in wllama the model echoed questions. Fix the token types to match the official E2B GGUF (tested locally: prompt 72 tokens as in training, and a correct get_weather call parsed by llama.cpp) and upload as tiny-gemma4-heal3-v2-Q4_0.gguf. CPU, a few cents."
+}
