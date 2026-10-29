@@ -157,7 +157,15 @@ bpb barely moved, but behaviour changed a lot:
 Still wrong in places (the sky "reflects light from the sun"; greedy decoding repeats `<|tool_response>`
 after a call, which the runtime should stop on). Checkpoint: `kealjones/tp-parse-runs` →
 `tiny-gemma4-heal3b/6ae371135ddcdc083026213d/ckpt/`. GGUF: `kealjones/tiny-gemma4-test`,
-`tiny-gemma4-heal3-Q4_0.gguf`.
+`tiny-gemma4-heal3-v2-Q4_0.gguf` (use this one, see below).
+
+**GGUF special-token bug (found on heal 3, fixed).** In the browser the heal-3 GGUF echoed questions back, even
+given the exact training prompt. Pruning had shifted token ids by one, and llama.cpp's converter marked the wrong
+tokens as control tokens: `<|turn>`, `<turn|>`, `<|tool>`, `<tool|>` came out as plain text (so a prompt's turn
+markers were split into text pieces: 86 tokens instead of 72), and generation ended on `<eos>` instead of `<turn|>`.
+Every earlier GGUF had it too. `fix_tokens.py` sets the types by token text as in the official E2B GGUF (unsloth's)
+and `gguf_job.sh` now runs it; `fix_upload.sh` fixed heal 3's file in place of a rebuild. After the fix, wllama's
+chat completion with a `get_weather` tool returns the call `{"city": "Phoenix"}`.
 
 Spend for the $10 bigger-heal stretch: gen1 ~$0.16, gen2 ~$0.61, gen3 ~$1.19, GGUF builds ~$0.06, heal3 crash
 ~$0.05, heal 3 ~$6.55 = **~$8.62**.
