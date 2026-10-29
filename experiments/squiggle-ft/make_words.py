@@ -12,7 +12,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 OUT = HERE / "data" / "sources" / "unknown_words.json"
-UA = {"User-Agent": "squiggle-ft/0.1 (https://github.com/KealJones/tp-parse; research)"}
+UA = {"User-Agent": "squiggle-ft/0.1 (https://github.com/KealJones/lm-experiments; research)"}
 
 ONSET = ["bl", "br", "dr", "fl", "fr", "gl", "gr", "pl", "pr", "sk", "sl", "sn", "sp", "spl", "str", "tr", "tw", "phl", "thr",
          "squ", "gw", "kr", "zl", "pr", "vr", "scr", "shm", "cl", "dw", "fn"]

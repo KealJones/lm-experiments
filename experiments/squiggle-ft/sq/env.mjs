@@ -16,7 +16,7 @@ import { RELAY } from './stubs/github.mjs';
 const RealDate = Date;
 const realNow = () => RealDate.now();
 
-export const UA = 'squiggle-ft/1.0 (fine-tune data for an on-device agent; https://github.com/KealJones/tp-parse)';
+export const UA = 'squiggle-ft/1.0 (fine-tune data for an on-device agent; https://github.com/KealJones/lm-experiments)';
 const RELAY_UA = 'Mozilla/5.0 (compatible; squiggle-relay)';   // what the real relay sends
 
 // ── DOMParser + innerText ────────────────────────────────────────────────
