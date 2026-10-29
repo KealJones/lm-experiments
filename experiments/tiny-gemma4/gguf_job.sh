@@ -44,7 +44,7 @@ tags: [gguf, gemma4, pruned, distilled, experimental]
 Gemma 4 E2B-it cut down for phones (80K-token vocabulary, hidden 1024, FFN 42%, 31 of 35 layers: ~0.6B body)
 and partly healed by distillation from the uncut model. **Barely healed: it rambles and repeats.** Built to
 measure memory and speed in a browser tab (wllama / llama.cpp b11364). Experiment notes:
-https://github.com/KealJones/tp-parse/tree/main/experiments/tiny-gemma4
+https://github.com/KealJones/lm-experiments/tree/main/experiments/tiny-gemma4
 
 Files: `{name}-Q4_0.gguf`.
 """
