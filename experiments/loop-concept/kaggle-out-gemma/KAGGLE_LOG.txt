@@ -1,0 +1,182 @@
+[{"stream_name":"stderr","time":6.696238651,"data":"/usr/local/lib/python3.13/dist-packages/nbformat/validator.py:434: MissingIDFieldWarning: Cell is missing an id field, this will become a hard error in future nbformat versions. You may want to use `normalize()` on your notebooks before validations (available since nbformat 5.1.4). Previous versions of nbformat are fixing this issue transparently, and will stop doing so in the future.\n"}
+,{"stream_name":"stderr","time":6.696288401,"data":"  _validate(nbdict, ref, version, version_minor, relax_add_props)\n"}
+,{"stream_name":"stderr","time":7.652867183,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":7.652895205,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":7.652900207,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":7.652904432,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":8.266359824,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":8.26641201,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":8.266420167,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":8.2664249,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":27.43035811,"data":"want pass) \n"}
+,{"stream_name":"stdout","time":27.430399609,"data":"ok  plink  stars     syntax (want syntax) syntax error: line 1: can't read 'for i in range(1, 6):'\n"}
+,{"stream_name":"stdout","time":27.430408093,"data":"\n"}
+,{"stream_name":"stdout","time":27.430412178,"data":"ok  plink  squares   pass   (want pass) \n"}
+,{"stream_name":"stdout","time":27.430416328,"data":"ok  plink  pairs     pass   (want pass) \n"}
+,{"stream_name":"stdout","time":27.430419728,"data":"ok  plink  indexed   pass   (want pass) \n"}
+,{"stream_name":"stdout","time":27.430422994,"data":"ok  plink  collatz   pass   (want pass) \n"}
+,{"stream_name":"stdout","time":27.430426184,"data":"ok  zig    sum100    pass   (want pass) \n"}
+,{"stream_name":"stdout","time":27.430429547,"data":"ok  zig    evens     pass   (want pass) \n"}
+,{"stream_name":"stdout","time":27.430432927,"data":"ok  zig    countdown syntax (want syntax) ision with 'i64' and 'comptime_int': signed integers and floats must use @rem or @mod\n"}
+,{"stream_name":"stdout","time":27.430438277,"data":"    while (i \u003e= 1) : (i -= 1) { if\n"}
+,{"stream_name":"stdout","time":27.430446422,"data":"ok  card python: wrong exit 0; got '3\\n1\\n4 even\\n0 3\\n1 1\\n2 4\\ntotal: 55'\n"}
+,{"stream_name":"stdout","time":27.430449456,"data":"ok  card zig: wrong exit 0; got '3\\n1\\n4 even\\n0 3\\n1 1\\n2 4\\ntotal: 55\\ndone'; err '3\\n1\\n4 even\\n0 3\\n1 1\\n2 4\\ntotal:\n"}
+,{"stream_name":"stdout","time":27.430452411,"data":"ok  card plink: wrong exit 0; got '3\\n1\\n4 even\\n0 3\\n1 1\\n2 4\\ntotal: 55'\n"}
+,{"stream_name":"stdout","time":27.430455035,"data":"ALL OK\n"}
+,{"stream_name":"stdout","time":27.430457227,"data":" \n"}
+,{"stream_name":"stdout","time":58.834363631,"data":"libcuda candidates: ['/usr/local/nvidia/lib64/libcuda.so.580.178.04', '/usr/local/nvidia/lib64/libcuda.so.1', '/usr/local/nvidia/lib64/libcuda.so']\n"}
+,{"stream_name":"stdout","time":1682.356507975,"data":"eFiles/server-context.dir/server-common.cpp.o\n"}
+,{"stream_name":"stdout","time":1682.356556636,"data":"[ 96%] Building CXX object tools/server/CMakeFiles/server-context.dir/server-decision.cpp.o\n"}
+,{"stream_name":"stdout","time":1682.356571181,"data":"[ 96%] Building CXX object tools/server/CMakeFiles/server-context.dir/server-context.cpp.o\n"}
+,{"stream_name":"stdout","time":1682.356575221,"data":"[ 96%] Building CXX object tools/server/CMakeFiles/server-context.dir/server-realtime.cpp.o\n"}
+,{"stream_name":"stdout","time":1682.356578905,"data":"[ 97%] Building CXX object tools/server/CMakeFiles/server-context.dir/server-stream.cpp.o\n"}
+,{"stream_name":"stdout","time":1682.356582286,"data":"[ 97%] Building CXX object tools/server/CMakeFiles/server-context.dir/server-tools.cpp.o\n"}
+,{"stream_name":"stdout","time":1682.356586023,"data":"[ 97%] Building CXX object tools/server/CMakeFiles/server-context.dir/server-mcp.cpp.o\n"}
+,{"stream_name":"stdout","time":1682.35658952,"data":"[ 97%] Building CXX object tools/server/CMakeFiles/server-context.dir/server-schema.cpp.o\n"}
+,{"stream_name":"stdout","time":1682.356593022,"data":"[ 97%] Linking CXX static library libserver-context.a\n"}
+,{"stream_name":"stdout","time":1682.356596608,"data":"[ 97%] Built target server-context\n"}
+,{"stream_name":"stdout","time":1682.35659991,"data":"[ 97%] Building CXX object tools/server/CMakeFiles/llama-server-impl.dir/server.cpp.o\n"}
+,{"stream_name":"stdout","time":1682.356603258,"data":"[ 97%] Building CXX object tools/server/CMakeFiles/llama-server-impl.dir/server-connect.cpp.o\n"}
+,{"stream_name":"stdout","time":1682.356606741,"data":"[ 98%] Building CXX object tools/server/CMakeFiles/llama-server-impl.dir/server-http.cpp.o\n"}
+,{"stream_name":"stdout","time":1682.356610289,"data":"[ 98%] Building CXX object tools/server/CMakeFiles/llama-server-impl.dir/server-models.cpp.o\n"}
+,{"stream_name":"stdout","time":1682.356613644,"data":"[ 98%] Building CXX object tools/server/CMakeFiles/llama-server-impl.dir/server-models-sched.cpp.o\n"}
+,{"stream_name":"stdout","time":1682.356617036,"data":"[ 98%] Linking CXX shared library ../../bin/libllama-server-impl.so\n"}
+,{"stream_name":"stdout","time":1682.356620451,"data":"[ 98%] Built target llama-server-impl\n"}
+,{"stream_name":"stdout","time":1682.356623887,"data":"[100%] Building CXX object tools/server/CMakeFiles/llama-server.dir/main.cpp.o\n"}
+,{"stream_name":"stdout","time":1682.35662727,"data":"[100%] Linking CXX executable ../../bin/llama-server\n"}
+,{"stream_name":"stdout","time":1682.356630386,"data":"[100%] Built target llama-server\n"}
+,{"stream_name":"stdout","time":1682.356633601,"data":" CMAKE_BUILD_TYPE=Release\n"}
+,{"stream_name":"stdout","time":1682.356636993,"data":"\n"}
+,{"stream_name":"stdout","time":1682.356640832,"data":"llama.cpp built in 27.6 min\n"}
+,{"stream_name":"stderr","time":1683.436191996,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stderr","time":1683.436216719,"data":"\n"}
+,{"stream_name":"stderr","time":1683.436221465,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":1734.463804887,"data":"gemma4-e2b server up at http://127.0.0.1:8080\n"}
+,{"stream_name":"stdout","time":1734.463845602,"data":"tiny-gemma4 server up at http://127.0.0.1:8081\n"}
+,{"stream_name":"stdout","time":1764.49091256,"data":"[  0.5 min gemma4-e2b] starting\n"}
+,{"stream_name":"stdout","time":1764.491757564,"data":"[  0.5 min tiny-gemma4] starting\n"}
+,{"stream_name":"stdout","time":1794.486776218,"data":"[  1.0 min gemma4-e2b] == gemma4-e2b plink pilot: pass 0/2, tasks solved 0/2, doc lookups 0, errors 0\n"}
+,{"stream_name":"stdout","time":1794.489015426,"data":"[  1.0 min tiny-gemma4] == tiny-gemma4 plink pilot: pass 0/2, tasks solved 0/2, doc lookups 0, errors 0\n"}
+,{"stream_name":"stdout","time":1824.497167523,"data":"[  1.5 min gemma4-e2b] == gemma4-e2b plink pilot: pass 0/2, tasks solved 0/2, doc lookups 0, errors 0\n"}
+,{"stream_name":"stdout","time":1824.498485574,"data":"[  1.5 min tiny-gemma4] == tiny-gemma4 plink pilot: pass 0/2, tasks solved 0/2, doc lookups 0, errors 0\n"}
+,{"stream_name":"stdout","time":1824.69254869,"data":"--- gemma4-e2b (exit 0) ---\n"}
+,{"stream_name":"stdout","time":1824.692573246,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":1824.692578229,"data":"  gemma4-e2b: 4/4 done, 0 pass (23s)\n"}
+,{"stream_name":"stdout","time":1824.692581964,"data":"== gemma4-e2b zig pilot: pass 0/2, tasks solved 0/2, doc lookups 0, errors 0\n"}
+,{"stream_name":"stdout","time":1824.692585735,"data":"== gemma4-e2b plink pilot: pass 0/2, tasks solved 0/2, doc lookups 0, errors 0\n"}
+,{"stream_name":"stdout","time":1824.692589519,"data":"\n"}
+,{"stream_name":"stdout","time":1824.692592945,"data":"--- tiny-gemma4 (exit 0) ---\n"}
+,{"stream_name":"stdout","time":1824.692596544,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":1824.69260055,"data":"  tiny-gemma4: 4/4 done, 0 pass (6s)\n"}
+,{"stream_name":"stdout","time":1824.692604124,"data":"== tiny-gemma4 zig pilot: pass 0/2, tasks solved 0/2, doc lookups 0, errors 0\n"}
+,{"stream_name":"stdout","time":1824.692607854,"data":"== tiny-gemma4 plink pilot: pass 0/2, tasks solved 0/2, doc lookups 0, errors 0\n"}
+,{"stream_name":"stdout","time":1824.692611543,"data":"\n"}
+,{"stream_name":"stdout","time":1824.692614953,"data":"Pilot passed; full run starting.\n"}
+,{"stream_name":"stdout","time":2124.503540683,"data":"[  5.0 min gemma4-e2b]   gemma4-e2b: 20/150 done, 3 pass (221s)\n"}
+,{"stream_name":"stdout","time":2124.504856833,"data":"[  5.0 min tiny-gemma4] == tiny-gemma4 plink full: pass 0/75, tasks solved 0/25, doc lookups 3, errors 0\n"}
+,{"stream_name":"stdout","time":2424.507563275,"data":"[ 10.0 min gemma4-e2b]   gemma4-e2b: 50/150 done, 10 pass (517s)\n"}
+,{"stream_name":"stdout","time":2424.508368602,"data":"[ 10.0 min tiny-gemma4] == tiny-gemma4 plink full: pass 0/75, tasks solved 0/25, doc lookups 3, errors 0\n"}
+,{"stream_name":"stdout","time":2724.504540576,"data":"[ 15.0 min gemma4-e2b]   gemma4-e2b: 100/150 done, 17 pass (882s)\n"}
+,{"stream_name":"stdout","time":2724.50529741,"data":"[ 15.0 min tiny-gemma4] == tiny-gemma4 plink full: pass 0/75, tasks solved 0/25, doc lookups 3, errors 0\n"}
+,{"stream_name":"stdout","time":3024.511020026,"data":"[ 20.0 min gemma4-e2b]   gemma4-e2b: 140/150 done, 20 pass (1139s)\n"}
+,{"stream_name":"stdout","time":3024.512248651,"data":"[ 20.0 min tiny-gemma4] == tiny-gemma4 plink full: pass 0/75, tasks solved 0/25, doc lookups 3, errors 0\n"}
+,{"stream_name":"stdout","time":3324.512378159,"data":"[ 25.0 min gemma4-e2b] == gemma4-e2b plink full: pass 4/75, tasks solved 4/25, doc lookups 80, errors 0\n"}
+,{"stream_name":"stdout","time":3324.513111161,"data":"[ 25.0 min tiny-gemma4] == tiny-gemma4 plink full: pass 0/75, tasks solved 0/25, doc lookups 3, errors 0\n"}
+,{"stream_name":"stdout","time":3324.667816806,"data":"--- gemma4-e2b (exit 0) ---\n"}
+,{"stream_name":"stdout","time":3324.66785981,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":3324.667865895,"data":"  gemma4-e2b: 10/150 done, 3 pass (114s)\n"}
+,{"stream_name":"stdout","time":3324.667883,"data":"  gemma4-e2b: 20/150 done, 3 pass (221s)\n"}
+,{"stream_name":"stdout","time":3324.667886844,"data":"  gemma4-e2b: 30/150 done, 7 pass (291s)\n"}
+,{"stream_name":"stdout","time":3324.667890806,"data":"  gemma4-e2b: 40/150 done, 8 pass (434s)\n"}
+,{"stream_name":"stdout","time":3324.667894672,"data":"  gemma4-e2b: 50/150 done, 10 pass (517s)\n"}
+,{"stream_name":"stdout","time":3324.667898022,"data":"  gemma4-e2b: 60/150 done, 13 pass (590s)\n"}
+,{"stream_name":"stdout","time":3324.667901873,"data":"  gemma4-e2b: 70/150 done, 15 pass (690s)\n"}
+,{"stream_name":"stdout","time":3324.667905452,"data":"  gemma4-e2b: 80/150 done, 16 pass (747s)\n"}
+,{"stream_name":"stdout","time":3324.667908548,"data":"  gemma4-e2b: 90/150 done, 17 pass (825s)\n"}
+,{"stream_name":"stdout","time":3324.667911689,"data":"  gemma4-e2b: 100/150 done, 17 pass (882s)\n"}
+,{"stream_name":"stdout","time":3324.667914901,"data":"  gemma4-e2b: 110/150 done, 18 pass (947s)\n"}
+,{"stream_name":"stdout","time":3324.667918586,"data":"  gemma4-e2b: 120/150 done, 18 pass (1018s)\n"}
+,{"stream_name":"stdout","time":3324.667921867,"data":"  gemma4-e2b: 130/150 done, 20 pass (1071s)\n"}
+,{"stream_name":"stdout","time":3324.667925353,"data":"  gemma4-e2b: 140/150 done, 20 pass (1139s)\n"}
+,{"stream_name":"stdout","time":3324.667928696,"data":"  gemma4-e2b: 150/150 done, 20 pass (1198s)\n"}
+,{"stream_name":"stdout","time":3324.667931877,"data":"== gemma4-e2b zig full: pass 16/75, tasks solved 9/25, doc lookups 4, errors 0\n"}
+,{"stream_name":"stdout","time":3324.667935319,"data":"== gemma4-e2b plink full: pass 4/75, tasks solved 4/25, doc lookups 80, errors 0\n"}
+,{"stream_name":"stdout","time":3324.667938572,"data":"\n"}
+,{"stream_name":"stdout","time":3324.667941791,"data":"--- tiny-gemma4 (exit 0) ---\n"}
+,{"stream_name":"stdout","time":3324.667944858,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":3324.667948862,"data":"  tiny-gemma4: 10/150 done, 0 pass (6s)\n"}
+,{"stream_name":"stdout","time":3324.66795203,"data":"  tiny-gemma4: 20/150 done, 0 pass (18s)\n"}
+,{"stream_name":"stdout","time":3324.667955237,"data":"  tiny-gemma4: 30/150 done, 0 pass (23s)\n"}
+,{"stream_name":"stdout","time":3324.667958465,"data":"  tiny-gemma4: 40/150 done, 0 pass (33s)\n"}
+,{"stream_name":"stdout","time":3324.667961934,"data":"  tiny-gemma4: 50/150 done, 0 pass (39s)\n"}
+,{"stream_name":"stdout","time":3324.667965687,"data":"  tiny-gemma4: 60/150 done, 0 pass (47s)\n"}
+,{"stream_name":"stdout","time":3324.667969208,"data":"  tiny-gemma4: 70/150 done, 0 pass (55s)\n"}
+,{"stream_name":"stdout","time":3324.667972671,"data":"  tiny-gemma4: 80/150 done, 0 pass (65s)\n"}
+,{"stream_name":"stdout","time":3324.667976467,"data":"  tiny-gemma4: 90/150 done, 0 pass (75s)\n"}
+,{"stream_name":"stdout","time":3324.667980316,"data":"  tiny-gemma4: 100/150 done, 0 pass (81s)\n"}
+,{"stream_name":"stdout","time":3324.667984117,"data":"  tiny-gemma4: 110/150 done, 0 pass (91s)\n"}
+,{"stream_name":"stdout","time":3324.667988235,"data":"  tiny-gemma4: 120/150 done, 0 pass (102s)\n"}
+,{"stream_name":"stdout","time":3324.66799195,"data":"  tiny-gemma4: 130/150 done, 0 pass (112s)\n"}
+,{"stream_name":"stdout","time":3324.667995732,"data":"  tiny-gemma4: 140/150 done, 0 pass (118s)\n"}
+,{"stream_name":"stdout","time":3324.667999516,"data":"  tiny-gemma4: 150/150 done, 0 pass (129s)\n"}
+,{"stream_name":"stdout","time":3324.6680027,"data":"== tiny-gemma4 zig full: pass 0/75, tasks solved 0/25, doc lookups 5, errors 1\n"}
+,{"stream_name":"stdout","time":3324.668012173,"data":"== tiny-gemma4 plink full: pass 0/75, tasks solved 0/25, doc lookups 3, errors 0\n"}
+,{"stream_name":"stdout","time":3324.668015794,"data":"\n"}
+,{"stream_name":"stdout","time":3324.66801943,"data":"# From scratch with tools: results\n"}
+,{"stream_name":"stdout","time":3324.668022744,"data":"\n"}
+,{"stream_name":"stdout","time":3324.668027856,"data":"Each model gets just the task, tools to list/grep/read the docs and run code, up to 15 turns, 3 attempts per task (sampled). Lenient grading: the answer must be the last line(s) of output.\n"}
+,{"stream_name":"stdout","time":3324.668032922,"data":"\n"}
+,{"stream_name":"stdout","time":3324.668035989,"data":"# Gemma 4 E2B-it, Q8_0\n"}
+,{"stream_name":"stdout","time":3324.668039168,"data":"\n"}
+,{"stream_name":"stdout","time":3324.66804216,"data":"## Plink\n"}
+,{"stream_name":"stdout","time":3324.668045309,"data":"\n"}
+,{"stream_name":"stdout","time":3324.668048367,"data":"- **Tasks solved: 4/25**\n"}
+,{"stream_name":"stdout","time":3324.668051497,"data":"- Answers passing: 4/75; failing to compile/parse: 71/75\n"}
+,{"stream_name":"stdout","time":3324.668054767,"data":"- Average per attempt: 13.6 turns, grep 0.1, read 1.0, list_files 0.6, run 11.7\n"}
+,{"stream_name":"stdout","time":3324.66805853,"data":"- Attempts that never looked at the docs: 32/75; never ran code: 0/75\n"}
+,{"stream_name":"stdout","time":3324.668062172,"data":"- How attempts ended: answered 17, turn limit 58, context full 0, error 0\n"}
+,{"stream_name":"stdout","time":3324.668066284,"data":"- Solved: arrsum, oddcount, running, sum100\n"}
+,{"stream_name":"stdout","time":3324.668069753,"data":"\n"}
+,{"stream_name":"stdout","time":3324.668073494,"data":"# Gemma 4 E2B-it, Q8_0\n"}
+,{"stream_name":"stdout","time":3324.668076752,"data":"\n"}
+,{"stream_name":"stdout","time":3324.668079848,"data":"## Zig 0.17\n"}
+,{"stream_name":"stdout","time":3324.668082992,"data":"\n"}
+,{"stream_name":"stdout","time":3324.668086097,"data":"- **Tasks solved: 9/25**\n"}
+,{"stream_name":"stdout","time":3324.668089234,"data":"- Answers passing: 16/75; failing to compile/parse: 48/75\n"}
+,{"stream_name":"stdout","time":3324.668092571,"data":"- Average per attempt: 11.6 turns, grep 0.0, read 0.0, list_files 0.0, run 11.2\n"}
+,{"stream_name":"stdout","time":3324.668095908,"data":"- Attempts that never looked at the docs: 73/75; never ran code: 0/75\n"}
+,{"stream_name":"stdout","time":3324.668099332,"data":"- How attempts ended: answered 24, turn limit 51, context full 0, error 0\n"}
+,{"stream_name":"stdout","time":3324.668102572,"data":"- Solved: arrmax, arrsum, countdown, evens, indexed, odds, pow2, running, times7\n"}
+,{"stream_name":"stdout","time":3324.668106027,"data":"\n"}
+,{"stream_name":"stdout","time":3324.668109024,"data":"# Keal's tiny Gemma 4 (heal 3, 0.6B body), Q4_0 phone build\n"}
+,{"stream_name":"stdout","time":3324.668112382,"data":"\n"}
+,{"stream_name":"stdout","time":3324.668115397,"data":"## Plink\n"}
+,{"stream_name":"stdout","time":3324.668118557,"data":"\n"}
+,{"stream_name":"stdout","time":3324.668121622,"data":"- **Tasks solved: 0/25**\n"}
+,{"stream_name":"stdout","time":3324.668124778,"data":"- Answers passing: 0/75; failing to compile/parse: 45/75\n"}
+,{"stream_name":"stdout","time":3324.66812814,"data":"- Average per attempt: 1.3 turns, grep 0.0, read 0.0, list_files 0.2, run 0.0\n"}
+,{"stream_name":"stdout","time":3324.668131361,"data":"- Attempts that never looked at the docs: 72/75; never ran code: 74/75\n"}
+,{"stream_name":"stdout","time":3324.668136451,"data":"- How attempts ended: answered 75, turn limit 0, context full 0, error 0\n"}
+,{"stream_name":"stdout","time":3324.668147446,"data":"- Solved: none\n"}
+,{"stream_name":"stdout","time":3324.668149822,"data":"\n"}
+,{"stream_name":"stdout","time":3324.668151922,"data":"# Keal's tiny Gemma 4 (heal 3, 0.6B body), Q4_0 phone build\n"}
+,{"stream_name":"stdout","time":3324.66815419,"data":"\n"}
+,{"stream_name":"stdout","time":3324.668156273,"data":"## Zig 0.17\n"}
+,{"stream_name":"stdout","time":3324.668158396,"data":"\n"}
+,{"stream_name":"stdout","time":3324.6681605,"data":"- **Tasks solved: 0/25**\n"}
+,{"stream_name":"stdout","time":3324.66816267,"data":"- Answers passing: 0/75; failing to compile/parse: 44/75\n"}
+,{"stream_name":"stdout","time":3324.668164916,"data":"- Average per attempt: 1.3 turns, grep 0.0, read 0.0, list_files 0.2, run 0.0\n"}
+,{"stream_name":"stdout","time":3324.668167197,"data":"- Attempts that never looked at the docs: 70/75; never ran code: 74/75\n"}
+,{"stream_name":"stdout","time":3324.668169483,"data":"- How attempts ended: answered 74, turn limit 0, context full 0, error 1\n"}
+,{"stream_name":"stdout","time":3324.668171762,"data":"- Solved: none\n"}
+,{"stream_name":"stdout","time":3324.668180075,"data":"\n"}
+,{"stream_name":"stdout","time":3324.668182296,"data":" \n"}
+,{"stream_name":"stderr","time":3329.55330383,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":3329.553331566,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":3329.742806061,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":3329.742830547,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":3330.499336062,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":3330.582084383,"data":"[NbConvertApp] Writing 569343 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":3332.995948742,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":3333.528348706,"data":"[NbConvertApp] Writing 859215 bytes to __results__.html\n"}
+]
