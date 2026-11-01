@@ -1,7 +1,22 @@
 # Kaggle run: loop-concept
 
-Status: **running** (pushed 2026-11-01T04:36:33+00:00)
+Status: **complete** after 0.6 h (finished check 2026-11-01T05:13:51+00:00)
+Kaggle page: https://www.kaggle.com/code/kealinit/loop-concept
 
+Files copied here:
+- RESULTS.md
+- full_gpu0.txt
+- full_gpu1.txt
+- full_qwen3-0.6b.json
+- full_qwen3-1.7b.json
+- pilot_gpu0.txt
+- pilot_gpu1.txt
+- pilot_qwen3-0.6b.json
+- pilot_qwen3-1.7b.json
+- plink.py
+- run.py
+
+Last status line:
 ```
-Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/kealinit/loop-concept
+kealinit/loop-concept has status "KernelWorkerStatus.COMPLETE"
 ```

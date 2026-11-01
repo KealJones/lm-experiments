@@ -1,0 +1,169 @@
+{
+ "model": "Qwen/Qwen3-1.7B",
+ "tag": "pilot",
+ "seconds": 63,
+ "rows": [
+  {
+   "lang": "python",
+   "arm": "cold",
+   "task": "sum100",
+   "sample": 0,
+   "reply": "```python\ntotal = 0\nfor i in range(1, 101):\n    total += i\nprint(total)\n```",
+   "verdict": "pass",
+   "detail": ""
+  },
+  {
+   "lang": "python",
+   "arm": "cold",
+   "task": "arrmax",
+   "sample": 0,
+   "reply": "```python\n# Initialize the list with the given numbers\nnumbers = [12, 45, 7, 89, 23, 56]\n\n# Find the largest number using a loop\nmax_value = numbers[0]\nfor num in numbers:\n    if num > max_value:\n        max_value = num\n\n# Print each value on its own line\nfor num in numbers:\n    print(num)\n```",
+   "verdict": "wrong",
+   "detail": "exit 0; got '12\\n45\\n7\\n89\\n23\\n56'"
+  },
+  {
+   "lang": "python",
+   "arm": "cold",
+   "task": "fizzbuzz",
+   "sample": 0,
+   "reply": "```python\nfor i in range(1, 16):\n    if i % 3 == 0 and i % 5 == 0:\n        print(\"FizzBuzz\")\n    elif i % 3 == 0:\n        print(\"Fizz\")\n    elif i % 5 == 0:\n        print(\"Buzz\")\n    else:\n        print(i)\n```",
+   "verdict": "pass",
+   "detail": ""
+  },
+  {
+   "lang": "python",
+   "arm": "snippet",
+   "task": "sum100",
+   "sample": 0,
+   "reply": "```python\ntotal = 0\nfor i in range(1, 101):\n    total += i\nfor i in range(1, 101):\n    print(i)\n```",
+   "verdict": "wrong",
+   "detail": "exit 0; got '1\\n2\\n3\\n4\\n5\\n6\\n7\\n8\\n9\\n10\\n11\\n12\\n13\\n14\\n15\\n16\\n17\\n18\\n19\\n20\\n21\\n22\\n23\\n24\\n25\\n26\\n27\\n28\\n29\\n30\\n31\\n32\\n33\\n34\\n35\\n36\\n37\\n38\\n39\\n40\\n41\\n42\\n43\\n44\\n45\\n46\\n47\\n48\\n49\\n50\\n51\\n52\\n53\\n54\\n55\\n56\\n57\\n58\\n59\\n60\\n61\\n62\\n63\\n64\\n65\\n66\\n67\\n68\\n69\\n70'"
+  },
+  {
+   "lang": "python",
+   "arm": "snippet",
+   "task": "arrmax",
+   "sample": 0,
+   "reply": "```python\n# Initialize the list with the given numbers\nnumbers = [12, 45, 7, 89, 23, 56]\n\n# Find the largest number using a loop\nlargest = numbers[0]\nfor num in numbers:\n    if num > largest:\n        largest = num\n\n# Print each value on its own line\nfor num in numbers:\n    print(num)\n```",
+   "verdict": "wrong",
+   "detail": "exit 0; got '12\\n45\\n7\\n89\\n23\\n56'"
+  },
+  {
+   "lang": "python",
+   "arm": "snippet",
+   "task": "fizzbuzz",
+   "sample": 0,
+   "reply": "```python\nfor i in range(1, 16):\n    if i % 3 == 0 and i % 5 == 0:\n        print(\"FizzBuzz\")\n    elif i % 3 == 0:\n        print(\"Fizz\")\n    elif i % 5 == 0:\n        print(\"Buzz\")\n    else:\n        print(i)\n```",
+   "verdict": "pass",
+   "detail": ""
+  },
+  {
+   "lang": "zig",
+   "arm": "cold",
+   "task": "sum100",
+   "sample": 0,
+   "reply": "```zig\nconst std = @import(\"std\");\n\nconst total = 100;\nvar sum = 0;\n\nfor (0usize..total) {\n    sum += (0usize + 1);\n}\n\nstd.io.print(\"Sum: {}\\n\", sum);\n```",
+   "verdict": "syntax",
+   "detail": "main.zig:6:21: error: expected loop payload, found '{'\nfor (0usize..total) {\n                    ^\n"
+  },
+  {
+   "lang": "zig",
+   "arm": "cold",
+   "task": "arrmax",
+   "sample": 0,
+   "reply": "```zig\nconst std = @import(\"std\");\n\nconst arr = [6]i32{12, 45, 7, 89, 23, 56};\n\nvar max = arr[0];\nfor (arr[1..]) |num| {\n    if (num > max) {\n        max = num;\n    }\n}\n\nfor (arr) |num| {\n    std.debug.print(\"{d}\\n\", .{num});\n}\n```",
+   "verdict": "syntax",
+   "detail": "main.zig:6:22: error: expected type expression, found '{'\nfor (arr[1..]) |num| {\n                     ^\n"
+  },
+  {
+   "lang": "zig",
+   "arm": "cold",
+   "task": "fizzbuzz",
+   "sample": 0,
+   "reply": "```zig\nfor i := 1; i <= 15; i++ {\n    if i % 3 == 0 && i % 5 == 0 {\n        print(\"FizzBuzz\")\n    } else if i % 3 == 0 {\n        print(\"Fizz\")\n    } else if i % 5 == 0 {\n        print(\"Buzz\")\n    } else {\n        print(i)\n    }\n}\n```",
+   "verdict": "syntax",
+   "detail": "main.zig:1:5: error: expected '(', found 'an identifier'\nfor i := 1; i <= 15; i++ {\n    ^\n"
+  },
+  {
+   "lang": "zig",
+   "arm": "snippet",
+   "task": "sum100",
+   "sample": 0,
+   "reply": "```zig\nconst std = @import(\"std\");\n\npub fn main() void {\n    var total: i64 = 0;\n    var i: i64 = 1;\n\n    while (i <= 100) {\n        total += i;\n        i += 1;\n    }\n\n    for (1..101) |num| {\n        std.debug.print(\"{d}\\n\", .{num});\n    }\n}\n```",
+   "verdict": "wrong",
+   "detail": "exit 0; got '1\\n2\\n3\\n4\\n5\\n6\\n7\\n8\\n9\\n10\\n11\\n12\\n13\\n14\\n15\\n16\\n17\\n18\\n19\\n20\\n21\\n22\\n23\\n24\\n25\\n26\\n27\\n28\\n29\\n30\\n31\\n32\\n33\\n34\\n35\\n36\\n37\\n38\\n39\\n40\\n41\\n42\\n43\\n44\\n45\\n46\\n47\\n48\\n49\\n50\\n51\\n52\\n53\\n54\\n55\\n56\\n57\\n58\\n59\\n60\\n61\\n62\\n63\\n64\\n65\\n66\\n67\\n68\\n69\\n70'; err '\\n35\\n36\\n37\\n38\\n39\\n40\\n41\\n42\\n43\\n44\\n45\\n46\\n47\\n48\\n49\\n50\\n51\\n52\\n53\\n54\\n55\\n56\\n57\\n58\\n59\\n60\\n61\\n62\\n63\\n64\\n65\\n66\\n67\\n68\\n69\\n70\\n71\\n72\\n73\\n74\\n75\\n76\\n77\\n78\\n79\\n80\\n81\\n82\\n83\\n84\\n85\\n86\\n87\\n88\\n89\\n90\\n91\\n92\\n93\\n94\\n95\\n96\\n97\\n98\\n99\\n100\\n'"
+  },
+  {
+   "lang": "zig",
+   "arm": "snippet",
+   "task": "arrmax",
+   "sample": 0,
+   "reply": "```zig\nconst std = @import(\"std\");\n\npub fn main() void {\n    // Array of numbers\n    var numbers = [_]i64{12, 45, 7, 89, 23, 56};\n\n    // Find the largest number\n    var max: i64 = numbers[0];\n    for (numbers[1..]) |num| {\n        if (num > max) {\n            max = num;\n        }\n    }\n\n    // Print each value on its own line\n    for (numbers) |num| {\n        std.debug.print(\"{d}\\n\", .{num});\n    }\n}\n```",
+   "verdict": "wrong",
+   "detail": "exit 0; got '12\\n45\\n7\\n89\\n23\\n56'; err '12\\n45\\n7\\n89\\n23\\n56\\n'"
+  },
+  {
+   "lang": "zig",
+   "arm": "snippet",
+   "task": "fizzbuzz",
+   "sample": 0,
+   "reply": "```zig\nconst std = @import(\"std\");\n\npub fn main() void {\n    var i: i64 = 1;\n    while (i <= 15) {\n        if (i % 3 == 0 and i % 5 == 0) {\n            std.debug.print(\"FizzBuzz\\n\", .{i});\n        } else if (i % 3 == 0) {\n            std.debug.print(\"Fizz\\n\", .{i});\n        } else if (i % 5 == 0) {\n            std.debug.print(\"Buzz\\n\", .{i});\n        } else {\n            std.debug.print(\"{d}\\n\", .{i});\n        }\n        i += 1;\n    }\n}\n```",
+   "verdict": "syntax",
+   "detail": "main.zig:6:13: error: remainder division with 'i64' and 'comptime_int': signed integers and floats must use @rem or @mod\n        if (i % 3 == 0 and i % 5 == 0) {\n            ^\nreferenced by:\n    callMain [inlined]: /usr/local/lib/python3.13/dist-packages/ziglang/lib/std/start.zig:788:64\n    callMainWithArgs [inlined]: /usr/local/lib/python3.13/dist-packages/ziglang/lib/std/start.zig:729:20\n    posixCallMainAndExit: /usr/local/lib/python3.13/dist-packages/ziglang/lib/std/start.zig:681:38\n    2 reference(s) hidden; use '-freference-trace=5' to see all references\n"
+  },
+  {
+   "lang": "plink",
+   "arm": "cold",
+   "task": "sum100",
+   "sample": 0,
+   "reply": "```plink\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n...\n99\n100\n```",
+   "verdict": "syntax",
+   "detail": "syntax error: line 1: can't read '1'\n"
+  },
+  {
+   "lang": "plink",
+   "arm": "cold",
+   "task": "arrmax",
+   "sample": 0,
+   "reply": "```python\n# Plink program to store numbers in an array, find the largest, and print each value\n\nnumbers = [12, 45, 7, 89, 23, 56]\n\nmax_number = numbers[0]\n\nfor num in numbers:\n    if num > max_number:\n        max_number = num\n\nfor num in numbers:\n    print(num)\n```",
+   "verdict": "syntax",
+   "detail": "syntax error: line 1: can't read '# Plink program to store numbers in an a'\n"
+  },
+  {
+   "lang": "plink",
+   "arm": "cold",
+   "task": "fizzbuzz",
+   "sample": 0,
+   "reply": "```plink\nfor i in 1..15:\n    if i % 3 == 0 and i % 5 == 0:\n        print(\"FizzBuzz\")\n    elif i % 3 == 0:\n        print(\"Fizz\")\n    elif i % 5 == 0:\n        print(\"Buzz\")\n    else:\n        print(i)\n```",
+   "verdict": "syntax",
+   "detail": "syntax error: line 1: can't read 'for i in 1..15:'\n"
+  },
+  {
+   "lang": "plink",
+   "arm": "snippet",
+   "task": "sum100",
+   "sample": 0,
+   "reply": "```plink\nlet total be 0\nlet nums be list(1, 2, 3, ..., 100)\ncount i from 1 to 100 by 1\n  set total to total + i\nend\nfor each x in nums\n  show x\nend\nfor each x in nums\n  show x\nend\nshow \"total: \" & text(total)\n```",
+   "verdict": "syntax",
+   "detail": "syntax error: line 2: can't read '..., 100)'\n"
+  },
+  {
+   "lang": "plink",
+   "arm": "snippet",
+   "task": "arrmax",
+   "sample": 0,
+   "reply": "```plink\nlet numbers be list(12, 45, 7, 89, 23, 56)\nnote counting loop: i takes 1, 2, ..., 10 (both ends included); \"by\" sets the step, which may be negative\ncount i from 1 to 10 by 1\n  let max be 0\n  if i > max\n    set max to i\n  end\nend\nfor each x in numbers\n  if x > max\n    set max to x\n  end\nend\nshow \"max: \" & text(max)\n```",
+   "verdict": "wrong",
+   "detail": "exit 0; got 'max: 89'"
+  },
+  {
+   "lang": "plink",
+   "arm": "snippet",
+   "task": "fizzbuzz",
+   "sample": 0,
+   "reply": "```plink\nlet total be 0\nlet nums be list(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)\nnote counting loop: i takes 1, 2, ..., 15 (both ends included); \"by\" sets the step, which may be negative\ncount i from 1 to 15 by 1\n  set total to total + i\nend\nnote loop over the items of a list\nfor each x in nums\n  if x mod 3 = 0 and x mod 5 = 0\n    show \"FizzBuzz\"\n  else if x mod 3 = 0\n    show \"Fizz\"\n  else if x mod 5 = 0\n    show \"Buzz\"\n  else\n    show x\n  end\nend\n```",
+   "verdict": "syntax",
+   "detail": "syntax error: line 11: can't read 'else if x mod 3 = 0'\n"
+  }
+ ]
+}
