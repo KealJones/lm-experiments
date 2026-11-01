@@ -52,3 +52,17 @@ Lenient numbers:
 - Bigger helps a little (0.6B -> 1.7B), but at this size "know the loop, look up the spelling" does not come for free.
   The next step is the trained version: fine-tune on "here is a template, fill these slots" pairs mined from real code,
   then rerun this exact test.
+
+## Round 2: from scratch, with tools (Qwen3 0.6B only)
+
+Keal: skip the snippet, just ask plain Qwen to do it and let it use tools. [`agent.py`](agent.py): plain Qwen3 0.6B
+(thinking off) gets only the task, plus tools to `list_files`, `grep` and `read` the language's docs and `run` code,
+for up to 15 turns; 3 sampled attempts per task. Docs: the real Zig 0.17 language reference as plain text
+([`docs/zig/langref.txt`](docs/zig/langref.txt), built by [`build_zig_docs.py`](build_zig_docs.py) from
+codeberg.org/ziglang/zig tag 0.17.0, MIT) and a written Plink reference ([`docs/plink/reference.txt`](docs/plink/reference.txt)).
+Graded leniently. Notebook: [`agent_from_scratch.ipynb`](agent_from_scratch.ipynb).
+
+A 2-task CPU pilot showed the shape already: both times it wrote JavaScript/Python, ran it once, got a syntax error,
+and gave up without ever searching the docs.
+
+Results: pending (`kaggle-out-agent/AGENT_RESULTS.md`).
