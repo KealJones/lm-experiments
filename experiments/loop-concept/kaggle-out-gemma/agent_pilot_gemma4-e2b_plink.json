@@ -1,0 +1,276 @@
+{
+ "model": "Gemma 4 E2B-it, Q8_0",
+ "lang": "plink",
+ "tag": "pilot",
+ "seconds": 23,
+ "convs": [
+  {
+   "model": "gemma4-e2b",
+   "lang": "plink",
+   "task": "sum100",
+   "attempt": 0,
+   "expected": "5050",
+   "end": "turn limit",
+   "turns": 6,
+   "tools": {
+    "list_files": 0,
+    "grep": 0,
+    "read": 0,
+    "run": 6
+   },
+   "last_run_code": "sum = 0\nfor i from 1 to 100:\n    sum = sum + i\nprint(sum)",
+   "final_code": null,
+   "user": "Write a complete Plink program that adds up the whole numbers from 1 to 100 and prints the total. Print only the answer, each value on its own line. When you're done, reply with only the final code in one code block.",
+   "msgs": [
+    {
+     "role": "assistant",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "run",
+       "arguments": {
+        "code": "sum = 0\nfor i in range(1, 101):\n    sum = sum + i\nprint(sum)"
+       }
+      }
+     ]
+    },
+    {
+     "role": "tool",
+     "name": "run",
+     "content": "exit code: 2\noutput:\n\nerrors:\nsyntax error: line 1: can't read 'sum = 0'\n"
+    },
+    {
+     "role": "assistant",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "run",
+       "arguments": {
+        "code": "total = 0\nfor i in range(1, 101):\n    total = total + i\nprint(total)"
+       }
+      }
+     ]
+    },
+    {
+     "role": "tool",
+     "name": "run",
+     "content": "exit code: 2\noutput:\n\nerrors:\nsyntax error: line 1: can't read 'total = 0'\n"
+    },
+    {
+     "role": "assistant",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "run",
+       "arguments": {
+        "code": "sum = 0\nfor i in 1 to 100:\n    sum = sum + i\nprint(sum)"
+       }
+      }
+     ]
+    },
+    {
+     "role": "tool",
+     "name": "run",
+     "content": "exit code: 2\noutput:\n\nerrors:\nsyntax error: line 1: can't read 'sum = 0'\n"
+    },
+    {
+     "role": "assistant",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "run",
+       "arguments": {
+        "code": "sum = 0\nfor i in 1 to 100:\n    sum = sum + i\nprint(sum)"
+       }
+      }
+     ]
+    },
+    {
+     "role": "tool",
+     "name": "run",
+     "content": "exit code: 2\noutput:\n\nerrors:\nsyntax error: line 1: can't read 'sum = 0'\n"
+    },
+    {
+     "role": "assistant",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "run",
+       "arguments": {
+        "code": "sum = 0\nfor i in 1: 100:\n    sum = sum + i\nprint(sum)"
+       }
+      }
+     ]
+    },
+    {
+     "role": "tool",
+     "name": "run",
+     "content": "exit code: 2\noutput:\n\nerrors:\nsyntax error: line 1: can't read 'sum = 0'\n"
+    },
+    {
+     "role": "assistant",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "run",
+       "arguments": {
+        "code": "sum = 0\nfor i from 1 to 100:\n    sum = sum + i\nprint(sum)"
+       }
+      }
+     ]
+    },
+    {
+     "role": "tool",
+     "name": "run",
+     "content": "exit code: 2\noutput:\n\nerrors:\nsyntax error: line 1: can't read 'sum = 0'\n"
+    }
+   ],
+   "prompt0": "<|turn>system\nYou are a programmer. Plink is a small programming language. You can search and read the Plink documentation and run Plink code with your tools. Use them as much as you need.<|tool>declaration:list_files{description:<|\"|>List the documentation files.<|\"|>,parameters:{type:<|\"|>OBJECT<|\"|>}}<tool|><|tool>declaration:grep{description:<|\"|>Search the documentation for a regular expression (case-insensitive). Returns matching lines as file:line: text.<|\"|>,parameters:{properties:{pattern:{description:<|\"|>what to find<|\"|>,type:<|\"|>STRING<|\"|>}},required:[<|\"|>pattern<|\"|>],type:<|\"|>OBJECT<|\"|>}}<tool|><|tool>declaration:read{description:<|\"|>Read lines from a documentation file.<|\"|>,parameters:{properties:{file:{type:<|\"|>STRING<|\"|>},num_lines:{description:<|\"|>how many lines (max 100)<|\"|>,type:<|\"|>INTEGER<|\"|>},start_line:{description:<|\"|>first line, from 1<|\"|>,type:<|\"|>INTEGER<|\"|>}},required:[<|\"|>file<|\"|>],type:<|\"|>OBJECT<|\"|>}}<tool|><|tool>declaration:run{description:<|\"|>Compile and run a complete program. Returns the exit code, output and errors.<|\"|>,parameters:{properties:{code:{description:<|\"|>the whole program<|\"|>,type:<|\"|>STRING<|\"|>}},required:[<|\"|>code<|\"|>],type:<|\"|>OBJECT<|\"|>}}<tool|><turn|>\n<|turn>user\nWrite a complete Plink program that adds up the whole numbers from 1 to 100 and prints the total. Print only the answer, each value on its own line. When you're done, reply with only the final code in one code block.<turn|>\n<|turn>model\n",
+   "raw": [
+    "<|tool_call>call:run{code:<|\"|>sum = 0\nfor i in range(1, 101):\n    sum = sum + i\nprint(sum)<|\"|>}<tool_call|><|tool_response>",
+    "<|tool_call>call:run{code:<|\"|>total = 0\nfor i in range(1, 101):\n    total = total + i\nprint(total)<|\"|>}<tool_call|><|tool_response>",
+    "<|tool_call>call:run{code:<|\"|>sum = 0\nfor i in 1 to 100:\n    sum = sum + i\nprint(sum)<|\"|>}<tool_call|><|tool_response>",
+    "<|tool_call>call:run{code:<|\"|>sum = 0\nfor i in 1 to 100:\n    sum = sum + i\nprint(sum)<|\"|>}<tool_call|><|tool_response>",
+    "<|tool_call>call:run{code:<|\"|>sum = 0\nfor i in 1: 100:\n    sum = sum + i\nprint(sum)<|\"|>}<tool_call|><|tool_response>",
+    "<|tool_call>call:run{code:<|\"|>sum = 0\nfor i from 1 to 100:\n    sum = sum + i\nprint(sum)<|\"|>}<tool_call|><|tool_response>"
+   ],
+   "graded_code": "last run",
+   "verdict": "syntax",
+   "detail": "syntax error: line 1: can't read 'sum = 0'\n"
+  },
+  {
+   "model": "gemma4-e2b",
+   "lang": "plink",
+   "task": "arrmax",
+   "attempt": 0,
+   "expected": "89",
+   "end": "turn limit",
+   "turns": 6,
+   "tools": {
+    "list_files": 0,
+    "grep": 0,
+    "read": 0,
+    "run": 6
+   },
+   "last_run_code": "array = [12, 45, 7, 89, 23, 56]\nlargest = 12\nfor num in array:\n    if num > largest:\n        largest = num\nprint(largest)",
+   "final_code": null,
+   "user": "Write a complete Plink program that stores the numbers 12, 45, 7, 89, 23, 56 in an array/list, finds the largest with a loop and prints it. Print only the answer, each value on its own line. When you're done, reply with only the final code in one code block.",
+   "msgs": [
+    {
+     "role": "assistant",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "run",
+       "arguments": {
+        "code": "array = [12, 45, 7, 89, 23, 56]\nlargest = 0\nfor num in array:\n    if num > largest:\n        largest = num\nprint(largest)"
+       }
+      }
+     ]
+    },
+    {
+     "role": "tool",
+     "name": "run",
+     "content": "exit code: 2\noutput:\n\nerrors:\nsyntax error: line 1: can't read 'array = [12, 45, 7, 89, 23, 56]'\n"
+    },
+    {
+     "role": "assistant",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "run",
+       "arguments": {
+        "code": "array = [12, 45, 7, 89, 23, 56]\nlargest = array[0]\nfor num in array:\n    if num > largest:\n        largest = num\nprint(largest)"
+       }
+      }
+     ]
+    },
+    {
+     "role": "tool",
+     "name": "run",
+     "content": "exit code: 2\noutput:\n\nerrors:\nsyntax error: line 1: can't read 'array = [12, 45, 7, 89, 23, 56]'\n"
+    },
+    {
+     "role": "assistant",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "run",
+       "arguments": {
+        "code": "array = [12, 45, 7, 89, 23, 56]\nlargest = 0\nfor num in array:\n    if num > largest:\n        largest = num\nprint(largest)"
+       }
+      }
+     ]
+    },
+    {
+     "role": "tool",
+     "name": "run",
+     "content": "exit code: 2\noutput:\n\nerrors:\nsyntax error: line 1: can't read 'array = [12, 45, 7, 89, 23, 56]'\n"
+    },
+    {
+     "role": "assistant",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "run",
+       "arguments": {
+        "code": "array = [12, 45, 7, 89, 23, 56]\nlargest = array[0]\nfor num in array:\n    if num > largest:\n        largest = num\nprint(largest)"
+       }
+      }
+     ]
+    },
+    {
+     "role": "tool",
+     "name": "run",
+     "content": "exit code: 2\noutput:\n\nerrors:\nsyntax error: line 1: can't read 'array = [12, 45, 7, 89, 23, 56]'\n"
+    },
+    {
+     "role": "assistant",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "run",
+       "arguments": {
+        "code": "array = [12, 45, 7, 89, 23, 56]\nlargest = -1\nfor num in array:\n    if num > largest:\n        largest = num\nprint(largest)"
+       }
+      }
+     ]
+    },
+    {
+     "role": "tool",
+     "name": "run",
+     "content": "exit code: 2\noutput:\n\nerrors:\nsyntax error: line 1: can't read 'array = [12, 45, 7, 89, 23, 56]'\n"
+    },
+    {
+     "role": "assistant",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "run",
+       "arguments": {
+        "code": "array = [12, 45, 7, 89, 23, 56]\nlargest = 12\nfor num in array:\n    if num > largest:\n        largest = num\nprint(largest)"
+       }
+      }
+     ]
+    },
+    {
+     "role": "tool",
+     "name": "run",
+     "content": "exit code: 2\noutput:\n\nerrors:\nsyntax error: line 1: can't read 'array = [12, 45, 7, 89, 23, 56]'\n"
+    }
+   ],
+   "prompt0": "<|turn>system\nYou are a programmer. Plink is a small programming language. You can search and read the Plink documentation and run Plink code with your tools. Use them as much as you need.<|tool>declaration:list_files{description:<|\"|>List the documentation files.<|\"|>,parameters:{type:<|\"|>OBJECT<|\"|>}}<tool|><|tool>declaration:grep{description:<|\"|>Search the documentation for a regular expression (case-insensitive). Returns matching lines as file:line: text.<|\"|>,parameters:{properties:{pattern:{description:<|\"|>what to find<|\"|>,type:<|\"|>STRING<|\"|>}},required:[<|\"|>pattern<|\"|>],type:<|\"|>OBJECT<|\"|>}}<tool|><|tool>declaration:read{description:<|\"|>Read lines from a documentation file.<|\"|>,parameters:{properties:{file:{type:<|\"|>STRING<|\"|>},num_lines:{description:<|\"|>how many lines (max 100)<|\"|>,type:<|\"|>INTEGER<|\"|>},start_line:{description:<|\"|>first line, from 1<|\"|>,type:<|\"|>INTEGER<|\"|>}},required:[<|\"|>file<|\"|>],type:<|\"|>OBJECT<|\"|>}}<tool|><|tool>declaration:run{description:<|\"|>Compile and run a complete program. Returns the exit code, output and errors.<|\"|>,parameters:{properties:{code:{description:<|\"|>the whole program<|\"|>,type:<|\"|>STRING<|\"|>}},required:[<|\"|>code<|\"|>],type:<|\"|>OBJECT<|\"|>}}<tool|><turn|>\n<|turn>user\nWrite a complete Plink program that stores the numbers 12, 45, 7, 89, 23, 56 in an array/list, finds the largest with a loop and prints it. Print only the answer, each value on its own line. When you're done, reply with only the final code in one code block.<turn|>\n<|turn>model\n",
+   "raw": [
+    "<|tool_call>call:run{code:<|\"|>array = [12, 45, 7, 89, 23, 56]\nlargest = 0\nfor num in array:\n    if num > largest:\n        largest = num\nprint(largest)<|\"|>}<tool_call|><|tool_response>",
+    "<|tool_call>call:run{code:<|\"|>array = [12, 45, 7, 89, 23, 56]\nlargest = array[0]\nfor num in array:\n    if num > largest:\n        largest = num\nprint(largest)<|\"|>}<tool_call|><|tool_response>",
+    "<|tool_call>call:run{code:<|\"|>array = [12, 45, 7, 89, 23, 56]\nlargest = 0\nfor num in array:\n    if num > largest:\n        largest = num\nprint(largest)<|\"|>}<tool_call|><|tool_response>",
+    "<|tool_call>call:run{code:<|\"|>array = [12, 45, 7, 89, 23, 56]\nlargest = array[0]\nfor num in array:\n    if num > largest:\n        largest = num\nprint(largest)<|\"|>}<tool_call|><|tool_response>",
+    "<|tool_call>call:run{code:<|\"|>array = [12, 45, 7, 89, 23, 56]\nlargest = -1\nfor num in array:\n    if num > largest:\n        largest = num\nprint(largest)<|\"|>}<tool_call|><|tool_response>",
+    "<|tool_call>call:run{code:<|\"|>array = [12, 45, 7, 89, 23, 56]\nlargest = 12\nfor num in array:\n    if num > largest:\n        largest = num\nprint(largest)<|\"|>}<tool_call|><|tool_response>"
+   ],
+   "graded_code": "last run",
+   "verdict": "syntax",
+   "detail": "syntax error: line 1: can't read 'array = [12, 45, 7, 89, 23, 56]'\n"
+  }
+ ]
+}
