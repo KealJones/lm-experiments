@@ -18,10 +18,17 @@ print(r.stdout[-800:], r.stderr[-800:])
 assert r.returncode == 0, "grader check failed"
 t0 = time.time()
 sh = lambda c: subprocess.run(c, shell=True, check=True, capture_output=True, text=True)
-sh("git clone -q https://github.com/ggml-org/llama.cpp && cd llama.cpp && git checkout -q {LLAMA_CPP}")
+sh("git clone -q https://github.com/ggml-org/llama.cpp /tmp/llama.cpp && cd /tmp/llama.cpp && git checkout -q {LLAMA_CPP}")  # not in /kaggle/working: outputs get collected
+# Kaggle's CUDA toolkit has no libcuda stub where CMake looks (CUDA::cuda_driver not found), so point it at one
+import glob
+cands = (glob.glob("/usr/local/cuda*/**/stubs/libcuda.so", recursive=True) + glob.glob("/usr/lib/x86_64-linux-gnu/libcuda.so*")
+         + glob.glob("/usr/local/nvidia/lib64/libcuda.so*") + glob.glob("/usr/lib64/libcuda.so*"))
+print("libcuda candidates:", cands)
+assert cands, "no libcuda found"
+driver = f"-DCUDA_cuda_driver_LIBRARY={{cands[0]}}"
 os.environ["PATH"] = "/usr/local/cuda/bin:" + os.environ["PATH"]
-r = subprocess.run("cd llama.cpp && cmake -B build -DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=75 -DLLAMA_CURL=OFF "
-                   "-DLLAMA_BUILD_TESTS=OFF && cmake --build build --target llama-server -j 4", shell=True,
+r = subprocess.run("cd /tmp/llama.cpp && cmake -B build -DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=75 -DLLAMA_CURL=OFF "
+                   f"-DLLAMA_BUILD_TESTS=OFF {{driver}} && cmake --build build --target llama-server -j 4", shell=True,
                    capture_output=True, text=True)
 print(r.stdout[-1500:], r.stderr[-3000:])
 assert r.returncode == 0, "llama.cpp build failed"
@@ -36,7 +43,7 @@ for gpu, (name, port) in enumerate([("gemma4-e2b", 8080), ("tiny-gemma4", 8081)]
     path = hf_hub_download(repo, fname)
     env = dict(os.environ, CUDA_VISIBLE_DEVICES=str(gpu))
     log = open(f"server_{name}.txt", "w")
-    servers[name] = (subprocess.Popen(["llama.cpp/build/bin/llama-server", "-m", path, "-ngl", "99", "-c", "98304",
+    servers[name] = (subprocess.Popen(["/tmp/llama.cpp/build/bin/llama-server", "-m", path, "-ngl", "99", "-c", "98304",
                                        "-np", "6", "--port", str(port), "-fa", "on"],
                                       env=env, stdout=log, stderr=subprocess.STDOUT), f"http://127.0.0.1:{port}")
 for name, (p, url) in servers.items():
