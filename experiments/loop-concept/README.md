@@ -81,3 +81,16 @@ and gave up without ever searching the docs.
   habit of "I don't know this, go look it up" and can't use an error message to change course. Those are behaviours
   to train, not knowledge it lacks. That lines up with Squiggle's findout experiments (teach the loop, not the facts).
 
+
+## Round 3: same test, Gemma (Gemma 4 E2B and Keal's tiny Gemma 4)
+
+[`gemma_agent.py`](gemma_agent.py): identical task, system prompt, tools, docs, limits and grading as round 2, but the
+models run on llama.cpp (llama-server) in Gemma 4's native tool format: Gemma 4 E2B-it (unsloth Q8_0 GGUF) and
+Keal's tiny Gemma 4 from [`tiny-gemma4`](../tiny-gemma4/) (heal 3, 0.6B body, the `tiny-gemma4-heal3-v2-Q4_0.gguf`
+phone build; the full checkpoint is in a private dataset Kaggle can't reach). Sampling: Gemma's recommended
+temperature 1.0, top-p 0.95, top-k 64. Notebook: [`agent_gemma.ipynb`](agent_gemma.ipynb).
+
+Local CPU pilot (tiny Gemma, 4 attempts): same shape as Qwen. It never called a tool and answered in Python every
+time (once with an empty reply).
+
+Results: pending (`kaggle-out-gemma/AGENT_RESULTS.md`).

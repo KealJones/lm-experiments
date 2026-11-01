@@ -291,19 +291,21 @@ def worker(lang, gpu, tag):
 
 def report():
     lines = ["# From scratch with tools: results", "",
-             f"Plain {MODEL}, just the task, tools to list/grep/read the docs and run code, up to {MAX_TURNS} turns, "
+             f"Each model gets just the task, tools to list/grep/read the docs and run code, up to {MAX_TURNS} turns, "
              f"{ATTEMPTS} attempts per task (sampled). Lenient grading: the answer must be the last line(s) of output.", ""]
     for f in sorted(pathlib.Path(".").glob("agent_full_*.json")):
         d = json.load(open(f))
         cs, lang = d["convs"], d["lang"]
+        lines += [f"# {d['model']}", ""]
         n = len(cs)
         solved = {c["task"] for c in cs if c["verdict"] == "pass"}
         avg = lambda k: sum(c["tools"].get(k, 0) for c in cs) / n
         ends = {e: sum(c["end"] == e for c in cs) for e in ["answered", "turn limit", "context full"]}
+        ends["error"] = sum(c["end"].startswith("error") for c in cs)
         syn = sum(c["verdict"] == "syntax" for c in cs)
         lines += [f"## {base.NICE[lang]}", "",
-                  f"- **Tasks solved: {len(solved)}/25** (before: cold {BEFORE[lang]['cold']}/25, with a snippet "
-                  f"{BEFORE[lang]['snippet']}/25)",
+                  f"- **Tasks solved: {len(solved)}/25**" + (f" (before: cold {BEFORE[lang]['cold']}/25, with a snippet "
+                  f"{BEFORE[lang]['snippet']}/25)" if d["model"] == MODEL else ""),
                   f"- Answers passing: {sum(c['verdict'] == 'pass' for c in cs)}/{n}; failing to compile/parse: {syn}/{n}",
                   f"- Average per attempt: {sum(c['turns'] for c in cs) / n:.1f} turns, grep {avg('grep'):.1f}, "
                   f"read {avg('read'):.1f}, list_files {avg('list_files'):.1f}, run {avg('run'):.1f}",
