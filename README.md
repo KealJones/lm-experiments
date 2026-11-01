@@ -19,6 +19,7 @@ parser; the history of every moved file came along.
 - [`goals`](experiments/goals/) — Goals + lookup
 - [`harness`](experiments/harness/) — Harness, first cut
 - [`kaggle-smoke`](experiments/kaggle-smoke/)
+- [`loop-concept`](experiments/loop-concept/) — Loop concept vs loop syntax: does a looked-up snippet let a small model write loops in a language it never saw?
 - [`real`](experiments/real/) — Simple language first, with real data
 - [`registers-v2`](experiments/registers-v2/) — Registers v2
 - [`registers`](experiments/registers/) — Registers: a state table inside a small model
