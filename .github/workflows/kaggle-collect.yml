@@ -30,7 +30,7 @@ jobs:
         with:
           python-version: "3.11"
       - if: steps.check.outputs.go == '1'
-        run: pip install -q kaggle && python kaggle/bridge.py collect
+        run: pip install -q kaggle six && python kaggle/bridge.py collect
       - if: steps.check.outputs.go == '1'
         name: Commit results
         run: |
