@@ -65,4 +65,19 @@ Graded leniently. Notebook: [`agent_from_scratch.ipynb`](agent_from_scratch.ipyn
 A 2-task CPU pilot showed the shape already: both times it wrote JavaScript/Python, ran it once, got a syntax error,
 and gave up without ever searching the docs.
 
-Results: pending (`kaggle-out-agent/AGENT_RESULTS.md`).
+### Round 2 results (Kaggle, 0.7 h, free): [`kaggle-out-agent/AGENT_RESULTS.md`](kaggle-out-agent/AGENT_RESULTS.md)
+
+| | tasks solved | attempts that ever searched/read the docs | avg turns | avg runs |
+|---|---|---|---|---|
+| Zig 0.17 | 0 / 25 | 0 / 75 | 3.6 | 2.7 |
+| Plink | 0 / 25 | 0 / 75 | 7.3 | 6.4 |
+
+- **It never looked anything up.** 150 attempts, zero calls to grep, read or list_files. It only ever used `run`.
+- On Zig it mostly didn't even try: 50 of 75 attempts answered in one turn with made-up Zig
+  (`const even_numbers = 0..20 step 2;`) and never ran it.
+- On Plink it wrote Python or JavaScript, ran it, got `syntax error: line 1`, said "Let me fix the code", and
+  resubmitted **the identical code**, up to 15 times. 29 of 75 attempts hit the turn limit doing that.
+- So plain Qwen3 0.6B has the loop concept (it solves the same tasks in Python) and can call tools, but it has no
+  habit of "I don't know this, go look it up" and can't use an error message to change course. Those are behaviours
+  to train, not knowledge it lacks. That lines up with Squiggle's findout experiments (teach the loop, not the facts).
+
