@@ -1,0 +1,136 @@
+[{"stream_name":"stderr","time":10.208616286,"data":"/usr/local/lib/python3.13/dist-packages/nbformat/validator.py:434: MissingIDFieldWarning: Cell is missing an id field, this will become a hard error in future nbformat versions. You may want to use `normalize()` on your notebooks before validations (available since nbformat 5.1.4). Previous versions of nbformat are fixing this issue transparently, and will stop doing so in the future.\n"}
+,{"stream_name":"stderr","time":10.208670202,"data":"  _validate(nbdict, ref, version, version_minor, relax_add_props)\n"}
+,{"stream_name":"stderr","time":11.744908137,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":11.744938665,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":11.744942258,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":11.744945137,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":12.552196005,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":12.55222808,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":12.552236588,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":12.552239223,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":60.718492863,"data":"transformers 5.16.1\n"}
+,{"stream_name":"stdout","time":69.104616132,"data":"ok  python sum100    pass   (want pass) \n"}
+,{"stream_name":"stdout","time":69.104642195,"data":"ok  python stars     pass   (want pass) \n"}
+,{"stream_name":"stdout","time":69.104647264,"data":"ok  plink  sum100    pass   (want pass) \n"}
+,{"stream_name":"stdout","time":69.104668074,"data":"ok  plink  down3     pass   (want pass) \n"}
+,{"stream_name":"stdout","time":69.104671835,"data":"ok  plink  arrmax    pass   (want pass) \n"}
+,{"stream_name":"stdout","time":69.104674762,"data":"ok  plink  fizzbuzz  pass   (want pass) \n"}
+,{"stream_name":"stdout","time":69.104697128,"data":"ok  plink  stars     syntax (want syntax) syntax error: line 1: can't read 'for i in range(1, 6):'\n"}
+,{"stream_name":"stdout","time":69.104702698,"data":"\n"}
+,{"stream_name":"stdout","time":69.104707143,"data":"ok  plink  squares   pass   (want pass) \n"}
+,{"stream_name":"stdout","time":69.104711972,"data":"ok  plink  pairs     pass   (want pass) \n"}
+,{"stream_name":"stdout","time":69.104716195,"data":"ok  plink  indexed   pass   (want pass) \n"}
+,{"stream_name":"stdout","time":69.104720389,"data":"ok  plink  collatz   pass   (want pass) \n"}
+,{"stream_name":"stdout","time":69.104724493,"data":"ok  zig    sum100    pass   (want pass) \n"}
+,{"stream_name":"stdout","time":69.104728599,"data":"ok  zig    evens     pass   (want pass) \n"}
+,{"stream_name":"stdout","time":69.104732634,"data":"ok  zig    countdown syntax (want syntax) ision with 'i64' and 'comptime_int': signed integers and floats must use @rem or @mod\n"}
+,{"stream_name":"stdout","time":69.104737087,"data":"    while (i \u003e= 1) : (i -= 1) { if\n"}
+,{"stream_name":"stdout","time":69.104741604,"data":"ok  card python: wrong exit 0; got '3\\n1\\n4 even\\n0 3\\n1 1\\n2 4\\ntotal: 55'\n"}
+,{"stream_name":"stdout","time":69.10474611,"data":"ok  card zig: wrong exit 0; got '3\\n1\\n4 even\\n0 3\\n1 1\\n2 4\\ntotal: 55\\ndone'; err '3\\n1\\n4 even\\n0 3\\n1 1\\n2 4\\ntotal:\n"}
+,{"stream_name":"stdout","time":69.104751085,"data":"ok  card plink: wrong exit 0; got '3\\n1\\n4 even\\n0 3\\n1 1\\n2 4\\ntotal: 55'\n"}
+,{"stream_name":"stdout","time":69.104780535,"data":"ALL OK\n"}
+,{"stream_name":"stdout","time":69.104783235,"data":" \n"}
+,{"stream_name":"stdout","time":83.25722168,"data":"GPUs: ['Tesla T4', 'Tesla T4']\n"}
+,{"stream_name":"stdout","time":113.063120519,"data":"[  0.5 min gpu0] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":116.076203925,"data":"[  0.5 min gpu1] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":143.060681526,"data":"[  1.0 min gpu0] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":143.061439973,"data":"[  1.0 min gpu1] == plink pilot: pass 0/2, tasks solved 0/2 in 38s\n"}
+,{"stream_name":"stdout","time":173.067002745,"data":"[  1.5 min gpu0] == zig pilot: pass 0/2, tasks solved 0/2 in 67s\n"}
+,{"stream_name":"stdout","time":173.067928296,"data":"[  1.5 min gpu1] == plink pilot: pass 0/2, tasks solved 0/2 in 38s\n"}
+,{"stream_name":"stdout","time":173.069072389,"data":"--- gpu0 (exit 0) ---\n"}
+,{"stream_name":"stdout","time":173.069083611,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":173.06909405,"data":"  step 1: 1/2 finished (60s)\n"}
+,{"stream_name":"stdout","time":173.069103915,"data":"  step 2: 2/2 finished (66s)\n"}
+,{"stream_name":"stdout","time":173.069107191,"data":"grading\n"}
+,{"stream_name":"stdout","time":173.069110105,"data":"== zig pilot: pass 0/2, tasks solved 0/2 in 67s\n"}
+,{"stream_name":"stdout","time":173.069113025,"data":"\n"}
+,{"stream_name":"stdout","time":173.069115891,"data":"--- gpu1 (exit 0) ---\n"}
+,{"stream_name":"stdout","time":173.069118758,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":173.069122405,"data":"  step 1: 0/2 finished (23s)\n"}
+,{"stream_name":"stdout","time":173.069125278,"data":"  step 2: 1/2 finished (26s)\n"}
+,{"stream_name":"stdout","time":173.069128033,"data":"  step 3: 1/2 finished (29s)\n"}
+,{"stream_name":"stdout","time":173.069130882,"data":"  step 4: 1/2 finished (32s)\n"}
+,{"stream_name":"stdout","time":173.06913364,"data":"  step 5: 1/2 finished (35s)\n"}
+,{"stream_name":"stdout","time":173.069137491,"data":"  step 6: 2/2 finished (38s)\n"}
+,{"stream_name":"stdout","time":173.069154876,"data":"grading\n"}
+,{"stream_name":"stdout","time":173.069159661,"data":"== plink pilot: pass 0/2, tasks solved 0/2 in 38s\n"}
+,{"stream_name":"stdout","time":173.069164305,"data":"\n"}
+,{"stream_name":"stdout","time":173.069169202,"data":"Pilot passed; full run starting.\n"}
+,{"stream_name":"stdout","time":473.093922001,"data":"[  5.0 min gpu0]   step 8: 62/75 finished (291s)\n"}
+,{"stream_name":"stdout","time":473.09514232,"data":"[  5.0 min gpu1] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":773.094612434,"data":"[ 10.0 min gpu0] == zig full: pass 0/75, tasks solved 0/25 in 550s\n"}
+,{"stream_name":"stdout","time":773.095773554,"data":"[ 10.0 min gpu1]   step 6: 43/75 finished (570s)\n"}
+,{"stream_name":"stdout","time":1073.097025578,"data":"[ 15.0 min gpu0] == zig full: pass 0/75, tasks solved 0/25 in 550s\n"}
+,{"stream_name":"stdout","time":1073.098016115,"data":"[ 15.0 min gpu1] == plink full: pass 0/75, tasks solved 0/25 in 871s\n"}
+,{"stream_name":"stdout","time":1073.188235275,"data":"--- gpu0 (exit 0) ---\n"}
+,{"stream_name":"stdout","time":1073.188260442,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":1073.18826664,"data":"  step 1: 50/75 finished (118s)\n"}
+,{"stream_name":"stdout","time":1073.188271603,"data":"  step 2: 59/75 finished (150s)\n"}
+,{"stream_name":"stdout","time":1073.188275773,"data":"  step 3: 60/75 finished (171s)\n"}
+,{"stream_name":"stdout","time":1073.188280319,"data":"  step 4: 62/75 finished (190s)\n"}
+,{"stream_name":"stdout","time":1073.188285066,"data":"  step 5: 62/75 finished (212s)\n"}
+,{"stream_name":"stdout","time":1073.188289943,"data":"  step 6: 62/75 finished (236s)\n"}
+,{"stream_name":"stdout","time":1073.188294073,"data":"  step 7: 62/75 finished (262s)\n"}
+,{"stream_name":"stdout","time":1073.188298001,"data":"  step 8: 62/75 finished (291s)\n"}
+,{"stream_name":"stdout","time":1073.188301971,"data":"  step 9: 62/75 finished (322s)\n"}
+,{"stream_name":"stdout","time":1073.188306088,"data":"  step 10: 62/75 finished (355s)\n"}
+,{"stream_name":"stdout","time":1073.18832519,"data":"  step 11: 63/75 finished (392s)\n"}
+,{"stream_name":"stdout","time":1073.188331031,"data":"  step 12: 63/75 finished (425s)\n"}
+,{"stream_name":"stdout","time":1073.188335261,"data":"  step 13: 63/75 finished (461s)\n"}
+,{"stream_name":"stdout","time":1073.188339396,"data":"  step 14: 63/75 finished (499s)\n"}
+,{"stream_name":"stdout","time":1073.188343956,"data":"  step 15: 75/75 finished (539s)\n"}
+,{"stream_name":"stdout","time":1073.188349186,"data":"grading\n"}
+,{"stream_name":"stdout","time":1073.188354363,"data":"== zig full: pass 0/75, tasks solved 0/25 in 550s\n"}
+,{"stream_name":"stdout","time":1073.188358504,"data":"\n"}
+,{"stream_name":"stdout","time":1073.188362483,"data":"--- gpu1 (exit 0) ---\n"}
+,{"stream_name":"stdout","time":1073.188366895,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":1073.188371386,"data":"  step 1: 14/75 finished (349s)\n"}
+,{"stream_name":"stdout","time":1073.188375763,"data":"  step 2: 38/75 finished (449s)\n"}
+,{"stream_name":"stdout","time":1073.188379811,"data":"  step 3: 40/75 finished (480s)\n"}
+,{"stream_name":"stdout","time":1073.188383974,"data":"  step 4: 40/75 finished (509s)\n"}
+,{"stream_name":"stdout","time":1073.188388023,"data":"  step 5: 40/75 finished (540s)\n"}
+,{"stream_name":"stdout","time":1073.188392118,"data":"  step 6: 43/75 finished (570s)\n"}
+,{"stream_name":"stdout","time":1073.188396297,"data":"  step 7: 44/75 finished (597s)\n"}
+,{"stream_name":"stdout","time":1073.18840039,"data":"  step 8: 46/75 finished (626s)\n"}
+,{"stream_name":"stdout","time":1073.188404933,"data":"  step 9: 46/75 finished (654s)\n"}
+,{"stream_name":"stdout","time":1073.188410069,"data":"  step 10: 46/75 finished (684s)\n"}
+,{"stream_name":"stdout","time":1073.188414323,"data":"  step 11: 46/75 finished (717s)\n"}
+,{"stream_name":"stdout","time":1073.188418303,"data":"  step 12: 46/75 finished (751s)\n"}
+,{"stream_name":"stdout","time":1073.188422715,"data":"  step 13: 46/75 finished (788s)\n"}
+,{"stream_name":"stdout","time":1073.188427145,"data":"  step 14: 46/75 finished (825s)\n"}
+,{"stream_name":"stdout","time":1073.18844377,"data":"  step 15: 75/75 finished (866s)\n"}
+,{"stream_name":"stdout","time":1073.188447715,"data":"grading\n"}
+,{"stream_name":"stdout","time":1073.188450878,"data":"== plink full: pass 0/75, tasks solved 0/25 in 871s\n"}
+,{"stream_name":"stdout","time":1073.18845407,"data":"\n"}
+,{"stream_name":"stdout","time":1073.188457259,"data":"# From scratch with tools: results\n"}
+,{"stream_name":"stdout","time":1073.188460551,"data":"\n"}
+,{"stream_name":"stdout","time":1073.188464349,"data":"Plain Qwen/Qwen3-0.6B, just the task, tools to list/grep/read the docs and run code, up to 15 turns, 3 attempts per task (sampled). Lenient grading: the answer must be the last line(s) of output.\n"}
+,{"stream_name":"stdout","time":1073.188471887,"data":"\n"}
+,{"stream_name":"stdout","time":1073.18847513,"data":"## Plink\n"}
+,{"stream_name":"stdout","time":1073.18847846,"data":"\n"}
+,{"stream_name":"stdout","time":1073.188481745,"data":"- **Tasks solved: 0/25** (before: cold 0/25, with a snippet 1/25)\n"}
+,{"stream_name":"stdout","time":1073.18848578,"data":"- Answers passing: 0/75; failing to compile/parse: 74/75\n"}
+,{"stream_name":"stdout","time":1073.188489478,"data":"- Average per attempt: 7.3 turns, grep 0.0, read 0.0, list_files 0.0, run 6.4\n"}
+,{"stream_name":"stdout","time":1073.188493209,"data":"- Attempts that never looked at the docs: 75/75; never ran code: 18/75\n"}
+,{"stream_name":"stdout","time":1073.188497546,"data":"- How attempts ended: answered 48, turn limit 27, context full 0\n"}
+,{"stream_name":"stdout","time":1073.188501276,"data":"- Solved: none\n"}
+,{"stream_name":"stdout","time":1073.188505198,"data":"\n"}
+,{"stream_name":"stdout","time":1073.188508287,"data":"## Zig 0.17\n"}
+,{"stream_name":"stdout","time":1073.188511564,"data":"\n"}
+,{"stream_name":"stdout","time":1073.188516713,"data":"- **Tasks solved: 0/25** (before: cold 0/25, with a snippet 0/25)\n"}
+,{"stream_name":"stdout","time":1073.188520201,"data":"- Answers passing: 0/75; failing to compile/parse: 75/75\n"}
+,{"stream_name":"stdout","time":1073.188523428,"data":"- Average per attempt: 3.6 turns, grep 0.0, read 0.0, list_files 0.0, run 2.7\n"}
+,{"stream_name":"stdout","time":1073.188526826,"data":"- Attempts that never looked at the docs: 75/75; never ran code: 51/75\n"}
+,{"stream_name":"stdout","time":1073.188530135,"data":"- How attempts ended: answered 63, turn limit 12, context full 0\n"}
+,{"stream_name":"stdout","time":1073.188533512,"data":"- Solved: none\n"}
+,{"stream_name":"stdout","time":1073.18853668,"data":"\n"}
+,{"stream_name":"stdout","time":1073.188540073,"data":" \n"}
+,{"stream_name":"stderr","time":1076.396582505,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":1076.396604863,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":1076.603950728,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":1076.603977544,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":1077.441263796,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":1077.519687525,"data":"[NbConvertApp] Writing 552199 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":1079.929305589,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":1080.470167066,"data":"[NbConvertApp] Writing 834699 bytes to __results__.html\n"}
+]
