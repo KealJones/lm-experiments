@@ -24,6 +24,31 @@ enough to write loops in a language it's never really seen. Free first test, no 
 grader, which must fail as syntax). Run on Kaggle (free T4 x2) via [`loop_concept.ipynb`](loop_concept.ipynb),
 built by [`make_notebook.py`](make_notebook.py). No training data involved: this is evaluation only.
 
-## Results
+## Results (Kaggle, 2x T4, 0.6 h, free)
 
-Pending: `kaggle-out/RESULTS.md` when the run finishes.
+Raw strict scores: [`kaggle-out/RESULTS.md`](kaggle-out/RESULTS.md). The strict grader was too harsh on Python
+(my "print each value on its own line" made models print the input list; "Steps taken: 111" failed), so
+[`regrade.py`](regrade.py) re-runs every answer and accepts it if the right answer is the last line(s), labels allowed.
+Lenient numbers:
+
+| model | language | cold: pass / syntax fail | snippet: pass / syntax fail | tasks solved with snippet, of those solved in Python | snippet answers that paste the snippet's example |
+|---|---|---|---|---|---|
+| Qwen3 0.6B | Python | 66% / 0% | 44% / 1% | 18 / 22 | 22% |
+| Qwen3 0.6B | Zig 0.17 | 0% / 100% | 0% / 74% | 0 / 22 | 36% |
+| Qwen3 0.6B | Plink | 0% / 100% | 1% / 63% | 1 / 22 | 66% |
+| Qwen3 1.7B | Python | 80% / 0% | 71% / 0% | 20 / 21 | 0% |
+| Qwen3 1.7B | Zig 0.17 | 0% / 100% | 11% / 65% | 3 / 21 | 3% |
+| Qwen3 1.7B | Plink | 0% / 100% | 18% / 46% | 5 / 21 | 26% |
+
+**What it says:**
+- Both models have the loop concept: they solve 21-22 of 25 tasks in Python.
+- A looked-up snippet does **not** let them carry that concept into a new spelling. With the snippet, Qwen3 0.6B
+  solves 0 of those tasks in Zig and 1 in Plink; Qwen3 1.7B solves 3 in Zig and 5 in Plink.
+- The snippet roughly halves syntax failures, but they mostly turn into *wrong output*, not passes. The main reason:
+  the model treats the snippet as the answer to imitate, not as a template to fill. 0.6B pastes the snippet's own
+  example (`list(3, 1, 4)`, `"even"`) into 66% of its Plink answers. It even hurts plain Python for 0.6B (66% -> 44%).
+- 1.7B's Zig errors show the same gap: the snippet says signed ints need `@mod`, and it still writes `i % 2`
+  (31 compile errors). It reads the example's shape, not its rules.
+- Bigger helps a little (0.6B -> 1.7B), but at this size "know the loop, look up the spelling" does not come for free.
+  The next step is the trained version: fine-tune on "here is a template, fill these slots" pairs mined from real code,
+  then rerun this exact test.
