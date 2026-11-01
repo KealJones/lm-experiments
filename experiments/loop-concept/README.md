@@ -93,4 +93,6 @@ temperature 1.0, top-p 0.95, top-k 64. Notebook: [`agent_gemma.ipynb`](agent_gem
 Local CPU pilot (tiny Gemma, 4 attempts): same shape as Qwen. It never called a tool and answered in Python every
 time (once with an empty reply).
 
+First Kaggle try (2026-11-01) failed before any model ran: CMake on Kaggle couldn't find the CUDA driver library; the notebook now points it at libcuda directly and builds in /tmp.
+
 Results: pending (`kaggle-out-gemma/AGENT_RESULTS.md`).
