@@ -95,4 +95,24 @@ time (once with an empty reply).
 
 First Kaggle try (2026-11-01) failed before any model ran: CMake on Kaggle couldn't find the CUDA driver library; the notebook now points it at libcuda directly and builds in /tmp.
 
-Results: pending (`kaggle-out-gemma/AGENT_RESULTS.md`).
+### Round 3 results (Kaggle, 1.3 h, free): [`kaggle-out-gemma/AGENT_RESULTS.md`](kaggle-out-gemma/AGENT_RESULTS.md)
+
+| model | Zig 0.17 solved | Plink solved | attempts that looked at the docs | avg turns | avg runs |
+|---|---|---|---|---|---|
+| Qwen3 0.6B (round 2) | 0 / 25 | 0 / 25 | 0 / 150 | 3.6 / 7.3 | 2.7 / 6.4 |
+| Gemma 4 E2B | **9 / 25** | **4 / 25** | 2 / 75 Zig, 43 / 75 Plink | 11.6 / 13.6 | 11.2 / 11.7 |
+| tiny Gemma 4 (heal 3) | 0 / 25 | 0 / 25 | 5-6 / 75 (list_files only) | 1.3 | 0.0 |
+
+- **Gemma 4 E2B learns from the compiler.** It almost never read the Zig docs, but it ran its code ~11 times per
+  attempt and changed it after each error. Typical: writes a C-style `for (var i = 0; ...)`, gets
+  `expected expression, found 'var'`, switches to Zig's `while (i <= 20) : (i += 2)`, passes. That's the loop concept
+  plus syntax fixed by feedback, which plain Qwen3 0.6B couldn't do (it resubmitted identical code).
+- On Plink, E2B did open the docs in 43 of 75 attempts, but mostly `list_files` then `read` with empty
+  `start_line`/`num_lines` (Gemma fills optional args with ""), which `tool_read` turned into "the first 60 lines",
+  before the loop sections. A harness weakness worth fixing before reading too much into the Plink number.
+- **Tiny Gemma 4 (the Squiggle phone build) doesn't use the loop at all**: one turn, a final answer (usually Python),
+  no runs. Its few tool calls were `list_files` with junk arguments.
+- Side note for Squiggle: on Kaggle's GPU (llama.cpp CUDA) tiny Gemma reads prompts at ~3,800 tokens/s and writes at
+  ~75 tokens/s, so its very slow start in the browser (wllama, CPU, one thread: ~2.5 tokens/s reading) is about the
+  CPU/WASM path, not the model file.
+
