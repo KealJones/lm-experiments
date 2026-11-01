@@ -1,0 +1,306 @@
+[{"stream_name":"stderr","time":6.514043685,"data":"/usr/local/lib/python3.13/dist-packages/nbformat/validator.py:434: MissingIDFieldWarning: Cell is missing an id field, this will become a hard error in future nbformat versions. You may want to use `normalize()` on your notebooks before validations (available since nbformat 5.1.4). Previous versions of nbformat are fixing this issue transparently, and will stop doing so in the future.\n"}
+,{"stream_name":"stderr","time":6.5140859110000005,"data":"  _validate(nbdict, ref, version, version_minor, relax_add_props)\n"}
+,{"stream_name":"stderr","time":7.44409737,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":7.444122042,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":7.444127172,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":7.444131642,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":8.061640016,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":8.061673303,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":8.061676956,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":8.061679433,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":33.495215378,"data":"transformers 5.16.1\n"}
+,{"stream_name":"stdout","time":41.857536942,"data":"ok  python sum100    pass   (want pass) \n"}
+,{"stream_name":"stdout","time":41.857566983,"data":"ok  python stars     pass   (want pass) \n"}
+,{"stream_name":"stdout","time":41.857573169,"data":"ok  plink  sum100    pass   (want pass) \n"}
+,{"stream_name":"stdout","time":41.857577272,"data":"ok  plink  down3     pass   (want pass) \n"}
+,{"stream_name":"stdout","time":41.85758186,"data":"ok  plink  arrmax    pass   (want pass) \n"}
+,{"stream_name":"stdout","time":41.857586647,"data":"ok  plink  fizzbuzz  pass   (want pass) \n"}
+,{"stream_name":"stdout","time":41.8575907,"data":"ok  plink  stars     syntax (want syntax) syntax error: line 1: can't read 'for i in range(1, 6):'\n"}
+,{"stream_name":"stdout","time":41.85759518,"data":"\n"}
+,{"stream_name":"stdout","time":41.85759921,"data":"ok  plink  squares   pass   (want pass) \n"}
+,{"stream_name":"stdout","time":41.857603354,"data":"ok  plink  pairs     pass   (want pass) \n"}
+,{"stream_name":"stdout","time":41.857607382,"data":"ok  plink  indexed   pass   (want pass) \n"}
+,{"stream_name":"stdout","time":41.857611543,"data":"ok  plink  collatz   pass   (want pass) \n"}
+,{"stream_name":"stdout","time":41.85761559,"data":"ok  zig    sum100    pass   (want pass) \n"}
+,{"stream_name":"stdout","time":41.857619676,"data":"ok  zig    evens     pass   (want pass) \n"}
+,{"stream_name":"stdout","time":41.857623733,"data":"ok  zig    countdown syntax (want syntax) ision with 'i64' and 'comptime_int': signed integers and floats must use @rem or @mod\n"}
+,{"stream_name":"stdout","time":41.857628095,"data":"    while (i \u003e= 1) : (i -= 1) { if\n"}
+,{"stream_name":"stdout","time":41.857632682,"data":"ok  card python: wrong exit 0; got '3\\n1\\n4 even\\n0 3\\n1 1\\n2 4\\ntotal: 55'\n"}
+,{"stream_name":"stdout","time":41.857637256,"data":"ok  card zig: wrong exit 0; got '3\\n1\\n4 even\\n0 3\\n1 1\\n2 4\\ntotal: 55\\ndone'; err '3\\n1\\n4 even\\n0 3\\n1 1\\n2 4\\ntotal:\n"}
+,{"stream_name":"stdout","time":41.857642202,"data":"ok  card plink: wrong exit 0; got '3\\n1\\n4 even\\n0 3\\n1 1\\n2 4\\ntotal: 55'\n"}
+,{"stream_name":"stdout","time":41.857666688,"data":"ALL OK\n"}
+,{"stream_name":"stdout","time":41.857669565,"data":" \n"}
+,{"stream_name":"stdout","time":49.423495965,"data":"GPUs: ['Tesla T4', 'Tesla T4']\n"}
+,{"stream_name":"stdout","time":79.226246354,"data":"[  0.5 min gpu0] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":81.045511922,"data":"[  0.5 min gpu1] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":109.229466136,"data":"[  1.0 min gpu0] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":109.230018789,"data":"[  1.0 min gpu1] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":139.233020325,"data":"[  1.5 min gpu0] == Qwen/Qwen3-0.6B pilot done in 60s\n"}
+,{"stream_name":"stdout","time":139.234020049,"data":"[  1.5 min gpu1] == Qwen/Qwen3-1.7B pilot done in 63s\n"}
+,{"stream_name":"stdout","time":139.234991368,"data":"--- gpu0 (exit 0) ---\n"}
+,{"stream_name":"stdout","time":139.235010042,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":139.235015874,"data":"  generated 16/18 (greedy, 54s)\n"}
+,{"stream_name":"stdout","time":139.235020052,"data":"  generated 18/18 (greedy, 58s)\n"}
+,{"stream_name":"stdout","time":139.235025682,"data":"generation done in 58s; grading\n"}
+,{"stream_name":"stdout","time":139.235030446,"data":"  python cold    greedy pass 2/3  syntax-fail 0\n"}
+,{"stream_name":"stdout","time":139.23503496,"data":"  python snippet greedy pass 1/3  syntax-fail 0\n"}
+,{"stream_name":"stdout","time":139.235039397,"data":"  zig    cold    greedy pass 0/3  syntax-fail 3\n"}
+,{"stream_name":"stdout","time":139.235044452,"data":"  zig    snippet greedy pass 0/3  syntax-fail 2\n"}
+,{"stream_name":"stdout","time":139.235049086,"data":"  plink  cold    greedy pass 0/3  syntax-fail 3\n"}
+,{"stream_name":"stdout","time":139.235053403,"data":"  plink  snippet greedy pass 0/3  syntax-fail 2\n"}
+,{"stream_name":"stdout","time":139.235057585,"data":"== Qwen/Qwen3-0.6B pilot done in 60s\n"}
+,{"stream_name":"stdout","time":139.235061775,"data":"\n"}
+,{"stream_name":"stdout","time":139.235065755,"data":"--- gpu1 (exit 0) ---\n"}
+,{"stream_name":"stdout","time":139.235070004,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":139.235074747,"data":"  generated 16/18 (greedy, 50s)\n"}
+,{"stream_name":"stdout","time":139.235079072,"data":"  generated 18/18 (greedy, 60s)\n"}
+,{"stream_name":"stdout","time":139.235083945,"data":"generation done in 60s; grading\n"}
+,{"stream_name":"stdout","time":139.235088364,"data":"  python cold    greedy pass 2/3  syntax-fail 0\n"}
+,{"stream_name":"stdout","time":139.235092854,"data":"  python snippet greedy pass 1/3  syntax-fail 0\n"}
+,{"stream_name":"stdout","time":139.235097359,"data":"  zig    cold    greedy pass 0/3  syntax-fail 3\n"}
+,{"stream_name":"stdout","time":139.235101718,"data":"  zig    snippet greedy pass 0/3  syntax-fail 1\n"}
+,{"stream_name":"stdout","time":139.235115419,"data":"  plink  cold    greedy pass 0/3  syntax-fail 3\n"}
+,{"stream_name":"stdout","time":139.235118919,"data":"  plink  snippet greedy pass 0/3  syntax-fail 2\n"}
+,{"stream_name":"stdout","time":139.23512209,"data":"== Qwen/Qwen3-1.7B pilot done in 63s\n"}
+,{"stream_name":"stdout","time":139.235125728,"data":"\n"}
+,{"stream_name":"stdout","time":139.23512966,"data":"Pilot passed; full run starting.\n"}
+,{"stream_name":"stdout","time":439.250493174,"data":"[  5.0 min gpu0]   generated 48/150 (sampled, 276s)\n"}
+,{"stream_name":"stdout","time":439.250714307,"data":"[  5.0 min gpu1]   generated 112/150 (sampled, 266s)\n"}
+,{"stream_name":"stdout","time":739.254511549,"data":"[ 10.0 min gpu0]   generated 80/150 (sampled, 579s)\n"}
+,{"stream_name":"stdout","time":739.255527992,"data":"[ 10.0 min gpu1]   generated 144/150 (sampled, 589s)\n"}
+,{"stream_name":"stdout","time":1039.25558483,"data":"[ 15.0 min gpu0] == Qwen/Qwen3-0.6B full done in 765s\n"}
+,{"stream_name":"stdout","time":1039.256408483,"data":"[ 15.0 min gpu1] == Qwen/Qwen3-1.7B full done in 702s\n"}
+,{"stream_name":"stdout","time":1039.362192801,"data":"--- gpu0 (exit 0) ---\n"}
+,{"stream_name":"stdout","time":1039.362222662,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":1039.362229516,"data":"  generated 16/150 (greedy, 10s)\n"}
+,{"stream_name":"stdout","time":1039.362234029,"data":"  generated 32/150 (greedy, 18s)\n"}
+,{"stream_name":"stdout","time":1039.362238477,"data":"  generated 48/150 (greedy, 27s)\n"}
+,{"stream_name":"stdout","time":1039.362242833,"data":"  generated 64/150 (greedy, 31s)\n"}
+,{"stream_name":"stdout","time":1039.362246964,"data":"  generated 80/150 (greedy, 51s)\n"}
+,{"stream_name":"stdout","time":1039.362251389,"data":"  generated 96/150 (greedy, 72s)\n"}
+,{"stream_name":"stdout","time":1039.362256413,"data":"  generated 112/150 (greedy, 86s)\n"}
+,{"stream_name":"stdout","time":1039.36226094,"data":"  generated 128/150 (greedy, 100s)\n"}
+,{"stream_name":"stdout","time":1039.362265077,"data":"  generated 144/150 (greedy, 116s)\n"}
+,{"stream_name":"stdout","time":1039.362269205,"data":"  generated 150/150 (greedy, 119s)\n"}
+,{"stream_name":"stdout","time":1039.362273903,"data":"  generated 16/150 (sampled, 124s)\n"}
+,{"stream_name":"stdout","time":1039.36227883,"data":"  generated 32/150 (sampled, 133s)\n"}
+,{"stream_name":"stdout","time":1039.362283406,"data":"  generated 48/150 (sampled, 142s)\n"}
+,{"stream_name":"stdout","time":1039.362287678,"data":"  generated 64/150 (sampled, 147s)\n"}
+,{"stream_name":"stdout","time":1039.362292001,"data":"  generated 80/150 (sampled, 164s)\n"}
+,{"stream_name":"stdout","time":1039.362297062,"data":"  generated 96/150 (sampled, 189s)\n"}
+,{"stream_name":"stdout","time":1039.362302109,"data":"  generated 112/150 (sampled, 210s)\n"}
+,{"stream_name":"stdout","time":1039.362306999,"data":"  generated 128/150 (sampled, 225s)\n"}
+,{"stream_name":"stdout","time":1039.362311094,"data":"  generated 144/150 (sampled, 240s)\n"}
+,{"stream_name":"stdout","time":1039.362315374,"data":"  generated 150/150 (sampled, 252s)\n"}
+,{"stream_name":"stdout","time":1039.362319628,"data":"  generated 16/150 (sampled, 257s)\n"}
+,{"stream_name":"stdout","time":1039.362323914,"data":"  generated 32/150 (sampled, 266s)\n"}
+,{"stream_name":"stdout","time":1039.362328361,"data":"  generated 48/150 (sampled, 276s)\n"}
+,{"stream_name":"stdout","time":1039.362333088,"data":"  generated 64/150 (sampled, 320s)\n"}
+,{"stream_name":"stdout","time":1039.362337813,"data":"  generated 80/150 (sampled, 330s)\n"}
+,{"stream_name":"stdout","time":1039.362367708,"data":"  generated 96/150 (sampled, 353s)\n"}
+,{"stream_name":"stdout","time":1039.362374721,"data":"  generated 112/150 (sampled, 365s)\n"}
+,{"stream_name":"stdout","time":1039.36237853,"data":"  generated 128/150 (sampled, 380s)\n"}
+,{"stream_name":"stdout","time":1039.362382264,"data":"  generated 144/150 (sampled, 397s)\n"}
+,{"stream_name":"stdout","time":1039.362386114,"data":"  generated 150/150 (sampled, 409s)\n"}
+,{"stream_name":"stdout","time":1039.362389648,"data":"  generated 16/150 (sampled, 413s)\n"}
+,{"stream_name":"stdout","time":1039.362393376,"data":"  generated 32/150 (sampled, 421s)\n"}
+,{"stream_name":"stdout","time":1039.362397061,"data":"  generated 48/150 (sampled, 430s)\n"}
+,{"stream_name":"stdout","time":1039.362400365,"data":"  generated 64/150 (sampled, 437s)\n"}
+,{"stream_name":"stdout","time":1039.362403626,"data":"  generated 80/150 (sampled, 459s)\n"}
+,{"stream_name":"stdout","time":1039.36240684,"data":"  generated 96/150 (sampled, 474s)\n"}
+,{"stream_name":"stdout","time":1039.362410036,"data":"  generated 112/150 (sampled, 493s)\n"}
+,{"stream_name":"stdout","time":1039.362413248,"data":"  generated 128/150 (sampled, 508s)\n"}
+,{"stream_name":"stdout","time":1039.362418028,"data":"  generated 144/150 (sampled, 525s)\n"}
+,{"stream_name":"stdout","time":1039.362421195,"data":"  generated 150/150 (sampled, 536s)\n"}
+,{"stream_name":"stdout","time":1039.362426102,"data":"  generated 16/150 (sampled, 541s)\n"}
+,{"stream_name":"stdout","time":1039.362429876,"data":"  generated 32/150 (sampled, 549s)\n"}
+,{"stream_name":"stdout","time":1039.362434259,"data":"  generated 48/150 (sampled, 561s)\n"}
+,{"stream_name":"stdout","time":1039.362437923,"data":"  generated 64/150 (sampled, 566s)\n"}
+,{"stream_name":"stdout","time":1039.3624417,"data":"  generated 80/150 (sampled, 579s)\n"}
+,{"stream_name":"stdout","time":1039.362445294,"data":"  generated 96/150 (sampled, 604s)\n"}
+,{"stream_name":"stdout","time":1039.362448419,"data":"  generated 112/150 (sampled, 624s)\n"}
+,{"stream_name":"stdout","time":1039.36245169,"data":"  generated 128/150 (sampled, 645s)\n"}
+,{"stream_name":"stdout","time":1039.362454848,"data":"  generated 144/150 (sampled, 667s)\n"}
+,{"stream_name":"stdout","time":1039.362458048,"data":"  generated 150/150 (sampled, 688s)\n"}
+,{"stream_name":"stdout","time":1039.362461295,"data":"generation done in 688s; grading\n"}
+,{"stream_name":"stdout","time":1039.362464608,"data":"  python cold    greedy pass 14/25  syntax-fail 0\n"}
+,{"stream_name":"stdout","time":1039.362468624,"data":"  python snippet greedy pass 6/25  syntax-fail 0\n"}
+,{"stream_name":"stdout","time":1039.362477373,"data":"  zig    cold    greedy pass 0/25  syntax-fail 25\n"}
+,{"stream_name":"stdout","time":1039.362480825,"data":"  zig    snippet greedy pass 0/25  syntax-fail 18\n"}
+,{"stream_name":"stdout","time":1039.362484395,"data":"  plink  cold    greedy pass 0/25  syntax-fail 25\n"}
+,{"stream_name":"stdout","time":1039.362487701,"data":"  plink  snippet greedy pass 0/25  syntax-fail 13\n"}
+,{"stream_name":"stdout","time":1039.362491015,"data":"== Qwen/Qwen3-0.6B full done in 765s\n"}
+,{"stream_name":"stdout","time":1039.362494155,"data":"\n"}
+,{"stream_name":"stdout","time":1039.362497224,"data":"--- gpu1 (exit 0) ---\n"}
+,{"stream_name":"stdout","time":1039.362500474,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":1039.362504088,"data":"  generated 16/150 (greedy, 12s)\n"}
+,{"stream_name":"stdout","time":1039.36251454,"data":"  generated 32/150 (greedy, 17s)\n"}
+,{"stream_name":"stdout","time":1039.362518656,"data":"  generated 48/150 (greedy, 23s)\n"}
+,{"stream_name":"stdout","time":1039.362521846,"data":"  generated 64/150 (greedy, 30s)\n"}
+,{"stream_name":"stdout","time":1039.362525143,"data":"  generated 80/150 (greedy, 41s)\n"}
+,{"stream_name":"stdout","time":1039.362528476,"data":"  generated 96/150 (greedy, 54s)\n"}
+,{"stream_name":"stdout","time":1039.362531849,"data":"  generated 112/150 (greedy, 61s)\n"}
+,{"stream_name":"stdout","time":1039.362535284,"data":"  generated 128/150 (greedy, 73s)\n"}
+,{"stream_name":"stdout","time":1039.362538661,"data":"  generated 144/150 (greedy, 89s)\n"}
+,{"stream_name":"stdout","time":1039.362542342,"data":"  generated 150/150 (greedy, 100s)\n"}
+,{"stream_name":"stdout","time":1039.362546319,"data":"  generated 16/150 (sampled, 106s)\n"}
+,{"stream_name":"stdout","time":1039.362549812,"data":"  generated 32/150 (sampled, 114s)\n"}
+,{"stream_name":"stdout","time":1039.362553109,"data":"  generated 48/150 (sampled, 120s)\n"}
+,{"stream_name":"stdout","time":1039.362556258,"data":"  generated 64/150 (sampled, 131s)\n"}
+,{"stream_name":"stdout","time":1039.362559594,"data":"  generated 80/150 (sampled, 140s)\n"}
+,{"stream_name":"stdout","time":1039.362562986,"data":"  generated 96/150 (sampled, 154s)\n"}
+,{"stream_name":"stdout","time":1039.362567023,"data":"  generated 112/150 (sampled, 162s)\n"}
+,{"stream_name":"stdout","time":1039.362570611,"data":"  generated 128/150 (sampled, 173s)\n"}
+,{"stream_name":"stdout","time":1039.362574029,"data":"  generated 144/150 (sampled, 191s)\n"}
+,{"stream_name":"stdout","time":1039.362577386,"data":"  generated 150/150 (sampled, 203s)\n"}
+,{"stream_name":"stdout","time":1039.362581346,"data":"  generated 16/150 (sampled, 207s)\n"}
+,{"stream_name":"stdout","time":1039.362584672,"data":"  generated 32/150 (sampled, 212s)\n"}
+,{"stream_name":"stdout","time":1039.362588049,"data":"  generated 48/150 (sampled, 218s)\n"}
+,{"stream_name":"stdout","time":1039.362592338,"data":"  generated 64/150 (sampled, 229s)\n"}
+,{"stream_name":"stdout","time":1039.36259545,"data":"  generated 80/150 (sampled, 241s)\n"}
+,{"stream_name":"stdout","time":1039.362598788,"data":"  generated 96/150 (sampled, 255s)\n"}
+,{"stream_name":"stdout","time":1039.362602053,"data":"  generated 112/150 (sampled, 266s)\n"}
+,{"stream_name":"stdout","time":1039.362605553,"data":"  generated 128/150 (sampled, 311s)\n"}
+,{"stream_name":"stdout","time":1039.362609009,"data":"  generated 144/150 (sampled, 329s)\n"}
+,{"stream_name":"stdout","time":1039.362612408,"data":"  generated 150/150 (sampled, 342s)\n"}
+,{"stream_name":"stdout","time":1039.362615709,"data":"  generated 16/150 (sampled, 347s)\n"}
+,{"stream_name":"stdout","time":1039.362619134,"data":"  generated 32/150 (sampled, 354s)\n"}
+,{"stream_name":"stdout","time":1039.362623086,"data":"  generated 48/150 (sampled, 360s)\n"}
+,{"stream_name":"stdout","time":1039.362626564,"data":"  generated 64/150 (sampled, 368s)\n"}
+,{"stream_name":"stdout","time":1039.362629769,"data":"  generated 80/150 (sampled, 380s)\n"}
+,{"stream_name":"stdout","time":1039.362632964,"data":"  generated 96/150 (sampled, 398s)\n"}
+,{"stream_name":"stdout","time":1039.362636318,"data":"  generated 112/150 (sampled, 410s)\n"}
+,{"stream_name":"stdout","time":1039.362640335,"data":"  generated 128/150 (sampled, 455s)\n"}
+,{"stream_name":"stdout","time":1039.362643962,"data":"  generated 144/150 (sampled, 477s)\n"}
+,{"stream_name":"stdout","time":1039.362647603,"data":"  generated 150/150 (sampled, 483s)\n"}
+,{"stream_name":"stdout","time":1039.362655386,"data":"  generated 16/150 (sampled, 487s)\n"}
+,{"stream_name":"stdout","time":1039.362658811,"data":"  generated 32/150 (sampled, 495s)\n"}
+,{"stream_name":"stdout","time":1039.362665597,"data":"  generated 48/150 (sampled, 501s)\n"}
+,{"stream_name":"stdout","time":1039.362668982,"data":"  generated 64/150 (sampled, 509s)\n"}
+,{"stream_name":"stdout","time":1039.362672186,"data":"  generated 80/150 (sampled, 520s)\n"}
+,{"stream_name":"stdout","time":1039.362677113,"data":"  generated 96/150 (sampled, 537s)\n"}
+,{"stream_name":"stdout","time":1039.362685062,"data":"  generated 112/150 (sampled, 548s)\n"}
+,{"stream_name":"stdout","time":1039.362688116,"data":"  generated 128/150 (sampled, 567s)\n"}
+,{"stream_name":"stdout","time":1039.362690416,"data":"  generated 144/150 (sampled, 589s)\n"}
+,{"stream_name":"stdout","time":1039.362692599,"data":"  generated 150/150 (sampled, 600s)\n"}
+,{"stream_name":"stdout","time":1039.362694766,"data":"generation done in 600s; grading\n"}
+,{"stream_name":"stdout","time":1039.362697377,"data":"  python cold    greedy pass 16/25  syntax-fail 0\n"}
+,{"stream_name":"stdout","time":1039.362700933,"data":"  python snippet greedy pass 15/25  syntax-fail 0\n"}
+,{"stream_name":"stdout","time":1039.362703609,"data":"  zig    cold    greedy pass 0/25  syntax-fail 25\n"}
+,{"stream_name":"stdout","time":1039.362705943,"data":"  zig    snippet greedy pass 3/25  syntax-fail 16\n"}
+,{"stream_name":"stdout","time":1039.362708149,"data":"  plink  cold    greedy pass 0/25  syntax-fail 25\n"}
+,{"stream_name":"stdout","time":1039.362710326,"data":"  plink  snippet greedy pass 3/25  syntax-fail 11\n"}
+,{"stream_name":"stdout","time":1039.362712521,"data":"== Qwen/Qwen3-1.7B full done in 702s\n"}
+,{"stream_name":"stdout","time":1039.362714715,"data":"\n"}
+,{"stream_name":"stdout","time":1039.362716853,"data":"# Loop concept vs syntax: results\n"}
+,{"stream_name":"stdout","time":1039.362719107,"data":"\n"}
+,{"stream_name":"stdout","time":1039.362721181,"data":"## Qwen/Qwen3-0.6B\n"}
+,{"stream_name":"stdout","time":1039.362723313,"data":"\n"}
+,{"stream_name":"stdout","time":1039.362725514,"data":"25 tasks; each cell is 1 greedy answer + 4 sampled answers per task (125 programs). 'solved' = at least one of the 5 answers passed.\n"}
+,{"stream_name":"stdout","time":1039.362727837,"data":"\n"}
+,{"stream_name":"stdout","time":1039.362729955,"data":"| language | arm | greedy pass | all answers: pass | syntax fail | wrong output | tasks solved |\n"}
+,{"stream_name":"stdout","time":1039.362732301,"data":"|---|---|---|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":1039.362734477,"data":"| Python | cold | 56% | 55% | 0% | 45% | 20/25 |\n"}
+,{"stream_name":"stdout","time":1039.362736684,"data":"| Python | snippet | 24% | 23% | 1% | 76% | 9/25 |\n"}
+,{"stream_name":"stdout","time":1039.362738885,"data":"| Zig 0.17 | cold | 0% | 0% | 100% | 0% | 0/25 |\n"}
+,{"stream_name":"stdout","time":1039.362741068,"data":"| Zig 0.17 | snippet | 0% | 0% | 74% | 26% | 0/25 |\n"}
+,{"stream_name":"stdout","time":1039.362743263,"data":"| Plink | cold | 0% | 0% | 100% | 0% | 0/25 |\n"}
+,{"stream_name":"stdout","time":1039.36274631,"data":"| Plink | snippet | 0% | 0% | 63% | 37% | 0/25 |\n"}
+,{"stream_name":"stdout","time":1039.362748651,"data":"\n"}
+,{"stream_name":"stdout","time":1039.362751515,"data":"Tasks it solves in plain Python (it has the concept): 20/25. Of those, how many it also solves in:\n"}
+,{"stream_name":"stdout","time":1039.362754188,"data":"\n"}
+,{"stream_name":"stdout","time":1039.362756385,"data":"- Zig 0.17 cold: 0/20\n"}
+,{"stream_name":"stdout","time":1039.36275854,"data":"- Zig 0.17 snippet: 0/20\n"}
+,{"stream_name":"stdout","time":1039.362763444,"data":"- Plink cold: 0/20\n"}
+,{"stream_name":"stdout","time":1039.362765661,"data":"- Plink snippet: 0/20\n"}
+,{"stream_name":"stdout","time":1039.362767884,"data":"\n"}
+,{"stream_name":"stdout","time":1039.362770071,"data":"Per task (greedy answer; P pass, S syntax fail, W wrong output):\n"}
+,{"stream_name":"stdout","time":1039.362772442,"data":"\n"}
+,{"stream_name":"stdout","time":1039.362774644,"data":"| task | Python cold | Python snippet | Zig 0.17 cold | Zig 0.17 snippet | Plink cold | Plink snippet |\n"}
+,{"stream_name":"stdout","time":1039.362776926,"data":"|---|---|---|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":1039.362779092,"data":"| sum100 | P | W | S | S | S | W |\n"}
+,{"stream_name":"stdout","time":1039.362781293,"data":"| evens | W | W | S | W | S | W |\n"}
+,{"stream_name":"stdout","time":1039.362784284,"data":"| countdown | P | W | S | W | S | W |\n"}
+,{"stream_name":"stdout","time":1039.362786554,"data":"| fact10 | P | W | S | S | S | S |\n"}
+,{"stream_name":"stdout","time":1039.362789103,"data":"| fib15 | W | W | S | S | S | S |\n"}
+,{"stream_name":"stdout","time":1039.362791346,"data":"| squares | P | P | S | S | S | W |\n"}
+,{"stream_name":"stdout","time":1039.362793709,"data":"| times7 | W | P | S | W | S | W |\n"}
+,{"stream_name":"stdout","time":1039.362795871,"data":"| arrsum | W | W | S | S | S | S |\n"}
+,{"stream_name":"stdout","time":1039.362798109,"data":"| arrmax | W | W | S | S | S | S |\n"}
+,{"stream_name":"stdout","time":1039.362800358,"data":"| oddcount | W | W | S | S | S | S |\n"}
+,{"stream_name":"stdout","time":1039.362802598,"data":"| primes | P | W | S | W | S | S |\n"}
+,{"stream_name":"stdout","time":1039.362804748,"data":"| digitsum | P | W | S | S | S | W |\n"}
+,{"stream_name":"stdout","time":1039.362806982,"data":"| gcd | P | W | S | W | S | W |\n"}
+,{"stream_name":"stdout","time":1039.362809371,"data":"| collatz | W | W | S | S | S | S |\n"}
+,{"stream_name":"stdout","time":1039.362811548,"data":"| pow2 | W | W | S | S | S | W |\n"}
+,{"stream_name":"stdout","time":1039.362813726,"data":"| reverse | P | P | S | S | S | S |\n"}
+,{"stream_name":"stdout","time":1039.362816822,"data":"| fizzbuzz | P | P | S | W | S | S |\n"}
+,{"stream_name":"stdout","time":1039.362819065,"data":"| stars | W | W | S | S | S | W |\n"}
+,{"stream_name":"stdout","time":1039.362821241,"data":"| mult35 | P | W | S | S | S | W |\n"}
+,{"stream_name":"stdout","time":1039.3628235,"data":"| odds | P | W | S | S | S | S |\n"}
+,{"stream_name":"stdout","time":1039.362825661,"data":"| running | W | W | S | S | S | S |\n"}
+,{"stream_name":"stdout","time":1039.362827823,"data":"| down3 | P | W | S | W | S | W |\n"}
+,{"stream_name":"stdout","time":1039.362830914,"data":"| pairs | P | P | S | S | S | S |\n"}
+,{"stream_name":"stdout","time":1039.362833074,"data":"| indexed | P | P | S | S | S | S |\n"}
+,{"stream_name":"stdout","time":1039.362835319,"data":"| revnum | W | W | S | S | S | W |\n"}
+,{"stream_name":"stdout","time":1039.362837507,"data":"\n"}
+,{"stream_name":"stdout","time":1039.362839661,"data":"## Qwen/Qwen3-1.7B\n"}
+,{"stream_name":"stdout","time":1039.362841805,"data":"\n"}
+,{"stream_name":"stdout","time":1039.362843926,"data":"25 tasks; each cell is 1 greedy answer + 4 sampled answers per task (125 programs). 'solved' = at least one of the 5 answers passed.\n"}
+,{"stream_name":"stdout","time":1039.362846293,"data":"\n"}
+,{"stream_name":"stdout","time":1039.362848579,"data":"| language | arm | greedy pass | all answers: pass | syntax fail | wrong output | tasks solved |\n"}
+,{"stream_name":"stdout","time":1039.362850879,"data":"|---|---|---|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":1039.362855024,"data":"| Python | cold | 64% | 70% | 0% | 30% | 19/25 |\n"}
+,{"stream_name":"stdout","time":1039.362857319,"data":"| Python | snippet | 60% | 63% | 0% | 37% | 18/25 |\n"}
+,{"stream_name":"stdout","time":1039.362859609,"data":"| Zig 0.17 | cold | 0% | 0% | 100% | 0% | 0/25 |\n"}
+,{"stream_name":"stdout","time":1039.362861792,"data":"| Zig 0.17 | snippet | 12% | 11% | 65% | 24% | 4/25 |\n"}
+,{"stream_name":"stdout","time":1039.362863996,"data":"| Plink | cold | 0% | 0% | 100% | 0% | 0/25 |\n"}
+,{"stream_name":"stdout","time":1039.362866183,"data":"| Plink | snippet | 12% | 13% | 46% | 42% | 4/25 |\n"}
+,{"stream_name":"stdout","time":1039.362868464,"data":"\n"}
+,{"stream_name":"stdout","time":1039.362870564,"data":"Tasks it solves in plain Python (it has the concept): 19/25. Of those, how many it also solves in:\n"}
+,{"stream_name":"stdout","time":1039.362872876,"data":"\n"}
+,{"stream_name":"stdout","time":1039.362874951,"data":"- Zig 0.17 cold: 0/19\n"}
+,{"stream_name":"stdout","time":1039.362877104,"data":"- Zig 0.17 snippet: 3/19\n"}
+,{"stream_name":"stdout","time":1039.362879256,"data":"- Plink cold: 0/19\n"}
+,{"stream_name":"stdout","time":1039.362881398,"data":"- Plink snippet: 4/19\n"}
+,{"stream_name":"stdout","time":1039.36290082,"data":"\n"}
+,{"stream_name":"stdout","time":1039.362904573,"data":"Per task (greedy answer; P pass, S syntax fail, W wrong output):\n"}
+,{"stream_name":"stdout","time":1039.362908083,"data":"\n"}
+,{"stream_name":"stdout","time":1039.362911356,"data":"| task | Python cold | Python snippet | Zig 0.17 cold | Zig 0.17 snippet | Plink cold | Plink snippet |\n"}
+,{"stream_name":"stdout","time":1039.362915363,"data":"|---|---|---|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":1039.362918817,"data":"| sum100 | P | W | S | W | S | S |\n"}
+,{"stream_name":"stdout","time":1039.362922096,"data":"| evens | P | P | S | S | S | W |\n"}
+,{"stream_name":"stdout","time":1039.36292582,"data":"| countdown | P | P | S | W | S | W |\n"}
+,{"stream_name":"stdout","time":1039.362929999,"data":"| fact10 | W | W | S | W | S | S |\n"}
+,{"stream_name":"stdout","time":1039.362933874,"data":"| fib15 | P | P | S | W | S | S |\n"}
+,{"stream_name":"stdout","time":1039.362937669,"data":"| squares | P | P | S | W | S | S |\n"}
+,{"stream_name":"stdout","time":1039.36294184,"data":"| times7 | P | P | S | S | S | P |\n"}
+,{"stream_name":"stdout","time":1039.362945309,"data":"| arrsum | W | W | S | S | S | W |\n"}
+,{"stream_name":"stdout","time":1039.362948427,"data":"| arrmax | W | W | S | W | S | W |\n"}
+,{"stream_name":"stdout","time":1039.362951555,"data":"| oddcount | W | W | S | S | S | S |\n"}
+,{"stream_name":"stdout","time":1039.362954672,"data":"| primes | P | P | S | S | S | W |\n"}
+,{"stream_name":"stdout","time":1039.362957725,"data":"| digitsum | W | W | S | S | S | W |\n"}
+,{"stream_name":"stdout","time":1039.362960766,"data":"| gcd | W | P | S | S | S | S |\n"}
+,{"stream_name":"stdout","time":1039.362963898,"data":"| collatz | W | W | S | S | S | S |\n"}
+,{"stream_name":"stdout","time":1039.362967072,"data":"| pow2 | W | W | S | P | S | W |\n"}
+,{"stream_name":"stdout","time":1039.362970809,"data":"| reverse | P | P | S | S | S | S |\n"}
+,{"stream_name":"stdout","time":1039.362974781,"data":"| fizzbuzz | P | P | S | S | S | S |\n"}
+,{"stream_name":"stdout","time":1039.362978385,"data":"| stars | P | P | S | S | S | W |\n"}
+,{"stream_name":"stdout","time":1039.362981557,"data":"| mult35 | P | P | S | S | S | W |\n"}
+,{"stream_name":"stdout","time":1039.362985037,"data":"| odds | P | P | S | S | S | P |\n"}
+,{"stream_name":"stdout","time":1039.36299346,"data":"| running | P | W | S | S | S | W |\n"}
+,{"stream_name":"stdout","time":1039.362997246,"data":"| down3 | P | P | S | P | S | W |\n"}
+,{"stream_name":"stdout","time":1039.363001629,"data":"| pairs | P | P | S | P | S | S |\n"}
+,{"stream_name":"stdout","time":1039.363005048,"data":"| indexed | P | P | S | S | S | P |\n"}
+,{"stream_name":"stdout","time":1039.363008226,"data":"| revnum | W | W | S | S | S | S |\n"}
+,{"stream_name":"stdout","time":1039.363011717,"data":"\n"}
+,{"stream_name":"stdout","time":1039.36301474,"data":" \n"}
+,{"stream_name":"stderr","time":1042.306102976,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":1042.30613211,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":1042.476701949,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":1042.47673483,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":1043.234254964,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":1043.309595406,"data":"[NbConvertApp] Writing 59547 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":1045.710103453,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":1046.220224175,"data":"[NbConvertApp] Writing 341026 bytes to __results__.html\n"}
+]
