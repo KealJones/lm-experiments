@@ -1,0 +1,24 @@
+{
+ "slug": "tiny-gemma4-mlc-smoke",
+ "flavor": "cpu-upgrade",
+ "timeout": "90m",
+ "files": [
+  "experiments/tiny-gemma4/mlc_job.sh",
+  "experiments/tiny-gemma4/to_mlc.py",
+  "experiments/tiny-gemma4/patch_mlc.py"
+ ],
+ "pip": [
+  "transformers==5.21.0",
+  "safetensors",
+  "sentencepiece",
+  "protobuf",
+  "huggingface_hub",
+  "tokenizers",
+  "brotli>=1.2.0"
+ ],
+ "upload_every": 600,
+ "outdir": "out",
+ "cmd": "CKPT=kealjones/tp-parse-runs:tiny-gemma4-heal3b/6ae371135ddcdc083026213d/ckpt REPO=kealjones/tiny-gemma4-test-MLC NAME=tiny-gemma4-heal3 bash mlc_job.sh out",
+ "out": "experiments/tiny-gemma4/hf-mlc-smoke",
+ "note": "DRAFT, not queued: first try of the WebLLM (MLC, WebGPU) export on heal 3's checkpoint, so the pipeline is proven before heal 4 lands. Untested steps (text-only patch, convert, gen_config, webgpu compile); steps.txt says where it stopped. CPU only, under ~$0.05."
+}

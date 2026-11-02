@@ -1,0 +1,24 @@
+{
+ "slug": "tiny-gemma4-heal4-mlc",
+ "flavor": "cpu-upgrade",
+ "timeout": "90m",
+ "files": [
+  "experiments/tiny-gemma4/mlc_job.sh",
+  "experiments/tiny-gemma4/to_mlc.py",
+  "experiments/tiny-gemma4/patch_mlc.py"
+ ],
+ "pip": [
+  "transformers==5.21.0",
+  "safetensors",
+  "sentencepiece",
+  "protobuf",
+  "huggingface_hub",
+  "tokenizers",
+  "brotli>=1.2.0"
+ ],
+ "upload_every": 600,
+ "outdir": "out",
+ "cmd": "CKPT=kealjones/tp-parse-runs:tiny-gemma4-heal4/JOB_ID/ckpt REPO=kealjones/tiny-gemma4-test-MLC NAME=tiny-gemma4-heal4 bash mlc_job.sh out",
+ "out": "experiments/tiny-gemma4/hf-heal4-mlc",
+ "note": "DRAFT, not queued: WebLLM export of heal 4, run next to its GGUF job once heal 4 finishes (fill in JOB_ID). CPU only, under ~$0.05."
+}

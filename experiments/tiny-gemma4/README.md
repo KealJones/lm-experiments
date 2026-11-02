@@ -245,7 +245,34 @@ Changes:
 **Next, needs budget:** two pilots on an H200 from heal 3, same data, seed and **750 steps** each (~16 min of
 training, ~8 min of loading/prep/eval): `heal4-pilot-kd.json` (distillation only) and `heal4-pilot-ce.json`
 (plus next-token loss on Toucan's answers), about $2 each, hard cap ~$3.30. Then `heal4.json` (2,400 steps,
-~$5.50) with the winner, then GGUF and the same probes in Squiggle. To launch one: copy it to `hf/queue/` and push.
+~$5.50) with the winner, then GGUF and WebLLM exports (below) and the same probes in Squiggle. To launch one: copy it to `hf/queue/` and push.
+
+### Heal 4 also ships as a WebLLM build (plan, 2026-11-02) — `to_mlc.py`, `patch_mlc.py`, `mlc_job.sh`
+
+Why: on Keal's iPhone, WebLLM (MLC on WebGPU) ran stock models 5-12x faster than wllama's CPU build (Llama 3.2 1B
+~30 tok/s vs ~2.6; Squiggle `app/memtest.html`), and Squiggle now has a WebLLM path for phones
+(`engine-webllm.js`). Tiny Gemma 4 on WebLLM should land near Qwen3 0.6B's ~34 tok/s instead of CPU speed.
+
+What WebLLM needs: weights in MLC's format (`mlc_llm convert_weight` + `gen_config`, from the safetensors
+checkpoint, not the GGUF) and a model library compiled for WebGPU (`mlc_llm compile --device webgpu`, a .wasm).
+MLC-LLM added a `gemma4` architecture (commit 44fd06d, 2026-10-30) and WebLLM 0.2.87 (same day) loads its
+token-id artifact contract (prefill_tokens / decode_tokens), which Gemma 4's per-layer embeddings need.
+
+Fit with the cut model (checked against heal 3b's config): 31 layers, `num_kv_shared_layers` 20 with both layer
+types among the first 11, sliding window 512, hidden 1024, vocab 79,997: MLC's config checks pass on paper.
+Two things need handling:
+- **FFN 2580** isn't a multiple of 32 (4-bit groups): `to_mlc.py` pads with zero channels to 2592, as `to_gguf.py` does.
+- **MLC's gemma4 always builds E2B's audio tower** and expects its weights; tiny Gemma has none, and E2B's audio
+  projector outputs 1536 wide, not 1024. `patch_mlc.py` adds a `text_only` switch to the installed mlc_llm
+  (skip the audio modules, the `audio_embed` export, the artifact's audio input and the loader's audio
+  parameters). Checked that it applies cleanly and repeatably to commit 44fd06d and still compiles; not run.
+
+Plan: `mlc-smoke.json` on heal 3's checkpoint now (CPU, under ~$0.05) to prove the pipeline; `mlc_job.sh` stops
+at the first failing step and `steps.txt` names it. Then heal 4 runs as planned, and `heal4-mlc.json` exports
+it next to the GGUF job. Squiggle gets a model entry pointing at `kealjones/tiny-gemma4-test-MLC` (custom
+WebLLM appConfig) plus a Gemma 4 tool-call writer/parser in `engine-webllm.js`, like the Qwen ones.
+Risks: the .wasm must match WebLLM 0.2.87's TVM web runtime (pin the MLC wheels with `MLC_SPEC` if the nightly
+has moved on), and the Emscripten version MLC wants (`EMSDK_VERSION`, default 3.1.56) may need adjusting.
 
 ### Later: vision (Keal, 2026-10-29)
 
