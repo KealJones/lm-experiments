@@ -8,6 +8,10 @@ so a job that dies or hits its limit still leaves a usable model. Held-out bits 
 OUT/metrics.jsonl as it trains.
 
     python heal.py OUT_DIR    env: MODEL, KEEP_LAYERS or SKIP, FFN, KEPT_IDS, TOKENIZER, MINUTES, LR, BATCH, SEQ
+
+Heal 4 additions (prep_tools.py): a "toucan" source (multi-turn tool conversations with real results), the old
+E2B answers re-filtered, and MASK=1: chat-format sources are trained only on what the model writes (not the
+system prompt, tool declarations, user turns or tool results); plain text (web, code, maths) is trained everywhere.
 """
 import gzip, json, math, os, random, sys, time
 import torch
@@ -32,6 +36,8 @@ HIDDEN = int(os.environ.get("HIDDEN", 0))                   # keep this many hid
 RESUME = os.environ.get("RESUME", "")
 GEN = os.environ.get("GEN", "")                            # "repo_id:path/gen.jsonl.gz": E2B's own answers (gen.py)                      # "repo_id:path/to/ckpt" in a dataset repo: continue from it
 AGENT_FILE = os.environ.get("AGENT_FILE", "teacher_results.jsonl.gz")
+MASK = os.environ.get("MASK", "0") == "1"                  # train chat sources only on the model's own tokens
+TOOL_EVAL = int(os.environ.get("TOOL_EVAL", 120))           # held-out Toucan conversations for tools_replies bpb
 DEV = "cuda" if torch.cuda.is_available() else "cpu"
 T0 = time.time()
 
@@ -64,7 +70,7 @@ def chat_stream(template):
     pairs = []
     for r in rows:
         if r["role"] == "assistant" and r["parent_id"] in by_id and by_id[r["parent_id"]]["role"] == "prompter":
-            pairs.append(template(by_id[r["parent_id"]]["text"], r["text"]))
+            pairs.append(chat_item(template(by_id[r["parent_id"]]["text"], r["text"])))
     random.Random(2).shuffle(pairs)
     log(f"chat pairs: {len(pairs)}")
     while True:
@@ -81,7 +87,7 @@ def smoltalk_stream(tok):
             if len(msgs) < 2:
                 continue
             try:
-                yield tok.apply_chat_template(msgs, tokenize=False).removeprefix(tok.bos_token)
+                yield chat_item(tok.apply_chat_template(msgs, tokenize=False).removeprefix(tok.bos_token))
             except Exception:
                 continue
 
@@ -106,9 +112,22 @@ def gen_texts(tools=None):
         rows += [json.loads(l) for l in gzip.open(f, "rt")]
     if tools is not None:
         rows = [r for r in rows if (r.get("source") == "hermes") == tools]
+    if MASK:                                                   # heal 4: drop prose "calls" and question menus (prep_tools.keep_gen)
+        from prep_tools import keep_gen
+        why = {}
+        rows = [r for r in rows if keep_gen(r, why)]
+        log("on-policy filter dropped", why)
     random.Random(4).shuffle(rows)
     log(f"on-policy conversations{'' if tools is None else (' with tools' if tools else ' without tools')}: {len(rows)}")
-    return [r["text"] for r in rows]
+    return [chat_item(r["text"]) for r in rows]
+
+
+def chat_item(text):
+    """A chat-format text as a training item: masked segments when MASK, else the plain text."""
+    if not MASK:
+        return text
+    from prep_tools import segments
+    return segments(text)
 
 
 def math_stream():
@@ -150,23 +169,34 @@ class Packer:
     """Mixes sources by weight and packs token ids into SEQ-long rows (documents separated by BOS)."""
     def __init__(self, encode, bos, sources):
         self.encode, self.bos, self.sources = encode, bos, sources
-        self.buf = []
+        self.buf, self.mbuf = [], []                           # token ids and, per id, whether predicting it is trained
         self.rng = random.Random(1)
+
+    def add(self, item):
+        if isinstance(item, str):
+            ids = self.encode(item[:20000]); self.buf += [self.bos] + ids; self.mbuf += [0] + [1] * len(ids)
+            return
+        self.buf.append(self.bos); self.mbuf.append(0)        # [(text, train)] from prep_tools.segments
+        for text, train in item:
+            ids = self.encode(text)
+            self.buf += ids; self.mbuf += [int(train)] * len(ids)
 
     def row(self):
         while len(self.buf) < SEQ + 1:
             names = list(self.sources)
             name = self.rng.choices(names, weights=[MIX.get(n, 0) for n in names])[0]
             try:
-                text = next(self.sources[name])
+                item = next(self.sources[name])
             except StopIteration:
                 self.sources.pop(name); continue
-            self.buf += [self.bos] + self.encode(text[:20000])
-        r, self.buf = self.buf[:SEQ + 1], self.buf[SEQ:]
-        return r
+            self.add(item)
+        r, m = self.buf[:SEQ + 1], self.mbuf[:SEQ + 1]
+        self.buf, self.mbuf = self.buf[SEQ:], self.mbuf[SEQ:]
+        return r, m[1:]                                        # mask[i]: is target r[i+1] trained
 
     def batch(self):
-        return torch.tensor([self.row() for _ in range(BATCH)])
+        rows = [self.row() for _ in range(BATCH)]
+        return torch.tensor([r for r, _ in rows]), torch.tensor([m for _, m in rows], dtype=torch.float32)
 
 
 def cycle(items):
@@ -193,6 +223,26 @@ def bpb(model, head_w, encode, bos, docs, cap):
         logits = softcap((h.float() @ head_w.float().T), cap)
         nats += F.cross_entropy(logits, x[0, 1:], reduction="sum").item()
         byts += len(d.encode("utf-8"))
+    model.train()
+    return nats / math.log(2) / max(1, byts)
+
+
+def bpb_segments(model, head_w, encode, bos, recs, cap):
+    """Bits per byte on the trained (model-written) parts of chat records only."""
+    model.eval()
+    nats = byts = 0
+    for rec in recs:
+        ids, mask, n_bytes = [bos], [], 0
+        for text, train in rec:
+            e = encode(text); ids += e; mask += [train] * len(e)
+            n_bytes += len(text.encode("utf-8")) if train else 0
+        ids = ids[:2048]; mask = mask[:len(ids) - 1]
+        x = torch.tensor([ids], device=DEV)
+        with torch.no_grad(), torch.autocast(DEV, dtype=torch.bfloat16, enabled=DEV == "cuda"):
+            h = model(input_ids=x).last_hidden_state[0, :-1]
+        logits = softcap((h.float() @ head_w.float().T), cap)
+        ce = F.cross_entropy(logits, x[0, 1:], reduction="none")
+        nats += (ce * torch.tensor(mask, device=DEV, dtype=ce.dtype)).sum().item(); byts += n_bytes
     model.train()
     return nats / math.log(2) / max(1, byts)
 
@@ -299,18 +349,46 @@ def main():
     opt = torch.optim.AdamW(student.parameters(), lr=LR, betas=(0.9, 0.95), weight_decay=0.0, fused=DEV == "cuda")
 
     evals = {"web": web_eval[40:], "agent_replies": [a[:3000] for a in held_agent[:80]]}
+    tool_train, tool_eval = [], []
+    if MIX.get("toucan"):                                     # prep_tools: rendered, masked, length-limited
+        from prep_tools import toucan_records
+        st = {}
+        recs = toucan_records(tok, lambda t: len(encode(t)), limit=int(os.environ.get("TOUCAN_ROWS", 0)) or None, stats=st)
+        tool_eval, tool_train = [r["segments"] for r in recs[:TOOL_EVAL]], [r["segments"] for r in recs[TOOL_EVAL:]]
+        log("toucan", st, "train", len(tool_train), "held out", len(tool_eval))
     stop = {ptok.token_to_id(t) for t in ("<eos>", "<end_of_turn>", "<turn|>") if ptok.token_to_id(t) is not None}
     PROMPTS = ["What is the capital of France? Answer in one sentence.", "Write a Python function that reverses a string.",
                "Explain why the sky is blue in two sentences.", "What is 17 times 23? Think step by step, then answer.",
                "What's the weather like in Phoenix right now?"]
     WEATHER = [{"type": "function", "function": {"name": "get_weather", "description": "Current weather for a city.",
                "parameters": {"type": "object", "properties": {"city": {"type": "string", "description": "City name"}}, "required": ["city"]}}}]
+    SEARCH = [{"type": "function", "function": {"name": "web_search", "description": "Search the web. Returns titles, links and snippets.",
+              "parameters": {"type": "object", "properties": {"query": {"type": "string", "description": "What to search for"}}, "required": ["query"]}}},
+              {"type": "function", "function": {"name": "recall", "description": "Look up what is saved in memory about the user or a topic.",
+              "parameters": {"type": "object", "properties": {"query": {"type": "string"}}, "required": ["query"]}}}]
+    # Multi-turn probes from tiny Gemma 4 in the browser (2026-11-02): a detail given in a later turn, a tool
+    # result to answer from, and a question about the user. Good: a native call / an answer that uses the result.
+    PROBES = {
+        "star trek, detail in turn 2": [
+            {"role": "user", "content": "can you find out the name of the man who was in star trek that recently died?"},
+            {"role": "assistant", "content": "Sure. Do you remember anything else about him, like which Star Trek series he was in?"},
+            {"role": "user", "content": "literally just search the web for like \"death star trek\" and look for the latest results man"}],
+        "answer from a tool result": [                       # a made-up fixture: the answer must come from the result
+            {"role": "user", "content": "what's it like outside in phoenix rn"},
+            {"role": "assistant", "content": "", "tool_calls": [{"id": "c1", "type": "function", "function": {"name": "web_search", "arguments": {"query": "Phoenix weather now"}}}]},
+            {"role": "tool", "tool_call_id": "c1", "name": "web_search", "content": "1. Phoenix, AZ Weather - 61°F, light rain, wind 14 mph, high 66°F - weather.example"}],
+        "what do you remember about me": [{"role": "user", "content": "What do you remember about me?"}],
+    }
     def chat(p):
+        if p in PROBES:
+            return tok.apply_chat_template(PROBES[p], tools=SEARCH, tokenize=False, add_generation_prompt=True)
         kw = {"tools": WEATHER} if "weather" in p else {}
         return tok.apply_chat_template([{"role": "user", "content": p}], tokenize=False, add_generation_prompt=True, **kw)
+    if MIX.get("toucan"):
+        PROMPTS += list(PROBES)
 
     @torch.no_grad()
-    def chat_samples(n=48):
+    def chat_samples(n=64):
         """Greedy (worst case for loops) and the app's own settings (temperature 0.7, top-k 64, repeat penalty 1.15)."""
         student.eval()
         out = []
@@ -344,6 +422,8 @@ def main():
         r = {"step": step, "min": round((time.time() - T0) / 60, 1), "tag": tag}
         for k, docs in evals.items():
             r[f"student_{k}"] = round(bpb(student, s_head, encode, bos, docs, cap), 4)
+        if tool_eval:
+            r["student_tools_replies"] = round(bpb_segments(student, s_head, encode, bos, tool_eval, cap), 4)
         r["samples"] = chat_samples()
         open(os.path.join(OUT, "metrics.jsonl"), "a").write(json.dumps(r) + "\n")
         log("eval", {k: v for k, v in r.items() if k != "samples"}, "|", " / ".join(repr(x["reply"][:70]) for x in r["samples"][:2]))
@@ -369,6 +449,8 @@ def main():
 
     template = lambda q, a: tok.apply_chat_template([{"role": "user", "content": q}, {"role": "assistant", "content": a}], tokenize=False).removeprefix(tok.bos_token)
     sources = {"web": web_stream(200), "code": code_stream(), "agent": cycle(train_agent)}
+    if tool_train:
+        sources["toucan"] = cycle(tool_train)
     if MIX.get("chat"):
         sources["chat"] = chat_stream(template)
     if MIX.get("gentools") and GEN:                            # tool calls get their own share of the mix
@@ -388,7 +470,8 @@ def main():
     total_est = None
     tokens = 0
     while time.time() < deadline:
-        x = packer.batch().to(DEV)                                           # student ids
+        x, wmask = packer.batch()
+        x, wmask = x.to(DEV), wmask.to(DEV)                                  # student ids; which targets are trained
         inp, tgt = x[:, :-1], x[:, 1:]
         with torch.no_grad():
             th = teacher(input_ids=new2old[inp]).last_hidden_state
@@ -398,8 +481,14 @@ def main():
             sh = student(input_ids=inp).last_hidden_state
         sl = softcap(sh.float() @ s_head.float().T, cap)
         sp = F.log_softmax(sl, -1)
-        kd = F.kl_div(sp.reshape(-1, sp.shape[-1]), tp.reshape(-1, tp.shape[-1]), log_target=True, reduction="batchmean")
-        ce = F.nll_loss(sp.reshape(-1, sp.shape[-1]), tgt.reshape(-1))
+        if MASK:                                                             # per-token KL, averaged over trained targets
+            w = wmask.reshape(-1)
+            kl_tok = (tp.exp() * (tp - sp)).sum(-1).reshape(-1)
+            kd = (kl_tok * w).sum() / w.sum().clamp(min=1)
+            ce = (F.nll_loss(sp.reshape(-1, sp.shape[-1]), tgt.reshape(-1), reduction="none") * w).sum() / w.sum().clamp(min=1)
+        else:
+            kd = F.kl_div(sp.reshape(-1, sp.shape[-1]), tp.reshape(-1, tp.shape[-1]), log_target=True, reduction="batchmean")
+            ce = F.nll_loss(sp.reshape(-1, sp.shape[-1]), tgt.reshape(-1))
         loss = kd + CE_W * ce
         # Warmup then cosine to 10% over the time budget.
         frac = min(1.0, (time.time() - T0) / (MINUTES * 60))

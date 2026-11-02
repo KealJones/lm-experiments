@@ -170,6 +170,46 @@ chat completion with a `get_weather` tool returns the call `{"city": "Phoenix"}`
 Spend for the $10 bigger-heal stretch: gen1 ~$0.16, gen2 ~$0.61, gen3 ~$1.19, GGUF builds ~$0.06, heal3 crash
 ~$0.05, heal 3 ~$6.55 = **~$8.62**.
 
+### Heal 4 prep: real multi-turn tool data (2026-11-02, CPU only, $0) — `prep_tools.py`, `heal4.json`
+
+What heal 3 got wrong in the browser (Keal's screenshots, small-model mode on): it ignored a detail given in a
+later turn ("just use web_search for patrick stewart" → "they have not provided any names"), wrote
+"Tool Call Plan (Simulated): `web_search(...)`" in its thinking instead of calling, asked menus of questions
+("For example, are you looking for: 1. … 2. …"), and wrote nothing after a tool result. Causes, from the data:
+
+- **Every training conversation was one turn.** gen.py took only each dataset's first user message; the model
+  never saw a later user turn carry the detail it needs.
+- **No tool call ever got a result.** The Hermes examples end at the call, so "call → result → answer from it"
+  was never seen.
+- **The loss covered everything,** including user turns and (for distillation) the teacher's guesses at text it
+  never writes. The Squiggle episodes were also joined as plain text without turn markers, in Squiggle Small's
+  fenced `<think>` format, which isn't how tiny Gemma is prompted.
+- The filter only checked that an answer finished. In fact few answers were bad: re-filtering drops 19 of
+  20,521 (13 calls written as text, 6 question menus). The "simulated" thinking and the question menus are E2B's
+  own habits, which the student copied; the fix is mostly the missing data, not the filter.
+
+Changes:
+- **Toucan-1.5M SFT** (Agent-Ark, Apache-2.0; tasks by open models, answers by GPT-OSS 120B / Kimi K2 / Qwen3 32B,
+  tools really executed on MCP servers). Rendered with E2B's own chat template, so calls and results use Gemma 4's
+  native tokens and match what wllama sends at inference. Tool results cut to 1,200 characters; conversations
+  over 2,000 tokens cut after the last whole model turn that fits (or dropped); the "irrelevant" subset (answer
+  without a tool) kept at 15%. Dry run on 8,000 rows: 53% kept (36% multi-turn, 32% single, 17% diversified,
+  15% irrelevant), median 1,149 tokens, 90th percentile 1,836; 40% of tokens are the model's own.
+- **nvidia/When2Call left out:** its SFT split has no tool calls, and most answers refuse ordinary requests
+  ("Apologies, I'm unable to create a Facebook ad copy"). Salesforce APIGen-MT is non-commercial, also left out.
+- **MASK=1:** chat-format sources train only on what the model writes (thinking, text, calls, the
+  `<|tool_response>` stop token, `<turn|>`), not the system prompt, declarations, user turns or tool results.
+  Segments split at special tokens, so the ids match encoding the whole text (checked: 0 mismatches in 1,000).
+- **SEQ 2048** (batch 6, same tokens per step) so a conversation fits one row.
+- Squiggle fenced-format episodes dropped from the training mix (still the `agent_replies` eval).
+- New eval: `tools_replies` bpb on 120 held-out Toucan conversations (model tokens only), and three probes from
+  the screenshots: the detail-in-turn-2 search, answering from a tool result, "What do you remember about me?"
+  (tools: `web_search`, `recall`).
+
+`heal4.json` is a draft job (not queued): resume heal 3, 60 min on an H200, mix toucan 40% / E2B answers 20% /
+E2B tool calls 6% / maths 10% / web 12% / code 6% / oasst1 6%. About $5.50 with startup, hard cap ~$6.70.
+To launch: copy it to `hf/queue/` and push.
+
 ### Later: vision (Keal, 2026-10-29)
 
 The cut keeps only Gemma 4's text model: E2B's vision and audio encoders were never copied, and the GGUF has no
