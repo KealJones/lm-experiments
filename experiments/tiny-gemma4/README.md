@@ -226,10 +226,26 @@ Changes:
 - *Add Squiggle's own workflow* (find, plan, done, fresh step contexts) — agreed, not in this round: it needs E2B
   run through the real harness in native format, a generation run of its own. Generic multi-turn tool use first.
 
-**Next, needs budget:** two 20-minute pilots on an H200 from heal 3, same data and seed: `heal4-pilot-kd.json`
-(distillation only) and `heal4-pilot-ce.json` (plus next-token loss on Toucan's answers), about $2 each. Then
-`heal4.json` (60 min, ~$5.50) with the winner, then GGUF and a check in Squiggle that the probes still pass
-there. To launch one: copy it to `hf/queue/` and push.
+**Second review (2026-11-02), also applied:**
+- *Probe checks were too loose* (an empty reply passed "remember about me"; a reply with both 61 and 97 passed
+  both weather probes; a half-written call counted as a search). Calls are now parsed: one complete
+  `web_search` whose query has the right words; weather answers need the right number and not the other one, and
+  no call; a tool error passes on a retry or a plain "it failed" with no made-up temperature; "remember about me"
+  needs a `recall` call or a plain "nothing saved". 18/18 hand-made good/bad replies scored correctly.
+- *Equal minutes isn't equal training* (the clock included loading, prep and the first eval, and drove the LR
+  schedule). `STEPS` now fixes the step count and schedule; `MINUTES` is only a spending cap, and a run stopped
+  by the cap says so in its log and summary.
+- *"Whole conversations" wasn't literal*: a too-long one was cut, and packed conversations can attend to the one
+  before them. A conversation longer than a row is now dropped, and the pilots use one conversation per row.
+- Correction to the notes above: tool results are no longer cut, but a conversation over 2,000 tokens is still
+  shortened to its last whole exchange that fits (only dropped if not even the first fits). 70% of kept
+  "multi-turn" conversations still have two or more user turns.
+- Passing the pilots shows generic multi-turn tool use; it won't show Squiggle's `find → plan → steps → done`.
+
+**Next, needs budget:** two pilots on an H200 from heal 3, same data, seed and **750 steps** each (~16 min of
+training, ~8 min of loading/prep/eval): `heal4-pilot-kd.json` (distillation only) and `heal4-pilot-ce.json`
+(plus next-token loss on Toucan's answers), about $2 each, hard cap ~$3.30. Then `heal4.json` (2,400 steps,
+~$5.50) with the winner, then GGUF and the same probes in Squiggle. To launch one: copy it to `hf/queue/` and push.
 
 ### Later: vision (Keal, 2026-10-29)
 
