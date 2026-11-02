@@ -1,0 +1,21 @@
+{
+ "run": "I-off",
+ "secs": 248,
+ "model_calls": 43,
+ "notes": [
+  "skeleton: 15 functions emptied to TODO, 5 duplicates dropped",
+  "bare skeleton scores 1/5"
+ ],
+ "error": null,
+ "finished_tool": false,
+ "points": 0,
+ "compiles": false,
+ "runs": false,
+ "board": false,
+ "clicks_work": false,
+ "computer_moves": false,
+ "ts_errors": 9,
+ "lines": 165,
+ "has_minimax": false,
+ "report": "TypeScript errors (9):\n  line 36: A function whose declared type is neither 'undefined', 'void', nor 'any' must return a value.\n  line 73: Cannot assign to 'board' because it is a constant.\n  line 74: Cannot assign to 'boardIndex' because it is a constant.\n  line 75: Cannot assign to 'boardSize' because it is a constant.\n  line 76: Cannot find name 'currentPlayer'. Did you mean 'getCurrentPlayer'?\n  line 77: Cannot find name 'initializeBoard'.\n  line 83: Cannot assign to 'board' because it is a constant.\n  line 121: A function whose declared type is neither 'undefined', 'void', nor 'any' must return a value.\nRuntime error: Assignment to constant variable.\nThe page has no board elements (nothing was added to the DOM)."
+}

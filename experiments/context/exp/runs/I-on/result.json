@@ -1,0 +1,22 @@
+{
+ "run": "I-on",
+ "secs": 770,
+ "model_calls": 12,
+ "notes": [
+  "skeleton: 10 functions emptied to TODO, 3 duplicates dropped",
+  "bare skeleton scores 0/5",
+  "hit the time limit"
+ ],
+ "error": null,
+ "finished_tool": false,
+ "points": 0,
+ "compiles": false,
+ "runs": false,
+ "board": false,
+ "clicks_work": false,
+ "computer_moves": false,
+ "ts_errors": 27,
+ "lines": 181,
+ "has_minimax": true,
+ "report": "TypeScript errors (27):\n  line 8: Type '[string, string, string]' is not assignable to type 'string'.\n  line 9: Type '[string, string, string]' is not assignable to type 'string'.\n  line 10: Type '[string, string, string]' is not assignable to type 'string'.\n  line 16: Expected 0 arguments, but got 1.\n  line 21: Expected 0 arguments, but got 1.\n  line 26: Expected 0 arguments, but got 1.\n  line 59: Type 'number[]' is not assignable to type '[number, number]'.   Target requires 2 element(s) but source may have fewer.\n  line 69: Type '[string, string, string]' is not assignable to type 'string'.\nRuntime error: Cannot read properties of null (reading 'addEventListener')\nThe page has no board elements (nothing was added to the DOM)."
+}
