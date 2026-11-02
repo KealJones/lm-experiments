@@ -9,16 +9,16 @@ parser; the history of every moved file came along.
 
 ## Experiments
 
-- [`answers`](experiments/answers/)
+- [`answers`](experiments/answers/) — Answers: 18 of Keal's real messages with pass rules written first; Qwen3 0.6B, 1.7B and 4B answer in their own words and are graded by hand
 - [`askfirst`](experiments/askfirst/) — Ask first: find out what someone needs before answering
 - [`basic-english`](experiments/basic-english/) — Basic English → toki pona hub map
 - [`findout`](experiments/findout/) — Finding out: teach a small borrowed model the loop, not the facts
 - [`findout2`](experiments/findout2/) — Findout pilot (v2)
 - [`finetune`](experiments/finetune/) — Fine-tune test
-- [`gemma-traces`](experiments/gemma-traces/)
+- [`gemma-traces`](experiments/gemma-traces/) — Gemma traces: what Gemma 4 E4B and E2B think on 38 messy, real-style prompts, as input to Squiggle's training template
 - [`goals`](experiments/goals/) — Goals + lookup
 - [`harness`](experiments/harness/) — Harness, first cut
-- [`kaggle-smoke`](experiments/kaggle-smoke/)
+- [`kaggle-smoke`](experiments/kaggle-smoke/) — Kaggle smoke test: a GPU notebook that checks the Kaggle bridge works end to end
 - [`loop-concept`](experiments/loop-concept/) — Loop concept vs loop syntax: does a looked-up snippet let a small model write loops in a language it never saw?
 - [`real`](experiments/real/) — Simple language first, with real data
 - [`registers-v2`](experiments/registers-v2/) — Registers v2
@@ -27,7 +27,7 @@ parser; the history of every moved file came along.
 - [`squiggle-ft`](experiments/squiggle-ft/) — squiggle-ft: a small phone model for Squiggle's harness
 - [`tiny-gemma4`](experiments/tiny-gemma4/) — Tiny Gemma 4
 - [`tiny`](experiments/tiny/) — Tiny toki pona transfer experiments
-- [`tokzoo`](experiments/tokzoo/)
+- [`tokzoo`](experiments/tokzoo/) — Tokenizer zoo: a plan (not built yet) to compare 20 ways of cutting text into tokens on the same small GPT setup as `weird`
 - [`traces`](experiments/traces/) — Human finding-out traces
 - [`weird`](experiments/weird/) — Weird maths in a transformer
 
