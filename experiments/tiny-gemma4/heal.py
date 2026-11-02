@@ -13,7 +13,7 @@ Heal 4 additions (prep_tools.py): a "toucan" source (multi-turn tool conversatio
 E2B answers re-filtered, and MASK=1: chat-format sources are trained only on what the model writes (not the
 system prompt, tool declarations, user turns or tool results); plain text (web, code, maths) is trained everywhere.
 """
-import gzip, json, math, os, random, sys, time
+import gzip, json, math, os, random, re, sys, time
 import torch
 import torch.nn.functional as F
 
@@ -24,7 +24,8 @@ OUT = sys.argv[1] if len(sys.argv) > 1 else "out"
 os.makedirs(OUT, exist_ok=True)
 MODEL = os.environ.get("MODEL", "google/gemma-4-E2B-it")
 FFN = float(os.environ.get("FFN", 0.66))
-MINUTES = float(os.environ.get("MINUTES", 60))           # training time; checkpoint + eval at the end
+MINUTES = float(os.environ.get("MINUTES", 60))           # training time; checkpoint + eval at the end. With STEPS: a cap only
+STEPS = int(os.environ.get("STEPS", 0))                    # train exactly this many steps, LR schedule by step (comparable runs)
 CKPT_MIN = float(os.environ.get("CKPT_MIN", 40))
 LR = float(os.environ.get("LR", 2e-4))
 BATCH = int(os.environ.get("BATCH", 8))
@@ -175,14 +176,16 @@ class Packer:
     Plain text (web, code, maths) streams through rows split anywhere, documents separated by BOS. Chat records
     ([(text, train)] from prep_tools.segments) are never split across rows: whole conversations are packed into a
     row while they fit (PACK_CONVS=1) or one per row (PACK_CONVS=0), and the rest of the row is padding, masked.
-    A split conversation would train its later answers without the turns they answer (heal 4 review)."""
+    A split conversation would train its later answers without the turns they answer (heal 4 review). With
+    packing, a later conversation can still attend to an earlier one in its row (BOS doesn't isolate them), so the
+    pilots use PACK_CONVS=0. A conversation longer than a row is dropped, never cut."""
     def __init__(self, encode, bos, sources, pad=0):
         self.encode, self.bos, self.sources, self.pad = encode, bos, sources, pad
         self.buf, self.mbuf, self.cbuf = [], [], []             # plain stream: ids, trained, CE weight
         self.conv = None                                        # conversation row being filled
         self.ready = []
         self.rng = random.Random(1)
-        self.rows = {"plain": 0, "conv": 0, "pad_tokens": 0, "conv_cut": 0}
+        self.rows = {"plain": 0, "conv": 0, "pad_tokens": 0, "conv_dropped": 0}
 
     def _finish(self, ids, m, c):
         n = SEQ + 1 - len(ids)
@@ -197,8 +200,9 @@ class Packer:
         ids, m = [self.bos], [0]
         for text, train in item:
             e = self.encode(text); ids += e; m += [int(train)] * len(e)
-        if len(ids) > SEQ + 1:                                  # prep keeps conversations under SEQ; cut the end if not
-            ids, m = ids[:SEQ + 1], m[:SEQ + 1]; self.rows["conv_cut"] += 1
+        if len(ids) > SEQ + 1:                                  # prep keeps conversations under SEQ; never cut one here
+            self.rows["conv_dropped"] += 1
+            return
         c = [ce_w * x for x in m]
         if PACK_CONVS and self.conv and len(self.conv[0]) + len(ids) <= SEQ + 1:
             for a, b in zip(self.conv, (ids, m, c)):
@@ -411,21 +415,47 @@ def main():
         return [{"role": "user", "content": q},
                 {"role": "assistant", "content": "", "tool_calls": [{"id": "c1", "type": "function", "function": {"name": "web_search", "arguments": {"query": "Phoenix weather now"}}}]},
                 {"role": "tool", "tool_call_id": "c1", "name": "web_search", "content": result}]
-    calls = lambda name: (lambda r: f"<|tool_call>call:{name}" in r)
-    says = lambda *xs: (lambda r: "<|tool_call>" not in r and all(x.lower() in r.lower() for x in xs))
+    def parsed_calls(r):
+        """Complete native calls in a reply: [(name, {arg: string value})]. A half-written call doesn't count."""
+        out = []
+        for name, body in re.findall(r"<\|tool_call>call:([\w.-]+)\{(.*?)\}<tool_call\|>", r, flags=re.S):
+            out.append((name, dict(re.findall(r'(\w+):<\|"\|>(.*?)<\|"\|>', body, flags=re.S))))
+        return out
+    def searched(*words):          # exactly one complete web_search with a query mentioning all the words
+        def ok(r):
+            c = [a for n, a in parsed_calls(r) if n == "web_search"]
+            q = (c[0].get("query") or "").lower() if len(c) == 1 else ""
+            return bool(q.strip()) and all(w in q for w in words)
+        return ok
+    text = lambda r: re.sub(r"<\|channel>.*?<channel\|>|<[^>]{1,24}>", "", r, flags=re.S).strip()
+    def says(want, not_want):      # a non-empty answer, no call, the right number and not the other one
+        return lambda r: not parsed_calls(r) and "<|tool_call>" not in r and want in text(r) and not_want not in text(r)
+    def handles_error(r):          # retries the search, or says it failed without inventing a temperature
+        if parsed_calls(r):
+            return [n for n, _ in parsed_calls(r)] == ["web_search"]
+        t = text(r).lower()
+        return bool(t) and not re.search(r"\d+\s*°|\d+\s*(degrees|f\b)", t) and any(w in t for w in (
+            "couldn", "could not", "error", "timed out", "time out", "try again", "wasn't able", "unable", "didn't work", "failed"))
+    def about_me(r):               # looks in memory, or says plainly that nothing is saved; never a web search
+        names = [n for n, _ in parsed_calls(r)]
+        if names:
+            return names == ["recall"]
+        t = text(r).lower()
+        return bool(t) and "web_search" not in r and any(w in t for w in (
+            "don't have", "do not have", "nothing saved", "no saved", "don't know anything", "haven't saved", "no memories", "don't remember", "nothing about you"))
     PROBES = {   # made-up fixtures: the answer must come from the result
         "star trek, detail in turn 2": ([
             {"role": "user", "content": "can you find out the name of the man who was in star trek that recently died?"},
             {"role": "assistant", "content": "Sure. Do you remember anything else about him, like which Star Trek series he was in?"},
-            {"role": "user", "content": "literally just search the web for like \"death star trek\" and look for the latest results man"}], calls("web_search")),
+            {"role": "user", "content": "literally just search the web for like \"death star trek\" and look for the latest results man"}], searched("star trek")),
         "name given in turn 2": ([
             {"role": "user", "content": "look up an actor for me"},
             {"role": "assistant", "content": "Sure, which actor?"},
-            {"role": "user", "content": "just use the web_search tool for \"patrick stewart\""}], lambda r: calls("web_search")(r) and "stewart" in r.lower()),
-        "answer from a tool result": (after_search("1. Phoenix, AZ Weather - 61°F, light rain, wind 14 mph, high 66°F - weather.example"), says("61")),
-        "same call, different result": (after_search("1. Phoenix, AZ Weather - 97°F, clear and sunny, wind 3 mph, high 101°F - weather.example"), says("97")),
-        "tool error": (after_search("Error: search service timed out"), lambda r: "<|tool_call>call:web_search" in r or ("°" not in r and any(w in r.lower() for w in ("couldn", "could not", "error", "timed out", "try again", "wasn't able", "unable")))),
-        "what do you remember about me": ([{"role": "user", "content": "What do you remember about me?"}], lambda r: "call:web_search" not in r),
+            {"role": "user", "content": "just use the web_search tool for \"patrick stewart\""}], searched("stewart")),
+        "answer from a tool result": (after_search("1. Phoenix, AZ Weather - 61°F, light rain, wind 14 mph, high 66°F - weather.example"), says("61", "97")),
+        "same call, different result": (after_search("1. Phoenix, AZ Weather - 97°F, clear and sunny, wind 3 mph, high 101°F - weather.example"), says("97", "61")),
+        "tool error": (after_search("Error: search service timed out"), handles_error),
+        "what do you remember about me": ([{"role": "user", "content": "What do you remember about me?"}], about_me),
     }
     def chat(p):
         if p in PROBES:
@@ -436,7 +466,7 @@ def main():
         PROMPTS += list(PROBES)
 
     @torch.no_grad()
-    def chat_samples(n=64):
+    def chat_samples(n=96):
         """Greedy (worst case for loops) and the app's own settings (temperature 0.7, top-k 64, repeat penalty 1.15)."""
         student.eval()
         out = []
@@ -517,12 +547,15 @@ def main():
     if MIX.get("math"):
         sources["math"] = math_stream()
     packer = Packer(encode, bos, sources, pad=ptok.token_to_id("<pad>") or 0)
+    # STEPS: a fixed amount of training and schedule, whatever loading/prep/eval took; MINUTES (from job start)
+    # is then only the spending cap. Without STEPS, the old behaviour: train until MINUTES, schedule by clock.
     deadline = T0 + MINUTES * 60
+    t_train = time.time()
     last_ckpt = time.time()
     warm = 100
     total_est = None
     tokens = trained = 0
-    while time.time() < deadline:
+    while time.time() < deadline and not (STEPS and step >= STEPS):
         x, wmask, cew = packer.batch()
         x, wmask, cew = x.to(DEV), wmask.to(DEV), cew.to(DEV)                # ids; which targets are trained; CE weight
         inp, tgt = x[:, :-1], x[:, 1:]
@@ -543,7 +576,7 @@ def main():
         ce = (nll * w).sum() / w.sum().clamp(min=1)                          # logged
         loss = kd + (nll * cew.reshape(-1)).sum() / w.sum().clamp(min=1)
         # Warmup then cosine to 10% over the time budget.
-        frac = min(1.0, (time.time() - T0) / (MINUTES * 60))
+        frac = min(1.0, step / STEPS) if STEPS else min(1.0, (time.time() - T0) / (MINUTES * 60))
         lr = LR * min(1.0, (step + 1) / warm) * (0.1 + 0.9 * 0.5 * (1 + math.cos(math.pi * frac)))
         for g in opt.param_groups:
             g["lr"] = lr
@@ -563,7 +596,9 @@ def main():
             last_ckpt = time.time()
     last = evaluate("end")
     save_ckpt(student, tok_json, f"final step {step}", {"tokens": tokens, "keep_layers": keep_layers, "ffn": FFN})
-    summary = {"teacher": base, "before": first, "after": last, "steps": step, "tokens": tokens,
+    if STEPS and step < STEPS:
+        log(f"WARNING: stopped by the MINUTES cap at step {step} of {STEPS}; not comparable to a run that finished")
+    summary = {"teacher": base, "before": first, "after": last, "steps": step, "steps_target": STEPS, "trained_tokens": trained, "tokens": tokens,
                "student_params": n_params, "keep_layers": keep_layers, "ffn": FFN, "vocab": len(kept)}
     json.dump(summary, open(os.path.join(OUT, "summary.json"), "w"), indent=1)
     log("done", summary)

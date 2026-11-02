@@ -1,7 +1,7 @@
 {
  "slug": "tiny-gemma4-heal4-pilot-kd",
  "flavor": "h200",
- "timeout": "35m",
+ "timeout": "40m",
  "files": [
   "experiments/tiny-gemma4/heal.py",
   "experiments/tiny-gemma4/surgery.py",
@@ -10,7 +10,7 @@
   "experiments/tiny-gemma4/hf-stage1/tokenizer_pruned.json",
   "experiments/squiggle-ft/hf-teach-pilot-g4b/teach/teacher_results.jsonl.gz"
  ],
- "cmd": "RESUME=kealjones/tp-parse-runs:tiny-gemma4-heal3b/6ae371135ddcdc083026213d/ckpt GEN=kealjones/tp-parse-runs:tiny-gemma4-gen2/6ae3513241e90535df78da62/gen.jsonl.gz,kealjones/tp-parse-runs:tiny-gemma4-gen3/6ae35cc05ddcdc08302611bb/gen.jsonl.gz KEEP_LAYERS=0,1,3,4,5,7,8,9,10,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34 FFN=0.42 HIDDEN=1024 MASK=1 PACK_CONVS=1 CKPT_KEEP=2 TOUCAN_ROWS=15000 MIX='{\"toucan\": 0.4, \"gen\": 0.2, \"gentools\": 0.06, \"math\": 0.1, \"web\": 0.12, \"code\": 0.06, \"chat\": 0.06}' MINUTES=20 BATCH=6 SEQ=2048 LR=1e-4 CE_W=0 CE_SRC='{}' EVAL_EVERY=250 CKPT_MIN=30 python heal.py out",
+ "cmd": "RESUME=kealjones/tp-parse-runs:tiny-gemma4-heal3b/6ae371135ddcdc083026213d/ckpt GEN=kealjones/tp-parse-runs:tiny-gemma4-gen2/6ae3513241e90535df78da62/gen.jsonl.gz,kealjones/tp-parse-runs:tiny-gemma4-gen3/6ae35cc05ddcdc08302611bb/gen.jsonl.gz KEEP_LAYERS=0,1,3,4,5,7,8,9,10,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34 FFN=0.42 HIDDEN=1024 MASK=1 PACK_CONVS=0 CKPT_KEEP=2 TOUCAN_ROWS=15000 MIX='{\"toucan\": 0.4, \"gen\": 0.2, \"gentools\": 0.06, \"math\": 0.1, \"web\": 0.12, \"code\": 0.06, \"chat\": 0.06}' STEPS=750 MINUTES=30 BATCH=6 SEQ=2048 LR=1e-4 CE_W=0 CE_SRC='{}' EVAL_EVERY=250 CKPT_MIN=30 python heal.py out",
  "pip": [
   "transformers==5.21.0",
   "datasets",
@@ -22,5 +22,5 @@
  "upload_every": 600,
  "outdir": "out",
  "out": "experiments/tiny-gemma4/hf-heal4-pilot-kd",
- "note": "DRAFT, not queued: heal 4 repair pilot (distillation only on every source). Same data and seed as the other pilot; compare probes (greedy and app sampling), tools_replies / web / agent_replies bpb and the sky/Python samples against heal 3. 20 min on h200, ~$2 with startup; hard cap ~$2.90."
+ "note": "DRAFT, not queued: heal 4 repair pilot (distillation only on every source). Same data and seed as the other pilot; compare probes (greedy and app sampling), tools_replies / web / agent_replies bpb and the sky/Python samples against heal 3. Exactly 750 steps (LR schedule by step, same for both pilots), one whole conversation per row, oversized ones dropped; MINUTES=30 is only a cap. ~16 min of training + ~8 min loading/prep/eval on h200, ~$2 each; hard cap ~$3.30 (40 min)."
 }
