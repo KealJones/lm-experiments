@@ -191,8 +191,8 @@ later turn ("just use web_search for patrick stewart" → "they have not provide
 Changes:
 - **Toucan-1.5M SFT** (Agent-Ark, Apache-2.0; tasks by open models, answers by GPT-OSS 120B / Kimi K2 / Qwen3 32B,
   tools really executed on MCP servers). Rendered with E2B's own chat template, so calls and results use Gemma 4's
-  native tokens and match what wllama sends at inference. Tool results cut to 1,200 characters; conversations
-  over 2,000 tokens cut after the last whole model turn that fits (or dropped); the "irrelevant" subset (answer
+  native tokens and match what wllama sends at inference. Conversations over 2,000 tokens are cut after the last whole model
+  turn that fits (or dropped; tool results were first cut to 1,200 characters, since changed, see below); the "irrelevant" subset (answer
   without a tool) kept at 15%. Dry run on 8,000 rows: 53% kept (36% multi-turn, 32% single, 17% diversified,
   15% irrelevant), median 1,149 tokens, 90th percentile 1,836; 40% of tokens are the model's own.
 - **nvidia/When2Call left out:** its SFT split has no tool calls, and most answers refuse ordinary requests
@@ -206,9 +206,30 @@ Changes:
   the screenshots: the detail-in-turn-2 search, answering from a tool result, "What do you remember about me?"
   (tools: `web_search`, `recall`).
 
-`heal4.json` is a draft job (not queued): resume heal 3, 60 min on an H200, mix toucan 40% / E2B answers 20% /
-E2B tool calls 6% / maths 10% / web 12% / code 6% / oasst1 6%. About $5.50 with startup, hard cap ~$6.70.
-To launch: copy it to `hf/queue/` and push.
+**Review of the plan (Keal shared a second opinion, 2026-11-02); what it caught and what changed:**
+- *Conversations could still straddle rows* (right: `Packer` sliced the stream every SEQ tokens, so a 1,500-token
+  conversation after another one was split and its answers trained without their turns). Now chat records are
+  never split: whole conversations share a row while they fit, the rest is masked padding (`PACK_CONVS=0`: one
+  per row). Plain text still streams.
+- *Cut tool results can hide the evidence an answer used* (right: 1,200-character cuts touched 16% of kept
+  conversations). Results are no longer cut; conversations that don't fit are dropped (kept share 53% → 47%).
+- *Multi-turn records can lose their follow-ups* (right: fitting to 2,000 tokens left 30% of "multi-turn"
+  conversations with one user turn; 70% keep two or more). Now counted in the prep stats.
+- *KD alone learns E2B's guesses on Toucan's text, not Toucan's answers.* `CE_SRC` adds next-token loss per
+  source (e.g. `{"toucan": 1.0}`) without touching web/maths/code. Which is better is what the pilots decide.
+- *Keep heal 3 and keep dated checkpoints* (heal 3's checkpoint is in its own run folder and is only read).
+  `CKPT_KEEP` keeps the last two `ckpt-step<N>` copies besides `ckpt`.
+- *Score behaviour, not just bpb.* Probes now pass/fail: a search with the detail given in turn 2, a name given in
+  turn 2, answering from a result, **the same call with a different result** (the answer must change), a tool
+  error (no invented answer), and "what do you remember about me" (no web search). Reported as `probes_greedy`
+  and `probes_app` at every eval, next to the old sky/Python/maths samples to catch regressions.
+- *Add Squiggle's own workflow* (find, plan, done, fresh step contexts) — agreed, not in this round: it needs E2B
+  run through the real harness in native format, a generation run of its own. Generic multi-turn tool use first.
+
+**Next, needs budget:** two 20-minute pilots on an H200 from heal 3, same data and seed: `heal4-pilot-kd.json`
+(distillation only) and `heal4-pilot-ce.json` (plus next-token loss on Toucan's answers), about $2 each. Then
+`heal4.json` (60 min, ~$5.50) with the winner, then GGUF and a check in Squiggle that the probes still pass
+there. To launch one: copy it to `hf/queue/` and push.
 
 ### Later: vision (Keal, 2026-10-29)
 
