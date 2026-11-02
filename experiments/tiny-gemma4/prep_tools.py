@@ -23,7 +23,8 @@ writes (thinking, text, tool calls, the <|tool_response> stop token, <turn|>).
 import ast, gzip, json, os, random, re, sys
 
 TEMPLATE_MODEL = os.environ.get("MODEL", "google/gemma-4-E2B-it")
-RESP_CHARS = int(os.environ.get("TOOL_RESP_CHARS", 1200))     # tool results are cut like Squiggle cuts them
+RESP_CHARS = int(os.environ.get("TOOL_RESP_CHARS", 0))        # 0: never cut a result (a cut one can hide what the
+                                                               # answer relies on); too-long conversations are dropped
 MAX_TOKENS = int(os.environ.get("TOOL_MAX_TOKENS", 2000))     # whole conversation, so it fits one SEQ=2048 row
 IRRELEVANT_SHARE = float(os.environ.get("IRRELEVANT_SHARE", 0.15))
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -70,9 +71,10 @@ def segments(text):
 
 # ── Toucan ───────────────────────────────────────────────────────────────────
 
-def _cut(s, n=RESP_CHARS):
+def _cut(s, n=None):
+    n = n or RESP_CHARS
     s = str(s)
-    return s if len(s) <= n else s[:n].rstrip() + f"\n…(cut, {len(s) - n} more characters)"
+    return s if not n or len(s) <= n else s[:n].rstrip() + f"\n…(cut, {len(s) - n} more characters)"
 
 
 def _args(raw):
@@ -182,6 +184,9 @@ def toucan_records(tok, count_tokens, limit=None, stats=None, workers=None):
     out = keep + irr[:n_irr]
     random.Random(6).shuffle(out)
     stats["kept"] = len(out); stats["irrelevant_kept"] = n_irr; stats["irrelevant_dropped"] = len(irr) - n_irr
+    turns = [sum(t.count("<|turn>user") for t, _ in r["segments"]) for r in keep if r["source"] == "toucan:multi-turn"]
+    stats["multi_turn_kept_2plus_user_turns"] = sum(n >= 2 for n in turns)
+    stats["multi_turn_cut_to_1_user_turn"] = sum(n < 2 for n in turns)
     return out
 
 

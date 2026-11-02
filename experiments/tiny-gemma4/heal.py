@@ -32,6 +32,10 @@ SEQ = int(os.environ.get("SEQ", 1024))
 EVAL_EVERY = int(os.environ.get("EVAL_EVERY", 400))
 MIX = json.loads(os.environ.get("MIX", '{"web": 0.85, "code": 0.10, "agent": 0.05}'))
 CE_W = float(os.environ.get("CE_W", 0.0))                  # plain next-token loss weight (0 = distillation only)
+CE_SRC = json.loads(os.environ.get("CE_SRC", "{}"))        # per-source next-token weight, e.g. {"toucan": 1.0}: learn the
+                                                           # data's own answers there, distillation everywhere
+PACK_CONVS = os.environ.get("PACK_CONVS", "1") == "1"      # whole conversations share a row while they fit
+CKPT_KEEP = int(os.environ.get("CKPT_KEEP", 2))            # also keep this many dated checkpoints (ckpt-step<N>)
 HIDDEN = int(os.environ.get("HIDDEN", 0))                   # keep this many hidden dims (0 = all)
 RESUME = os.environ.get("RESUME", "")
 GEN = os.environ.get("GEN", "")                            # "repo_id:path/gen.jsonl.gz": E2B's own answers (gen.py)                      # "repo_id:path/to/ckpt" in a dataset repo: continue from it
@@ -166,37 +170,67 @@ def agent_texts(held=20):
 
 
 class Packer:
-    """Mixes sources by weight and packs token ids into SEQ-long rows (documents separated by BOS)."""
-    def __init__(self, encode, bos, sources):
-        self.encode, self.bos, self.sources = encode, bos, sources
-        self.buf, self.mbuf = [], []                           # token ids and, per id, whether predicting it is trained
-        self.rng = random.Random(1)
+    """Mixes sources by weight into SEQ-long rows of (ids, trained mask, CE weight per target).
 
-    def add(self, item):
+    Plain text (web, code, maths) streams through rows split anywhere, documents separated by BOS. Chat records
+    ([(text, train)] from prep_tools.segments) are never split across rows: whole conversations are packed into a
+    row while they fit (PACK_CONVS=1) or one per row (PACK_CONVS=0), and the rest of the row is padding, masked.
+    A split conversation would train its later answers without the turns they answer (heal 4 review)."""
+    def __init__(self, encode, bos, sources, pad=0):
+        self.encode, self.bos, self.sources, self.pad = encode, bos, sources, pad
+        self.buf, self.mbuf, self.cbuf = [], [], []             # plain stream: ids, trained, CE weight
+        self.conv = None                                        # conversation row being filled
+        self.ready = []
+        self.rng = random.Random(1)
+        self.rows = {"plain": 0, "conv": 0, "pad_tokens": 0, "conv_cut": 0}
+
+    def _finish(self, ids, m, c):
+        n = SEQ + 1 - len(ids)
+        self.rows["conv"] += 1; self.rows["pad_tokens"] += n
+        self.ready.append((ids + [self.pad] * n, (m + [0] * n)[1:], (c + [0.0] * n)[1:]))
+
+    def add(self, item, ce_w):
         if isinstance(item, str):
-            ids = self.encode(item[:20000]); self.buf += [self.bos] + ids; self.mbuf += [0] + [1] * len(ids)
+            ids = self.encode(item[:20000])
+            self.buf += [self.bos] + ids; self.mbuf += [0] + [1] * len(ids); self.cbuf += [0.0] + [ce_w] * len(ids)
             return
-        self.buf.append(self.bos); self.mbuf.append(0)        # [(text, train)] from prep_tools.segments
+        ids, m = [self.bos], [0]
         for text, train in item:
-            ids = self.encode(text)
-            self.buf += ids; self.mbuf += [int(train)] * len(ids)
+            e = self.encode(text); ids += e; m += [int(train)] * len(e)
+        if len(ids) > SEQ + 1:                                  # prep keeps conversations under SEQ; cut the end if not
+            ids, m = ids[:SEQ + 1], m[:SEQ + 1]; self.rows["conv_cut"] += 1
+        c = [ce_w * x for x in m]
+        if PACK_CONVS and self.conv and len(self.conv[0]) + len(ids) <= SEQ + 1:
+            for a, b in zip(self.conv, (ids, m, c)):
+                a += b
+            return
+        if self.conv:
+            self._finish(*self.conv)
+        self.conv = [ids, m, c]
+        if not PACK_CONVS:
+            self._finish(*self.conv); self.conv = None
 
     def row(self):
-        while len(self.buf) < SEQ + 1:
+        while True:
+            if self.ready:
+                return self.ready.pop(0)
+            if len(self.buf) >= SEQ + 1:
+                r, m, c = self.buf[:SEQ + 1], self.mbuf[:SEQ + 1], self.cbuf[:SEQ + 1]
+                self.buf, self.mbuf, self.cbuf = self.buf[SEQ:], self.mbuf[SEQ:], self.cbuf[SEQ:]
+                self.rows["plain"] += 1
+                return r, m[1:], c[1:]                          # mask[i]: is target r[i+1] trained
             names = list(self.sources)
             name = self.rng.choices(names, weights=[MIX.get(n, 0) for n in names])[0]
             try:
                 item = next(self.sources[name])
             except StopIteration:
                 self.sources.pop(name); continue
-            self.add(item)
-        r, m = self.buf[:SEQ + 1], self.mbuf[:SEQ + 1]
-        self.buf, self.mbuf = self.buf[SEQ:], self.mbuf[SEQ:]
-        return r, m[1:]                                        # mask[i]: is target r[i+1] trained
+            self.add(item, CE_SRC.get(name, CE_W))
 
     def batch(self):
         rows = [self.row() for _ in range(BATCH)]
-        return torch.tensor([r for r, _ in rows]), torch.tensor([m for _, m in rows], dtype=torch.float32)
+        return (torch.tensor([r for r, _, _ in rows]), torch.tensor([m for _, m, _ in rows], dtype=torch.float32),
+                torch.tensor([c for _, _, c in rows], dtype=torch.float32))
 
 
 def cycle(items):
@@ -255,10 +289,15 @@ def save_ckpt(student, tok_json, tag, extra):
     student.save_pretrained(tmp, state_dict=sd, safe_serialization=True)
     json.dump(tok_json, open(os.path.join(tmp, "tokenizer.json"), "w"))
     json.dump({"tag": tag, **extra}, open(os.path.join(tmp, "ckpt_info.json"), "w"))
+    import shutil
     if os.path.isdir(d):
-        import shutil
         shutil.rmtree(d)
     os.rename(tmp, d)
+    if CKPT_KEEP and extra.get("step") and not tag.startswith("final"):  # dated copies; heal 3's own folder is never touched
+        shutil.copytree(d, os.path.join(OUT, f"ckpt-step{extra['step']}"))
+        old = sorted((x for x in os.listdir(OUT) if x.startswith("ckpt-step")), key=lambda x: int(x[9:]))
+        for x in old[:-CKPT_KEEP]:
+            shutil.rmtree(os.path.join(OUT, x))
     log("checkpoint", tag)
 
 
@@ -366,22 +405,31 @@ def main():
               "parameters": {"type": "object", "properties": {"query": {"type": "string", "description": "What to search for"}}, "required": ["query"]}}},
               {"type": "function", "function": {"name": "recall", "description": "Look up what is saved in memory about the user or a topic.",
               "parameters": {"type": "object", "properties": {"query": {"type": "string"}}, "required": ["query"]}}}]
-    # Multi-turn probes from tiny Gemma 4 in the browser (2026-11-02): a detail given in a later turn, a tool
-    # result to answer from, and a question about the user. Good: a native call / an answer that uses the result.
-    PROBES = {
-        "star trek, detail in turn 2": [
+    # Multi-turn probes from tiny Gemma 4 in the browser (2026-11-02) and the heal 4 review, each with a pass check
+    # on the reply. "Same call, different result" tells reading the result apart from a canned answer.
+    def after_search(result, q="what's it like outside in phoenix rn"):
+        return [{"role": "user", "content": q},
+                {"role": "assistant", "content": "", "tool_calls": [{"id": "c1", "type": "function", "function": {"name": "web_search", "arguments": {"query": "Phoenix weather now"}}}]},
+                {"role": "tool", "tool_call_id": "c1", "name": "web_search", "content": result}]
+    calls = lambda name: (lambda r: f"<|tool_call>call:{name}" in r)
+    says = lambda *xs: (lambda r: "<|tool_call>" not in r and all(x.lower() in r.lower() for x in xs))
+    PROBES = {   # made-up fixtures: the answer must come from the result
+        "star trek, detail in turn 2": ([
             {"role": "user", "content": "can you find out the name of the man who was in star trek that recently died?"},
             {"role": "assistant", "content": "Sure. Do you remember anything else about him, like which Star Trek series he was in?"},
-            {"role": "user", "content": "literally just search the web for like \"death star trek\" and look for the latest results man"}],
-        "answer from a tool result": [                       # a made-up fixture: the answer must come from the result
-            {"role": "user", "content": "what's it like outside in phoenix rn"},
-            {"role": "assistant", "content": "", "tool_calls": [{"id": "c1", "type": "function", "function": {"name": "web_search", "arguments": {"query": "Phoenix weather now"}}}]},
-            {"role": "tool", "tool_call_id": "c1", "name": "web_search", "content": "1. Phoenix, AZ Weather - 61°F, light rain, wind 14 mph, high 66°F - weather.example"}],
-        "what do you remember about me": [{"role": "user", "content": "What do you remember about me?"}],
+            {"role": "user", "content": "literally just search the web for like \"death star trek\" and look for the latest results man"}], calls("web_search")),
+        "name given in turn 2": ([
+            {"role": "user", "content": "look up an actor for me"},
+            {"role": "assistant", "content": "Sure, which actor?"},
+            {"role": "user", "content": "just use the web_search tool for \"patrick stewart\""}], lambda r: calls("web_search")(r) and "stewart" in r.lower()),
+        "answer from a tool result": (after_search("1. Phoenix, AZ Weather - 61°F, light rain, wind 14 mph, high 66°F - weather.example"), says("61")),
+        "same call, different result": (after_search("1. Phoenix, AZ Weather - 97°F, clear and sunny, wind 3 mph, high 101°F - weather.example"), says("97")),
+        "tool error": (after_search("Error: search service timed out"), lambda r: "<|tool_call>call:web_search" in r or ("°" not in r and any(w in r.lower() for w in ("couldn", "could not", "error", "timed out", "try again", "wasn't able", "unable")))),
+        "what do you remember about me": ([{"role": "user", "content": "What do you remember about me?"}], lambda r: "call:web_search" not in r),
     }
     def chat(p):
         if p in PROBES:
-            return tok.apply_chat_template(PROBES[p], tools=SEARCH, tokenize=False, add_generation_prompt=True)
+            return tok.apply_chat_template(PROBES[p][0], tools=SEARCH, tokenize=False, add_generation_prompt=True)
         kw = {"tools": WEATHER} if "weather" in p else {}
         return tok.apply_chat_template([{"role": "user", "content": p}], tokenize=False, add_generation_prompt=True, **kw)
     if MIX.get("toucan"):
@@ -413,7 +461,8 @@ def main():
                     gen.append(j)
                     if j in stop:
                         break
-                out.append({"mode": mode, "prompt": p, "reply": ptok.decode(gen, skip_special_tokens=False)})
+                reply = ptok.decode(gen, skip_special_tokens=False)
+                out.append({"mode": mode, "prompt": p, "reply": reply, **({"pass": bool(PROBES[p][1](reply))} if p in PROBES else {})})
         student.train()
         return out
     t_head_k = t_head[kept_t]
@@ -425,6 +474,10 @@ def main():
         if tool_eval:
             r["student_tools_replies"] = round(bpb_segments(student, s_head, encode, bos, tool_eval, cap), 4)
         r["samples"] = chat_samples()
+        if MIX.get("toucan"):
+            for mode in ("greedy", "app"):
+                got = [x["pass"] for x in r["samples"] if x["mode"] == mode and "pass" in x]
+                r[f"probes_{mode}"] = f"{sum(got)}/{len(got)}"
         open(os.path.join(OUT, "metrics.jsonl"), "a").write(json.dumps(r) + "\n")
         log("eval", {k: v for k, v in r.items() if k != "samples"}, "|", " / ".join(repr(x["reply"][:70]) for x in r["samples"][:2]))
         return r
@@ -463,15 +516,15 @@ def main():
         sources["smoltalk"] = smoltalk_stream(tok)
     if MIX.get("math"):
         sources["math"] = math_stream()
-    packer = Packer(encode, bos, sources)
+    packer = Packer(encode, bos, sources, pad=ptok.token_to_id("<pad>") or 0)
     deadline = T0 + MINUTES * 60
     last_ckpt = time.time()
     warm = 100
     total_est = None
-    tokens = 0
+    tokens = trained = 0
     while time.time() < deadline:
-        x, wmask = packer.batch()
-        x, wmask = x.to(DEV), wmask.to(DEV)                                  # student ids; which targets are trained
+        x, wmask, cew = packer.batch()
+        x, wmask, cew = x.to(DEV), wmask.to(DEV), cew.to(DEV)                # ids; which targets are trained; CE weight
         inp, tgt = x[:, :-1], x[:, 1:]
         with torch.no_grad():
             th = teacher(input_ids=new2old[inp]).last_hidden_state
@@ -481,15 +534,14 @@ def main():
             sh = student(input_ids=inp).last_hidden_state
         sl = softcap(sh.float() @ s_head.float().T, cap)
         sp = F.log_softmax(sl, -1)
-        if MASK:                                                             # per-token KL, averaged over trained targets
-            w = wmask.reshape(-1)
-            kl_tok = (tp.exp() * (tp - sp)).sum(-1).reshape(-1)
-            kd = (kl_tok * w).sum() / w.sum().clamp(min=1)
-            ce = (F.nll_loss(sp.reshape(-1, sp.shape[-1]), tgt.reshape(-1), reduction="none") * w).sum() / w.sum().clamp(min=1)
-        else:
-            kd = F.kl_div(sp.reshape(-1, sp.shape[-1]), tp.reshape(-1, tp.shape[-1]), log_target=True, reduction="batchmean")
-            ce = F.nll_loss(sp.reshape(-1, sp.shape[-1]), tgt.reshape(-1))
-        loss = kd + CE_W * ce
+        # Per-token KL averaged over trained targets (all of them for plain text; equals batchmean KL when
+        # nothing is masked), plus next-token loss where a source asks for it (CE_SRC / CE_W).
+        w = wmask.reshape(-1)
+        kl_tok = (tp.exp() * (tp - sp)).sum(-1).reshape(-1)
+        kd = (kl_tok * w).sum() / w.sum().clamp(min=1)
+        nll = F.nll_loss(sp.reshape(-1, sp.shape[-1]), tgt.reshape(-1), reduction="none")
+        ce = (nll * w).sum() / w.sum().clamp(min=1)                          # logged
+        loss = kd + (nll * cew.reshape(-1)).sum() / w.sum().clamp(min=1)
         # Warmup then cosine to 10% over the time budget.
         frac = min(1.0, (time.time() - T0) / (MINUTES * 60))
         lr = LR * min(1.0, (step + 1) / warm) * (0.1 + 0.9 * 0.5 * (1 + math.cos(math.pi * frac)))
@@ -501,12 +553,13 @@ def main():
         opt.step()
         step += 1
         tokens += inp.numel()
+        trained += int(wmask.sum().item())
         if step % 20 == 0:
-            log(f"step {step} kd {kd.item():.4f} ce {ce.item():.3f} lr {lr:.2e} tokens {tokens / 1e6:.1f}M")
+            log(f"step {step} kd {kd.item():.4f} ce {ce.item():.3f} lr {lr:.2e} tokens {tokens / 1e6:.1f}M trained {trained / 1e6:.1f}M rows {packer.rows}")
         if step % EVAL_EVERY == 0:
             evaluate("training")
         if time.time() - last_ckpt > CKPT_MIN * 60:
-            save_ckpt(student, tok_json, f"step {step}", {"tokens": tokens, "keep_layers": keep_layers, "ffn": FFN})
+            save_ckpt(student, tok_json, f"step {step}", {"step": step, "tokens": tokens, "keep_layers": keep_layers, "ffn": FFN})
             last_ckpt = time.time()
     last = evaluate("end")
     save_ckpt(student, tok_json, f"final step {step}", {"tokens": tokens, "keep_layers": keep_layers, "ffn": FFN})
