@@ -1,0 +1,21 @@
+{
+ "run": "J-on",
+ "secs": 251,
+ "model_calls": 3,
+ "notes": [
+  "skeleton: 5 functions emptied to TODO, 0 duplicates dropped",
+  "bare skeleton scores 0/5"
+ ],
+ "error": null,
+ "finished_tool": true,
+ "points": 0,
+ "compiles": false,
+ "runs": false,
+ "board": false,
+ "clicks_work": false,
+ "computer_moves": false,
+ "ts_errors": 67,
+ "lines": 182,
+ "has_minimax": false,
+ "report": "TypeScript errors (67):\n  line 14: Cannot find name 'renderBoard'.\n  line 14: ';' expected.\n  line 19: Type 'number' is not assignable to type 'string'.\n  line 28: Duplicate function implementation.\n  line 33: Duplicate function implementation.\n  line 40: Type 'number[]' is not assignable to type 'number'.\n  line 44: Duplicate function implementation.\n  line 54: Cannot redeclare block-scoped variable 'boardElement'.\nRuntime error: Identifier 'boardElement' has already been declared\nThe page has no board elements (nothing was added to the DOM)."
+}

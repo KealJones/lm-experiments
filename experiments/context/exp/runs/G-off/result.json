@@ -1,0 +1,18 @@
+{
+ "run": "G-off",
+ "secs": 26,
+ "model_calls": 1,
+ "notes": [],
+ "error": null,
+ "finished_tool": false,
+ "points": 1,
+ "compiles": false,
+ "runs": true,
+ "board": false,
+ "clicks_work": false,
+ "computer_moves": false,
+ "ts_errors": 8,
+ "lines": 104,
+ "has_minimax": false,
+ "report": "TypeScript errors (8):\n  line 19: No value exists in scope for the shorthand property 'restartButton'. Either declare one or provide an initializer.\n  line 19: ',' expected.\n  line 24: Property 'initialize' does not exist on type '{ board: HTMLDivElement; rows: NodeListOf<Element>; isGameRunning: boolean; score: { player1: number; player2: number; }; restartButton: any; \"\": string; }'.\n  line 35: Property 'handleClick' does not exist on type '{ board: HTMLDivElement; rows: NodeListOf<Element>; isGameRunning: boolean; score: { player1: number; player2: number; }; restartButton: any; \"\": string; }'.\n  line 40: Property 'resetGame' does not exist on type '{ board: HTMLDivElement; rows: NodeListOf<Element>; isGameRunning: boolean; score: { player1: number; player2: number; }; restartButton: any; \"\": string; }'.\n  line 49: Property 'checkWin' does not exist on type '{ board: HTMLDivElement; rows: NodeListOf<Element>; isGameRunning: boolean; score: { player1: number; player2: number; }; restartButton: any; \"\": string; }'.\n  line 89: Property 'every' does not exist on type 'NodeListOf<Element>'.\n  line 104: Property 'initialize' does not exist on type '{ board: HTMLDivElement; rows: NodeL"
+}

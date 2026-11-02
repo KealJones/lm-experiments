@@ -1,0 +1,21 @@
+{
+ "run": "C-on",
+ "secs": 553,
+ "model_calls": 6,
+ "notes": [
+  "skeleton: 5 functions emptied to TODO, 0 duplicates dropped",
+  "bare skeleton scores 1/5"
+ ],
+ "error": null,
+ "finished_tool": false,
+ "points": 1,
+ "compiles": false,
+ "runs": true,
+ "board": false,
+ "clicks_work": false,
+ "computer_moves": false,
+ "ts_errors": 10,
+ "lines": 360,
+ "has_minimax": true,
+ "report": "TypeScript errors (10):\n  line 122: Duplicate function implementation.\n  line 127: Duplicate function implementation.\n  line 132: Duplicate function implementation.\n  line 149: Duplicate function implementation.\n  line 238: Duplicate function implementation.\n  line 243: Duplicate function implementation.\n  line 340: Cannot assign to 'board' because it is a constant.\n  line 354: Cannot assign to 'score' because it is a constant.\nRan without runtime errors.\nThe page has no board elements (nothing was added to the DOM)."
+}

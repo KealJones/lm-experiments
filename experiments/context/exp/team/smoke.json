@@ -1,0 +1,17 @@
+[
+ {
+  "mode": "single",
+  "model": "0.6b",
+  "problem": "easy",
+  "trial": 0,
+  "samples_pass_final": true,
+  "hidden": [
+   20,
+   20
+  ],
+  "secs": 104,
+  "gen": 1350,
+  "finish": "stop",
+  "out": "ding to the problem statement, N is at least 1. So no problem.\n\nTesting sample inputs:\n\nSample 1:\n\n5\n\n3 1 4 1 5 \u2192 set is {3,1,4,5} \u2192 sorted descending is [5,4,3,1]. So output 4. Correct.\n\nSample 2:\n\n3\n\n7 7 7 \u2192 set is {7}, sorted is [7]. Output -1. Correct.\n\nAnother test case: N=2, list [1, 2]. Output 2.\n\nAnother case: N=3, list [1,1,2]. Output 1.\n\nYes.\n\nSo this approach should work.\n\nNow, code this into one Python code block.\n\nWait, but in Python, when converting to a set, if the list has duplicates, the set will have only unique elements. Then sorted in reverse order.\n\nYes.\n\nNow, code:\n\nRead N, then list. Then process.\n\nBut wait, what if N is 0? Well, according to constraints, N is \u22651. So no problem.\n\nSo the code should be:\n\nRead N, then the list. Then process.\n\nSo the code would be:\n\nn = int(input())\na = list(map(int, input().split()))\nunique = sorted(set(a), reverse=True)\nif len(unique) >= 2:\n    print(unique[1])\nelse:\n    print(-1)\n\nWait, but what if the list has all elements the same? Like N=3, all 7. Then set is {7}, sorted is [7], len is 1. Output -1. Correct.\n\nYes.\n\nThis should handle all cases.\n\nNow, testing with the sample inputs:\n\nFirst sample input:\n\n5\n\n3 1 4 1 5 \u2192 unique is {3,1,4,5} \u2192 sorted descending is [5,4,3,1]. So output 4.\n\nSecond sample input:\n\n3\n\n7 7 7 \u2192 unique is {7}, len 1 \u2192 output -1.\n\nAnother test case:\n\nn=2, list [1,2] \u2192 output 2.\n\nYes.\n\nSo this code should work.\n\nNow, write it in Python code.\n\nBut wait, when converting to a set, the order may not matter, but sorted in reverse order is correct.\n\nYes.\n\nSo the code is as above. Now, write it into a single Python code block.\n\nBut note that for very large N (like 2e5), using set and sorted is acceptable. Because even with 2e5 elements, converting to a set is O(N), and sorted is O(N log N).\n\nYes.\n\nSo the code is correct.\n</think>\n\n```python\nn = int(input())\na = list(map(int, input().split()))\nunique = sorted(set(a), reverse=True)\nif len(unique) >= 2:\n    print(unique[1])\nelse:\n    print(-1)\n```"
+ }
+]

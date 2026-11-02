@@ -1,0 +1,21 @@
+{
+ "run": "C-off",
+ "secs": 116,
+ "model_calls": 10,
+ "notes": [
+  "skeleton: 9 functions emptied to TODO, 0 duplicates dropped",
+  "bare skeleton scores 1/5"
+ ],
+ "error": null,
+ "finished_tool": false,
+ "points": 0,
+ "compiles": false,
+ "runs": false,
+ "board": false,
+ "clicks_work": false,
+ "computer_moves": false,
+ "ts_errors": 53,
+ "lines": 208,
+ "has_minimax": false,
+ "report": "TypeScript errors (53):\n  line 35: Duplicate identifier 'GameState'.\n  line 68: Cannot find name 'initializeBoard'.\n  line 69: Cannot find name 'createPlayer'.\n  line 70: Cannot find name 'createPlayer'.\n  line 71: Cannot find name 'initializeScore'.\n  line 75: Argument of type '{ board: any; player1: any; player2: any; score: any; }' is not assignable to parameter of type 'GameState'.   Type '{ board: any; player1: any; player2: any; score: any; }' is missing the following properties from type 'GameState': game, isGameRunning, isGameOver\n  line 81: Property 'score' does not exist on type 'GameState'.\n  line 89: Property 'board' does not exist on type 'GameState'.\nRuntime error: Cannot set properties of null (setting 'innerHTML')\nThe page has no board elements (nothing was added to the DOM)."
+}
