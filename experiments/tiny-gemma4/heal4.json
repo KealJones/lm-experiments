@@ -22,5 +22,5 @@
  "upload_every": 600,
  "outdir": "out",
  "out": "experiments/tiny-gemma4/hf-heal4",
- "note": "DRAFT, not queued: run only after the two pilots, with the better objective (CE_SRC from the winner). Heal 3 + Toucan multi-turn tool conversations with real, uncut results (40% of the mix), re-filtered E2B answers, loss only on model-written tokens, whole conversations per row, SEQ 2048, dated checkpoints. 2400 steps (~50 min of training; PACK_CONVS from the pilot result), MINUTES=70 cap; ~$5.50 with startup; hard cap ~$6.70."
+ "note": "DRAFT, not queued: run only after the two pilots, with the better objective (CE_SRC from the winner). Heal 3 + Toucan multi-turn tool conversations with real, uncut results (40% of the mix), re-filtered E2B answers, loss only on model-written tokens, whole conversations per row, SEQ 2048, dated checkpoints. 2400 steps (~50 min of training; PACK_CONVS from the pilot result), MINUTES=70 cap; ~$5.50 with startup; hard cap ~$6.70. After it: GGUF (gguf_job.sh) and WebLLM (heal4-mlc.json) exports from the same ckpt."
 }
