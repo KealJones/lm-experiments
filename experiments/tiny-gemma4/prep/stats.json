@@ -1,0 +1,24 @@
+{
+ "toucan": {
+  "too_long": 2041,
+  "bad_shape": 59,
+  "kept": 4278,
+  "irrelevant_kept": 641,
+  "irrelevant_dropped": 1622
+ },
+ "toucan_sources": {
+  "toucan:multi-turn": 1538,
+  "toucan:single-turn-original": 1372,
+  "toucan:single-turn-diversify": 727,
+  "toucan:irrelevant": 641
+ },
+ "gen_kept": 20502,
+ "gen_total": 20521,
+ "gen_dropped": {
+  "tools offered: a menu of questions instead of a call": 6,
+  "tool call written as text": 13
+ },
+ "tokens_p50": 1149,
+ "tokens_p90": 1836,
+ "trained_share": 0.397
+}
