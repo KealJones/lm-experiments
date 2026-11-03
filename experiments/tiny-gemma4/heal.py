@@ -570,7 +570,7 @@ def main():
         # Per-token KL averaged over trained targets (all of them for plain text; equals batchmean KL when
         # nothing is masked), plus next-token loss where a source asks for it (CE_SRC / CE_W).
         w = wmask.reshape(-1)
-        kl_tok = (tp.exp() * (tp - sp)).sum(-1).reshape(-1)
+        kl_tok = F.kl_div(sp, tp, log_target=True, reduction="none").sum(-1).reshape(-1)   # one vocab-sized temporary
         kd = (kl_tok * w).sum() / w.sum().clamp(min=1)
         nll = F.nll_loss(sp.reshape(-1, sp.shape[-1]), tgt.reshape(-1), reduction="none")
         ce = (nll * w).sum() / w.sum().clamp(min=1)                          # logged
