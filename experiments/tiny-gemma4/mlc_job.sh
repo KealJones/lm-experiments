@@ -16,6 +16,15 @@ step "tools"
 # The compiled .wasm has to match the TVM web runtime inside the WebLLM version Squiggle loads (0.2.87).
 # MLC_SPEC pins the wheels; the default is the nightly CPU build.
 pip install -q --pre ${MLC_SPEC:-mlc-ai-nightly-cpu mlc-llm-nightly-cpu} -f https://mlc.ai/wheels 2>&1 | tail -2
+# The nightly mlc-llm wheel (0.26.dev6 on 2026-11-03) predates Gemma 4, so its Python package is replaced with
+# mlc-llm's own source at MLC_COMMIT (Gemma 4 + the artifact manifest WebLLM 0.2.87 reads); the wheel's
+# compiled libraries stay. The first run on heal 4 failed here without this (no model/gemma4 in the wheel).
+step "mlc-llm python at ${MLC_COMMIT:-44fd06d04f22c87820e205b0f2b2e5e6a1f6ca85}"
+git clone -q --depth 1 https://github.com/mlc-ai/mlc-llm mlc-src
+git -C mlc-src fetch -q --depth 1 origin ${MLC_COMMIT:-44fd06d04f22c87820e205b0f2b2e5e6a1f6ca85} && git -C mlc-src checkout -q FETCH_HEAD
+SITE=$(python -c "import mlc_llm, os; print(os.path.dirname(mlc_llm.__file__))")
+cp -r mlc-src/python/mlc_llm/. "$SITE"/
+python -c "import mlc_llm.model.gemma4, mlc_llm.protocol.artifact_manifest; print('gemma4 ok')" | tee -a "$OUT/steps.txt"
 python -c "import mlc_llm, tvm; print('mlc_llm', getattr(mlc_llm, '__version__', '?'), 'tvm', tvm.__version__)" | tee -a "$OUT/steps.txt"
 # WebGPU compile needs Emscripten (the version MLC's docs pin) and TVM's prebuilt web runtime.
 git clone -q --depth 1 https://github.com/emscripten-core/emsdk.git
@@ -43,6 +52,31 @@ mlc_llm convert_weight pkg --quantization q4f16_1 -o "$OUT/$NAME-q4f16_1-MLC" 2>
 step "gen_config"
 mlc_llm gen_config pkg --quantization q4f16_1 --conv-template ${CONV:-gemma4_instruction} --context-window-size 4096 \
   -o "$OUT/$NAME-q4f16_1-MLC" 2>&1 | tail -20
+
+step "fix stop tokens and marker decoding for the pruned vocab"
+# gemma4_instruction hard-codes E2B's ids (1 <eos>, 106 <turn|>, 50 <|tool_response>); the pruned vocab moved them.
+# The tool and channel markers are made non-special so decoding keeps them in the text (they're still single
+# tokens when encoding): Squiggle parses <|tool_call>…<tool_call|> and <|channel>…<channel|> out of the reply.
+python - "$OUT/$NAME-q4f16_1-MLC" <<'PY' | tee -a "$OUT/steps.txt"
+import json, sys, os
+d = sys.argv[1]
+tj = json.load(open(os.path.join(d, "tokenizer.json")))
+ids = {a["content"]: a["id"] for a in tj["added_tokens"]}
+stop = [ids["<eos>"], ids["<turn|>"], ids["<|tool_response>"]]
+cfg_path = os.path.join(d, "mlc-chat-config.json")
+cfg = json.load(open(cfg_path))
+cfg["conv_template"]["stop_token_ids"] = stop
+cfg["eos_token_id"] = stop
+cfg["bos_token_id"] = ids["<bos>"]
+cfg["conv_template"]["system_prefix_token_ids"] = [ids["<bos>"]]
+json.dump(cfg, open(cfg_path, "w"), indent=2)
+keep = {"<|tool_call>", "<tool_call|>", "<|tool_response>", "<tool_response|>", '<|"|>', "<|channel>", "<channel|>", "<|tool>", "<tool|>"}
+for a in tj["added_tokens"]:
+    if a["content"] in keep:
+        a["special"] = False
+json.dump(tj, open(os.path.join(d, "tokenizer.json"), "w"), ensure_ascii=False)
+print("stop", stop, "bos", ids["<bos>"], "markers kept in decoded text:", sorted(keep))
+PY
 
 step "compile webgpu"
 mlc_llm compile "$OUT/$NAME-q4f16_1-MLC/mlc-chat-config.json" --device webgpu -o "$OUT/$NAME-q4f16_1-webgpu.wasm" 2>&1 | tail -30
