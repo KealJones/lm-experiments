@@ -1,0 +1,24 @@
+{
+ "flavor": "cpu-upgrade",
+ "timeout": "90m",
+ "files": [
+  "experiments/tiny-gemma4/mlc_job.sh",
+  "experiments/tiny-gemma4/to_mlc.py",
+  "experiments/tiny-gemma4/patch_mlc.py"
+ ],
+ "pip": [
+  "transformers==5.21.0",
+  "safetensors",
+  "sentencepiece",
+  "protobuf",
+  "huggingface_hub",
+  "tokenizers",
+  "brotli>=1.2.0"
+ ],
+ "upload_every": 600,
+ "outdir": "out",
+ "slug": "tiny-gemma4-mlc-heal4a-2",
+ "cmd": "CKPT=kealjones/tp-parse-runs:tiny-gemma4-heal4-pilot-kd/6ae969b60e0338d1bb7ee4cb/ckpt REPO=kealjones/tiny-gemma4-test-MLC NAME=tiny-gemma4-heal4a bash mlc_job.sh out",
+ "out": "experiments/tiny-gemma4/hf-mlc-heal4a-2",
+ "note": "WebLLM (MLC) export of heal 4 pilot A, second try: the nightly mlc-llm wheel has no Gemma 4, so the job overlays mlc-llm's Python source at 44fd06d (patch_mlc.py checked against it), then fixes stop tokens for the pruned vocab and keeps the tool markers in decoded text. CPU, under ~$0.10."
+}

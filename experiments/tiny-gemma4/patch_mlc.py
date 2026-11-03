@@ -12,9 +12,12 @@ package in place (text replacement, each one checked) so a text_only config:
 Written against mlc-llm commit 44fd06d (2026-10-30). If a replacement no longer matches, it stops and says which.
 """
 import os, sys
-import mlc_llm
 
-root = os.path.join(os.path.dirname(mlc_llm.__file__), "model", "gemma4")
+if os.environ.get("MLC_GEMMA4_DIR"):                         # a checkout, for testing the patch without mlc_llm
+    root = os.environ["MLC_GEMMA4_DIR"]
+else:
+    import mlc_llm
+    root = os.path.join(os.path.dirname(mlc_llm.__file__), "model", "gemma4")
 
 def patch(fname, edits):
     path = os.path.join(root, fname)
