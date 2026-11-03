@@ -250,6 +250,7 @@ def softcap(x, c):
 
 
 @torch.no_grad()
+@torch.no_grad()                                           # eval only: no graph (it held GBs once training was on)
 def bpb(model, head_w, encode, bos, docs, cap):
     model.eval()
     nats = byts = 0

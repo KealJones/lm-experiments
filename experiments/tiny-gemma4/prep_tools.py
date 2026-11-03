@@ -132,16 +132,32 @@ def _clean_tools(tools):
 
 
 def toucan_rows(limit=None, seed=5):
-    """The SFT subset in a fixed shuffled order (seed), first `limit` rows. Rows are only turned into Python
-    objects after the cut: all 119K as dicts took ~5 GB and got a dry run killed."""
+    """The SFT subset in a fixed shuffled order (seed), first `limit` rows. One file at a time, only the columns
+    used, and rows become Python objects only after the cut: everything at once peaked at 4-5 GB and got CPU dry
+    runs killed."""
     import pyarrow as pa
     import pyarrow.parquet as pq
     from huggingface_hub import hf_hub_download, list_repo_files
-    files = sorted(f for f in list_repo_files("Agent-Ark/Toucan-1.5M", repo_type="dataset") if f.startswith("SFT/"))
-    table = pa.concat_tables([pq.read_table(hf_hub_download("Agent-Ark/Toucan-1.5M", f, repo_type="dataset")) for f in files])
-    order = list(range(table.num_rows))
-    random.Random(seed).shuffle(order)                         # same order as shuffling the rows themselves
-    return table.take(order[:limit] if limit else order).to_pylist()
+    cols = ["subset_name", "tools", "messages"]
+    files = [hf_hub_download("Agent-Ark/Toucan-1.5M", f, repo_type="dataset")
+             for f in sorted(f for f in list_repo_files("Agent-Ark/Toucan-1.5M", repo_type="dataset") if f.startswith("SFT/"))]
+    sizes = [pq.ParquetFile(f).metadata.num_rows for f in files]
+    order = list(range(sum(sizes)))
+    random.Random(seed).shuffle(order)                         # same order as shuffling all the rows themselves
+    order = order[:limit] if limit else order
+    pos = {g: i for i, g in enumerate(order)}
+    out = [None] * len(order)
+    start = 0
+    for f, n in zip(files, sizes):
+        want = sorted(g for g in pos if start <= g < start + n)
+        if want:
+            t = pq.read_table(f, columns=cols)
+            for g, row in zip(want, t.take([g - start for g in want]).to_pylist()):
+                out[pos[g]] = row
+            del t
+            pa.default_memory_pool().release_unused()
+        start += n
+    return out
 
 
 _W = {}
