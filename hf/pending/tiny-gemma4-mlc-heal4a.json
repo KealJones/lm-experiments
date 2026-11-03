@@ -20,5 +20,9 @@
  "outdir": "out",
  "cmd": "CKPT=kealjones/tp-parse-runs:tiny-gemma4-heal4-pilot-kd/6ae969b60e0338d1bb7ee4cb/ckpt REPO=kealjones/tiny-gemma4-test-MLC NAME=tiny-gemma4-heal4a bash mlc_job.sh out",
  "out": "experiments/tiny-gemma4/hf-mlc-heal4a",
- "note": "WebLLM (MLC, WebGPU) export of heal 4 pilot A. First run of this pipeline (never smoke-tested): steps.txt says where it stops. Keal's go 2026-11-03. CPU, under ~$0.10."
+ "note": "WebLLM (MLC, WebGPU) export of heal 4 pilot A. First run of this pipeline (never smoke-tested): steps.txt says where it stops. Keal's go 2026-11-03. CPU, under ~$0.10.",
+ "job_id": "6aea04d10e0338d1bb7f57e8",
+ "url": "https://huggingface.co/jobs/kealjones/6aea04d10e0338d1bb7f57e8",
+ "started": "2026-11-03T15:59:13+00:00",
+ "sha": "e4d6165ac1331c51ecdb4223481814d6c26794f9"
 }
