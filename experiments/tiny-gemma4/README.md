@@ -274,6 +274,43 @@ WebLLM appConfig) plus a Gemma 4 tool-call writer/parser in `engine-webllm.js`, 
 Risks: the .wasm must match WebLLM 0.2.87's TVM web runtime (pin the MLC wheels with `MLC_SPEC` if the nightly
 has moved on), and the Emscripten version MLC wants (`EMSDK_VERSION`, default 3.1.56) may need adjusting.
 
+### Heal 4 pilots (2026-11-02, h200, 750 steps each, ~$2.10 each) — `hf/done/tiny-gemma4-heal4-pilot-*`
+
+First, heal 3 measured in the browser with `squiggle/tests/e2e/model-probes.mjs` (the app's wllama runtime and the
+GGUF's own template; pairs that differ in one thing). Clean prompt: 2/10. It passes a name given in turn 2
+(`web_search("Patrick stewart")`), so it *can* read later turns; it fails every tool result (empty reply), searches the
+web for weather text the user pasted, and picks `web_search` even with `recall` declared (its thinking only lists the
+first two tools). With the app's small-model prompt the same turn-2 test becomes `plan(steps: ["Find where the login
+form is defined"])` (copied from plan's own example) and a tool result becomes "For example, are you looking for: …":
+that prompt produced Keal's screenshots. A reworded prompt ("look things up with web_search…") still failed: it called
+`find`, i.e. it takes the first-declared tools whatever the prompt says. Gemma 4 E2B (the teacher) on the same tests:
+passes turn 2, answers from 61°F and 97°F results correctly, retries after an error, calls `recall` when declared.
+
+Pilots, both resumed from heal 3, same data (Toucan 40%, E2B answers 26%, rest maths/web/code/oasst1), 750 steps,
+masked to model tokens, one conversation per row:
+
+| | heal 3 | A: distillation | B: + next-token loss on Toucan |
+|---|---|---|---|
+| probes greedy / sampled | 2/6 / 2/6 | **5/6 / 5/6** | 3/6 / 3/6 |
+| answers from a 61°F result | empty | "currently **61°F** … light rain" | ✓ |
+| same call, 97°F result | empty | "currently **97°F** … clear skies" | quotes the high (101°F) instead ✗ |
+| tool error | empty | says the search had an issue ✓ | ✓ greedy, ✗ sampled |
+| Star Trek, detail in turn 2 | ✓ | ✓ | ✗ greedy ("I don't have access to real-time…") |
+| "what do you remember about me" (recall declared) | `web_search` | `web_search("me")` ✗ | "I remember to be a person." ✗ |
+| held-out Toucan answers (bpb) | 0.993 | 0.928 | 0.768 (trained on that text) |
+| web (bpb) | 1.327 | 1.399 | 1.397 |
+| E2B agent replies (bpb) | 1.101 | 1.165 | 1.154 |
+
+- **A wins on behaviour.** It now reads tool results (the answer changes with the result) and handles an error without
+  inventing weather. B's lower Toucan bpb is just learning Toucan's own text; it behaves worse.
+- **Both regressed on general text:** web +0.07 bpb, and the greedy 17 × 23 sample went from 391 to wrong steps; the sky
+  answer is still nonsense. 750 steps of a 40%-tool mix pulls the model away from plain text: a full heal needs more
+  E2B answers / web in the mix, or a smaller LR.
+- **Tool choice is still by position:** with `recall` declared after `web_search`, both still search the web. Toucan's
+  examples are mostly "the first tool fits"; this needs examples where the right tool isn't first.
+- Spend: ~$4.15 of Keal's $10. Checkpoints: `kealjones/tp-parse-runs` → `tiny-gemma4-heal4-pilot-kd/6ae969b60e0338d1bb7ee4cb/ckpt/`
+  (A), `tiny-gemma4-heal4-pilot-ce/6ae96ed50e0338d1bb7ee913/ckpt/` (B). `gguf-heal4a.json`: draft GGUF of A (~$0.03).
+
 ### Later: vision (Keal, 2026-10-29)
 
 The cut keeps only Gemma 4's text model: E2B's vision and audio encoders were never copied, and the GGUF has no
