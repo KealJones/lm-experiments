@@ -131,15 +131,17 @@ def _clean_tools(tools):
     return out
 
 
-def toucan_rows(seed=5):
+def toucan_rows(limit=None, seed=5):
+    """The SFT subset in a fixed shuffled order (seed), first `limit` rows. Rows are only turned into Python
+    objects after the cut: all 119K as dicts took ~5 GB and got a dry run killed."""
+    import pyarrow as pa
     import pyarrow.parquet as pq
     from huggingface_hub import hf_hub_download, list_repo_files
     files = sorted(f for f in list_repo_files("Agent-Ark/Toucan-1.5M", repo_type="dataset") if f.startswith("SFT/"))
-    rows = []
-    for f in files:
-        rows += pq.read_table(hf_hub_download("Agent-Ark/Toucan-1.5M", f, repo_type="dataset")).to_pylist()
-    random.Random(seed).shuffle(rows)
-    return rows
+    table = pa.concat_tables([pq.read_table(hf_hub_download("Agent-Ark/Toucan-1.5M", f, repo_type="dataset")) for f in files])
+    order = list(range(table.num_rows))
+    random.Random(seed).shuffle(order)                         # same order as shuffling the rows themselves
+    return table.take(order[:limit] if limit else order).to_pylist()
 
 
 _W = {}
@@ -165,8 +167,7 @@ def toucan_records(tok, count_tokens, limit=None, stats=None, workers=None):
     limit: rows to look at (all 119K take ~28 CPU-minutes, so the job uses every core)."""
     import multiprocessing as mp
     stats = stats if stats is not None else {}
-    rows = toucan_rows()
-    rows = rows[:limit] if limit else rows
+    rows = toucan_rows(limit)
     _W.update(tok=tok, count=count_tokens)
     workers = workers or max(1, min(32, (os.cpu_count() or 1)))
     if workers > 1:
