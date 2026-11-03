@@ -1,0 +1,142 @@
+job 6aea04d10e0338d1bb7f57e8 on cpu: tiny-gemma4-mlc-heal4a at e4d6165
+fetched experiments/tiny-gemma4/mlc_job.sh
+fetched experiments/tiny-gemma4/to_mlc.py
+fetched experiments/tiny-gemma4/patch_mlc.py
+== 15:59:29 tools
+debconf: delaying package configuration, since apt-utils is not installed
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable.It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+[16:01:07] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "snapdragon835", "mattr": ("+neon",), "mtriple": "arm64-linux-android"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:07] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "kirin970", "mattr": ("+neon",), "mtriple": "arm64-linux-android"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:07] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "bcm2837", "mattr": ("+neon",), "mtriple": "armv7l-linux-gnueabihf"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:07] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "bcm2711", "mattr": ("+neon",), "mcpu": "cortex-a72", "mtriple": "armv8l-linux-gnueabihf"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:07] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "pynq", "mattr": ("+neon",), "mtriple": "armv7a-linux-eabi"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:07] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "beagleai", "mattr": ("+neon", "+vfp4", "+thumb2"), "mcpu": "cortex-a15", "mtriple": "armv7a-linux-gnueabihf"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:07] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "stm32mp1", "mattr": ("+neon", "+vfp4", "+thumb2"), "mcpu": "cortex-a7", "mtriple": "armv7a-linux-gnueabihf"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:07] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "snapdragon835", "mattr": ("+neon",), "mtriple": "arm64-linux-android"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:07] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "beagleai", "mattr": ("+neon", "+vfp4", "+thumb2"), "mcpu": "cortex-a15", "mtriple": "armv7a-linux-gnueabihf"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:07] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "kirin970", "mattr": ("+neon",), "mtriple": "arm64-linux-android"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:07] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "stm32mp1", "mattr": ("+neon", "+vfp4", "+thumb2"), "mcpu": "cortex-a7", "mtriple": "armv7a-linux-gnueabihf"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:07] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "bcm2711", "mattr": ("+neon",), "mcpu": "cortex-a72", "mtriple": "armv8l-linux-gnueabihf"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:07] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "pynq", "mattr": ("+neon",), "mtriple": "armv7a-linux-eabi"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:07] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "bcm2837", "mattr": ("+neon",), "mtriple": "armv7l-linux-gnueabihf"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:07] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "mtriple": "arm64-apple-macos"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:07] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "mcpu": "apple-m1", "mtriple": "arm64-apple-macos"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:07] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "mtriple": "arm64-apple-macos"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:07] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "mcpu": "apple-m1", "mtriple": "arm64-apple-macos"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:07] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "mtriple": "arm64-apple-macos"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:07] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "mcpu": "apple-m2", "mtriple": "arm64-apple-macos"}. LLVM was not compiled with support for Arm(R)-based targets.
+mlc_llm 0.1.dev0 tvm 0.26.dev246
+Setting up EMSDK environment (suppress these messages with EMSDK_QUIET=1)
+Adding directories to PATH:
+PATH += /workspace/work/emsdk
+PATH += /workspace/work/emsdk/upstream/emscripten
+PATH += /workspace/work/emsdk/node/24.19.0_64bit/bin
+
+Setting environment variables:
+PATH = /workspace/work/emsdk:/workspace/work/emsdk/upstream/emscripten:/workspace/work/emsdk/node/24.19.0_64bit/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+EMSDK = /workspace/work/emsdk
+EMSDK_NODE = /workspace/work/emsdk/node/24.19.0_64bit/bin/node
+== 16:01:31 download checkpoint
+
+
+Downloading bytes:           |  0.00B            [A
+
+Reconstructing (incomplete total...): |          |  0.00B /  0.00B            [A
+
+Fetching 4 files:   0%|          | 0/4 [00:00<?, ?it/s][A
+
+Reconstructing (incomplete total...):   0%|          |  0.00B / 2.62GB            [A
+
+Reconstructing (incomplete total...):   0%|          | 2.38kB / 2.62GB            [A
+
+Reconstructing (incomplete total...):   0%|          | 2.38kB / 2.63GB            [A
+
+Reconstructing (incomplete total...):   0%|          | 2.38kB / 2.63GB            [A
+
+Downloading bytes: ▎         | 82.2MB,   ???B/s  [A
+
+Reconstructing (incomplete total...):   3%|▎         | 73.0MB / 2.63GB,   ???B/s  [A
+
+Downloading bytes: █▊        |  468MB, 76.0MB/s  [A
+
+Reconstructing (incomplete total...):  34%|███▎      |  881MB / 2.63GB, 56.9MB/s  [A
+
+Downloading bytes: ███▍      |  915MB,  252MB/s  [A
+
+Reconstructing (incomplete total...):  49%|████▉     | 1.28GB / 2.63GB,  343MB/s  [A
+
+Downloading bytes: █████▌    | 1.46GB,  339MB/s  [A
+
+Reconstructing (incomplete total...):  64%|██████▍   | 1.69GB / 2.63GB,  364MB/s  [A
+
+Downloading bytes: ████████▍ | 2.21GB,  418MB/s  [A
+
+Fetching 4 files: 100%|██████████| 4/4 [00:06<00:00,  1.52s/it][A
+Fetching 4 files: 100%|██████████| 4/4 [00:06<00:00,  1.52s/it]
+
+
+Downloading bytes: ██████████| 2.28GB,  535MB/s  [A
+
+Download complete: ██████████| 2.28GB,  535MB/s  [A
+
+Reconstruction complete: 100%|██████████| 2.63GB / 2.63GB,  352MB/s               [A
+Download complete: ██████████| 2.28GB,  535MB/s  
+
+Reconstruction complete: 100%|██████████| 2.63GB / 2.63GB,  352MB/s  
+== 16:01:38 package for MLC
+FFN padded 2580 -> 2592
+
+
+config.json:   0%|          | 0.00/4.95k [00:00<?, ?B/s][A
+config.json: 100%|██████████| 4.95k/4.95k [00:00<00:00, 13.3MB/s]
+
+
+tokenizer_config.json:   0%|          | 0.00/3.08k [00:00<?, ?B/s][A
+tokenizer_config.json: 100%|██████████| 3.08k/3.08k [00:00<00:00, 14.7MB/s]
+
+
+tokenizer.json: reconstructing file:   0%|          |  0.00B / 32.2MB            [A
+tokenizer.json: downloading bytes:           |  0.00B            
+tokenizer.json: downloading bytes: ██████████| 8.75MB,  868kB/s  
+tokenizer.json: downloading bytes: ██████████| 8.75MB,  868kB/s  
+
+tokenizer.json: reconstructing file: 100%|██████████| 32.2MB / 32.2MB, 3.19MB/s  
+
+
+chat_template.jinja:   0%|          | 0.00/18.6k [00:00<?, ?B/s][A
+chat_template.jinja: 100%|██████████| 18.6k/18.6k [00:00<00:00, 46.4MB/s]
+
+
+generation_config.json:   0%|          | 0.00/208 [00:00<?, ?B/s][A
+generation_config.json: 100%|██████████| 208/208 [00:00<00:00, 726kB/s]
+packaged pkg {'hidden_size': 1024, 'num_hidden_layers': 31, 'num_kv_shared_layers': 20, 'intermediate_size': 2592, 'vocab_size': 79997}
+== 16:01:50 text-only patch
+[16:01:53] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "snapdragon835", "mattr": ("+neon",), "mtriple": "arm64-linux-android"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:53] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "kirin970", "mattr": ("+neon",), "mtriple": "arm64-linux-android"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:53] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "bcm2837", "mattr": ("+neon",), "mtriple": "armv7l-linux-gnueabihf"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:53] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "bcm2711", "mattr": ("+neon",), "mcpu": "cortex-a72", "mtriple": "armv8l-linux-gnueabihf"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:53] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "pynq", "mattr": ("+neon",), "mtriple": "armv7a-linux-eabi"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:53] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "beagleai", "mattr": ("+neon", "+vfp4", "+thumb2"), "mcpu": "cortex-a15", "mtriple": "armv7a-linux-gnueabihf"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:53] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "stm32mp1", "mattr": ("+neon", "+vfp4", "+thumb2"), "mcpu": "cortex-a7", "mtriple": "armv7a-linux-gnueabihf"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:53] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "snapdragon835", "mattr": ("+neon",), "mtriple": "arm64-linux-android"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:53] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "beagleai", "mattr": ("+neon", "+vfp4", "+thumb2"), "mcpu": "cortex-a15", "mtriple": "armv7a-linux-gnueabihf"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:53] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "kirin970", "mattr": ("+neon",), "mtriple": "arm64-linux-android"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:53] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "stm32mp1", "mattr": ("+neon", "+vfp4", "+thumb2"), "mcpu": "cortex-a7", "mtriple": "armv7a-linux-gnueabihf"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:53] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "bcm2711", "mattr": ("+neon",), "mcpu": "cortex-a72", "mtriple": "armv8l-linux-gnueabihf"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:53] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "pynq", "mattr": ("+neon",), "mtriple": "armv7a-linux-eabi"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:53] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "keys": ("arm_cpu", "cpu"), "device": "arm_cpu", "model": "bcm2837", "mattr": ("+neon",), "mtriple": "armv7l-linux-gnueabihf"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:53] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "mtriple": "arm64-apple-macos"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:53] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "mcpu": "apple-m1", "mtriple": "arm64-apple-macos"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:53] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "mtriple": "arm64-apple-macos"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:53] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "mcpu": "apple-m1", "mtriple": "arm64-apple-macos"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:53] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "mtriple": "arm64-apple-macos"}. LLVM was not compiled with support for Arm(R)-based targets.
+[16:01:53] /workspace/tvm/src/target/canonicalizer/llvm/arm_aprofile.cc:104: Warning: Cannot parse target features for target: {"kind": "llvm", "mcpu": "apple-m2", "mtriple": "arm64-apple-macos"}. LLVM was not compiled with support for Arm(R)-based targets.
+Traceback (most recent call last):
+  File "/workspace/work/patch_mlc.py", line 31, in <module>
+    patch("gemma4_config.py", [
+  File "/workspace/work/patch_mlc.py", line 21, in patch
+    src = open(path).read()
+          ^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/opt/conda/lib/python3.11/site-packages/mlc_llm/model/gemma4/gemma4_config.py'
+FAILED at: == 16:01:50 text-only patch
+exit code 1 after 2.6 min
