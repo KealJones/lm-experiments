@@ -1,0 +1,284 @@
+job 6ae969b60e0338d1bb7ee4cb on gpu: tiny-gemma4-heal4-pilot-kd at c4b1d15
+fetched experiments/tiny-gemma4/heal.py
+fetched experiments/tiny-gemma4/surgery.py
+fetched experiments/tiny-gemma4/prep_tools.py
+fetched experiments/tiny-gemma4/hf-stage1/kept_ids.json
+fetched experiments/tiny-gemma4/hf-stage1/tokenizer_pruned.json
+fetched experiments/squiggle-ft/hf-teach-pilot-g4b/teach/teacher_results.jsonl.gz
+
+
+config.json:   0%|          | 0.00/4.95k [00:00<?, ?B/s][A
+config.json: 100%|██████████| 4.95k/4.95k [00:00<00:00, 16.8MB/s]
+
+
+tokenizer_config.json:   0%|          | 0.00/3.08k [00:00<?, ?B/s][A
+tokenizer_config.json: 100%|██████████| 3.08k/3.08k [00:00<00:00, 10.3MB/s]
+
+
+tokenizer.json: reconstructing file:   0%|          |  0.00B / 32.2MB            [A
+tokenizer.json: downloading bytes:           |  0.00B            
+tokenizer.json: downloading bytes: ██████████| 8.75MB,  860kB/s  
+tokenizer.json: downloading bytes: ██████████| 8.75MB,  860kB/s  
+
+tokenizer.json: reconstructing file: 100%|██████████| 32.2MB / 32.2MB, 3.16MB/s  
+
+
+chat_template.jinja:   0%|          | 0.00/18.6k [00:00<?, ?B/s][A
+chat_template.jinja: 100%|██████████| 18.6k/18.6k [00:00<00:00, 55.8MB/s]
+
+
+model.safetensors: reconstructing file:   0%|          |  0.00B / 10.2GB            [A
+model.safetensors: downloading bytes:           |  0.00B            
+
+model.safetensors: reconstructing file:   1%|          |  107MB / 10.2GB, 9.17MB/s  [A
+model.safetensors: downloading bytes:           | 79.3MB, 5.81MB/s  
+model.safetensors: downloading bytes: ▏         |  233MB, 20.3MB/s  
+
+model.safetensors: reconstructing file:   5%|▍         |  470MB / 10.2GB, 38.3MB/s  [A
+model.safetensors: downloading bytes: ▋         |  674MB, 52.1MB/s  
+
+model.safetensors: reconstructing file:   8%|▊         |  805MB / 10.2GB, 53.3MB/s  [A
+model.safetensors: downloading bytes: █▌        | 1.57GB,  127MB/s  
+
+model.safetensors: reconstructing file:  22%|██▏       | 2.28GB / 10.2GB,  152MB/s  [A
+model.safetensors: downloading bytes: ██▋       | 2.80GB,  218MB/s  
+
+model.safetensors: reconstructing file:  34%|███▍      | 3.49GB / 10.2GB,  229MB/s  [A
+model.safetensors: downloading bytes: ███▉      | 4.04GB,  304MB/s  
+
+model.safetensors: reconstructing file:  50%|████▉     | 5.10GB / 10.2GB,  379MB/s  [A
+model.safetensors: downloading bytes: █████▏    | 5.33GB,  384MB/s  
+model.safetensors: downloading bytes: ██████▌   | 6.67GB,  461MB/s  
+
+model.safetensors: reconstructing file:  62%|██████▏   | 6.32GB / 10.2GB,  432MB/s  [A
+model.safetensors: downloading bytes: ███████▉  | 8.11GB,  537MB/s  
+
+model.safetensors: reconstructing file:  85%|████████▍ | 8.66GB / 10.2GB,  565MB/s  [A
+model.safetensors: downloading bytes: ██████████| 8.66GB,  548MB/s  
+model.safetensors: downloading bytes: ██████████| 8.66GB,  548MB/s  
+
+model.safetensors: reconstructing file: 100%|██████████| 10.2GB / 10.2GB,  676MB/s  
+
+
+Loading weights:   0%|          | 0/1951 [00:00<?, ?it/s][A
+Loading weights: 100%|██████████| 1951/1951 [00:00<00:00, 9694.41it/s]
+
+
+generation_config.json:   0%|          | 0.00/208 [00:00<?, ?B/s][A
+generation_config.json: 100%|██████████| 208/208 [00:00<00:00, 1.51MB/s]
+[   0.3 min] keep layers [0, 1, 3, 4, 5, 7, 8, 9, 10, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34]
+
+
+README.md:   0%|          | 0.00/26.4k [00:00<?, ?B/s][A
+README.md: 100%|██████████| 26.4k/26.4k [00:00<00:00, 59.7MB/s]
+
+
+Resolving data files:   0%|          | 0/2410 [00:00<?, ?it/s][A
+Resolving data files: 100%|██████████| 2410/2410 [00:00<00:00, 42343.28it/s]
+
+
+Downloading bytes:           |  0.00B            [A
+
+Reconstructing (incomplete total...): |          |  0.00B /  0.00B            [A
+
+Fetching 4 files:   0%|          | 0/4 [00:00<?, ?it/s][A
+
+Reconstructing (incomplete total...):   0%|          |  0.00B / 2.62GB            [A
+
+Reconstructing (incomplete total...):   0%|          |  0.00B / 2.62GB            [A
+
+Reconstructing (incomplete total...):   0%|          | 2.38kB / 2.63GB            [A
+
+Reconstructing (incomplete total...):   0%|          | 2.38kB / 2.63GB            [A
+
+Reconstructing (incomplete total...):   0%|          | 5.93MB / 2.63GB            [A
+
+Downloading bytes:           | 7.91MB,   ???B/s  [A
+
+Downloading bytes: ██▋       |  692MB, 7.31MB/s  [A
+
+Reconstructing (incomplete total...):  13%|█▎        |  345MB / 2.63GB, 5.48MB/s  [A
+
+Downloading bytes: ████▏     | 1.10GB,  392MB/s  [A
+
+Reconstructing (incomplete total...):  48%|████▊     | 1.26GB / 2.63GB,  152MB/s  [A
+
+Downloading bytes: █████▊    | 1.52GB,  338MB/s  [A
+
+Reconstructing (incomplete total...):  87%|████████▋ | 2.29GB / 2.63GB,  447MB/s  [A
+
+Fetching 4 files: 100%|██████████| 4/4 [00:05<00:00,  1.48s/it][A
+Fetching 4 files: 100%|██████████| 4/4 [00:05<00:00,  1.48s/it]
+
+
+Downloading bytes: ██████████| 2.28GB,  366MB/s  [A
+
+Download complete: ██████████| 2.28GB,  366MB/s  [A
+
+Reconstruction complete: 100%|██████████| 2.63GB / 2.63GB,  510MB/s               [A
+Download complete: ██████████| 2.28GB,  366MB/s  
+
+Reconstruction complete: 100%|██████████| 2.63GB / 2.63GB,  510MB/s  
+
+
+Loading weights:   0%|          | 0/472 [00:00<?, ?it/s][A
+Loading weights: 100%|██████████| 472/472 [00:00<00:00, 1613.43it/s]
+[   0.6 min] resumed from kealjones/tp-parse-runs:tiny-gemma4-heal3b/6ae371135ddcdc083026213d/ckpt {'tag': 'final step 3841', 'tokens': 47198208, 'keep_layers': [0, 1, 3, 4, 5, 7, 8, 9, 10, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34], 'ffn': 0.42}
+[   0.6 min] student 1312M params, body 595M (31 layers, hidden 1024, ffn 0.42, vocab 79997)
+
+
+SFT/train-00000-of-00003.parquet: reconstructing file:   0%|          |  0.00B /  120MB            [A
+SFT/train-00000-of-00003.parquet: downloading bytes:           |  0.00B            
+SFT/train-00000-of-00003.parquet: downloading bytes: ████████▉ |  108MB, 10.1MB/s  
+
+SFT/train-00000-of-00003.parquet: reconstructing file:  57%|█████▋    | 68.0MB /  120MB            [A
+SFT/train-00000-of-00003.parquet: downloading bytes: ██████████|  118MB, 9.07MB/s  
+SFT/train-00000-of-00003.parquet: downloading bytes: ██████████|  118MB, 9.07MB/s  
+
+SFT/train-00000-of-00003.parquet: reconstructing file: 100%|██████████|  120MB /  120MB, 10.9MB/s  
+
+
+SFT/train-00001-of-00003.parquet: reconstructing file:   0%|          |  0.00B / 68.9MB            [A
+SFT/train-00001-of-00003.parquet: downloading bytes:           |  0.00B            
+SFT/train-00001-of-00003.parquet: downloading bytes: ████████▋ | 59.7MB, 5.71MB/s  
+
+SFT/train-00001-of-00003.parquet: reconstructing file: 100%|██████████| 68.9MB / 68.9MB            [A
+SFT/train-00001-of-00003.parquet: downloading bytes: ██████████| 68.3MB, 5.27MB/s  
+SFT/train-00001-of-00003.parquet: downloading bytes: ██████████| 68.3MB, 5.27MB/s  
+
+SFT/train-00001-of-00003.parquet: reconstructing file: 100%|██████████| 68.9MB / 68.9MB, 6.29MB/s  
+
+
+SFT/train-00002-of-00003.parquet: reconstructing file:   0%|          |  0.00B /  236MB            [A
+SFT/train-00002-of-00003.parquet: downloading bytes:           |  0.00B            
+SFT/train-00002-of-00003.parquet: downloading bytes: █████████▌|  225MB, 21.7MB/s  
+
+SFT/train-00002-of-00003.parquet: reconstructing file:  28%|██▊       | 65.5MB /  236MB            [A
+SFT/train-00002-of-00003.parquet: downloading bytes: ██████████|  235MB, 18.3MB/s  
+SFT/train-00002-of-00003.parquet: downloading bytes: ██████████|  235MB, 18.3MB/s  
+
+SFT/train-00002-of-00003.parquet: reconstructing file: 100%|██████████|  236MB /  236MB, 21.7MB/s  
+[   0.9 min] toucan {'too_long': 4560, 'bad_shape': 110, 'kept': 7148, 'irrelevant_kept': 1072, 'irrelevant_dropped': 3182, 'multi_turn_kept_2plus_user_turns': 1900, 'multi_turn_cut_to_1_user_turn': 701} train 7028 held out 120
+[   0.9 min] teacher {'teacher_web': 1.4859, 'teacher_agent_replies': 1.6121}
+[   1.7 min] eval {'step': 0, 'min': 0.9, 'tag': 'cut, before healing', 'student_web': 1.3265, 'student_agent_replies': 1.1008, 'student_tools_replies': 0.9929, 'probes_greedy': '2/6', 'probes_app': '2/6'} | 'The capital of France is **Paris** (or **Parisian**).<turn|>' / 'Here are a few ways to write a Python function that reverses a string,'
+
+
+tiny-gemma4-gen2/6ae3513241e90535df78da6(…): reconstructing file:   0%|          |  0.00B / 4.20MB            [A
+tiny-gemma4-gen2/6ae3513241e90535df78da6(…): downloading bytes:           |  0.00B            
+tiny-gemma4-gen2/6ae3513241e90535df78da6(…): downloading bytes: ██████████| 4.20MB,  407kB/s  
+tiny-gemma4-gen2/6ae3513241e90535df78da6(…): downloading bytes: ██████████| 4.20MB,  407kB/s  
+
+tiny-gemma4-gen2/6ae3513241e90535df78da6(…): reconstructing file: 100%|██████████| 4.20MB / 4.20MB,  408kB/s  
+
+
+tiny-gemma4-gen3/6ae35cc05ddcdc08302611b(…): reconstructing file:   0%|          |  0.00B / 16.0MB            [A
+tiny-gemma4-gen3/6ae35cc05ddcdc08302611b(…): downloading bytes:           |  0.00B            
+tiny-gemma4-gen3/6ae35cc05ddcdc08302611b(…): downloading bytes: ██████████| 16.0MB, 1.55MB/s  
+tiny-gemma4-gen3/6ae35cc05ddcdc08302611b(…): downloading bytes: ██████████| 16.0MB, 1.55MB/s  
+
+tiny-gemma4-gen3/6ae35cc05ddcdc08302611b(…): reconstructing file: 100%|██████████| 16.0MB / 16.0MB, 1.56MB/s  
+[   1.7 min] on-policy filter dropped {'tools offered: a menu of questions instead of a call': 6, 'tool call written as text': 13}
+[   1.7 min] on-policy conversations with tools: 2649
+[   1.7 min] on-policy filter dropped {}
+[   1.7 min] on-policy conversations without tools: 17853
+
+
+README.md:   0%|          | 0.00/401 [00:00<?, ?B/s][A
+README.md: 100%|██████████| 401/401 [00:00<00:00, 2.91MB/s]
+Repo card metadata block was not found. Setting CardData to empty.
+[transformers] `use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+
+
+Resolving data files:   0%|          | 0/2410 [00:00<?, ?it/s][A
+Resolving data files: 100%|██████████| 2410/2410 [00:00<00:00, 46664.48it/s]
+
+
+README.md:   0%|          | 0.00/12.4k [00:00<?, ?B/s][A
+README.md: 100%|██████████| 12.4k/12.4k [00:00<00:00, 33.4MB/s]
+
+
+Resolving data files:   0%|          | 0/128 [00:00<?, ?it/s][A
+Resolving data files: 100%|██████████| 128/128 [00:00<00:00, 43633.85it/s]
+
+
+Resolving data files:   0%|          | 0/64 [00:00<?, ?it/s][A
+Resolving data files: 100%|██████████| 64/64 [00:00<00:00, 42963.42it/s]
+
+
+README.md:   0%|          | 0.00/10.2k [00:00<?, ?B/s][A
+README.md: 100%|██████████| 10.2k/10.2k [00:00<00:00, 22.7MB/s]
+
+
+data/train-00000-of-00001-b42a775f407cee(…): reconstructing file:   0%|          |  0.00B / 39.5MB            [A
+data/train-00000-of-00001-b42a775f407cee(…): downloading bytes:           |  0.00B            
+data/train-00000-of-00001-b42a775f407cee(…): downloading bytes: ██████████| 38.5MB, 3.77MB/s  
+data/train-00000-of-00001-b42a775f407cee(…): downloading bytes: ██████████| 38.5MB, 3.77MB/s  
+
+data/train-00000-of-00001-b42a775f407cee(…): reconstructing file: 100%|██████████| 39.5MB / 39.5MB, 3.88MB/s  
+
+
+data/validation-00000-of-00001-134b8fd0c(…): reconstructing file:   0%|          |  0.00B / 2.08MB            [A
+data/validation-00000-of-00001-134b8fd0c(…): downloading bytes:           |  0.00B            
+data/validation-00000-of-00001-134b8fd0c(…): downloading bytes: ██████████| 2.02MB,  197kB/s  
+data/validation-00000-of-00001-134b8fd0c(…): downloading bytes: ██████████| 2.02MB,  197kB/s  
+
+data/validation-00000-of-00001-134b8fd0c(…): reconstructing file: 100%|██████████| 2.08MB / 2.08MB,  203kB/s  
+
+
+Generating train split:   0%|          | 0/84437 [00:00<?, ? examples/s][A
+Generating train split: 100%|██████████| 84437/84437 [00:00<00:00, 423939.56 examples/s]
+
+
+Generating validation split:   0%|          | 0/4401 [00:00<?, ? examples/s][A
+Generating validation split: 100%|██████████| 4401/4401 [00:00<00:00, 285656.64 examples/s]
+[   2.2 min] chat pairs: 23436
+[   2.5 min] step 20 kd 1.2357 ce 3.969 lr 2.00e-05 tokens 0.2M trained 0.1M rows {'plain': 20, 'conv': 100, 'pad_tokens': 112044, 'conv_dropped': 1}
+[   3.0 min] step 40 kd 1.2462 ce 3.282 lr 3.98e-05 tokens 0.5M trained 0.2M rows {'plain': 44, 'conv': 196, 'pad_tokens': 216992, 'conv_dropped': 2}
+[   3.5 min] step 60 kd 0.9068 ce 2.425 lr 5.92e-05 tokens 0.7M trained 0.3M rows {'plain': 71, 'conv': 289, 'pad_tokens': 316349, 'conv_dropped': 2}
+[   4.0 min] step 80 kd 0.7550 ce 1.033 lr 7.80e-05 tokens 1.0M trained 0.4M rows {'plain': 89, 'conv': 391, 'pad_tokens': 430385, 'conv_dropped': 3}
+[   4.4 min] step 100 kd 1.1572 ce 3.178 lr 9.62e-05 tokens 1.2M trained 0.5M rows {'plain': 110, 'conv': 490, 'pad_tokens': 533132, 'conv_dropped': 9}
+[   4.9 min] step 120 kd 0.9550 ce 2.202 lr 9.45e-05 tokens 1.5M trained 0.6M rows {'plain': 137, 'conv': 583, 'pad_tokens': 636843, 'conv_dropped': 11}
+[   5.4 min] step 140 kd 1.1315 ce 2.230 lr 9.26e-05 tokens 1.7M trained 0.7M rows {'plain': 161, 'conv': 679, 'pad_tokens': 740918, 'conv_dropped': 14}
+[   5.9 min] step 160 kd 1.6389 ce 2.623 lr 9.04e-05 tokens 2.0M trained 0.8M rows {'plain': 181, 'conv': 779, 'pad_tokens': 862684, 'conv_dropped': 15}
+[   6.4 min] step 180 kd 1.0176 ce 2.283 lr 8.79e-05 tokens 2.2M trained 0.9M rows {'plain': 200, 'conv': 880, 'pad_tokens': 970540, 'conv_dropped': 19}
+[   6.8 min] step 200 kd 1.1763 ce 2.832 lr 8.53e-05 tokens 2.5M trained 1.0M rows {'plain': 222, 'conv': 978, 'pad_tokens': 1085715, 'conv_dropped': 20}
+[   7.3 min] step 220 kd 0.9202 ce 2.201 lr 8.24e-05 tokens 2.7M trained 1.1M rows {'plain': 246, 'conv': 1074, 'pad_tokens': 1192896, 'conv_dropped': 22}
+[   7.8 min] step 240 kd 1.2812 ce 4.032 lr 7.93e-05 tokens 2.9M trained 1.1M rows {'plain': 266, 'conv': 1174, 'pad_tokens': 1297640, 'conv_dropped': 23}
+[   9.3 min] eval {'step': 250, 'min': 8.0, 'tag': 'training', 'student_web': 1.4133, 'student_agent_replies': 1.1769, 'student_tools_replies': 0.979, 'probes_greedy': '4/6', 'probes_app': '3/6'} | 'The capital of France is **Paris** (Latin: *Pāri-sə-māri-sə-māri-sə-mā' / 'Here are a few ways to write a Python function that reverses a string,'
+[   9.5 min] step 260 kd 0.7738 ce 2.389 lr 7.60e-05 tokens 3.2M trained 1.2M rows {'plain': 285, 'conv': 1275, 'pad_tokens': 1399326, 'conv_dropped': 26}
+[  10.0 min] step 280 kd 1.7291 ce 2.883 lr 7.26e-05 tokens 3.4M trained 1.3M rows {'plain': 304, 'conv': 1376, 'pad_tokens': 1508031, 'conv_dropped': 26}
+[  10.5 min] step 300 kd 0.8672 ce 1.991 lr 6.91e-05 tokens 3.7M trained 1.4M rows {'plain': 334, 'conv': 1466, 'pad_tokens': 1606280, 'conv_dropped': 28}
+[  11.0 min] step 320 kd 1.1426 ce 4.671 lr 6.55e-05 tokens 3.9M trained 1.6M rows {'plain': 362, 'conv': 1558, 'pad_tokens': 1709116, 'conv_dropped': 28}
+[  11.5 min] step 340 kd 1.5365 ce 2.699 lr 6.18e-05 tokens 4.2M trained 1.6M rows {'plain': 389, 'conv': 1651, 'pad_tokens': 1818128, 'conv_dropped': 29}
+[  11.9 min] step 360 kd 1.1469 ce 2.921 lr 5.80e-05 tokens 4.4M trained 1.8M rows {'plain': 418, 'conv': 1742, 'pad_tokens': 1921146, 'conv_dropped': 30}
+[  12.4 min] step 380 kd 1.1150 ce 3.116 lr 5.42e-05 tokens 4.7M trained 1.9M rows {'plain': 449, 'conv': 1831, 'pad_tokens': 2021087, 'conv_dropped': 31}
+[  12.9 min] step 400 kd 1.3185 ce 3.069 lr 5.05e-05 tokens 4.9M trained 2.0M rows {'plain': 474, 'conv': 1926, 'pad_tokens': 2133015, 'conv_dropped': 32}
+[  13.4 min] step 420 kd 1.1594 ce 3.804 lr 4.68e-05 tokens 5.2M trained 2.1M rows {'plain': 499, 'conv': 2021, 'pad_tokens': 2233370, 'conv_dropped': 32}
+[  13.9 min] step 440 kd 1.2323 ce 2.542 lr 4.31e-05 tokens 5.4M trained 2.2M rows {'plain': 528, 'conv': 2112, 'pad_tokens': 2337288, 'conv_dropped': 34}
+[  14.3 min] step 460 kd 1.0420 ce 3.352 lr 3.95e-05 tokens 5.7M trained 2.3M rows {'plain': 555, 'conv': 2205, 'pad_tokens': 2444629, 'conv_dropped': 35}
+[  14.8 min] step 480 kd 0.5371 ce 0.779 lr 3.60e-05 tokens 5.9M trained 2.4M rows {'plain': 577, 'conv': 2303, 'pad_tokens': 2549309, 'conv_dropped': 36}
+[  15.3 min] step 500 kd 1.0331 ce 2.826 lr 3.27e-05 tokens 6.1M trained 2.5M rows {'plain': 602, 'conv': 2398, 'pad_tokens': 2648733, 'conv_dropped': 36}
+[  16.3 min] eval {'step': 500, 'min': 15.3, 'tag': 'training', 'student_web': 1.4069, 'student_agent_replies': 1.1631, 'student_tools_replies': 0.9407, 'probes_greedy': '3/6', 'probes_app': '3/6'} | 'The capital of France is **Paris** (Paris, France).<turn|>' / 'Here are a few ways to write a Python function that reverses a string,'
+[  16.7 min] step 520 kd 1.3439 ce 2.890 lr 2.95e-05 tokens 6.4M trained 2.6M rows {'plain': 640, 'conv': 2480, 'pad_tokens': 2736833, 'conv_dropped': 39}
+[  17.2 min] step 540 kd 0.9600 ce 2.824 lr 2.65e-05 tokens 6.6M trained 2.7M rows {'plain': 661, 'conv': 2579, 'pad_tokens': 2845687, 'conv_dropped': 41}
+[  17.7 min] step 560 kd 0.8674 ce 2.331 lr 2.37e-05 tokens 6.9M trained 2.8M rows {'plain': 691, 'conv': 2669, 'pad_tokens': 2935416, 'conv_dropped': 43}
+[  18.2 min] step 580 kd 0.9024 ce 2.773 lr 2.11e-05 tokens 7.1M trained 2.9M rows {'plain': 711, 'conv': 2769, 'pad_tokens': 3058904, 'conv_dropped': 43}
+[  18.7 min] step 600 kd 1.2584 ce 3.085 lr 1.87e-05 tokens 7.4M trained 3.0M rows {'plain': 738, 'conv': 2862, 'pad_tokens': 3166928, 'conv_dropped': 44}
+[  19.1 min] step 620 kd 0.9369 ce 2.444 lr 1.66e-05 tokens 7.6M trained 3.1M rows {'plain': 765, 'conv': 2955, 'pad_tokens': 3268344, 'conv_dropped': 45}
+[  19.6 min] step 640 kd 1.0226 ce 3.231 lr 1.48e-05 tokens 7.9M trained 3.2M rows {'plain': 783, 'conv': 3057, 'pad_tokens': 3381369, 'conv_dropped': 45}
+[  20.1 min] step 660 kd 0.8306 ce 1.373 lr 1.32e-05 tokens 8.1M trained 3.3M rows {'plain': 816, 'conv': 3144, 'pad_tokens': 3480945, 'conv_dropped': 45}
+[  20.6 min] step 680 kd 1.1457 ce 2.576 lr 1.20e-05 tokens 8.4M trained 3.4M rows {'plain': 849, 'conv': 3231, 'pad_tokens': 3572552, 'conv_dropped': 45}
+[  21.1 min] step 700 kd 1.3772 ce 3.281 lr 1.10e-05 tokens 8.6M trained 3.5M rows {'plain': 875, 'conv': 3325, 'pad_tokens': 3672749, 'conv_dropped': 46}
+[  21.6 min] step 720 kd 0.9457 ce 2.951 lr 1.04e-05 tokens 8.8M trained 3.6M rows {'plain': 901, 'conv': 3419, 'pad_tokens': 3780719, 'conv_dropped': 47}
+[  22.0 min] step 740 kd 1.4386 ce 3.054 lr 1.00e-05 tokens 9.1M trained 3.7M rows {'plain': 916, 'conv': 3524, 'pad_tokens': 3885798, 'conv_dropped': 47}
+[  23.3 min] eval {'step': 750, 'min': 22.3, 'tag': 'training', 'student_web': 1.3986, 'student_agent_replies': 1.1651, 'student_tools_replies': 0.928, 'probes_greedy': '5/6', 'probes_app': '5/6'} | 'The capital of France is **Paris** (Paris, France).<turn|>' / 'Here are a few ways to write a Python function that reverses a string,'
+[  24.4 min] eval {'step': 750, 'min': 23.3, 'tag': 'end', 'student_web': 1.3986, 'student_agent_replies': 1.1651, 'student_tools_replies': 0.928, 'probes_greedy': '5/6', 'probes_app': '5/6'} | 'The capital of France is **Paris** (Paris, France).<turn|>' / 'Here are a few ways to write a Python function that reverses a string,'
+
+
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s][A
+
+Writing model shards: 100%|██████████| 1/1 [00:01<00:00,  1.06s/it][A
+Writing model shards: 100%|██████████| 1/1 [00:01<00:00,  1.06s/it]
+[  24.4 min] checkpoint final step 750
+[  24.4 min] done {'teacher': {'teacher_web': 1.4859, 'teacher_agent_replies': 1.6121}, 'before': {'step': 0, 'min': 0.9, 'tag': 'cut, before healing', 'student_web': 1.3265, 'student_agent_replies': 1.1008, 'student_tools_replies': 0.9929, 'samples': [{'mode': 'greedy', 'prompt': 'What is the capital of France? Answer in one sentence.', 'reply': 'The capital of France is **Paris** (or **Parisian**).<turn|>'}, {'mode': 'greedy', 'prompt': 'Write a Python function that reverses a string.', 'reply': 'Here are a few ways to write a Python function that reverses a string, ranging from the most common and efficient to a more concise one.\n\n### 1. Using the `str.reverse()` method (Most Pythonic)\n\nThis is the most straightforward and efficient way to reverse a string.\n\n```python\ndef reverse_string(s):\n    """\n    Reverses a string using the .reverse() method.\n    """\n    return s.reverse'}, {'mode': 'greedy', 'prompt': 'Explain why the sky is blue in two sentences.', 'reply': 'Here are two sentences explaining why the sky is blue:\n\n**Why the sky is blue in two sentences: **"The sky is blue in two sentences."****\n\n**Explanation of the difference between the two sentences (and why they are different):**\n\n* **"The sky is blue in two sentences"** is a **simple, direct statement** that states the sky is blue.\n* **"The sky is blue in two sentences"** is a **'}, {'mode': 'greedy', 'prompt': 'What is 17 times 23? Think step by step, then answer.', 'reply': "Here's how to solve the problem:\n\n**1. Set up the equation**\n\nYou have 17 times 23.\n$$17 \\times 23 = 17 \\times (20 + 3) = 340 + 51 = 391$$\n\n**2. Solve for the first term (23)**\n\nTo find the first term, you need to divide the total number of terms by"}, {'mode': 'greedy', 'prompt': "What's the weather like in Phoenix right now?", 'reply': '<|tool_call>call:get_weather{city:<|"|>Phoenix<|"|>}<tool_call|><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response>'}, {'mode': 'greedy', 'prompt': 'star trek, detail in turn 2', 'reply': '<|tool_call>call:web_search{query:<|"|>death star trek<|"|>}<tool_call|><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response>', 'pass': True}, {'mode': 'greedy', 'prompt': 'name given in turn 2', 'reply': '<|tool_call>call:web_search{query:<|"|>Patrick stewart<|"|>}<tool_call|><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response>', 'pass': True}, {'mode': 'greedy', 'prompt': 'answer from a tool result', 'reply': '<eos>', 'pass': False}, {'mode': 'greedy', 'prompt': 'same call, different result', 'reply': '<eos>', 'pass': False}, {'mode': 'greedy', 'prompt': 'tool error', 'reply': '<eos>', 'pass': False}, {'mode': 'greedy', 'prompt': 'what do you remember about me', 'reply': '<|tool_call>call:web_search{query:<|"|>who is the user<|"|>}<tool_call|><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response>', 'pass': False}, {'mode': 'app', 'prompt': 'What is the capital of France? Answer in one sentence.', 'reply': 'The capital of France is **Paris** (or sometimes called the capital of France) in the context of its history and culture.<turn|>'}, {'mode': 'app', 'prompt': 'Write a Python function that reverses a string.', 'reply': 'Here are a few ways to write a Python function that reverses a string, ranging from the most idiomatic and concise to more modern approaches.\n\n### 1. Using the `reversed()` method (Most Concise)\n\nThis is the cleanest and fastest way to reverse a string in Python.\n\n```python\ndef reverse_string(s):\n    """Reverses a string using the built-in reversed() method."""\n    return s[::-1]\n\n# Example usage'}, {'mode': 'app', 'prompt': 'Explain why the sky is blue in two sentences.', 'reply': 'Here are two sentences explaining why the sky is blue:\n\n**"The sky is blue in two sentences."**\n\n**Explanation of Blue in Two Sentences (Why it\'s blue):**\n\n* **Blue means "light," and "blue" means "dark."**\n* **In two sentences, the light is blue.**\n\n**Why it\'s Blue in Two Sentences (What makes it blue):**\n\n* **It\'s a visual phenomenon'}, {'mode': 'app', 'prompt': 'What is 17 times 23? Think step by step, then answer.', 'reply': "Here's how to solve the problem:\n\n**1. Set up the equation**\n\nYou need to find 17 times 23.\n\n$$17 \\times 23 = 17 \\times (20 + 3) = 340 + 51 = 391$$\n\n**2. Solve for the first number ($x$ )**\n\nTo isolate $x$ in terms of 391,"}, {'mode': 'app', 'prompt': "What's the weather like in Phoenix right now?", 'reply': '<|tool_call>call:get_weather{city:<|"|>Phoenix<|"|>}<tool_call|><|tool_response><eos>'}, {'mode': 'app', 'prompt': 'star trek, detail in turn 2', 'reply': '<|tool_call>call:web_search{query:<|"|>death star trek<|"|>}<tool_call|><|tool_response><eos>', 'pass': True}, {'mode': 'app', 'prompt': 'name given in turn 2', 'reply': '<|tool_call>call:web_search{query:<|"|>Patrick stewart<|"|>}<tool_call|><|tool_response><eos>', 'pass': True}, {'mode': 'app', 'prompt': 'answer from a tool result', 'reply': '<eos>', 'pass': False}, {'mode': 'app', 'prompt': 'same call, different result', 'reply': '<eos>', 'pass': False}, {'mode': 'app', 'prompt': 'tool error', 'reply': '<eos>', 'pass': False}, {'mode': 'app', 'prompt': 'what do you remember about me', 'reply': '<|tool_call>call:web_search{query:<|"|>who is the user<|"|>}<tool_call|><|tool_response><eos>', 'pass': False}], 'probes_greedy': '2/6', 'probes_app': '2/6'}, 'after': {'step': 750, 'min': 23.3, 'tag': 'end', 'student_web': 1.3986, 'student_agent_replies': 1.1651, 'student_tools_replies': 0.928, 'samples': [{'mode': 'greedy', 'prompt': 'What is the capital of France? Answer in one sentence.', 'reply': 'The capital of France is **Paris** (Paris, France).<turn|>'}, {'mode': 'greedy', 'prompt': 'Write a Python function that reverses a string.', 'reply': 'Here are a few ways to write a Python function that reverses a string, ranging from the most direct and efficient to a more Pythonic approach.\n\n### 1. Using the `reversed()` function (Most Pythonic)\n\nThe `reversed()` function is the most Pythonic and generally the fastest way to reverse a string.\n\n```python\ndef reverse_string(s):\n    """\n    Reverses a string in the order it appears.\n\n    Args:'}, {'mode': 'greedy', 'prompt': 'Explain why the sky is blue in two sentences.', 'reply': 'Here are two sentences that explain why the sky is blue:\n\n**1. The sky is blue.**\n* **Why it is blue.** It is a **vibrant, vibrant sky** with a deep, vibrant blue color. This light is what makes the sky so beautiful.\n\n**2. The sky is vibrant.**\n* **Why it is vibrant.** It is a **vibrant, vibrant sky** with a vibrant, vibrant color. This light is what makes'}, {'mode': 'greedy', 'prompt': 'What is 17 times 23? Think step by step, then answer.', 'reply': 'Here\'s how to solve the problem:\n\n**1. Understand the relationship between the numbers.**\n\nThe problem states: "What is 17 times 23?"\n\nThis means we need to find the product of 17 and 23.\n\n**2. Calculate the product of 17 and 23.**\n\n* **Step 1: Multiply 17 by 17.**\n   $$17 \\times 17'}, {'mode': 'greedy', 'prompt': "What's the weather like in Phoenix right now?", 'reply': '<|tool_call>call:get_weather{city:<|"|>Phoenix<|"|>}<tool_call|><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response>'}, {'mode': 'greedy', 'prompt': 'star trek, detail in turn 2', 'reply': '<|tool_call>call:web_search{query:<|"|>death star trek<|"|>}<tool_call|><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response>', 'pass': True}, {'mode': 'greedy', 'prompt': 'name given in turn 2', 'reply': '<|tool_call>call:web_search{query:<|"|>patrick stewart<|"|>}<tool_call|><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response>', 'pass': True}, {'mode': 'greedy', 'prompt': 'answer from a tool result', 'reply': 'The weather in Phoenix, Arizona is currently **61°F** (14°C) with **light rain** and **wind** of 14 mph.\n\nIt sounds like a beautiful day! Enjoy your visit!<turn|>', 'pass': True}, {'mode': 'greedy', 'prompt': 'same call, different result', 'reply': 'The weather in Phoenix, Arizona is currently **97°F** (29.7°C) with clear skies and sunny conditions. It is a pleasant day for an outdoor event!<turn|>', 'pass': True}, {'mode': 'greedy', 'prompt': 'tool error', 'reply': 'I apologize, but I encountered an issue with the web search tool. I was unable to find the exact location for "Phoenix" in the search results.\n\nCould you please provide me with the **query** you are looking for?<turn|>', 'pass': True}, {'mode': 'greedy', 'prompt': 'what do you remember about me', 'reply': '<|tool_call>call:web_search{query:<|"|>me<|"|>}<tool_call|><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response>', 'pass': False}, {'mode': 'app', 'prompt': 'What is the capital of France? Answer in one sentence.', 'reply': 'The capital of France is **Paris** (the capital of France).<turn|>'}, {'mode': 'app', 'prompt': 'Write a Python function that reverses a string.', 'reply': 'Here are a few ways to write a Python function that reverses a string, ranging from the most direct and efficient way to reverse it to more advanced methods like **slicing** or **reversing** (which is often preferred in production code).\n\n### 1. Using `reversed()` (The Most Efficient Way)\n\nThis is the cleanest and fastest way to reverse a string in Python.\n\n```python\ndef reverse_string(s):\n    """\n    '}, {'mode': 'app', 'prompt': 'Explain why the sky is blue in two sentences.', 'reply': 'Here are two sentences that explain why the sky is blue:\n\n**1. The sky is blue.**\n* **Meaning in a simple sentence (or more):** The sky is blue.\n\n**2. The sky is blue.**\n* **Meaning in a more formal or descriptive context (e.g., "The sky is blue"):** The sky is blue.\n\n---\n\n### Why these sentences are effective:\n\n1. **Stronger Verbs/Ad'}, {'mode': 'app', 'prompt': 'What is 17 times 23? Think step by step, then answer.', 'reply': "Here's how to solve the problem:\n\n**1. Understand the relationship between 17 and 23.**\n\nThe problem states that 17 times 23 is equal to $17 \\times 23$ (or $17 \\times 23 = 17 \\times (23 - 1)$).\n\n**2. Set up the equation based on the given information.**\n\nWe are told that $17 \\"}, {'mode': 'app', 'prompt': "What's the weather like in Phoenix right now?", 'reply': '<|tool_call>call:get_weather{city:<|"|>Phoenix<|"|>}<tool_call|><|tool_response><|tool_response><|tool_response><|tool_response><eos>'}, {'mode': 'app', 'prompt': 'star trek, detail in turn 2', 'reply': '<|tool_call>call:web_search{query:<|"|>death star trek<|"|>}<tool_call|><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response>', 'pass': True}, {'mode': 'app', 'prompt': 'name given in turn 2', 'reply': '<|tool_call>call:web_search{query:<|"|> Feedback on Patrick\'s stewart<|"|>}<tool_call|><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response>', 'pass': True}, {'mode': 'app', 'prompt': 'answer from a tool result', 'reply': 'The weather in Phoenix, AZ is currently **61°F** (142.5°C) with light rain and a wind of 14 mph.<turn|>', 'pass': True}, {'mode': 'app', 'prompt': 'same call, different result', 'reply': 'The weather in Phoenix, Arizona is currently **97°F** (26.5°C) with clear skies and sunny conditions.<turn|>', 'pass': True}, {'mode': 'app', 'prompt': 'tool error', 'reply': 'I apologize, but I encountered an issue with the web search tool. The search service was unable to find a specific location for "Phoenix" in the provided query.\n\nCould you please provide me with any other details you remember about it? For example, are you looking for:\n\n*   A general description of the weather in Phoenix?\n*   Any specific coordinates or conditions?\n*   A summary of the weather in those coordinates?<turn|>', 'pass': True}, {'mode': 'app', 'prompt': 'what do you remember about me', 'reply': '<|tool_call>call:web_search{query:<|"|>me<|"|>}<tool_call|><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response><|tool_response>', 'pass': False}], 'probes_greedy': '5/6', 'probes_app': '5/6'}, 'steps': 750, 'steps_target': 750, 'trained_tokens': 3759231, 'tokens': 9216000, 'student_params': 1312263168, 'keep_layers': [0, 1, 3, 4, 5, 7, 8, 9, 10, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34], 'ffn': 0.42, 'vocab': 79997}
+exit code 0 after 24.7 min
