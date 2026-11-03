@@ -1,0 +1,24 @@
+{
+ "slug": "tiny-gemma4-mlc-heal4a",
+ "flavor": "cpu-upgrade",
+ "timeout": "90m",
+ "files": [
+  "experiments/tiny-gemma4/mlc_job.sh",
+  "experiments/tiny-gemma4/to_mlc.py",
+  "experiments/tiny-gemma4/patch_mlc.py"
+ ],
+ "pip": [
+  "transformers==5.21.0",
+  "safetensors",
+  "sentencepiece",
+  "protobuf",
+  "huggingface_hub",
+  "tokenizers",
+  "brotli>=1.2.0"
+ ],
+ "upload_every": 600,
+ "outdir": "out",
+ "cmd": "CKPT=kealjones/tp-parse-runs:tiny-gemma4-heal4-pilot-kd/6ae969b60e0338d1bb7ee4cb/ckpt REPO=kealjones/tiny-gemma4-test-MLC NAME=tiny-gemma4-heal4a bash mlc_job.sh out",
+ "out": "experiments/tiny-gemma4/hf-mlc-heal4a",
+ "note": "WebLLM (MLC, WebGPU) export of heal 4 pilot A. First run of this pipeline (never smoke-tested): steps.txt says where it stops. Keal's go 2026-11-03. CPU, under ~$0.10."
+}
