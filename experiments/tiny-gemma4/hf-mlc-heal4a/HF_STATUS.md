@@ -1,4 +1,11 @@
 # Hugging Face job: tiny-gemma4-mlc-heal4a
 
-Status: **running** on `cpu-upgrade` (started 2026-11-03T15:59:13+00:00, time limit 90m, so at most about $0.04)
+Status: **error (exit 1)** after 2.6 min of work on `cpu-upgrade`, about $0.00 (plus a minute or two of startup)
 Job page: https://huggingface.co/jobs/kealjones/6aea04d10e0338d1bb7f57e8
+
+Files copied here:
+- JOB_LOG.txt
+- job_status.json
+- steps.txt
+
+Hugging Face says: Job failed with exit code: 1. Reason: Error
