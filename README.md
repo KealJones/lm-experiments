@@ -20,7 +20,7 @@ parser; the history of every moved file came along.
 - [`harness`](experiments/harness/) — Harness, first cut
 - [`kaggle-smoke`](experiments/kaggle-smoke/) — Kaggle smoke test: a GPU notebook that checks the Kaggle bridge works end to end
 - [`loop-concept`](experiments/loop-concept/) — Loop concept vs loop syntax: does a looked-up snippet let a small model write loops in a language it never saw?
-- [`random-weights`](experiments/random-weights/) — Random weights: a tiny GPT-2 that never trains, with four ways to fill its weights at random
+- [`random-weights`](experiments/random-weights/) — Random weights: tiny untrained GPT-2, Qwen3 and Gemma 4 with four ways to fill their weights at random
 - [`real`](experiments/real/) — Simple language first, with real data
 - [`registers-v2`](experiments/registers-v2/) — Registers v2
 - [`registers`](experiments/registers/) — Registers: a state table inside a small model

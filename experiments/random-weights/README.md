@@ -10,7 +10,9 @@ A 2-layer GPT-2 (width 128, 2 heads, 6.9M parameters, nearly all of them the GPT
 
 Each one is scored on the first 10,240 tokens of WikiText-2 test and asked to continue three prompts (20 sampled tokens, 12 greedy).
 
-Run: `uv run experiments/random-weights/random_weights.py` (CPU, under a minute after the download). Spend: $0.
+Round 2 does the same in two newer architectures, each with its own tokenizer: **Qwen3** (copied from Qwen3 0.6B) and **Gemma 4** (copied from Gemma 4 E2B; Gemma 3 is gated on Hugging Face, Gemma 4 is Apache-2.0 and open). `model.py` loads the real config and shrinks it to 2 layers, width 128, 2 heads. Gemma 4's per-layer embedding is cut from 256 to 16 wide, or it alone would be 134M parameters.
+
+Run: `uv run experiments/random-weights/random_weights.py [gpt2 qwen3 gemma4]` (CPU, a few minutes after the download). Chat with one: `uv run experiments/random-weights/chat.py [gpt2|qwen3|gemma4] [default|normal1|normal10|uniform]`. Qwen3 and Gemma 4 use their own chat templates. Spend: $0.
 
 ## Results (local CPU, 2026-11-03)
 
@@ -34,5 +36,23 @@ Sample outputs:
 - **Bigger random numbers make a confident idiot.** At std 1 or 10 the logits blow up and the model bets everything on a few tokens (59 to 62 different top picks across all 10,240 positions: `sonian`, `View`, `orthodox`, `PI`). It's wrong with huge confidence, so the loss goes far past the blind guess.
 - **It barely reads the prompt.** The default init's sampled continuations are almost the same string for all three prompts. With near-flat logits, the random draws decide the output, not the input. Greedy loops on one token after a few steps.
 - normal 1.0 and normal 10 share a seed, so they're the same direction scaled up; that's why they favour the same tokens.
+
+## Round 2: Qwen3 and Gemma 4 (local CPU, 2026-11-03)
+
+Vocabularies differ, so the table shows loss above a blind guess (ln V) rather than raw loss.
+
+| init | GPT-2 (6.9M, V 50k) | Qwen3 (19.9M, V 152k) | Gemma 4 (42.4M, V 262k) |
+|---|---|---|---|
+| default (normal 0.02) | +0.009 | +0.009 | +0.023 |
+| uniform -1..1 | +12.6 | +7.6 | +6.3 |
+| normal 1.0 | +55.3 | +41.3 | +20.1 |
+| normal 10 | +6,597 | +5,282 | **+30.1** |
+
+Distinct top-1 tokens over 10,240 positions: GPT-2 59 to 4,250, Qwen3 2,911 to 5,542, Gemma 4 14 to 8,755.
+
+- **Same story in newer architectures.** Nothing beats a blind guess; the default init is always closest because its logits are nearly flat.
+- **Gemma 4 can't blow up.** It squashes its final logits into ±30 (`final_logit_softcapping`), so even at std 10 the loss stops at +30 (42.5). GPT-2 and Qwen3 have no cap and reach thousands. Normal 10 also collapses Gemma 4 onto 14 tokens, and greedy decoding picks a special token straight away, so it says nothing.
+- **Qwen3 spreads its bets more.** At std 1 and 10 it still uses 5,000+ different top picks where GPT-2 uses about 60. Not checked why; the architectures differ in several places (RMSNorm, gated MLP, rotary positions).
+- **The tokenizer sets the flavour of the noise.** GPT-2 gibberish is English-ish fragments; Qwen3 mixes Chinese, Korean and code (`.catch.catch.catch`, `MouseEventArgs`); Gemma 4 pulls from dozens of scripts (Bengali, Tamil, Devanagari) and `<unused3086>` tokens.
 
 Takeaway: random weights give you a tokenizer-flavoured noise machine. Everything a model "knows" is in training; the architecture alone gives nothing measurable here.
