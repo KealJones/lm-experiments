@@ -20,5 +20,9 @@
  "slug": "tiny-gemma4-mlc-heal4a-2",
  "cmd": "CKPT=kealjones/tp-parse-runs:tiny-gemma4-heal4-pilot-kd/6ae969b60e0338d1bb7ee4cb/ckpt REPO=kealjones/tiny-gemma4-test-MLC NAME=tiny-gemma4-heal4a bash mlc_job.sh out",
  "out": "experiments/tiny-gemma4/hf-mlc-heal4a-2",
- "note": "WebLLM (MLC) export of heal 4 pilot A, second try: the nightly mlc-llm wheel has no Gemma 4, so the job overlays mlc-llm's Python source at 44fd06d (patch_mlc.py checked against it), then fixes stop tokens for the pruned vocab and keeps the tool markers in decoded text. CPU, under ~$0.10."
+ "note": "WebLLM (MLC) export of heal 4 pilot A, second try: the nightly mlc-llm wheel has no Gemma 4, so the job overlays mlc-llm's Python source at 44fd06d (patch_mlc.py checked against it), then fixes stop tokens for the pruned vocab and keeps the tool markers in decoded text. CPU, under ~$0.10.",
+ "job_id": "6aea0699c78863f9c631e242",
+ "url": "https://huggingface.co/jobs/kealjones/6aea0699c78863f9c631e242",
+ "started": "2026-11-03T16:06:49+00:00",
+ "sha": "ec5b7e274a3ea98a6539e0aeabcf8e6e926f24d6"
 }
