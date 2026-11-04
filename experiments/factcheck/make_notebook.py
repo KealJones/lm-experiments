@@ -1,0 +1,66 @@
+"""Builds factcheck.ipynb for Kaggle (2x T4, internet on).
+GPU 0: Qwen3 0.6B then Qwen3.5 0.8B; GPU 1: Llama 3.2 1B then Qwen2.5 Coder 1.5B.
+Tool smoke test, pilot (2 questions) for Qwen3 + Llama, then the full run, then RESULTS.md."""
+import base64, json, pathlib
+
+here = pathlib.Path(__file__).parent
+FILES = ["factcheck.py", "questions.json"]
+B64 = {f: base64.b64encode((here / f).read_bytes()).decode() for f in FILES}
+
+SETUP = f'''import base64, os, subprocess, sys
+for f, b in {json.dumps(B64)}.items():
+    open(f, "wb").write(base64.b64decode(b))
+os.environ["HF_HUB_DISABLE_PROGRESS_BARS"] = "1"
+os.environ["TRANSFORMERS_VERBOSITY"] = "error"
+subprocess.run([sys.executable, "-m", "pip", "install", "-q", "-U", "transformers", "accelerate"], check=False)
+import transformers
+print("transformers", transformers.__version__)
+r = subprocess.run([sys.executable, "factcheck.py", "check"], capture_output=True, text=True)
+print(r.stdout[-2500:], r.stderr[-2500:])
+assert r.returncode == 0, "tool check failed (internet on?)"'''
+
+RUN = '''import glob, time, torch
+NGPU = max(1, torch.cuda.device_count())
+print("GPUs:", [torch.cuda.get_device_name(i) for i in range(torch.cuda.device_count())])
+
+
+def go(tag, plan):
+    procs = []
+    for g, keys in plan.items():
+        log = open(f"log_{tag}_gpu{g}.txt", "w")
+        # ';' not '&&': one model failing (e.g. Qwen3.5 not loading) shouldn't skip the next one
+        cmd = " ; ".join(f"{sys.executable} -u factcheck.py worker --model {k} --gpu {g} --tag {tag}" for k in keys)
+        procs.append((g, subprocess.Popen(cmd, shell=True, stdout=log, stderr=subprocess.STDOUT)))
+    t0 = time.time()
+    while any(p.poll() is None for _, p in procs):
+        time.sleep(30 if tag == "pilot" else 120)
+        for g, _ in procs:
+            lines = [l for l in open(f"log_{tag}_gpu{g}.txt").read().splitlines() if l.strip()]
+            print(f"[{(time.time()-t0)/60:5.1f} min gpu{g}] " + (lines[-1][:200] if lines else "starting"), flush=True)
+    for g, p in procs:
+        print(f"--- gpu{g} ---\\n" + open(f"log_{tag}_gpu{g}.txt").read()[-4000:])
+
+
+if NGPU > 1:
+    PILOT, FULL = {0: ["qwen3"], 1: ["llama"]}, {0: ["qwen3", "qwen35"], 1: ["llama", "coder"]}
+else:
+    PILOT, FULL = {0: ["qwen3", "llama"]}, {0: ["qwen3", "llama", "coder", "qwen35"]}
+go("pilot", PILOT)
+GO = len(glob.glob("results_pilot_*.json")) >= 1
+print("Pilot ok; full run starting." if GO else "Pilot FAILED; full run skipped.")'''
+
+FULL = '''if GO:
+    go("full", FULL)
+r = subprocess.run([sys.executable, "factcheck.py", "report"], capture_output=True, text=True)
+print(r.stdout[-10000:], r.stderr[-3000:])'''
+
+head = ("# Draft -> fact-check\n\nSmall models answer 12 easy-to-look-up questions with Wikipedia/Wikidata tools, then "
+        "review their own answer (and a planted wrong one) in a fresh chat, plain and strict. Results: `RESULTS.md`; "
+        "transcripts in `results_full_*.json`.")
+cells = [{"cell_type": "markdown", "metadata": {}, "source": head}]
+for src in (SETUP, RUN, FULL):
+    cells.append({"cell_type": "code", "metadata": {}, "execution_count": None, "outputs": [], "source": src})
+nb = {"cells": cells, "metadata": {"kernelspec": {"name": "python3", "display_name": "Python 3", "language": "python"},
+      "language_info": {"name": "python"}, "accelerator": "GPU"}, "nbformat": 4, "nbformat_minor": 5}
+(here / "factcheck.ipynb").write_text(json.dumps(nb))
+print("factcheck.ipynb", round(len(json.dumps(nb)) / 1e6, 3), "MB")
