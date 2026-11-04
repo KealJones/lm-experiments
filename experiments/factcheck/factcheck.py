@@ -157,7 +157,7 @@ def tool_wikidata(entity="", property="", **_):
     lines = []
     for pid, vals, n in rows:
         lab = labels.get(pid, pid)
-        if property and str(property).lower() not in lab.lower():
+        if property and not any(w in lab.lower() for w in re.findall(r"[a-z]{3,}", str(property).lower())):
             continue
         more = f" (+{n - len(vals)} more)" if n > len(vals) else ""
         lines.append(f"- {lab}: " + "; ".join(show(k, v) for k, v in vals) + more)
@@ -188,7 +188,7 @@ TOOLS = [
     {"type": "function", "function": {
         "name": "wikidata",
         "description": "Look up hard facts about one thing (person, place, film, event) on Wikidata: dates, counts, "
-                       "heights, who holds an office, winners. Give `property` to filter, e.g. 'height' or 'head of government'.",
+                       "heights, who holds an office, winners. Give `property` to filter, e.g. 'elevation', 'date', 'head of government', 'winner'.",
         "parameters": {"type": "object", "properties": {
             "entity": {"type": "string", "description": "name of the thing, e.g. 'Mount Kilimanjaro'"},
             "property": {"type": "string", "description": "optional filter on the fact name"}},
@@ -210,8 +210,14 @@ def call_tool(name, args):
 
 # ---------------------------------------------------------------- prompts
 
-DRAFT_SYSTEM = (f"You are a helpful assistant. Today's date is {TODAY}. You can look things up with the tools "
-                "(Wikipedia search, reading Wikipedia pages, Wikidata facts). Answer the user briefly and directly.")
+DRAFT_SYSTEM = {
+    "free": (f"You are a helpful assistant. Today's date is {TODAY}. You can look things up with the tools "
+             "(Wikipedia search, reading Wikipedia pages, Wikidata facts). Answer the user briefly and directly."),
+    "lookup": (f"You are a helpful assistant. Today's date is {TODAY}. Your memory is out of date and often wrong, "
+               "so ALWAYS look the answer up with the tools (Wikipedia search, reading Wikipedia pages, Wikidata "
+               "facts) before answering. Never answer from memory. When you have found it, answer the user briefly "
+               "and directly."),
+}
 
 FORMAT = ("End your reply with exactly these two lines:\n"
           "VERDICT: RIGHT or WRONG\n"
@@ -233,13 +239,15 @@ REVIEW = {
 
 TAGGED = re.compile(r"<tool_call>\s*(.*?)\s*</tool_call>", re.S)
 PY_TAG = re.compile(r"<\|python_tag\|>\s*(\{.*\})", re.S)
+FENCE = re.compile(r"```(?:json|tool_call|python)?\s*\n(.*?)```", re.S)
 
 
 def _as_call(j):
     if not isinstance(j, dict):
         return None
-    name = j.get("name") or (j.get("function") or {}).get("name")
-    args = j.get("arguments", j.get("parameters", (j.get("function") or {}).get("arguments", {})))
+    fn = j.get("function") if isinstance(j.get("function"), dict) else {}
+    name = j.get("name") if isinstance(j.get("name"), str) else fn.get("name")
+    args = j.get("arguments", j.get("parameters", fn.get("arguments", {})))
     if isinstance(args, str):
         try:
             args = json.loads(args)
@@ -268,6 +276,18 @@ def parse(reply):
     calls = []
     raws = TAGGED.findall(reply) or PY_TAG.findall(reply)
     text = TAGGED.sub("", reply).split("<tool_call>")[0]
+    if not raws:  # Qwen2.5 Coder: prose, then the call in a ```json fence
+        fenced = []
+        for block in FENCE.findall(reply):
+            for o in _bare_json_objects(block):
+                try:
+                    c = _as_call(json.loads(o))
+                except json.JSONDecodeError:
+                    c = None
+                if c and c[0] in TOOL_FNS:
+                    fenced.append(c)
+        if fenced:
+            return FENCE.sub("", reply).strip(), fenced
     if not raws:
         stripped = reply.strip()
         objs = _bare_json_objects(stripped)
@@ -405,7 +425,7 @@ def new_conv(system, user, **meta):
                 done=False, end="", turns=0, raw=[], tools=[], final=None)
 
 
-def worker(model_key, gpu, tag):
+def worker(model_key, gpu, tag, arm="free", planted=True):
     os.environ["CUDA_VISIBLE_DEVICES"] = str(gpu)
 
     def log(m):
@@ -417,7 +437,7 @@ def worker(model_key, gpu, tag):
     qs = QUESTIONS[:2] if tag == "pilot" else QUESTIONS
     samples = 1 if tag == "pilot" else SAMPLES
 
-    drafts = [new_conv(DRAFT_SYSTEM, q["q"], qid=q["id"], sample=s) for s in range(samples) for q in qs]
+    drafts = [new_conv(DRAFT_SYSTEM[arm], q["q"], qid=q["id"], sample=s) for s in range(samples) for q in qs]
     log(f"drafts: {len(drafts)}")
     run_convs(drafts, tok, model, dev, log)
     byid = {q["id"]: q for q in qs}
@@ -431,7 +451,7 @@ def worker(model_key, gpu, tag):
                                     qid=d["qid"], sample=d["sample"], style=style, draft_correct=d["correct"],
                                     source="own"))
     # planted: a known-wrong answer, so every model's catch rate is measured even if its own drafts are all right/wrong
-    for s in range(samples):
+    for s in range(samples if planted else 0):
         for q in qs:
             for style, (sys_p, user_p) in REVIEW.items():
                 reviews.append(new_conv(sys_p, user_p.format(q=q["q"], a=q["planted_wrong"]), qid=q["id"], sample=s,
@@ -444,16 +464,16 @@ def worker(model_key, gpu, tag):
         r["final_correct"] = is_correct(byid[r["qid"]], r["final_answer"]) if r["final_answer"] else (
             r["draft_correct"] if r["verdict"] == "right" else False)
 
-    out = {"model": MODELS[model_key], "key": model_key, "tag": tag, "seconds": round(time.time() - t0),
+    out = {"model": MODELS[model_key], "key": model_key, "arm": arm, "tag": tag, "seconds": round(time.time() - t0),
            "drafts": drafts, "reviews": reviews}
-    pathlib.Path(f"results_{tag}_{model_key}.json").write_text(json.dumps(out, indent=1, default=str))
+    pathlib.Path(f"results_{tag}_{model_key}_{arm}.json").write_text(json.dumps(out, indent=1, default=str))
     dc = sum(d["correct"] for d in drafts)
     own = [r for r in reviews if r["source"] == "own"]
     log(f"== {tag}: drafts correct {dc}/{len(drafts)}; " + "; ".join(
         f"{s} final correct {sum(r['final_correct'] for r in own if r['style'] == s)}/{len(drafts)}"
         for s in REVIEW) + "; planted caught " + ", ".join(
         f"{s} {sum(r['verdict'] == 'wrong' for r in reviews if r['source'] == 'planted' and r['style'] == s)}"
-        f"/{len(qs) * samples}" for s in REVIEW) + f" ({out['seconds']}s)")
+        f"/{len(qs) * samples if planted else 0}" for s in REVIEW) + f" ({out['seconds']}s)")
 
 
 # ---------------------------------------------------------------- report
@@ -483,7 +503,7 @@ def report(pattern="results_full_*.json"):
             wrong = [x for x in R if not x["draft_correct"]]
             right = [x for x in R if x["draft_correct"]]
             lines.append("| " + " | ".join([
-                r["model"], pct(dc, len(D)), style,
+                f"{r['model'].split('/')[-1]} ({r.get('arm', 'free')})", pct(dc, len(D)), style,
                 pct(sum(x["verdict"] == "wrong" for x in wrong), len(wrong)),
                 pct(sum(x["verdict"] == "wrong" for x in right), len(right)),
                 pct(sum(x["final_correct"] for x in R), len(R)),
@@ -493,7 +513,7 @@ def report(pattern="results_full_*.json"):
                 pct(sum(x["final_correct"] for x in P), len(P)),
                 pct(sum(x["verdict"] is None for x in R + P), len(R + P))]) + " |")
         for d in D:
-            per_q.setdefault(d["qid"], {}).setdefault(r["key"], []).append("✓" if d["correct"] else "✗")
+            per_q.setdefault(d["qid"], {}).setdefault(f"{r['key']}/{r.get('arm', 'free')}", []).append("✓" if d["correct"] else "✗")
         tools = [t["name"] for x in D for t in x["tools"]]
         lines.append(f"| | tool calls per draft: {len(tools) / max(1, len(D)):.1f} "
                      f"({', '.join(f'{n} {tools.count(n)}' for n in TOOL_FNS)}) | | | | | | | | | |")
@@ -517,6 +537,9 @@ def check():
     assert parse('{"name": "search", "parameters": {"query": "x"}}')[1] == [("search", {"query": "x"})]
     assert parse('The answer is {not json} 1930.')[1] == []
     assert read_review("blah\nVERDICT: WRONG\nFINAL ANSWER: Canberra") == ("wrong", "Canberra")
+    assert parse('I will use wikidata:\n```json\n{"name": "wikidata", "arguments": {"entity": "Pluto"}}\n```\nThis gets it.')[1] == [("wikidata", {"entity": "Pluto"})]
+    assert parse('{"name": "search", "function": "x", "parameters": {"query": "q"}}')[1] == [("search", {"query": "q"})]
+    assert parse('Here is code:\n```python\nprint(1)\n```')[1] == []
     print("check ok")
 
 
@@ -526,5 +549,7 @@ if __name__ == "__main__":
     ap.add_argument("--model", default="qwen3")
     ap.add_argument("--gpu", default="0")
     ap.add_argument("--tag", default="full")
+    ap.add_argument("--arm", default="free", choices=["free", "lookup"])
+    ap.add_argument("--no-planted", action="store_true")
     a = ap.parse_args()
-    {"check": check, "report": report}.get(a.cmd, lambda: worker(a.model, a.gpu, a.tag))()
+    {"check": check, "report": report}.get(a.cmd, lambda: worker(a.model, a.gpu, a.tag, a.arm, not a.no_planted))()

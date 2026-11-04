@@ -29,7 +29,11 @@ def go(tag, plan):
     for g, keys in plan.items():
         log = open(f"log_{tag}_gpu{g}.txt", "w")
         # ';' not '&&': one model failing (e.g. Qwen3.5 not loading) shouldn't skip the next one
-        cmd = " ; ".join(f"{sys.executable} -u factcheck.py worker --model {k} --gpu {g} --tag {tag}" for k in keys)
+        def one(spec):  # "model:arm" or "model:arm:np" (no planted reviews)
+            k, arm, *rest = spec.split(":")
+            return (f"{sys.executable} -u factcheck.py worker --model {k} --arm {arm} --gpu {g} --tag {tag}"
+                    + (" --no-planted" if rest else ""))
+        cmd = " ; ".join(one(k) for k in keys)
         procs.append((g, subprocess.Popen(cmd, shell=True, stdout=log, stderr=subprocess.STDOUT)))
     t0 = time.time()
     while any(p.poll() is None for _, p in procs):
@@ -41,12 +45,14 @@ def go(tag, plan):
         print(f"--- gpu{g} ---\\n" + open(f"log_{tag}_gpu{g}.txt").read()[-4000:])
 
 
+GPU0 = ["qwen3:free", "qwen3:lookup:np", "qwen35:free", "qwen35:lookup:np"]
+GPU1 = ["llama:free", "llama:lookup:np", "coder:free", "coder:lookup:np"]
 if NGPU > 1:
-    PILOT, FULL = {0: ["qwen3"], 1: ["llama"]}, {0: ["qwen3", "qwen35"], 1: ["llama", "coder"]}
+    PILOT, FULL = {0: ["qwen3:lookup"], 1: ["llama:free"]}, {0: GPU0, 1: GPU1}
 else:
-    PILOT, FULL = {0: ["qwen3", "llama"]}, {0: ["qwen3", "llama", "coder", "qwen35"]}
+    PILOT, FULL = {0: ["qwen3:lookup", "llama:free"]}, {0: GPU0 + GPU1}
 go("pilot", PILOT)
-GO = len(glob.glob("results_pilot_*.json")) >= 1
+GO = len(glob.glob("results_pilot_*.json")) >= 2
 print("Pilot ok; full run starting." if GO else "Pilot FAILED; full run skipped.")'''
 
 FULL = '''if GO:
@@ -55,7 +61,7 @@ r = subprocess.run([sys.executable, "factcheck.py", "report"], capture_output=Tr
 print(r.stdout[-10000:], r.stderr[-3000:])'''
 
 head = ("# Draft -> fact-check\n\nSmall models answer 12 easy-to-look-up questions with Wikipedia/Wikidata tools, then "
-        "review their own answer (and a planted wrong one) in a fresh chat, plain and strict. Results: `RESULTS.md`; "
+        "review their own answer (and a planted wrong one) in a fresh chat, plain and strict. Two draft arms: free and lookup (always look it up). Results: `RESULTS.md`; "
         "transcripts in `results_full_*.json`.")
 cells = [{"cell_type": "markdown", "metadata": {}, "source": head}]
 for src in (SETUP, RUN, FULL):
