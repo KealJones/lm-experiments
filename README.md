@@ -14,6 +14,7 @@ parser; the history of every moved file came along.
 - [`basic-english`](experiments/basic-english/) — Basic English → toki pona hub map
 - [`findout`](experiments/findout/) — Finding out: teach a small borrowed model the loop, not the facts
 - [`findout2`](experiments/findout2/) — Findout pilot (v2)
+- [`factcheck`](experiments/factcheck/) — Draft -> fact-check: small models answer with Wikipedia/Wikidata tools, then review (and fix) their own answer; Haiku baseline
 - [`finetune`](experiments/finetune/) — Fine-tune test
 - [`gemma-traces`](experiments/gemma-traces/) — Gemma traces: what Gemma 4 E4B and E2B think on 38 messy, real-style prompts, as input to Squiggle's training template
 - [`goals`](experiments/goals/) — Goals + lookup
