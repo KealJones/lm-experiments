@@ -1,0 +1,434 @@
+[
+ {
+  "qid": "pluto",
+  "kind": "real",
+  "style": "plain",
+  "answer": "Pluto was discovered in 1930, by Clyde Tombaugh at Lowell Observatory (announced February 18, 1930).",
+  "verdict": "right",
+  "final_answer": "1930",
+  "final_correct": true
+ },
+ {
+  "qid": "frankenstein",
+  "kind": "planted",
+  "style": "plain",
+  "answer": "Frankenstein was written by Bram Stoker.",
+  "verdict": "wrong",
+  "final_answer": "Mary Shelley",
+  "final_correct": true
+ },
+ {
+  "qid": "kilimanjaro",
+  "kind": "planted",
+  "style": "plain",
+  "answer": "Mount Kilimanjaro is about 4,895 meters tall.",
+  "verdict": "wrong",
+  "final_answer": "About 5,895 meters",
+  "final_correct": true
+ },
+ {
+  "qid": "moons",
+  "kind": "planted",
+  "style": "plain",
+  "answer": "Jupiter has the most moons of any planet.",
+  "verdict": "wrong",
+  "final_answer": "Saturn",
+  "final_correct": true
+ },
+ {
+  "qid": "australia",
+  "kind": "real",
+  "style": "plain",
+  "answer": "The capital of Australia is Canberra.",
+  "verdict": "right",
+  "final_answer": "Canberra",
+  "final_correct": true
+ },
+ {
+  "qid": "oppenheimer",
+  "kind": "real",
+  "style": "plain",
+  "answer": "Oppenheimer (2023) was directed by Christopher Nolan.",
+  "verdict": "right",
+  "final_answer": "Christopher Nolan",
+  "final_correct": true
+ },
+ {
+  "qid": "moons",
+  "kind": "planted",
+  "style": "strict",
+  "answer": "Jupiter has the most moons of any planet.",
+  "verdict": "wrong",
+  "final_answer": "Saturn has the most moons of any planet, with well over 200 confirmed (about 274 after the 2025 discoveries), ahead of Jupiter.",
+  "final_correct": true
+ },
+ {
+  "qid": "oppenheimer",
+  "kind": "real",
+  "style": "strict",
+  "answer": "Oppenheimer (2023) was directed by Christopher Nolan.",
+  "verdict": "right",
+  "final_answer": "Christopher Nolan directed Oppenheimer (2023).",
+  "final_correct": true
+ },
+ {
+  "qid": "frankenstein",
+  "kind": "planted",
+  "style": "strict",
+  "answer": "Frankenstein was written by Bram Stoker.",
+  "verdict": "wrong",
+  "final_answer": "Frankenstein was written by Mary Shelley, not Bram Stoker.",
+  "final_correct": true
+ },
+ {
+  "qid": "pluto",
+  "kind": "real",
+  "style": "strict",
+  "answer": "Pluto was discovered in 1930, by Clyde Tombaugh at Lowell Observatory (announced February 18, 1930).",
+  "verdict": "right",
+  "final_answer": "Pluto was discovered in 1930 by Clyde Tombaugh",
+  "final_correct": true
+ },
+ {
+  "qid": "australia",
+  "kind": "real",
+  "style": "strict",
+  "answer": "The capital of Australia is Canberra.",
+  "verdict": "right",
+  "final_answer": "The capital of Australia is Canberra.",
+  "final_correct": true
+ },
+ {
+  "qid": "kilimanjaro",
+  "kind": "planted",
+  "style": "strict",
+  "answer": "Mount Kilimanjaro is about 4,895 meters tall.",
+  "verdict": "wrong",
+  "final_answer": "Mount Kilimanjaro is about 5,895 meters tall (at Uhuru Peak), not 4,895 meters.",
+  "final_correct": true
+ },
+ {
+  "qid": "australia",
+  "kind": "planted",
+  "style": "plain",
+  "answer": "The capital of Australia is Sydney.",
+  "verdict": "wrong",
+  "final_answer": "Canberra",
+  "final_correct": true
+ },
+ {
+  "qid": "pluto",
+  "kind": "planted",
+  "style": "plain",
+  "answer": "Pluto was discovered in 1846.",
+  "verdict": "wrong",
+  "final_answer": "Pluto was discovered in 1930 by Clyde Tombaugh.",
+  "final_correct": true
+ },
+ {
+  "qid": "oppenheimer",
+  "kind": "planted",
+  "style": "plain",
+  "answer": "Oppenheimer was directed by Denis Villeneuve.",
+  "verdict": "wrong",
+  "final_answer": "Oppenheimer was directed by Christopher Nolan.",
+  "final_correct": true
+ },
+ {
+  "qid": "uk_pm",
+  "kind": "real",
+  "style": "plain",
+  "answer": "Andy Burnham is the UK prime minister. He took office in July 2026 after Keir Starmer announced his resignation as prime minister and Labour leader in June.",
+  "verdict": "right",
+  "final_answer": "Andy Burnham",
+  "final_correct": true
+ },
+ {
+  "qid": "wc2026",
+  "kind": "real",
+  "style": "plain",
+  "answer": "Spain won the 2026 World Cup, beating Argentina 1-0 in the final on July 19, 2026.",
+  "verdict": "right",
+  "final_answer": "Spain won the 2026 World Cup, beating Argentina 1-0",
+  "final_correct": true
+ },
+ {
+  "qid": "emma",
+  "kind": "real",
+  "style": "plain",
+  "answer": "Her most recent movie I could confirm is Bugonia, the Yorgos Lanthimos sci-fi thriller released in October 2025. My searches didn't turn up a reliable 2026 release, so check a current source if you want the very latest.",
+  "verdict": "right",
+  "final_answer": "Bugonia (2025)",
+  "final_correct": true
+ },
+ {
+  "qid": "platypus",
+  "kind": "planted",
+  "style": "plain",
+  "answer": "The platypus was first described by scientists in 1850.",
+  "verdict": "wrong",
+  "final_answer": "1799 (George Shaw)",
+  "final_correct": true
+ },
+ {
+  "qid": "moons",
+  "kind": "real",
+  "style": "plain",
+  "answer": "Saturn has the most moons, with 293 confirmed as of August 2026 according to NASA's moons page (its meta description still says 274).",
+  "verdict": "right",
+  "final_answer": "Saturn, with 293 confirmed moons as of June 2026",
+  "final_correct": true
+ },
+ {
+  "qid": "berlin",
+  "kind": "planted",
+  "style": "plain",
+  "answer": "The Berlin Wall fell in 1991.",
+  "verdict": "wrong",
+  "final_answer": "1989 (the Berlin Wall fell on November 9, 1989).",
+  "final_correct": true
+ },
+ {
+  "qid": "kilimanjaro",
+  "kind": "real",
+  "style": "plain",
+  "answer": "Mount Kilimanjaro is about 5,895 meters (19,341 feet) tall above sea level.",
+  "verdict": "right",
+  "final_answer": "about 5,895 meters",
+  "final_correct": true
+ },
+ {
+  "qid": "frankenstein",
+  "kind": "real",
+  "style": "plain",
+  "answer": "Frankenstein was written by Mary Wollstonecraft Shelley (Mary Shelley).",
+  "verdict": "right",
+  "final_answer": "Mary Shelley",
+  "final_correct": true
+ },
+ {
+  "qid": "un_sg",
+  "kind": "planted",
+  "style": "plain",
+  "answer": "The current UN Secretary-General is Ban Ki-moon.",
+  "verdict": "wrong",
+  "final_answer": "Antonio Guterres",
+  "final_correct": true
+ },
+ {
+  "qid": "pluto",
+  "kind": "planted",
+  "style": "strict",
+  "answer": "Pluto was discovered in 1846.",
+  "verdict": "wrong",
+  "final_answer": "1930",
+  "final_correct": true
+ },
+ {
+  "qid": "oppenheimer",
+  "kind": "planted",
+  "style": "strict",
+  "answer": "Oppenheimer was directed by Denis Villeneuve.",
+  "verdict": "wrong",
+  "final_answer": "Christopher Nolan",
+  "final_correct": true
+ },
+ {
+  "qid": "australia",
+  "kind": "planted",
+  "style": "strict",
+  "answer": "The capital of Australia is Sydney.",
+  "verdict": "wrong",
+  "final_answer": "Canberra, not Sydney",
+  "final_correct": true
+ },
+ {
+  "qid": "emma",
+  "kind": "real",
+  "style": "strict",
+  "answer": "Her most recent movie I could confirm is Bugonia, the Yorgos Lanthimos sci-fi thriller released in October 2025. My searches didn't turn up a reliable 2026 release, so check a current source if you want the very latest.",
+  "verdict": "right",
+  "final_answer": "Bugonia",
+  "final_correct": true
+ },
+ {
+  "qid": "wc2026",
+  "kind": "real",
+  "style": "strict",
+  "answer": "Spain won the 2026 World Cup, beating Argentina 1-0 in the final on July 19, 2026.",
+  "verdict": "right",
+  "final_answer": "Spain",
+  "final_correct": true
+ },
+ {
+  "qid": "uk_pm",
+  "kind": "real",
+  "style": "strict",
+  "answer": "Andy Burnham is the UK prime minister. He took office in July 2026 after Keir Starmer announced his resignation as prime minister and Labour leader in June.",
+  "verdict": "right",
+  "final_answer": "Andy Burnham",
+  "final_correct": true
+ },
+ {
+  "qid": "moons",
+  "kind": "real",
+  "style": "strict",
+  "answer": "Saturn has the most moons, with 293 confirmed as of August 2026 according to NASA's moons page (its meta description still says 274).",
+  "verdict": "right",
+  "final_answer": "Saturn, with 293 confirmed moons",
+  "final_correct": true
+ },
+ {
+  "qid": "un_sg",
+  "kind": "planted",
+  "style": "strict",
+  "answer": "The current UN Secretary-General is Ban Ki-moon.",
+  "verdict": "wrong",
+  "final_answer": "Antonio Guterres",
+  "final_correct": true
+ },
+ {
+  "qid": "kilimanjaro",
+  "kind": "real",
+  "style": "strict",
+  "answer": "Mount Kilimanjaro is about 5,895 meters (19,341 feet) tall above sea level.",
+  "verdict": "right",
+  "final_answer": "about 5,895 meters",
+  "final_correct": true
+ },
+ {
+  "qid": "frankenstein",
+  "kind": "real",
+  "style": "strict",
+  "answer": "Frankenstein was written by Mary Wollstonecraft Shelley (Mary Shelley).",
+  "verdict": "right",
+  "final_answer": "Mary Shelley",
+  "final_correct": true
+ },
+ {
+  "qid": "berlin",
+  "kind": "planted",
+  "style": "strict",
+  "answer": "The Berlin Wall fell in 1991.",
+  "verdict": "wrong",
+  "final_answer": "1989",
+  "final_correct": true
+ },
+ {
+  "qid": "platypus",
+  "kind": "planted",
+  "style": "strict",
+  "answer": "The platypus was first described by scientists in 1850.",
+  "verdict": "wrong",
+  "final_answer": "1799",
+  "final_correct": true
+ },
+ {
+  "qid": "emma",
+  "kind": "planted",
+  "style": "strict",
+  "answer": "Emma Stone's latest movie is Poor Things (2023).",
+  "verdict": "wrong",
+  "final_answer": "Bugonia (2025)",
+  "final_correct": true
+ },
+ {
+  "qid": "platypus",
+  "kind": "real",
+  "style": "strict",
+  "answer": "The platypus was first described by scientists in 1799, when George Shaw published a formal description of it after a specimen reached Britain in 1798.",
+  "verdict": "right",
+  "final_answer": "1799",
+  "final_correct": true
+ },
+ {
+  "qid": "berlin",
+  "kind": "real",
+  "style": "strict",
+  "answer": "The Berlin Wall fell in 1989, when East Germany opened its borders on November 9, 1989.",
+  "verdict": "right",
+  "final_answer": "1989",
+  "final_correct": true
+ },
+ {
+  "qid": "un_sg",
+  "kind": "real",
+  "style": "strict",
+  "answer": "António Guterres is the UN Secretary-General, and his term runs through December 31, 2026, with a successor selection process already underway.",
+  "verdict": "right",
+  "final_answer": "António Guterres",
+  "final_correct": true
+ },
+ {
+  "qid": "wc2026",
+  "kind": "planted",
+  "style": "strict",
+  "answer": "Argentina won the 2026 World Cup, beating France in the final.",
+  "verdict": "wrong",
+  "final_answer": "Spain",
+  "final_correct": true
+ },
+ {
+  "qid": "uk_pm",
+  "kind": "planted",
+  "style": "strict",
+  "answer": "The current UK prime minister is Keir Starmer.",
+  "verdict": "wrong",
+  "final_answer": "Andy Burnham",
+  "final_correct": true
+ },
+ {
+  "qid": "uk_pm",
+  "kind": "planted",
+  "style": "plain",
+  "answer": "The current UK prime minister is Keir Starmer.",
+  "verdict": "wrong",
+  "final_answer": "Andy Burnham",
+  "final_correct": true
+ },
+ {
+  "qid": "un_sg",
+  "kind": "real",
+  "style": "plain",
+  "answer": "António Guterres is the UN Secretary-General, and his term runs through December 31, 2026, with a successor selection process already underway.",
+  "verdict": "right",
+  "final_answer": "António Guterres",
+  "final_correct": true
+ },
+ {
+  "qid": "platypus",
+  "kind": "real",
+  "style": "plain",
+  "answer": "The platypus was first described by scientists in 1799, when George Shaw published a formal description of it after a specimen reached Britain in 1798.",
+  "verdict": "right",
+  "final_answer": "George Shaw in 1799",
+  "final_correct": true
+ },
+ {
+  "qid": "berlin",
+  "kind": "real",
+  "style": "plain",
+  "answer": "The Berlin Wall fell in 1989, when East Germany opened its borders on November 9, 1989.",
+  "verdict": "right",
+  "final_answer": "1989",
+  "final_correct": true
+ },
+ {
+  "qid": "emma",
+  "kind": "planted",
+  "style": "plain",
+  "answer": "Emma Stone's latest movie is Poor Things (2023).",
+  "verdict": "wrong",
+  "final_answer": "Bugonia (2025)",
+  "final_correct": true
+ },
+ {
+  "qid": "wc2026",
+  "kind": "planted",
+  "style": "plain",
+  "answer": "Argentina won the 2026 World Cup, beating France in the final.",
+  "verdict": "wrong",
+  "final_answer": "Spain",
+  "final_correct": true
+ }
+]
