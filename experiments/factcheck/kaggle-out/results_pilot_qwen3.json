@@ -1,0 +1,320 @@
+{
+ "model": "Qwen/Qwen3-0.6B",
+ "key": "qwen3",
+ "tag": "pilot",
+ "seconds": 42,
+ "drafts": [
+  {
+   "qid": "emma",
+   "sample": 0,
+   "msgs": [
+    {
+     "role": "system",
+     "content": "You are a helpful assistant. Today's date is 2026-11-04. You can look things up with the tools (Wikipedia search, reading Wikipedia pages, Wikidata facts). Answer the user briefly and directly."
+    },
+    {
+     "role": "user",
+     "content": "yo whats emma stones latest movie"
+    },
+    {
+     "role": "assistant",
+     "content": "Emma Stone's latest movie is *The Last of Us* (2022)."
+    }
+   ],
+   "done": true,
+   "end": "answered",
+   "turns": 1,
+   "raw": [
+    "Emma Stone's latest movie is *The Last of Us* (2022)."
+   ],
+   "tools": [],
+   "final": "Emma Stone's latest movie is *The Last of Us* (2022).",
+   "correct": false
+  },
+  {
+   "qid": "uk_pm",
+   "sample": 0,
+   "msgs": [
+    {
+     "role": "system",
+     "content": "You are a helpful assistant. Today's date is 2026-11-04. You can look things up with the tools (Wikipedia search, reading Wikipedia pages, Wikidata facts). Answer the user briefly and directly."
+    },
+    {
+     "role": "user",
+     "content": "Who is the current prime minister of the UK?"
+    },
+    {
+     "role": "assistant",
+     "content": "The current prime minister of the UK is **Elizabeth II**."
+    }
+   ],
+   "done": true,
+   "end": "answered",
+   "turns": 1,
+   "raw": [
+    "The current prime minister of the UK is **Elizabeth II**."
+   ],
+   "tools": [],
+   "final": "The current prime minister of the UK is **Elizabeth II**.",
+   "correct": false
+  }
+ ],
+ "reviews": [
+  {
+   "qid": "emma",
+   "sample": 0,
+   "style": "plain",
+   "draft_correct": false,
+   "source": "own",
+   "msgs": [
+    {
+     "role": "system",
+     "content": "Today's date is 2026-11-04. You can look things up with the tools."
+    },
+    {
+     "role": "user",
+     "content": "Review this question and answer and tell me if it is good and right.\n\nQUESTION: yo whats emma stones latest movie\n\nANSWER: Emma Stone's latest movie is *The Last of Us* (2022).\n\nEnd your reply with exactly these two lines:\nVERDICT: RIGHT or WRONG\nFINAL ANSWER: <the answer the user should get>"
+    },
+    {
+     "role": "assistant",
+     "content": "VERDICT: RIGHT\nFINAL ANSWER: The Last of Us"
+    }
+   ],
+   "done": true,
+   "end": "answered",
+   "turns": 1,
+   "raw": [
+    "VERDICT: RIGHT\nFINAL ANSWER: The Last of Us"
+   ],
+   "tools": [],
+   "final": "VERDICT: RIGHT\nFINAL ANSWER: The Last of Us",
+   "verdict": "right",
+   "final_answer": "The Last of Us",
+   "final_correct": false
+  },
+  {
+   "qid": "emma",
+   "sample": 0,
+   "style": "strict",
+   "draft_correct": false,
+   "source": "own",
+   "msgs": [
+    {
+     "role": "system",
+     "content": "You are a strict fact-checker. Today's date is 2026-11-04. An assistant wrote the answer below and it may well be wrong or out of date. Your job is to find what is wrong. Do not trust the answer or your own memory: check every factual claim with the tools before deciding. Anything about 'current' or 'latest' must be checked against today's date. If it is wrong, give the corrected answer."
+    },
+    {
+     "role": "user",
+     "content": "QUESTION: yo whats emma stones latest movie\n\nANSWER TO CHECK: Emma Stone's latest movie is *The Last of Us* (2022).\n\nEnd your reply with exactly these two lines:\nVERDICT: RIGHT or WRONG\nFINAL ANSWER: <the answer the user should get>"
+    },
+    {
+     "role": "assistant",
+     "content": "VERDICT: WRONG\nFINAL ANSWER: Emma Stone's latest movie is *The Last of Us* (2022)."
+    }
+   ],
+   "done": true,
+   "end": "answered",
+   "turns": 1,
+   "raw": [
+    "VERDICT: WRONG\nFINAL ANSWER: Emma Stone's latest movie is *The Last of Us* (2022)."
+   ],
+   "tools": [],
+   "final": "VERDICT: WRONG\nFINAL ANSWER: Emma Stone's latest movie is *The Last of Us* (2022).",
+   "verdict": "wrong",
+   "final_answer": "Emma Stone's latest movie is *The Last of Us* (2022).",
+   "final_correct": false
+  },
+  {
+   "qid": "uk_pm",
+   "sample": 0,
+   "style": "plain",
+   "draft_correct": false,
+   "source": "own",
+   "msgs": [
+    {
+     "role": "system",
+     "content": "Today's date is 2026-11-04. You can look things up with the tools."
+    },
+    {
+     "role": "user",
+     "content": "Review this question and answer and tell me if it is good and right.\n\nQUESTION: Who is the current prime minister of the UK?\n\nANSWER: The current prime minister of the UK is **Elizabeth II**.\n\nEnd your reply with exactly these two lines:\nVERDICT: RIGHT or WRONG\nFINAL ANSWER: <the answer the user should get>"
+    },
+    {
+     "role": "assistant",
+     "content": "VERDICT: RIGHT  \nFINAL ANSWER: Elizabeth II"
+    }
+   ],
+   "done": true,
+   "end": "answered",
+   "turns": 1,
+   "raw": [
+    "VERDICT: RIGHT  \nFINAL ANSWER: Elizabeth II"
+   ],
+   "tools": [],
+   "final": "VERDICT: RIGHT  \nFINAL ANSWER: Elizabeth II",
+   "verdict": "right",
+   "final_answer": "Elizabeth II",
+   "final_correct": false
+  },
+  {
+   "qid": "uk_pm",
+   "sample": 0,
+   "style": "strict",
+   "draft_correct": false,
+   "source": "own",
+   "msgs": [
+    {
+     "role": "system",
+     "content": "You are a strict fact-checker. Today's date is 2026-11-04. An assistant wrote the answer below and it may well be wrong or out of date. Your job is to find what is wrong. Do not trust the answer or your own memory: check every factual claim with the tools before deciding. Anything about 'current' or 'latest' must be checked against today's date. If it is wrong, give the corrected answer."
+    },
+    {
+     "role": "user",
+     "content": "QUESTION: Who is the current prime minister of the UK?\n\nANSWER TO CHECK: The current prime minister of the UK is **Elizabeth II**.\n\nEnd your reply with exactly these two lines:\nVERDICT: RIGHT or WRONG\nFINAL ANSWER: <the answer the user should get>"
+    },
+    {
+     "role": "assistant",
+     "content": "VERDICT: WRONG\nFINAL ANSWER: The current prime minister of the UK is **Elizabeth II**."
+    }
+   ],
+   "done": true,
+   "end": "answered",
+   "turns": 1,
+   "raw": [
+    "VERDICT: WRONG\nFINAL ANSWER: The current prime minister of the UK is **Elizabeth II**."
+   ],
+   "tools": [],
+   "final": "VERDICT: WRONG\nFINAL ANSWER: The current prime minister of the UK is **Elizabeth II**.",
+   "verdict": "wrong",
+   "final_answer": "The current prime minister of the UK is **Elizabeth II**.",
+   "final_correct": false
+  },
+  {
+   "qid": "emma",
+   "sample": 0,
+   "style": "plain",
+   "draft_correct": false,
+   "source": "planted",
+   "msgs": [
+    {
+     "role": "system",
+     "content": "Today's date is 2026-11-04. You can look things up with the tools."
+    },
+    {
+     "role": "user",
+     "content": "Review this question and answer and tell me if it is good and right.\n\nQUESTION: yo whats emma stones latest movie\n\nANSWER: Emma Stone's latest movie is Poor Things (2023).\n\nEnd your reply with exactly these two lines:\nVERDICT: RIGHT or WRONG\nFINAL ANSWER: <the answer the user should get>"
+    },
+    {
+     "role": "assistant",
+     "content": "VERDICT: RIGHT\nFINAL ANSWER: Emma Stone's latest movie is Poor Things (2023)."
+    }
+   ],
+   "done": true,
+   "end": "answered",
+   "turns": 1,
+   "raw": [
+    "VERDICT: RIGHT\nFINAL ANSWER: Emma Stone's latest movie is Poor Things (2023)."
+   ],
+   "tools": [],
+   "final": "VERDICT: RIGHT\nFINAL ANSWER: Emma Stone's latest movie is Poor Things (2023).",
+   "verdict": "right",
+   "final_answer": "Emma Stone's latest movie is Poor Things (2023).",
+   "final_correct": false
+  },
+  {
+   "qid": "emma",
+   "sample": 0,
+   "style": "strict",
+   "draft_correct": false,
+   "source": "planted",
+   "msgs": [
+    {
+     "role": "system",
+     "content": "You are a strict fact-checker. Today's date is 2026-11-04. An assistant wrote the answer below and it may well be wrong or out of date. Your job is to find what is wrong. Do not trust the answer or your own memory: check every factual claim with the tools before deciding. Anything about 'current' or 'latest' must be checked against today's date. If it is wrong, give the corrected answer."
+    },
+    {
+     "role": "user",
+     "content": "QUESTION: yo whats emma stones latest movie\n\nANSWER TO CHECK: Emma Stone's latest movie is Poor Things (2023).\n\nEnd your reply with exactly these two lines:\nVERDICT: RIGHT or WRONG\nFINAL ANSWER: <the answer the user should get>"
+    },
+    {
+     "role": "assistant",
+     "content": "VERDICT: WRONG\nFINAL ANSWER: Emma Stone's latest movie is Poor Things (2023)."
+    }
+   ],
+   "done": true,
+   "end": "answered",
+   "turns": 1,
+   "raw": [
+    "VERDICT: WRONG\nFINAL ANSWER: Emma Stone's latest movie is Poor Things (2023)."
+   ],
+   "tools": [],
+   "final": "VERDICT: WRONG\nFINAL ANSWER: Emma Stone's latest movie is Poor Things (2023).",
+   "verdict": "wrong",
+   "final_answer": "Emma Stone's latest movie is Poor Things (2023).",
+   "final_correct": false
+  },
+  {
+   "qid": "uk_pm",
+   "sample": 0,
+   "style": "plain",
+   "draft_correct": false,
+   "source": "planted",
+   "msgs": [
+    {
+     "role": "system",
+     "content": "Today's date is 2026-11-04. You can look things up with the tools."
+    },
+    {
+     "role": "user",
+     "content": "Review this question and answer and tell me if it is good and right.\n\nQUESTION: Who is the current prime minister of the UK?\n\nANSWER: The current UK prime minister is Keir Starmer.\n\nEnd your reply with exactly these two lines:\nVERDICT: RIGHT or WRONG\nFINAL ANSWER: <the answer the user should get>"
+    },
+    {
+     "role": "assistant",
+     "content": "VERDICT: RIGHT\nFINAL ANSWER: The current UK prime minister is Keir Starmer."
+    }
+   ],
+   "done": true,
+   "end": "answered",
+   "turns": 1,
+   "raw": [
+    "VERDICT: RIGHT\nFINAL ANSWER: The current UK prime minister is Keir Starmer."
+   ],
+   "tools": [],
+   "final": "VERDICT: RIGHT\nFINAL ANSWER: The current UK prime minister is Keir Starmer.",
+   "verdict": "right",
+   "final_answer": "The current UK prime minister is Keir Starmer.",
+   "final_correct": false
+  },
+  {
+   "qid": "uk_pm",
+   "sample": 0,
+   "style": "strict",
+   "draft_correct": false,
+   "source": "planted",
+   "msgs": [
+    {
+     "role": "system",
+     "content": "You are a strict fact-checker. Today's date is 2026-11-04. An assistant wrote the answer below and it may well be wrong or out of date. Your job is to find what is wrong. Do not trust the answer or your own memory: check every factual claim with the tools before deciding. Anything about 'current' or 'latest' must be checked against today's date. If it is wrong, give the corrected answer."
+    },
+    {
+     "role": "user",
+     "content": "QUESTION: Who is the current prime minister of the UK?\n\nANSWER TO CHECK: The current UK prime minister is Keir Starmer.\n\nEnd your reply with exactly these two lines:\nVERDICT: RIGHT or WRONG\nFINAL ANSWER: <the answer the user should get>"
+    },
+    {
+     "role": "assistant",
+     "content": "VERDICT: WRONG\nFINAL ANSWER: The current UK prime minister is Keir Starmer."
+    }
+   ],
+   "done": true,
+   "end": "answered",
+   "turns": 1,
+   "raw": [
+    "VERDICT: WRONG\nFINAL ANSWER: The current UK prime minister is Keir Starmer."
+   ],
+   "tools": [],
+   "final": "VERDICT: WRONG\nFINAL ANSWER: The current UK prime minister is Keir Starmer.",
+   "verdict": "wrong",
+   "final_answer": "The current UK prime minister is Keir Starmer.",
+   "final_correct": false
+  }
+ ]
+}
