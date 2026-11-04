@@ -1,0 +1,29 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[llama] loaded unsloth/Llama-3.2-1B-Instruct on cuda in 38s
+[llama] drafts: 2
+[llama]   step 1: 0/2 done (3s)
+[llama]   step 2: 0/2 done (4s)
+[llama]   step 3: 0/2 done (5s)
+[llama]   step 4: 0/2 done (6s)
+[llama]   step 5: 1/2 done (8s)
+[llama]   step 6: 2/2 done (11s)
+[llama] reviews: 8
+Traceback (most recent call last):
+  File "/kaggle/working/factcheck.py", line 530, in <module>
+    {"check": check, "report": report}.get(a.cmd, lambda: worker(a.model, a.gpu, a.tag))()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/kaggle/working/factcheck.py", line 530, in <lambda>
+    {"check": check, "report": report}.get(a.cmd, lambda: worker(a.model, a.gpu, a.tag))()
+                                                          ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/working/factcheck.py", line 440, in worker
+    run_convs(reviews, tok, model, dev, log)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/working/factcheck.py", line 370, in run_convs
+    text, calls = parse(reply)
+                  ~~~~~^^^^^^^
+  File "/kaggle/working/factcheck.py", line 288, in parse
+    c = _as_call(json.loads(raw))
+  File "/kaggle/working/factcheck.py", line 241, in _as_call
+    name = j.get("name") or (j.get("function") or {}).get("name")
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'get'
