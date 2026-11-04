@@ -1,0 +1,117 @@
+[{"stream_name":"stderr","time":7.13202053,"data":"/usr/local/lib/python3.13/dist-packages/nbformat/validator.py:434: MissingIDFieldWarning: Cell is missing an id field, this will become a hard error in future nbformat versions. You may want to use `normalize()` on your notebooks before validations (available since nbformat 5.1.4). Previous versions of nbformat are fixing this issue transparently, and will stop doing so in the future.\n"}
+,{"stream_name":"stderr","time":7.132065925,"data":"  _validate(nbdict, ref, version, version_minor, relax_add_props)\n"}
+,{"stream_name":"stderr","time":8.111289992,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":8.111321523,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":8.111325415,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":8.111410132,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":8.738897733,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":8.738935115,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":8.738940803,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":8.738945333,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":36.494349969,"data":"transformers 5.22.1\n"}
+,{"stream_name":"stdout","time":37.678875075,"data":"1. List of Emma Stone performances: Emma Stone is an American actress who aspired to an acting career from an early age. She had her first role onstage at age 11, and followed with parts\n"}
+,{"stream_name":"stdout","time":37.678910022,"data":"2. Emma Watson: from the original on 17 May 2011. Retrieved 1 January 2008. Watson, Emma. \"Filmography\". Official website. Archived from the original on 10 May 2010. Retrieved\n"}
+,{"stream_name":"stdout","time":37.678913969,"data":"3. John Cena filmography: Wagmeister,\n"}
+,{"stream_name":"stdout","time":37.678917297,"data":"Wikipedia: Pluto\n"}
+,{"stream_name":"stdout","time":37.678933745,"data":"Paragraphs mentioning 'discovered':\n"}
+,{"stream_name":"stdout","time":37.678938197,"data":"Pluto was discovered in 1930 by Clyde W. Tombaugh, making it the first known object in the Kuiper belt. It was immediately hailed as the ninth planet, but its planetary status was questioned when it was found to be much smaller than expected. These doubts increased following the discovery of additional objects in the Kuiper belt starting in the \n"}
+,{"stream_name":"stdout","time":37.678943157,"data":"Wikidata: Mount Kilimanjaro (mountain massif in Kilimanjaro National Park in Tanzania)\n"}
+,{"stream_name":"stdout","time":37.678947246999996,"data":"- elevation above sea level: 5895 metre\n"}
+,{"stream_name":"stdout","time":37.678951182,"data":"check ok\n"}
+,{"stream_name":"stdout","time":37.678954567,"data":" \n"}
+,{"stream_name":"stdout","time":45.429411099,"data":"GPUs: ['Tesla T4', 'Tesla T4']\n"}
+,{"stream_name":"stdout","time":75.231627358,"data":"[  0.5 min gpu0] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":75.232566998,"data":"[  0.5 min gpu1] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":105.2344301,"data":"[  1.0 min gpu0] [qwen3] == pilot: drafts correct 0/2; plain final correct 0/2; strict final correct 0/2; planted caught plain 0/2, strict 2/2 (43s)\n"}
+,{"stream_name":"stdout","time":105.235177966,"data":"[  1.0 min gpu1] jinja2.exceptions.TemplateError: This model only supports single tool-calls at once!\n"}
+,{"stream_name":"stdout","time":105.236304748,"data":"--- gpu0 ---\n"}
+,{"stream_name":"stdout","time":105.236328926,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":105.236335253,"data":"[qwen3] loaded Qwen/Qwen3-0.6B on cuda in 38s\n"}
+,{"stream_name":"stdout","time":105.236339378,"data":"[qwen3] drafts: 2\n"}
+,{"stream_name":"stdout","time":105.236345572,"data":"[qwen3]   step 1: 2/2 done (3s)\n"}
+,{"stream_name":"stdout","time":105.236349006,"data":"[qwen3] reviews: 8\n"}
+,{"stream_name":"stdout","time":105.23635273,"data":"[qwen3]   step 1: 8/8 done (2s)\n"}
+,{"stream_name":"stdout","time":105.236356236,"data":"[qwen3] == pilot: drafts correct 0/2; plain final correct 0/2; strict final correct 0/2; planted caught plain 0/2, strict 2/2 (43s)\n"}
+,{"stream_name":"stdout","time":105.236360076,"data":"\n"}
+,{"stream_name":"stdout","time":105.236363348,"data":"--- gpu1 ---\n"}
+,{"stream_name":"stdout","time":105.236366804,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":105.236387603,"data":"[llama] loaded unsloth/Llama-3.2-1B-Instruct on cuda in 38s\n"}
+,{"stream_name":"stdout","time":105.236391836,"data":"[llama] drafts: 2\n"}
+,{"stream_name":"stdout","time":105.23639557,"data":"[llama]   step 1: 0/2 done (3s)\n"}
+,{"stream_name":"stdout","time":105.23639964,"data":"[llama]   step 2: 0/2 done (5s)\n"}
+,{"stream_name":"stdout","time":105.236403372,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stdout","time":105.236406866,"data":"  File \"/kaggle/working/factcheck.py\", line 555, in \u003cmodule\u003e\n"}
+,{"stream_name":"stdout","time":105.236411123,"data":"    {\"check\": check, \"report\": report}.get(a.cmd, lambda: worker(a.model, a.gpu, a.tag, a.arm, not a.no_planted))()\n"}
+,{"stream_name":"stdout","time":105.236415235,"data":"    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n"}
+,{"stream_name":"stdout","time":105.236418888,"data":"  File \"/kaggle/working/factcheck.py\", line 555, in \u003clambda\u003e\n"}
+,{"stream_name":"stdout","time":105.236422791,"data":"    {\"check\": check, \"report\": report}.get(a.cmd, lambda: worker(a.model, a.gpu, a.tag, a.arm, not a.no_planted))()\n"}
+,{"stream_name":"stdout","time":105.236426526,"data":"                                                          ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":105.236430234,"data":"  File \"/kaggle/working/factcheck.py\", line 442, in worker\n"}
+,{"stream_name":"stdout","time":105.236433844,"data":"    run_convs(drafts, tok, model, dev, log)\n"}
+,{"stream_name":"stdout","time":105.236437397,"data":"    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":105.23644082,"data":"  File \"/kaggle/working/factcheck.py\", line 367, in run_convs\n"}
+,{"stream_name":"stdout","time":105.236444423,"data":"    texts = [(c, render(c)) for c in active]\n"}
+,{"stream_name":"stdout","time":105.236447949,"data":"                 ~~~~~~^^^\n"}
+,{"stream_name":"stdout","time":105.236451352,"data":"  File \"/kaggle/working/factcheck.py\", line 358, in render\n"}
+,{"stream_name":"stdout","time":105.236455042,"data":"    return tok.apply_chat_template(c[\"msgs\"], tools=TOOLS, tokenize=False, add_generation_prompt=True,\n"}
+,{"stream_name":"stdout","time":105.236474014,"data":"           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":105.236476959,"data":"                                   enable_thinking=False)\n"}
+,{"stream_name":"stdout","time":105.236479353,"data":"                                   ^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":105.236482952,"data":"  File \"/usr/local/lib/python3.13/dist-packages/transformers/tokenization_utils_base.py\", line 3163, in apply_chat_template\n"}
+,{"stream_name":"stdout","time":105.236485658,"data":"    rendered_chat, generation_indices = render_jinja_template(\n"}
+,{"stream_name":"stdout","time":105.23648804,"data":"                                        ~~~~~~~~~~~~~~~~~~~~~^\n"}
+,{"stream_name":"stdout","time":105.236490413,"data":"        conversations=conversations,\n"}
+,{"stream_name":"stdout","time":105.23649275,"data":"        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":105.236495152,"data":"    ...\u003c6 lines\u003e...\n"}
+,{"stream_name":"stdout","time":105.236497618,"data":"        **template_kwargs,\n"}
+,{"stream_name":"stdout","time":105.236499982,"data":"        ^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":105.236502327,"data":"    )\n"}
+,{"stream_name":"stdout","time":105.236504678,"data":"    ^\n"}
+,{"stream_name":"stdout","time":105.236506959,"data":"  File \"/usr/local/lib/python3.13/dist-packages/transformers/utils/chat_template_utils.py\", line 712, in render_jinja_template\n"}
+,{"stream_name":"stdout","time":105.23650954,"data":"    rendered_chat = compiled_template.render(\n"}
+,{"stream_name":"stdout","time":105.236511923,"data":"        messages=chat,\n"}
+,{"stream_name":"stdout","time":105.236514324,"data":"    ...\u003c3 lines\u003e...\n"}
+,{"stream_name":"stdout","time":105.236516671,"data":"        **kwargs,\n"}
+,{"stream_name":"stdout","time":105.236518995,"data":"    )\n"}
+,{"stream_name":"stdout","time":105.236521302,"data":"  File \"/usr/local/lib/python3.13/dist-packages/jinja2/environment.py\", line 1295, in render\n"}
+,{"stream_name":"stdout","time":105.23652391,"data":"    self.environment.handle_exception()\n"}
+,{"stream_name":"stdout","time":105.236526266,"data":"    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n"}
+,{"stream_name":"stdout","time":105.236528604,"data":"  File \"/usr/local/lib/python3.13/dist-packages/jinja2/environment.py\", line 942, in handle_exception\n"}
+,{"stream_name":"stdout","time":105.236531112,"data":"    raise rewrite_traceback_stack(source=source)\n"}
+,{"stream_name":"stdout","time":105.236533476,"data":"  File \"\u003ctemplate\u003e\", line 72, in top-level template code\n"}
+,{"stream_name":"stdout","time":105.236547022,"data":"  File \"/usr/local/lib/python3.13/dist-packages/jinja2/sandbox.py\", line 401, in call\n"}
+,{"stream_name":"stdout","time":105.236549351,"data":"    return __context.call(__obj, *args, **kwargs)\n"}
+,{"stream_name":"stdout","time":105.236551564,"data":"           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":105.236553792,"data":"  File \"/usr/local/lib/python3.13/dist-packages/transformers/utils/chat_template_utils.py\", line 588, in raise_exception\n"}
+,{"stream_name":"stdout","time":105.23655617,"data":"    raise jinja2.exceptions.TemplateError(message)\n"}
+,{"stream_name":"stdout","time":105.23655842,"data":"jinja2.exceptions.TemplateError: This model only supports single tool-calls at once!\n"}
+,{"stream_name":"stdout","time":105.236560734,"data":"\n"}
+,{"stream_name":"stdout","time":105.236584729,"data":"Pilot FAILED; full run skipped.\n"}
+,{"stream_name":"stdout","time":105.359595811,"data":"# Draft -\u003e fact-check: results\n"}
+,{"stream_name":"stdout","time":105.359625005,"data":"\n"}
+,{"stream_name":"stdout","time":105.359630205,"data":"12 questions, 3 sampled drafts each, tools = Wikipedia search, Wikipedia page, Wikidata. Each draft is reviewed twice by the same model in a fresh chat: **plain** (Keal's wording) and **strict** (fact-checker, assume it's wrong).\n"}
+,{"stream_name":"stdout","time":105.359638925,"data":"\n"}
+,{"stream_name":"stdout","time":105.359642319,"data":"**Own drafts** = the model reviews its own answers. **Planted** = it reviews a known-wrong answer per question (e.g. 'The capital of Australia is Sydney').\n"}
+,{"stream_name":"stdout","time":105.359646171,"data":"\n"}
+,{"stream_name":"stdout","time":105.359649646,"data":"| model | draft right | review | caught wrong own drafts | false alarms on right drafts | final right | fixed (wrong-\u003eright) | broke (right-\u003ewrong) | planted caught | planted fixed | no verdict |\n"}
+,{"stream_name":"stdout","time":105.359654255,"data":"|---|---|---|---|---|---|---|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":105.359657957,"data":"| Qwen3-0.6B (lookup) | 0/2 (0%) | plain | 0/2 (0%) | - | 0/2 (0%) | 0/2 (0%) | - | 0/2 (0%) | 0/2 (0%) | 0/4 (0%) |\n"}
+,{"stream_name":"stdout","time":105.359661971,"data":"| Qwen3-0.6B (lookup) | 0/2 (0%) | strict | 2/2 (100%) | - | 0/2 (0%) | 0/2 (0%) | - | 2/2 (100%) | 0/2 (0%) | 0/4 (0%) |\n"}
+,{"stream_name":"stdout","time":105.359665954,"data":"| | tool calls per draft: 0.0 (search 0, read_page 0, wikidata 0) | | | | | | | | | |\n"}
+,{"stream_name":"stdout","time":105.359669891,"data":"\n"}
+,{"stream_name":"stdout","time":105.359673172,"data":"## Drafts per question (✓ right / ✗ wrong, one mark per sample)\n"}
+,{"stream_name":"stdout","time":105.359677765,"data":"\n"}
+,{"stream_name":"stdout","time":105.359681266,"data":"| question | qwen3/lookup |\n"}
+,{"stream_name":"stdout","time":105.359684847,"data":"|---|---|\n"}
+,{"stream_name":"stdout","time":105.359688375,"data":"| emma | ✗ |\n"}
+,{"stream_name":"stdout","time":105.359691785,"data":"| uk_pm | ✗ |\n"}
+,{"stream_name":"stdout","time":105.359694946,"data":" \n"}
+,{"stream_name":"stderr","time":108.325237402,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":108.325272034,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":108.486821976,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":108.486845942,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":109.227281545,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":109.301914245,"data":"[NbConvertApp] Writing 52393 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":111.79959874,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":112.291766529,"data":"[NbConvertApp] Writing 336121 bytes to __results__.html\n"}
+]
