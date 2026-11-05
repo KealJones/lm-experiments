@@ -1,0 +1,13 @@
+[
+ {
+  "round": 1,
+  "prompt_user": "Write me a TypeScript tic tac toe game.",
+  "prompt_tokens": 21,
+  "room": 4075,
+  "output": "Sure! Here's a basic **TypeScript implementation of a Tic Tac Toe game**:\n\n```typescript\n// Tic Tac Toe Game\n\nconst board: string[][] = [\n  [' ', ' ', ' '],\n  [' ', ' ', ' '],\n  [' ', ' ', ' ']\n];\n\nfunction printBoard() {\n  for (let row of board) {\n    console.log(row.join(' | '));\n  }\n}\n\nfunction makeMove(board, player, position) {\n  const [row, col] = position;\n  if (board[row][col] === ' ') {\n    board[row][col] = player;\n    return true;\n  }\n  return false;\n}\n\nfunction isWinner(player) {\n  // Check rows\n  for (let i = 0; i < 3; i++) {\n    if (board[i][0] === player && board[i][1] === player && board[i][2] === player) {\n      return true;\n    }\n  }\n\n  // Check columns\n  for (let j = 0; j < 3; j++) {\n    if (board[0][j] === player && board[1][j] === player && board[2][j] === player) {\n      return true;\n    }\n  }\n\n  // Check diagonals\n  if (board[0][0] === player && board[1][1] === player && board[2][2] === player) {\n    return true;\n  }\n  if (board[0][2] === player && board[1][1] === player && board[2][0] === player) {\n    return true;\n  }\n\n  return false;\n}\n\nfunction isDraw() {\n  for (let row of board) {\n    if (row.every(cell => cell === ' ')) {\n      return false;\n    }\n  }\n  return true;\n}\n\n// Game loop\nfunction startGame() {\n  const currentPlayer = 'X';\n  printBoard();\n\n  while (!isDraw()) {\n    const position = prompt(\"Enter your move (row, column):\");\n    if (!position) break;\n\n    const [row, col] = position.split(',');\n    const result = makeMove(board, currentPlayer, [row, col]);\n\n    if (result) {\n      printBoard();\n      if (isWinner(currentPlayer)) {\n        alert(`Player ${currentPlayer} wins!`);\n        break;\n      }\n      currentPlayer = currentPlayer === 'X' ? 'O' : 'X';\n    } else {\n      alert(\"Invalid move. Try again.\");\n    }\n  }\n\n  printBoard();\n}\n\nstartGame();\n```\n\n### Features:\n- A 3x3 grid.\n- Simple move validation.\n- Checks for a win or draw.\n- Updates the board in real-time.\n\nLet me know if you'd like to add more features like:\n- AI opponent\n- Game over messages\n- Sound effects\n- More advanced logic",
+  "finish": "stop",
+  "gen_tokens": 602,
+  "secs": 21.3,
+  "result": "model ended on its own"
+ }
+]
