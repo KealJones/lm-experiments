@@ -38,6 +38,12 @@ Highlights: [`squiggle-ft`](experiments/squiggle-ft/) trained Squiggle Small (LF
 prunes Gemma 4 E2B to a 0.6B core and heals it by distillation
 ([kealjones/tiny-gemma4-test](https://huggingface.co/kealjones/tiny-gemma4-test)).
 
+## The lab site
+
+[`site/`](site/README.md) builds a page for every experiment (and hand-built demos, starting with
+[`loop-concept`](site/demos/loop-concept/)) and publishes it to GitHub Pages on each push. New experiment folders
+show up there on their own.
+
 ## Running things
 
 Jobs run on rented GPUs from this repo, started by pushing a job file:
