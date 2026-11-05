@@ -362,7 +362,7 @@ def run_convs(convs, tok, model, dev, log):
 
     def render(c):
         return tok.apply_chat_template(c["msgs"], tools=TOOLS, tokenize=False, add_generation_prompt=True,
-                                       enable_thinking=False) + (c.get("prefix", "") if c["turns"] == 0 else "")
+                                       enable_thinking=bool(c.get("think"))) + (c.get("prefix", "") if c["turns"] == 0 else "")
 
     t0, step = time.time(), 0
     while True:
@@ -378,19 +378,25 @@ def run_convs(convs, tok, model, dev, log):
         texts = sorted([(c, t) for c, t in texts if not c["done"]], key=lambda x: lens[id(x[0])])
         i = 0
         while i < len(texts):
-            bs = max(1, min(12, 36000 // (lens[id(texts[i][0])] + MAX_NEW)))
+            mn = MAX_NEW * (3 if texts[i][0].get("think") else 1)
+            bs = max(1, min(12, 36000 // (lens[id(texts[i][0])] + mn)))
             chunk = texts[i:i + bs]
             i += bs
             batch = tok([t for _, t in chunk], return_tensors="pt", padding=True, add_special_tokens=False).to(dev)
             with torch.no_grad():
-                g = model.generate(**batch, max_new_tokens=MAX_NEW, do_sample=True, temperature=0.7, top_p=0.8,
+                g = model.generate(**batch, max_new_tokens=mn, do_sample=True, temperature=0.7, top_p=0.8,
                                    top_k=20, pad_token_id=tok.pad_token_id)
             replies = tok.batch_decode(g[:, batch["input_ids"].shape[1]:], skip_special_tokens=False)
             for (c, _), reply in zip(chunk, replies):
                 for sp in (tok.eos_token, tok.pad_token, "<|im_end|>", "<|eot_id|>", "<|eom_id|>", "<|endoftext|>"):
                     if sp:
                         reply = reply.replace(sp, "")
+                if c.get("think"):  # keep the reasoning for the transcript, but parse/answer from what follows it
+                    th = re.search(r"<think>(.*?)(</think>|$)", reply, re.S)
+                    c.setdefault("thinking", []).append(th.group(1).strip() if th else "")
+                    reply = reply.split("</think>")[-1] if "</think>" in reply else ("" if th else reply)
                 reply = re.sub(r"<think>\s*</think>", "", reply).strip()
+                reply = reply.split("<|im_start|>")[0].strip()  # Qwen3.5 sometimes runs on past its turn
                 if c["turns"] == 0 and c.get("prefix"):
                     reply = c["prefix"] + reply
                 c["turns"] += 1
@@ -402,9 +408,10 @@ def run_convs(convs, tok, model, dev, log):
                     c["final"], c["done"], c["end"] = reply, True, "answered"
                     continue
                 good = [(n, a) for n, a in calls if n is not None]
-                c["msgs"].append({"role": "assistant", "content": text,
-                                  "tool_calls": [{"type": "function", "function": {"name": n, "arguments": a}}
-                                                 for n, a in good]})
+                m = {"role": "assistant", "content": text}
+                if good:  # Llama 3.2's template raises on an empty tool_calls list (malformed call)
+                    m["tool_calls"] = [{"type": "function", "function": {"name": n, "arguments": a}} for n, a in good]
+                c["msgs"].append(m)
                 c["pending"] = calls
             with cf.ThreadPoolExecutor(4) as ex:
                 for c, _ in chunk:
@@ -429,9 +436,9 @@ def run_convs(convs, tok, model, dev, log):
             c["final"] = texts[-1] if texts else ""
 
 
-def new_conv(system, user, **meta):
+def new_conv(system, user, think=False, **meta):
     return dict(meta, msgs=[{"role": "system", "content": system}, {"role": "user", "content": user}],
-                done=False, end="", turns=0, raw=[], tools=[], final=None)
+                done=False, end="", turns=0, raw=[], tools=[], final=None, think=think)
 
 
 # "force" arm: the first turn of every draft and review is prefilled with the start of a search call,
@@ -444,6 +451,31 @@ FORCE_PREFIX = {
 }
 
 
+STOP = set("""yo whats what what's who whos which when where how is was are the a an of in on to did do does
+current currently right now latest first by tall""".split())
+
+
+def evidence(q, cache={}):
+    """"read" arm: search Wikipedia for the question, read the top page's paragraphs that mention its key words.
+    Injected as two tool calls before the model's first turn, so it starts with the evidence in front of it."""
+    if q not in cache:
+        words = " ".join(w for w in re.findall(r"[\w']+", q.lower()) if w not in STOP)
+        res = tool_search(words)
+        m = re.match(r"1\. (.+?):", res)
+        title = m.group(1) if m else words
+        cache[q] = [("search", {"query": words}, res),
+                    ("read_page", {"title": title, "find": words}, tool_read_page(title, words))]
+    return cache[q]
+
+
+def add_evidence(c, q):
+    for n, a, r in evidence(q):
+        c["msgs"].append({"role": "assistant", "content": "",
+                          "tool_calls": [{"type": "function", "function": {"name": n, "arguments": a}}]})
+        c["msgs"].append({"role": "tool", "name": n, "content": r})
+        c["tools"].append({"name": n, "args": a, "injected": True})
+
+
 def worker(model_key, gpu, tag, arm="free", planted=True):
     os.environ["CUDA_VISIBLE_DEVICES"] = str(gpu)
 
@@ -454,10 +486,16 @@ def worker(model_key, gpu, tag, arm="free", planted=True):
     tok, model, dev = load(model_key)
     log(f"loaded {MODELS[model_key]} on {dev} in {time.time() - t0:.0f}s")
     qs = QUESTIONS[:2] if tag == "pilot" else QUESTIONS
+    byq = {q["id"]: q["q"] for q in qs}
     samples = 1 if tag == "pilot" else SAMPLES
 
     pre = FORCE_PREFIX[model_key] if arm == "force" else ""
-    drafts = [new_conv(DRAFT_SYSTEM["lookup" if arm == "force" else arm], q["q"], prefix=pre, qid=q["id"], sample=s) for s in range(samples) for q in qs]
+    think = arm == "think"  # Qwen3 / Qwen3.5 with thinking on (Squiggle runs Qwen3 0.6B this way)
+    drafts = [new_conv(DRAFT_SYSTEM["lookup" if arm in ("force", "read") else "free" if arm == "think" else arm], q["q"],
+                        prefix=pre, think=think, qid=q["id"], sample=s) for s in range(samples) for q in qs]
+    if arm == "read":
+        for c in drafts:
+            add_evidence(c, byq[c["qid"]])
     log(f"drafts: {len(drafts)}")
     run_convs(drafts, tok, model, dev, log)
     byid = {q["id"]: q for q in qs}
@@ -468,14 +506,17 @@ def worker(model_key, gpu, tag, arm="free", planted=True):
     for d in drafts:
         for style, (sys_p, user_p) in REVIEW.items():
             reviews.append(new_conv(sys_p, user_p.format(q=byid[d["qid"]]["q"], a=d["final"] or "(no answer)"),
-                                    prefix=pre, qid=d["qid"], sample=d["sample"], style=style, draft_correct=d["correct"],
+                                    prefix=pre, think=think, qid=d["qid"], sample=d["sample"], style=style, draft_correct=d["correct"],
                                     source="own"))
     # planted: a known-wrong answer, so every model's catch rate is measured even if its own drafts are all right/wrong
     for s in range(samples if planted else 0):
         for q in qs:
             for style, (sys_p, user_p) in REVIEW.items():
-                reviews.append(new_conv(sys_p, user_p.format(q=q["q"], a=q["planted_wrong"]), prefix=pre, qid=q["id"], sample=s,
+                reviews.append(new_conv(sys_p, user_p.format(q=q["q"], a=q["planted_wrong"]), prefix=pre, think=think, qid=q["id"], sample=s,
                                         style=style, draft_correct=False, source="planted"))
+    if arm == "read":
+        for c in reviews:
+            add_evidence(c, byq[c["qid"]])
     log(f"reviews: {len(reviews)}")
     run_convs(reviews, tok, model, dev, log)
     for r in reviews:
@@ -570,7 +611,7 @@ if __name__ == "__main__":
     ap.add_argument("--model", default="qwen3")
     ap.add_argument("--gpu", default="0")
     ap.add_argument("--tag", default="full")
-    ap.add_argument("--arm", default="free", choices=["free", "lookup", "force"])
+    ap.add_argument("--arm", default="free", choices=["free", "lookup", "force", "read", "think"])
     ap.add_argument("--no-planted", action="store_true")
     a = ap.parse_args()
     {"check": check, "report": report}.get(a.cmd, lambda: worker(a.model, a.gpu, a.tag, a.arm, not a.no_planted))()

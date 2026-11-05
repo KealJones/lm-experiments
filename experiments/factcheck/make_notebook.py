@@ -45,13 +45,13 @@ def go(tag, plan):
         print(f"--- gpu{g} ---\\n" + open(f"log_{tag}_gpu{g}.txt").read()[-4000:])
 
 
-ARMS = ["free", "lookup:np", "force:np"]
-GPU0 = [f"{m}:{a}" for m in ("qwen3", "qwen35") for a in ARMS]
-GPU1 = [f"{m}:{a}" for m in ("llama", "coder") for a in ARMS]
+# run 4: Llama (crashed in run 3), Qwen3 / Qwen3.5 with thinking on, and the "read" arm (pipeline looks it up)
+GPU0 = ["qwen3:think", "llama:free", "llama:force:np", "coder:read"]
+GPU1 = ["qwen35:think", "llama:lookup:np", "qwen3:read", "qwen35:read", "llama:read"]
 if NGPU > 1:
-    PILOT, FULL = {0: ["qwen35:force"], 1: ["llama:force"]}, {0: GPU0, 1: GPU1}
+    PILOT, FULL = {0: ["llama:read"], 1: ["qwen3:think"]}, {0: GPU0, 1: GPU1}
 else:
-    PILOT, FULL = {0: ["qwen35:force", "llama:force"]}, {0: GPU0 + GPU1}
+    PILOT, FULL = {0: ["llama:read", "qwen3:think"]}, {0: GPU0 + GPU1}
 go("pilot", PILOT)
 GO = len(glob.glob("results_pilot_*.json")) >= 1  # one model failing shouldn't cost the rest
 print("Pilot ok; full run starting." if GO else "Pilot FAILED; full run skipped.")'''
@@ -62,7 +62,7 @@ r = subprocess.run([sys.executable, "factcheck.py", "report"], capture_output=Tr
 print(r.stdout[-10000:], r.stderr[-3000:])'''
 
 head = ("# Draft -> fact-check\n\nSmall models answer 12 easy-to-look-up questions with Wikipedia/Wikidata tools, then "
-        "review their own answer (and a planted wrong one) in a fresh chat, plain and strict. Three draft arms: free, lookup (told to always look it up) and force (first turn prefilled with a search call). Results: `RESULTS.md`; "
+        "review their own answer (and a planted wrong one) in a fresh chat, plain and strict. Three draft arms: free, lookup (told to always look it up) force (first turn prefilled with a search call), read (the pipeline searches and reads the top page first) and think (Qwen thinking on). Results: `RESULTS.md`; "
         "transcripts in `results_full_*.json`.")
 cells = [{"cell_type": "markdown", "metadata": {}, "source": head}]
 for src in (SETUP, RUN, FULL):
