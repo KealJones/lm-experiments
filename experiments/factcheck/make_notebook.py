@@ -45,14 +45,15 @@ def go(tag, plan):
         print(f"--- gpu{g} ---\\n" + open(f"log_{tag}_gpu{g}.txt").read()[-4000:])
 
 
-GPU0 = ["qwen3:free", "qwen3:lookup:np", "qwen35:free", "qwen35:lookup:np"]
-GPU1 = ["llama:free", "llama:lookup:np", "coder:free", "coder:lookup:np"]
+ARMS = ["free", "lookup:np", "force:np"]
+GPU0 = [f"{m}:{a}" for m in ("qwen3", "qwen35") for a in ARMS]
+GPU1 = [f"{m}:{a}" for m in ("llama", "coder") for a in ARMS]
 if NGPU > 1:
-    PILOT, FULL = {0: ["qwen3:lookup"], 1: ["llama:free"]}, {0: GPU0, 1: GPU1}
+    PILOT, FULL = {0: ["qwen35:force"], 1: ["llama:force"]}, {0: GPU0, 1: GPU1}
 else:
-    PILOT, FULL = {0: ["qwen3:lookup", "llama:free"]}, {0: GPU0 + GPU1}
+    PILOT, FULL = {0: ["qwen35:force", "llama:force"]}, {0: GPU0 + GPU1}
 go("pilot", PILOT)
-GO = len(glob.glob("results_pilot_*.json")) >= 2
+GO = len(glob.glob("results_pilot_*.json")) >= 1  # one model failing shouldn't cost the rest
 print("Pilot ok; full run starting." if GO else "Pilot FAILED; full run skipped.")'''
 
 FULL = '''if GO:
@@ -61,7 +62,7 @@ r = subprocess.run([sys.executable, "factcheck.py", "report"], capture_output=Tr
 print(r.stdout[-10000:], r.stderr[-3000:])'''
 
 head = ("# Draft -> fact-check\n\nSmall models answer 12 easy-to-look-up questions with Wikipedia/Wikidata tools, then "
-        "review their own answer (and a planted wrong one) in a fresh chat, plain and strict. Two draft arms: free and lookup (always look it up). Results: `RESULTS.md`; "
+        "review their own answer (and a planted wrong one) in a fresh chat, plain and strict. Three draft arms: free, lookup (told to always look it up) and force (first turn prefilled with a search call). Results: `RESULTS.md`; "
         "transcripts in `results_full_*.json`.")
 cells = [{"cell_type": "markdown", "metadata": {}, "source": head}]
 for src in (SETUP, RUN, FULL):
