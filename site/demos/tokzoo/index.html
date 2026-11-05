@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tokenizer zoo</title>
+<meta name="description" content="20 ways to cut text into tokens for a small GPT, from bytes and BPE to seam tokens, vowel-free words and keyboard neighbours. Type a sentence and see each one.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../lab.css">
+<link rel="stylesheet" href="demo.css">
+</head>
+<body>
+<header class="wrap top">
+  <p class="owner"><a href="../../">Small model lab</a></p>
+  <h1>What would a small model learn if it read text cut up differently?</h1>
+  <p class="lede">The plan: train the same 6-layer GPT 20 times and change only how its text is cut into tokens. Bytes,
+    characters and BPE are the baselines. The rest are stranger: tokens that straddle the gap between words, words
+    cut to their first and last letter, vowels dropped, everything backwards.</p>
+  <p class="planned">This one hasn't run yet, so there are no results. What you can do now is see what each scheme
+    does to a sentence of your own.</p>
+</header>
+
+<main class="wrap">
+  <section class="bench" aria-labelledby="try-h">
+    <h2 id="try-h">Your sentence</h2>
+    <textarea id="input" class="code editor" rows="3" spellcheck="false" aria-label="Text to tokenize"></textarea>
+    <div class="examples seg" role="group" aria-label="Examples" id="examples"></div>
+    <p class="count" id="count" aria-live="polite"></p>
+  </section>
+
+  <section aria-labelledby="cut-h">
+    <h2 id="cut-h">Cut into tokens</h2>
+    <p class="section-lede">These keep every character. The bar shows how many tokens each one needs for your
+      sentence, against one per byte. Fewer tokens means a longer sentence fits the model's window, but each token is
+      rarer and harder to learn.</p>
+    <div class="zoo" id="zoo-tokens"></div>
+  </section>
+
+  <section aria-labelledby="rw-h">
+    <h2 id="rw-h">Rewrite the text first</h2>
+    <p class="section-lede">These change the text before the model sees it. The lossy ones can't be undone, so they
+      will be scored on tests transformed the same way, not on bits per byte.</p>
+    <div class="zoo" id="zoo-rewrite"></div>
+  </section>
+
+  <section aria-labelledby="wait-h">
+    <h2 id="wait-h">Waiting on a tagging pass</h2>
+    <p class="section-lede">These need every word of the training text tagged first: with its sense, its roots, its
+      sound or its part of speech. That's part of the run, so they can't be shown on your sentence yet.</p>
+    <div class="zoo" id="zoo-wait"></div>
+  </section>
+
+  <section aria-labelledby="note-h" class="note">
+    <h2 id="note-h">About the BPE rows</h2>
+    <p id="corpus-note">The real run trains its vocabularies on FineWeb-Edu. Those don't exist yet, so the BPE rows here
+      use stand-ins trained on this repo's own READMEs. A corpus that small cuts everyday words oddly, so read those
+      rows as "what BPE does", not as the run's tokens.</p>
+    <p class="meta-line"><a href="https://github.com/KealJones/lm-experiments/blob/main/experiments/tokzoo/PLAN.md">The plan</a>
+      <a href="https://github.com/KealJones/lm-experiments/tree/main/site/demos/tokzoo">This page's code</a></p>
+  </section>
+</main>
+<footer><p>Everything runs in your browser. The BPE code is checked against the Python that trained the stand-in
+  vocabularies on 1,313 lines of text: same splits, same tokens.</p></footer>
+<script type="module" src="demo.js"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>State registers</title>
+<meta name="description" content="A 3.6M-parameter planner gets 8 memory slots that update as it reads. Plan in its world yourself, then see what the slots changed.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../lab.css">
+<link rel="stylesheet" href="demo.css">
+</head>
+<body>
+<header class="wrap top">
+  <p class="owner"><a href="../../">Small model lab</a></p>
+  <h1>Can a tiny model keep track of where it is?</h1>
+  <p class="lede">To plan, you have to remember where you are, what you're holding and which doors are open. A plain
+    3.6M-parameter GPT has nowhere to keep that, so it works it out again from the whole plan at every word. What if it
+    got 8 small memory slots that update as it reads?</p>
+  <p class="answer">The slots helped, most of all when the input got messy. Strip every period out of the problem and
+    the plain model solved 0% of long plans. With slots updated at every word it solved 72%, or 64% with no teaching at
+    all. Bookkeeping mistakes fell from 289 to 61–80.</p>
+</header>
+
+<main class="wrap">
+
+<section class="bench" aria-labelledby="bench-h">
+  <div class="bench-head">
+    <h2 id="bench-h">Be the planner</h2>
+    <div class="bench-controls">
+      <label class="field">Problem
+        <select id="problem"></select>
+      </label>
+      <button type="button" id="another">Another one</button>
+    </div>
+  </div>
+  <p class="bench-intro">This is one of the 100 test problems the models were scored on. Write a plan one sentence at a
+    time and the world checks each sentence, just as it checked the models. The state table shows what the
+    taught slots were trained to hold.</p>
+
+  <div class="skin-row">
+    <div class="seg" role="group" aria-label="Skin" id="skins"></div>
+    <label class="check"><input type="checkbox" id="messy"> Messy: remove the periods</label>
+  </div>
+  <p class="skin-note" id="skin-note"></p>
+
+  <div class="bench-grid">
+    <div class="work">
+      <h3 class="small-h">The problem</h3>
+      <p class="problem" id="problem-text"></p>
+      <h3 class="small-h">Your plan</h3>
+      <ol class="plan" id="plan" aria-live="polite"></ol>
+      <div class="builder" id="builder">
+        <label class="field">Next sentence
+          <select id="action"></select>
+        </label>
+        <label class="field" id="arg1-wrap"><span id="arg1-label">Place</span>
+          <select id="arg1"></select>
+        </label>
+        <label class="field" id="arg2-wrap" hidden><span>Because it is</span>
+          <select id="arg2"></select>
+        </label>
+        <button type="button" class="primary" id="add">Add it</button>
+      </div>
+      <p class="preview" id="preview"></p>
+      <div class="bench-actions">
+        <button type="button" id="gold">Show the next gold step</button>
+        <button type="button" id="undo">Undo</button>
+        <button type="button" id="restart">Start over</button>
+      </div>
+    </div>
+
+    <aside class="table-card" aria-labelledby="slots-h">
+      <div class="table-card-head">
+        <h3 id="slots-h">State table</h3>
+        <label class="check"><input type="checkbox" id="hide-table"> Hide it</label>
+      </div>
+      <dl class="slots" id="slots"></dl>
+      <p class="slots-foot" id="slots-foot"></p>
+    </aside>
+  </div>
+</section>
+
+<section aria-labelledby="res-h">
+  <h2 id="res-h">Four planners, five seeds each</h2>
+  <p class="section-lede">Each dot is one training seed (8,000 steps) planning the same 50 short and 50 long problems
+    in each of the 4 skins it trained on. A plan counts only if it reaches the goal when run in the world. The messy
+    tests remove every period from the problem, which never happened in training. The line shows the mean.</p>
+  <div class="dots" id="dots"></div>
+</section>
+
+<section aria-labelledby="fail-h">
+  <h2 id="fail-h">Where the plans broke</h2>
+  <p class="section-lede">Failures across all seeds on the clean tests. Bookkeeping failures are the ones a state
+    table should prevent: going where you already are, taking something that isn't there, opening a door that isn't
+    closed, saying something false.</p>
+  <div class="bars" id="bars"></div>
+</section>
+
+<section aria-labelledby="read-h">
+  <h2 id="read-h">Do the taught slots still hold the state?</h2>
+  <p class="section-lede">Teaching fades out between 50% and 80% of training. Afterwards, a readout checks the slots
+    against the true state on gold plans. Farm and space are skins the model saw only as loose sentences, never as
+    plans.</p>
+  <div class="table-wrap"><table class="readout" id="readout"></table></div>
+  <p>The slots kept the state in the skins the model planned in, even after teaching stopped. In farm and space they
+    read the place and the goal item at about chance. The table is tied to the words it learned on, not to the shape
+    of the problem.</p>
+</section>
+
+<section aria-labelledby="one-h">
+  <h2 id="one-h">One problem, four models</h2>
+  <p class="section-lede">The recorded plans from seed 0 on one long test problem (Long 1 in the bench above),
+    re-checked here sentence by sentence. All four solve it clean. With the periods gone, all four fail at the first
+    sentence: the plain model writes nonsense, and the slot models make a real but wrong choice. This one problem beat
+    every model. Across all the messy long problems, the every-word slots solved 64–72%.</p>
+  <div class="seg" role="group" aria-label="Input" id="one-mode">
+    <button type="button" data-mode="clean" aria-pressed="false">Clean input</button>
+    <button type="button" data-mode="messy" aria-pressed="true">Messy input</button>
+  </div>
+  <p class="problem one-problem" id="one-problem"></p>
+  <div class="one-list" id="one-list"></div>
+</section>
+
+<section aria-labelledby="says-h" class="says">
+  <h2 id="says-h">What it says</h2>
+  <ul>
+    <li>A small carried state helps a small planner. On clean problems the gain is modest (76% → 94–97% on long plans),
+      with far fewer bookkeeping mistakes.</li>
+    <li>When to update matters more than what's taught. Updating only at sentence ends, the slots barely help on
+      messy input (15%), because the periods that trigger updates are gone. Updating at every word: 72%.</li>
+    <li>The simulator teacher isn't needed. Slots trained only to predict which kinds of words come next
+      (self-every) did about as well as the taught ones.</li>
+    <li>It doesn't transfer to new nouns. The taught slots read the place and goal at chance in skins the model never
+      planned in.</li>
+    <li>An earlier run (registers, run 1) found the same direction with sentence-end slots: bookkeeping errors fell
+      from 226 to 38. Its seeds were noisy, which is why v2 used five.</li>
+  </ul>
+  <h3 class="next-h">Next: a save game for a borrowed model</h3>
+  <p>If trained slots hold state, can they be saved and restored? A quick check on stock Qwen3.5 0.8B said a
+    pretrained model's own recurrent state can't do it: told "the secret word is pineapple", it recalled the word
+    10 of 10 times with the text in the prompt and 0 of 10 with only its saved state. <a
+    href="https://github.com/KealJones/lm-experiments/tree/main/experiments/register-resume">Register resume</a> plans
+    to train slots onto a real model and find out. It's a plan; nothing has run yet.</p>
+  <p class="meta-line">Runs: Kaggle, 2× T4, free, 4.2 hours, 22–23 Oct 2026.
+    <a href="https://github.com/KealJones/lm-experiments/tree/main/experiments/registers-v2">The code, raw results and write-up</a></p>
+</section>
+
+</main>
+<footer><p>No model runs on this page; the checkpoints aren't published. The world and its checker run in your browser through
+  a JavaScript port of <code>rv2.py</code>'s checker, which agrees with the original on 160 test plans. Every score comes from the run's own result files.</p></footer>
+<script type="module" src="demo.js"></script>
+</body>
+</html>

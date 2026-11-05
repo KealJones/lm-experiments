@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Random weights</title>
+<meta name="description" content="A tiny GPT-2 that never trains, running in your browser. Fill its weights with random numbers and see what it says.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../lab.css">
+<link rel="stylesheet" href="demo.css">
+</head>
+<body>
+<header class="wrap top">
+  <p class="owner"><a href="../../">Small model lab</a></p>
+  <h1>What does a language model say before it has learned anything?</h1>
+  <p class="lede">Take GPT-2's shape, shrink it to 2 layers, and fill every weight with random numbers instead of
+    training it. Try four ways of filling it, then the same in Qwen3's and Gemma 4's architectures.</p>
+  <p class="answer">Noise in the flavour of its tokenizer. None of the 12 random models beats guessing every token
+    with equal odds. The bigger the random numbers, the more confidently wrong it gets.</p>
+</header>
+
+<main class="wrap">
+
+<section class="bench" aria-labelledby="bench-h">
+  <h2 id="bench-h">Make one in your browser</h2>
+  <p class="bench-sub">A 2-layer GPT-2: width 128, 2 heads, 6.9M parameters, never trained. It uses GPT-2's real
+    tokenizer, and every number in it comes from the fill you pick.</p>
+
+  <div class="controls">
+    <div class="control">
+      <span class="label" id="fill-l">Fill every weight with</span>
+      <div class="seg" role="group" aria-labelledby="fill-l" id="fill"></div>
+    </div>
+    <div class="control">
+      <span class="label">Random draw</span>
+      <div class="seed">
+        <label class="sr" for="seed">Seed</label>
+        <input id="seed" type="number" min="0" max="99999" value="0" inputmode="numeric">
+        <button type="button" id="reroll">New random draw</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="control">
+    <label class="label" for="prompt">Prompt</label>
+    <div class="prompt-row">
+      <input id="prompt" type="text" value="The cat sat on the" maxlength="200" autocomplete="off">
+      <button type="button" class="primary" id="go">Continue it</button>
+    </div>
+    <div class="chips" id="chips"></div>
+  </div>
+
+  <div class="out-grid">
+    <div class="out">
+      <h3>Its first guess for the next token</h3>
+      <ol class="bars" id="first"></ol>
+      <p class="note">A blind guess gives every one of the 50,257 tokens 0.002%.</p>
+    </div>
+    <div class="out">
+      <h3>Sampled, 20 tokens</h3>
+      <p class="tokens" id="sampled"></p>
+      <h3>Greedy, 12 tokens</h3>
+      <p class="tokens" id="greedy"></p>
+      <p class="note">Shading marks where one token ends and the next begins.</p>
+    </div>
+  </div>
+
+  <div class="score">
+    <div>
+      <h3>Score it</h3>
+      <p class="note">Loss on the first 256 tokens of WikiText-2 test, the same text the experiment scored first.
+        Lower is better. Guessing blind scores 10.825.</p>
+    </div>
+    <button type="button" id="score">Score this model</button>
+    <div id="score-out" class="score-out" aria-live="polite"></div>
+  </div>
+
+  <p class="hint" id="status" aria-live="polite">Building the model…</p>
+</section>
+
+<section aria-labelledby="rec-h">
+  <h2 id="rec-h">What the experiment recorded</h2>
+  <p class="section-lede">Every bar is one random model's loss on 10,240 tokens of WikiText-2. The red line is a blind
+    guess, ln(vocabulary size). A bar ending past the line did worse than guessing. Note the log scale.</p>
+  <div class="chart" id="chart"></div>
+  <p class="cap-note">Gemma 4's bars stop near 42 because it clamps its final logits to ±30
+    (<code>final_logit_softcapping</code>). GPT-2 and Qwen3 have no cap.</p>
+</section>
+
+<section aria-labelledby="samples-h">
+  <div class="grid-head">
+    <h2 id="samples-h">What each one said</h2>
+    <div class="pickers">
+      <label class="field">Architecture <select id="rec-arch"></select></label>
+      <label class="field">Fill <select id="rec-init"></select></label>
+    </div>
+  </div>
+  <p class="section-lede" id="rec-sub"></p>
+  <div class="rec-grid">
+    <div id="rec-samples" class="rec-samples"></div>
+    <div class="favs">
+      <h3>The tokens it bets on most</h3>
+      <p class="note">Share of the 10,240 positions where this token was its top pick.</p>
+      <ol class="bars" id="favs"></ol>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="says-h" class="says">
+  <h2 id="says-h">What it says</h2>
+  <ul>
+    <li><strong>Nothing random beats a blind guess.</strong> The standard init comes closest, 0.009 above uniform odds
+      in GPT-2. Its logits are so small that every token is nearly equally likely, which is the least wrong you can be.</li>
+    <li><strong>Bigger random numbers make a confident idiot.</strong> At std 1 or 10 the logits blow up, and GPT-2
+      bets everything on a few tokens: 59 to 62 different top picks across 10,240 positions. It's wrong with huge
+      confidence, so its loss lands far past the blind guess.</li>
+    <li><strong>It barely reads the prompt.</strong> With near-flat logits, the random draw decides the output, not
+      the input. Greedy decoding loops on one token within a few steps.</li>
+    <li><strong>The tokenizer sets the flavour of the noise.</strong> GPT-2's gibberish is English-ish fragments.
+      Qwen3's mixes Chinese, Korean and code. Gemma 4 pulls from dozens of scripts and <code>&lt;unused&gt;</code> tokens.</li>
+    <li>Everything a model "knows" comes from training. The architecture alone gives nothing measurable here.</li>
+  </ul>
+  <p class="meta-line" id="meta-line"></p>
+</section>
+
+</main>
+<footer><p>The live model runs in a Web Worker in plain JavaScript, with no libraries. Its random numbers come from
+  this page's own generator, so a seed here is a new model of the same kind, not the exact weights the experiment
+  drew in PyTorch. The tokenizer uses GPT-2's real vocabulary and merges, and gives the same token ids as Hugging Face's
+  tokenizer on the test strings and the WikiText passage.</p></footer>
+<script type="module" src="demo.js"></script>
+</body>
+</html>
