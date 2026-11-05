@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ask first</title>
+<meta name="description" content="Can a 0.6B model learn to ask what someone needs before answering? It learned to ask. It didn't learn what to ask. Play the simulated person yourself.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../lab.css">
+<link rel="stylesheet" href="demo.css">
+</head>
+<body>
+<header class="wrap top">
+  <p class="owner"><a href="../../">Small model lab</a></p>
+  <h1>Can a small model learn to ask what you need before it answers?</h1>
+  <p class="lede">Ask Qwen3 0.6B for a birthday gift idea and it lists generic gifts. It never asks who the gift is
+    for, or why she stopped gardening. So I trained a small patch on 6,000 example conversations where the helper
+    asks first, follows up on the odd detail, looks things up, and checks its answer against what it learned.</p>
+  <p class="verdict-lede">It learned the script, not the habit. On the kinds of request it trained on, it went from 0% to
+    100%, mostly by reciting the training conversations word for word. On a weekend trip, which it never saw, it
+    still asks first. But it asks "What is your age?", gets "idk what you mean lol", and gives up.</p>
+</header>
+
+<main class="wrap">
+
+<section class="bench" aria-labelledby="play-h">
+  <div class="bench-head">
+    <h2 id="play-h">You be the model</h2>
+    <label class="field">Scenario
+      <select id="trip"></select>
+    </label>
+  </div>
+  <p class="task-desc">Someone sends this. They know what they need but won't say it unless your question asks about
+    it. Ask them anything, then write your answer.</p>
+  <div class="play-grid">
+    <div class="chat-col">
+      <div class="chat" id="chat" aria-live="polite"></div>
+      <form class="ask-form" id="ask-form" autocomplete="off">
+        <label class="sr-only" for="ask-input">Your question</label>
+        <input id="ask-input" type="text" placeholder="Ask them something" maxlength="300">
+        <button type="submit" class="primary">Ask</button>
+      </form>
+      <form class="answer-form" id="answer-form">
+        <label for="answer-input">Your answer</label>
+        <textarea id="answer-input" rows="3" placeholder="Suggest a trip"></textarea>
+        <button type="submit">Grade my answer</button>
+      </form>
+      <div class="grade" id="grade" aria-live="polite"></div>
+    </div>
+    <aside class="hidden-col" aria-labelledby="hidden-h">
+      <h3 id="hidden-h">What they're keeping back</h3>
+      <ul class="hidden-list" id="hidden-list"></ul>
+      <p class="hint">The grader needs two of these: who's coming and why they want to go. The answer has to suit both
+        and stay within the budget.</p>
+      <button type="button" id="show-model" aria-expanded="false">Show what the trained model asked</button>
+      <div class="model-turn" id="model-turn" hidden></div>
+    </aside>
+  </div>
+  <p class="hint">The person is a port of the experiment's simulated person, and it uses the same rules: it answers
+    only the topics your question mentions. Your answer is graded by the same checker the model got.</p>
+</section>
+
+<section aria-labelledby="score-h">
+  <h2 id="score-h">The score</h2>
+  <p class="section-lede">Same harness, same simulated person. The untouched model got two worked examples in its
+    prompt. The patched one got none. In the "everything given" requests, the message already has what's needed, so
+    asking there is a mistake.</p>
+  <div class="table-wrap"><table class="score" id="score"></table></div>
+</section>
+
+<section aria-labelledby="replay-h">
+  <h2 id="replay-h">Replay the conversations</h2>
+  <p class="section-lede">The run saved the first 3 conversations of each kind, for both models. Step through one.
+    For the kinds the patch trained on, compare it with the training-style conversation for the same request.</p>
+  <div class="pickers">
+    <label class="field">Kind of request <select id="fam"></select></label>
+    <label class="field">Model <select id="arm">
+      <option value="patched">Qwen3 0.6B with the patch</option>
+      <option value="untouched">Qwen3 0.6B untouched</option>
+    </select></label>
+    <label class="field">Conversation <select id="ep"></select></label>
+  </div>
+  <div class="replay">
+    <div class="replay-main">
+      <div class="steps" id="steps"></div>
+      <div class="replay-actions">
+        <button type="button" class="primary" id="next">Next step</button>
+        <button type="button" id="all">Show the rest</button>
+        <button type="button" id="restart">Start over</button>
+      </div>
+      <p class="outcome" id="outcome" hidden></p>
+    </div>
+    <div class="replay-gold" id="gold-col" hidden>
+      <p class="gold-head" id="gold-head"></p>
+      <div class="steps gold" id="gold"></div>
+    </div>
+  </div>
+  <label class="toggle" id="gold-toggle-wrap" hidden><input type="checkbox" id="gold-toggle"> Compare with the training-style conversation for this request</label>
+  <p class="hint" id="shots-note" hidden>The untouched model's prompt had two worked examples, one of them a coeliac
+    dinner. That's why some of its gift and code answers start by checking for gluten.</p>
+</section>
+
+<section aria-labelledby="chat-h">
+  <h2 id="chat-h">The patch also broke plain chat</h2>
+  <p class="section-lede">Without the tags and the harness, here is Keal's own message to each model. With the patch on,
+    English got much worse: perplexity on WikiText-2 went from <span id="ppl-a"></span> to <span id="ppl-b"></span>
+    (lower is better). With the patch switched off it's <span id="ppl-c"></span> again, exactly the untouched model.</p>
+  <div class="plain-grid">
+    <figure class="pane"><figcaption class="pane-title">Untouched</figcaption><pre class="said" id="plain-a"></pre></figure>
+    <figure class="pane"><figcaption class="pane-title">Patched</figcaption><pre class="said" id="plain-b"></pre></figure>
+  </div>
+</section>
+
+<section aria-labelledby="says-h" class="says">
+  <h2 id="says-h">What it says</h2>
+  <ul>
+    <li>Asking first transferred. The patched model asks on every request that needs it, including the trip it never
+      trained on. It also correctly doesn't ask when the message already says everything.</li>
+    <li>What to ask didn't transfer. It asks in all 30 trip conversations, and none of them find out who's coming or
+      why. The three saved ones all open with "What is your age?"</li>
+    <li>On the trained kinds it's reciting. The saved patched conversations are <span id="sim-range"></span> the
+      same text as the training-style conversation for the same request, and <span id="sim-exact"></span> are identical
+      character for character.</li>
+    <li>The training data made that the cheapest thing to learn: 6,000 conversations from a handful of templates with
+      near-identical wording. And a simulated person who matches keywords rewards saying the right words, not asking
+      the right thing.</li>
+  </ul>
+  <p class="meta-line">Run: Hugging Face Jobs, 24 Oct 2026, rank-16 LoRA on Qwen3 0.6B, 43 min of training.
+    <a href="https://github.com/KealJones/lm-experiments/tree/main/experiments/askfirst">The code, scenarios and raw results</a></p>
+</section>
+
+</main>
+<footer><p>Every conversation here was produced by the run, and the page only replays them. The simulated person and
+  the trip checker are ports of <code>scenarios.py</code>.</p></footer>
+<script type="module" src="demo.js"></script>
+</body>
+</html>
