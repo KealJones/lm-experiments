@@ -1,0 +1,2003 @@
+{
+ "gpt2": {
+  "label": "GPT-2",
+  "inits": {
+   "default": {
+    "loss": 10.833971402037378,
+    "above_blind": 0.00906628233529716,
+    "distinct_top1": 4250,
+    "first_row_loss": 10.86245308670343,
+    "favourites": [
+     {
+      "token": " the",
+      "share": 0.0251953125
+     },
+     {
+      "token": " \"",
+      "share": 0.02177734375
+     },
+     {
+      "token": " ,",
+      "share": 0.01826171875
+     },
+     {
+      "token": " .",
+      "share": 0.01796875
+     },
+     {
+      "token": "\n\n",
+      "share": 0.01728515625
+     },
+     {
+      "token": " of",
+      "share": 0.01689453125
+     },
+     {
+      "token": " ",
+      "share": 0.00966796875
+     },
+     {
+      "token": " and",
+      "share": 0.0091796875
+     }
+    ],
+    "samples": [
+     {
+      "prompt": "The cat sat on the",
+      "sampled": [
+       " upset",
+       " Woo",
+       " Cas",
+       "ropy",
+       " rightfully",
+       "Gall",
+       " UNDER",
+       " savvy",
+       " Publishing",
+       " Startup",
+       "Pir",
+       " assimil",
+       " rare",
+       " AUT",
+       "pose",
+       " inconsistent",
+       "Buff",
+       " ****",
+       " import",
+       " Detection"
+      ],
+      "greedy": [
+       " the",
+       " an",
+       " an",
+       " advances",
+       " advances",
+       " advances",
+       " advances",
+       " advances",
+       " advances",
+       " advances",
+       " advances",
+       " advances"
+      ],
+      "sampled_text": "The cat sat on the upset Woo Casropy rightfullyGall UNDER savvy Publishing StartupPir assimil rare AUTpose inconsistentBuff **** import Detection",
+      "greedy_text": "The cat sat on the the an an advances advances advances advances advances advances advances advances advances"
+     },
+     {
+      "prompt": "Once upon a time",
+      "sampled": [
+       " upset",
+       " Woo",
+       " Cas",
+       "ropy",
+       " rightfully",
+       "Gall",
+       " UNDER",
+       "Enable",
+       " Really",
+       " Startup",
+       "Pir",
+       " assimil",
+       " Track",
+       " AUT",
+       "pose",
+       " inconsistent",
+       "Buff",
+       " ****",
+       " import",
+       " Detection"
+      ],
+      "greedy": [
+       "ADE",
+       "ADE",
+       "ADE",
+       "ADE",
+       "ADE",
+       "ADE",
+       "ADE",
+       "ADE",
+       "ADE",
+       "ADE",
+       "ADE",
+       "ADE"
+      ],
+      "sampled_text": "Once upon a time upset Woo Casropy rightfullyGall UNDEREnable Really StartupPir assimil Track AUTpose inconsistentBuff **** import Detection",
+      "greedy_text": "Once upon a timeADEADEADEADEADEADEADEADEADEADEADEADE"
+     },
+     {
+      "prompt": "def add(a, b):",
+      "sampled": [
+       " upset",
+       " Woo",
+       " Cas",
+       "ropy",
+       " rightfully",
+       "Gall",
+       " UNDER",
+       " savvy",
+       " Really",
+       " Startup",
+       " neuron",
+       " hysterical",
+       " Track",
+       " AUT",
+       "pose",
+       " inconsistent",
+       "Buff",
+       " scaven",
+       " uptake",
+       " Detection"
+      ],
+      "greedy": [
+       "):",
+       "):",
+       " questionable",
+       " questionable",
+       " questionable",
+       " IDF",
+       " IDF",
+       " IDF",
+       " IDF",
+       " IDF",
+       " IDF",
+       " IDF"
+      ],
+      "sampled_text": "def add(a, b): upset Woo Casropy rightfullyGall UNDER savvy Really Startup neuron hysterical Track AUTpose inconsistentBuff scaven uptake Detection",
+      "greedy_text": "def add(a, b):):): questionable questionable questionable IDF IDF IDF IDF IDF IDF IDF"
+     }
+    ]
+   },
+   "normal1": {
+    "loss": 66.0976056985294,
+    "above_blind": 55.272700578827326,
+    "distinct_top1": 59,
+    "first_row_loss": 64.97699142156863,
+    "favourites": [
+     {
+      "token": "orthodox",
+      "share": 0.35908203125
+     },
+     {
+      "token": "sonian",
+      "share": 0.17890625
+     },
+     {
+      "token": " PIT",
+      "share": 0.12412109375
+     },
+     {
+      "token": "View",
+      "share": 0.067578125
+     },
+     {
+      "token": " prol",
+      "share": 0.062109375
+     },
+     {
+      "token": "oeuv",
+      "share": 0.0572265625
+     },
+     {
+      "token": " Trade",
+      "share": 0.0287109375
+     },
+     {
+      "token": " PI",
+      "share": 0.02548828125
+     }
+    ],
+    "samples": [
+     {
+      "prompt": "The cat sat on the",
+      "sampled": [
+       " Shepard",
+       "View",
+       " Sudan",
+       " Sudan",
+       "View",
+       "sonian",
+       "View",
+       "sonian",
+       "orthodox",
+       "orthodox",
+       "orthodox",
+       "orthodox",
+       "oeuv",
+       "orthodox",
+       "orthodox",
+       "orthodox",
+       "orthodox",
+       "sonian",
+       "orthodox",
+       "View"
+      ],
+      "greedy": [
+       " PI",
+       "View",
+       "View",
+       "oeuv",
+       " PI",
+       "View",
+       "oeuv",
+       "View",
+       "oeuv",
+       " PI",
+       "View",
+       "oeuv"
+      ],
+      "sampled_text": "The cat sat on the ShepardView Sudan SudanViewsonianViewsonianorthodoxorthodoxorthodoxorthodoxoeuvorthodoxorthodoxorthodoxorthodoxsonianorthodoxView",
+      "greedy_text": "The cat sat on the PIViewViewoeuv PIViewoeuvViewoeuv PIViewoeuv"
+     },
+     {
+      "prompt": "Once upon a time",
+      "sampled": [
+       "sonian",
+       "View",
+       "sonian",
+       "sonian",
+       "sonian",
+       "sonian",
+       "sonian",
+       "sonian",
+       "oeuv",
+       " PIT",
+       " WILL",
+       "sonian",
+       "sonian",
+       "sonian",
+       " Pon",
+       " PIT",
+       "View",
+       "orthodox",
+       "orthodox",
+       "orthodox"
+      ],
+      "greedy": [
+       "sonian",
+       "View",
+       "sonian",
+       "sonian",
+       "sonian",
+       " PIT",
+       " WILL",
+       "View",
+       "View",
+       "View",
+       "View",
+       "View"
+      ],
+      "sampled_text": "Once upon a timesonianViewsoniansoniansoniansoniansoniansonianoeuv PIT WILLsoniansoniansonian Pon PITVieworthodoxorthodoxorthodox",
+      "greedy_text": "Once upon a timesonianViewsoniansoniansonian PIT WILLViewViewViewViewView"
+     },
+     {
+      "prompt": "def add(a, b):",
+      "sampled": [
+       "sonian",
+       "orthodox",
+       "View",
+       " PI",
+       "sonian",
+       "orthodox",
+       " PI",
+       "orthodox",
+       "orthodox",
+       "orthodox",
+       "View",
+       "sonian",
+       "orthodox",
+       " prol",
+       " PI",
+       " PI",
+       "orthodox",
+       " prol",
+       " PI",
+       "orthodox"
+      ],
+      "greedy": [
+       "sonian",
+       "orthodox",
+       "orthodox",
+       " RT",
+       "sonian",
+       "orthodox",
+       " PI",
+       "orthodox",
+       "orthodox",
+       "orthodox",
+       "View",
+       " somew"
+      ],
+      "sampled_text": "def add(a, b):sonianorthodoxView PIsonianorthodox PIorthodoxorthodoxorthodoxViewsonianorthodox prol PI PIorthodox prol PIorthodox",
+      "greedy_text": "def add(a, b):sonianorthodoxorthodox RTsonianorthodox PIorthodoxorthodoxorthodoxView somew"
+     }
+    ]
+   },
+   "normal10": {
+    "loss": 6608.161899509804,
+    "above_blind": 6597.3369943901025,
+    "distinct_top1": 62,
+    "first_row_loss": 6479.911274509804,
+    "favourites": [
+     {
+      "token": "orthodox",
+      "share": 0.320703125
+     },
+     {
+      "token": " PIT",
+      "share": 0.1591796875
+     },
+     {
+      "token": "sonian",
+      "share": 0.15087890625
+     },
+     {
+      "token": "View",
+      "share": 0.10693359375
+     },
+     {
+      "token": "oeuv",
+      "share": 0.059375
+     },
+     {
+      "token": " prol",
+      "share": 0.0533203125
+     },
+     {
+      "token": " Trade",
+      "share": 0.02724609375
+     },
+     {
+      "token": " PI",
+      "share": 0.02509765625
+     }
+    ],
+    "samples": [
+     {
+      "prompt": "The cat sat on the",
+      "sampled": [
+       "View",
+       "View",
+       "sonian",
+       "View",
+       "sonian",
+       "sonian",
+       "View",
+       "sonian",
+       "sonian",
+       "sonian",
+       "View",
+       "sonian",
+       "View",
+       "View",
+       "orthodox",
+       "oeuv",
+       "View",
+       "View",
+       "View",
+       "sonian"
+      ],
+      "greedy": [
+       "View",
+       "View",
+       "sonian",
+       "View",
+       "sonian",
+       "sonian",
+       "View",
+       "sonian",
+       "sonian",
+       "sonian",
+       "View",
+       "sonian"
+      ],
+      "sampled_text": "The cat sat on theViewViewsonianViewsoniansonianViewsoniansoniansonianViewsonianViewVieworthodoxoeuvViewViewViewsonian",
+      "greedy_text": "The cat sat on theViewViewsonianViewsoniansonianViewsoniansoniansonianViewsonian"
+     },
+     {
+      "prompt": "Once upon a time",
+      "sampled": [
+       "sonian",
+       "View",
+       "sonian",
+       "sonian",
+       "sonian",
+       "sonian",
+       "sonian",
+       "sonian",
+       "sonian",
+       " PIT",
+       "View",
+       "sonian",
+       "sonian",
+       "sonian",
+       " PIT",
+       "View",
+       "sonian",
+       "View",
+       " PIT",
+       " somew"
+      ],
+      "greedy": [
+       "sonian",
+       "View",
+       "sonian",
+       "sonian",
+       "sonian",
+       " PIT",
+       " WILL",
+       "View",
+       "sonian",
+       "orthodox",
+       "orthodox",
+       "oeuv"
+      ],
+      "sampled_text": "Once upon a timesonianViewsoniansoniansoniansoniansoniansoniansonian PITViewsoniansoniansonian PITViewsonianView PIT somew",
+      "greedy_text": "Once upon a timesonianViewsoniansoniansonian PIT WILLViewsonianorthodoxorthodoxoeuv"
+     },
+     {
+      "prompt": "def add(a, b):",
+      "sampled": [
+       "sonian",
+       "View",
+       "sonian",
+       " RT",
+       "sonian",
+       " PI",
+       " PI",
+       "View",
+       " PI",
+       "orthodox",
+       "View",
+       "sonian",
+       "View",
+       "sonian",
+       " PI",
+       "View",
+       "sonian",
+       "View",
+       " somew",
+       "sonian"
+      ],
+      "greedy": [
+       "sonian",
+       "View",
+       "sonian",
+       " RT",
+       "sonian",
+       " PI",
+       " PI",
+       "View",
+       " PI",
+       "orthodox",
+       "View",
+       "sonian"
+      ],
+      "sampled_text": "def add(a, b):sonianViewsonian RTsonian PI PIView PIorthodoxViewsonianViewsonian PIViewsonianView somewsonian",
+      "greedy_text": "def add(a, b):sonianViewsonian RTsonian PI PIView PIorthodoxViewsonian"
+     }
+    ]
+   },
+   "uniform": {
+    "loss": 23.457914656096815,
+    "above_blind": 12.633009536394734,
+    "distinct_top1": 125,
+    "first_row_loss": 23.20506663602941,
+    "favourites": [
+     {
+      "token": ",'\"",
+      "share": 0.18291015625
+     },
+     {
+      "token": "\u000b",
+      "share": 0.0896484375
+     },
+     {
+      "token": " idiots",
+      "share": 0.084375
+     },
+     {
+      "token": " Crusher",
+      "share": 0.08388671875
+     },
+     {
+      "token": "wan",
+      "share": 0.0720703125
+     },
+     {
+      "token": " recount",
+      "share": 0.06201171875
+     },
+     {
+      "token": "jug",
+      "share": 0.04765625
+     },
+     {
+      "token": "656",
+      "share": 0.03291015625
+     }
+    ],
+    "samples": [
+     {
+      "prompt": "The cat sat on the",
+      "sampled": [
+       " Cor",
+       " deficiencies",
+       " Records",
+       " recount",
+       " multiplication",
+       "\u000b",
+       " recount",
+       "wan",
+       " recount",
+       "\u000b",
+       "individual",
+       "Harris",
+       "\u000b",
+       " mosque",
+       "\u000b",
+       "\u000b",
+       "\u000b",
+       "individual",
+       "alse",
+       " Comment"
+      ],
+      "greedy": [
+       "\u000b",
+       " multiplication",
+       "jug",
+       " recount",
+       "\u000b",
+       " dors",
+       ",'\"",
+       " dors",
+       " incumb",
+       " tagged",
+       " Crusher",
+       "aretz"
+      ],
+      "sampled_text": "The cat sat on the Cor deficiencies Records recount multiplication\u000b recountwan recount\u000bindividualHarris\u000b mosque\u000b\u000b\u000bindividualalse Comment",
+      "greedy_text": "The cat sat on the\u000b multiplicationjug recount\u000b dors,'\" dors incumb tagged Crusheraretz"
+     },
+     {
+      "prompt": "Once upon a time",
+      "sampled": [
+       " skirt",
+       " skirt",
+       " Finally",
+       "alse",
+       " Consumer",
+       "\u000b",
+       "alse",
+       "wan",
+       " tagged",
+       "\u000b",
+       " relentless",
+       " Engineering",
+       " Crusher",
+       " Norwich",
+       " dors",
+       "Requires",
+       " Olive",
+       "wan",
+       " Highlands",
+       " Highlands"
+      ],
+      "greedy": [
+       " DeVos",
+       " skirt",
+       " recount",
+       ",'\"",
+       ",'\"",
+       "wan",
+       " recount",
+       ",'\"",
+       "wan",
+       "wan",
+       "wan",
+       "wan"
+      ],
+      "sampled_text": "Once upon a time skirt skirt Finallyalse Consumer\u000balsewan tagged\u000b relentless Engineering Crusher Norwich dorsRequires Olivewan Highlands Highlands",
+      "greedy_text": "Once upon a time DeVos skirt recount,'\",'\"wan recount,'\"wanwanwanwan"
+     },
+     {
+      "prompt": "def add(a, b):",
+      "sampled": [
+       ",'\"",
+       " skirt",
+       " Records",
+       ",'\"",
+       " multiplication",
+       "\u000b",
+       " recount",
+       "jug",
+       " tagged",
+       "\u000b",
+       "chy",
+       "Harris",
+       "Appearances",
+       " trave",
+       " Buckley",
+       "\u000b",
+       "itta",
+       "wan",
+       "JS",
+       " Nero"
+      ],
+      "greedy": [
+       "\u000b",
+       "\u000b",
+       "jug",
+       " South",
+       "wan",
+       "individual",
+       " version",
+       "individual",
+       " Consumer",
+       " Nero",
+       "\u000b",
+       " Highlands"
+      ],
+      "sampled_text": "def add(a, b):,'\" skirt Records,'\" multiplication\u000b recountjug tagged\u000bchyHarrisAppearances trave Buckley\u000bittawanJS Nero",
+      "greedy_text": "def add(a, b):\u000b\u000bjug Southwanindividual versionindividual Consumer Nero\u000b Highlands"
+     }
+    ]
+   }
+  },
+  "params": 6862464,
+  "vocab": 50257
+ },
+ "qwen3": {
+  "label": "Qwen3",
+  "inits": {
+   "default": {
+    "loss": 11.939929773667279,
+    "above_blind": 0.008715115137993834,
+    "distinct_top1": 2912,
+    "first_row_loss": 11.901804725796568,
+    "favourites": [
+     {
+      "token": " ,",
+      "share": 0.042578125
+     },
+     {
+      "token": " the",
+      "share": 0.0294921875
+     },
+     {
+      "token": " .",
+      "share": 0.0267578125
+     },
+     {
+      "token": " \"",
+      "share": 0.0240234375
+     },
+     {
+      "token": " of",
+      "share": 0.02197265625
+     },
+     {
+      "token": " in",
+      "share": 0.01923828125
+     },
+     {
+      "token": " ",
+      "share": 0.019140625
+     },
+     {
+      "token": " and",
+      "share": 0.01611328125
+     }
+    ],
+    "samples": [
+     {
+      "prompt": "The cat sat on the",
+      "sampled": [
+       "楼下",
+       "�",
+       ".TR",
+       " Pierre",
+       "奇",
+       "赈",
+       " setTime",
+       "ห",
+       "voir",
+       " fi",
+       " 필",
+       " 관",
+       "Admin",
+       ".perform",
+       " MouseEventArgs",
+       " Gardner",
+       "DMETHOD",
+       "皋",
+       " design",
+       " Stück"
+      ],
+      "greedy": [
+       ".catch",
+       ".catch",
+       ".catch",
+       ".catch",
+       ".catch",
+       ".catch",
+       ".catch",
+       ".catch",
+       ".catch",
+       ".catch",
+       ".catch",
+       ".catch"
+      ],
+      "sampled_text": "The cat sat on the楼下�.TR Pierre奇赈 setTimeหvoir fi 필 관Admin.perform MouseEventArgs GardnerDMETHOD皋 design Stück",
+      "greedy_text": "The cat sat on the.catch.catch.catch.catch.catch.catch.catch.catch.catch.catch.catch.catch"
+     },
+     {
+      "prompt": "Once upon a time",
+      "sampled": [
+       "eras",
+       "�",
+       ".TR",
+       " Pierre",
+       "奇",
+       " בדרך",
+       " setTime",
+       "ห",
+       "voir",
+       " fi",
+       " 필",
+       " 관",
+       "Admin",
+       ".perform",
+       " MouseEventArgs",
+       " Gardner",
+       "DMETHOD",
+       "皋",
+       " design",
+       " Stück"
+      ],
+      "greedy": [
+       " utterly",
+       " utterly",
+       " utterly",
+       " utterly",
+       " utterly",
+       " utterly",
+       " utterly",
+       " utterly",
+       " utterly",
+       " utterly",
+       " utterly",
+       " utterly"
+      ],
+      "sampled_text": "Once upon a timeeras�.TR Pierre奇 בדרך setTimeหvoir fi 필 관Admin.perform MouseEventArgs GardnerDMETHOD皋 design Stück",
+      "greedy_text": "Once upon a time utterly utterly utterly utterly utterly utterly utterly utterly utterly utterly utterly utterly"
+     },
+     {
+      "prompt": "def add(a, b):",
+      "sampled": [
+       "_pins",
+       "�",
+       ".TR",
+       " Pierre",
+       "奇",
+       " בדרך",
+       " setTime",
+       "ห",
+       "voir",
+       " fi",
+       " 필",
+       " 관",
+       "Admin",
+       ".perform",
+       "苧",
+       " Gardner",
+       "DMETHOD",
+       "皋",
+       " design",
+       "板材"
+      ],
+      "greedy": [
+       "):",
+       "):",
+       "):",
+       "):",
+       "):",
+       "):",
+       "):",
+       "):",
+       "):",
+       "):",
+       "):",
+       "):"
+      ],
+      "sampled_text": "def add(a, b):_pins�.TR Pierre奇 בדרך setTimeหvoir fi 필 관Admin.perform苧 GardnerDMETHOD皋 design板材",
+      "greedy_text": "def add(a, b):):):):):):):):):):):):):"
+     }
+    ]
+   },
+   "normal1": {
+    "loss": 53.20032628676471,
+    "above_blind": 41.26911162823542,
+    "distinct_top1": 5157,
+    "first_row_loss": 51.37405024509804,
+    "favourites": [
+     {
+      "token": " giường",
+      "share": 0.00849609375
+     },
+     {
+      "token": " Phillip",
+      "share": 0.00546875
+     },
+     {
+      "token": "答疑",
+      "share": 0.005078125
+     },
+     {
+      "token": "dap",
+      "share": 0.00439453125
+     },
+     {
+      "token": "(Point",
+      "share": 0.00400390625
+     },
+     {
+      "token": " REUTERS",
+      "share": 0.003515625
+     },
+     {
+      "token": "ኮ",
+      "share": 0.00322265625
+     },
+     {
+      "token": " Bryan",
+      "share": 0.00322265625
+     }
+    ],
+    "samples": [
+     {
+      "prompt": "The cat sat on the",
+      "sampled": [
+       " guilty",
+       "»,",
+       "ивать",
+       "_way",
+       " reboot",
+       " rounded",
+       ".com",
+       " Hoch",
+       "화",
+       " Gates",
+       "�",
+       "tracer",
+       "систем",
+       " ço",
+       ".lineWidth",
+       "\tsleep",
+       " prioritize",
+       "都是非常",
+       "»,",
+       "坬"
+      ],
+      "greedy": [
+       " guilty",
+       "»,",
+       "brities",
+       " Casino",
+       " triples",
+       ".ClientSize",
+       "出て",
+       " hóa",
+       "&);\n\n",
+       "WillAppear",
+       "の方が",
+       "*/),"
+      ],
+      "sampled_text": "The cat sat on the guilty»,ивать_way reboot rounded.com Hoch화 Gates�tracerсистем ço.lineWidth\tsleep prioritize都是非常»,坬",
+      "greedy_text": "The cat sat on the guilty»,brities Casino triples.ClientSize出て hóa&);\n\nWillAppearの方が*/),"
+     },
+     {
+      "prompt": "Once upon a time",
+      "sampled": [
+       "ท่า",
+       " locale",
+       "(Pointer",
+       "-commit",
+       "꺾",
+       " DbType",
+       " king",
+       "_Pro",
+       "芙",
+       "ansom",
+       "_atomic",
+       "(isolate",
+       "'A",
+       "톡",
+       "半小时",
+       "([\r\n",
+       " преимуществ",
+       "้อง",
+       " المشكلة",
+       "答疑"
+      ],
+      "greedy": [
+       "ท่า",
+       " locale",
+       "(Pointer",
+       "-commit",
+       "꺾",
+       " DbType",
+       " king",
+       "_Pro",
+       "芙",
+       " partic",
+       " לשם",
+       " pods"
+      ],
+      "sampled_text": "Once upon a timeท่า locale(Pointer-commit꺾 DbType king_Pro芙ansom_atomic(isolate'A톡半小时([\r\n преимуществ้อง المشكلة答疑",
+      "greedy_text": "Once upon a timeท่า locale(Pointer-commit꺾 DbType king_Pro芙 partic לשם pods"
+     },
+     {
+      "prompt": "def add(a, b):",
+      "sampled": [
+       "从根本",
+       "\"},\r\n",
+       " Employees",
+       "刻意",
+       " Pictures",
+       "싴",
+       " mặc",
+       "_endpoint",
+       "方が",
+       " theft",
+       " אוהבים",
+       "筶",
+       "aki",
+       "PLAN",
+       " continuous",
+       "Bas",
+       " Davies",
+       "Ash",
+       "海洋",
+       "误"
+      ],
+      "greedy": [
+       "从根本",
+       " Clinton",
+       "Living",
+       " التي",
+       "أمن",
+       " following",
+       "帽子",
+       "帽子",
+       "帽子",
+       "帽子",
+       "统战",
+       "รับผิด"
+      ],
+      "sampled_text": "def add(a, b):从根本\"},\r\n Employees刻意 Pictures싴 mặc_endpoint方が theft אוהבים筶akiPLAN continuousBas DaviesAsh海洋误",
+      "greedy_text": "def add(a, b):从根本 ClintonLiving التيأمن following帽子帽子帽子帽子统战รับผิด"
+     }
+    ]
+   },
+   "normal10": {
+    "loss": 5294.140759803921,
+    "above_blind": 5282.209545145392,
+    "distinct_top1": 5266,
+    "first_row_loss": 5232.712745098039,
+    "favourites": [
+     {
+      "token": "佩戴",
+      "share": 0.00537109375
+     },
+     {
+      "token": " Phillip",
+      "share": 0.00419921875
+     },
+     {
+      "token": "අ",
+      "share": 0.0041015625
+     },
+     {
+      "token": " успех",
+      "share": 0.00400390625
+     },
+     {
+      "token": " .",
+      "share": 0.00380859375
+     },
+     {
+      "token": " Fix",
+      "share": 0.00380859375
+     },
+     {
+      "token": " tricky",
+      "share": 0.00341796875
+     },
+     {
+      "token": " +/-",
+      "share": 0.003125
+     }
+    ],
+    "samples": [
+     {
+      "prompt": "The cat sat on the",
+      "sampled": [
+       "Search",
+       " tip",
+       "尔斯",
+       "------------------------------------------------------------------------------------------------",
+       "Orange",
+       "(no",
+       "------------------------------------------------------------------------------------------------",
+       " Heller",
+       " пот",
+       " Я",
+       " Minimum",
+       " Braves",
+       " девуш",
+       "\tfprintf",
+       "ấm",
+       " Anim",
+       " Listener",
+       ".partner",
+       "印象深刻",
+       " fab"
+      ],
+      "greedy": [
+       "Search",
+       " tip",
+       "尔斯",
+       "------------------------------------------------------------------------------------------------",
+       "Orange",
+       "(no",
+       "------------------------------------------------------------------------------------------------",
+       " Heller",
+       " пот",
+       " Я",
+       " Minimum",
+       " Braves"
+      ],
+      "sampled_text": "The cat sat on theSearch tip尔斯------------------------------------------------------------------------------------------------Orange(no------------------------------------------------------------------------------------------------ Heller пот Я Minimum Braves девуш\tfprintfấm Anim Listener.partner印象深刻 fab",
+      "greedy_text": "The cat sat on theSearch tip尔斯------------------------------------------------------------------------------------------------Orange(no------------------------------------------------------------------------------------------------ Heller пот Я Minimum Braves"
+     },
+     {
+      "prompt": "Once upon a time",
+      "sampled": [
+       "一群人",
+       " largely",
+       " Cake",
+       "Middleware",
+       "➱",
+       " Cake",
+       "Middleware",
+       "complete",
+       "Sequential",
+       ".Att",
+       "AppComponent",
+       "porate",
+       " convent",
+       "...\");\n",
+       "生活环境",
+       "狀",
+       "נגד",
+       " landslide",
+       "\"s",
+       "*C"
+      ],
+      "greedy": [
+       "一群人",
+       " largely",
+       " Cake",
+       "Middleware",
+       "➱",
+       " Cake",
+       "Middleware",
+       "complete",
+       "Sequential",
+       ".Att",
+       ">>>>",
+       "问卷"
+      ],
+      "sampled_text": "Once upon a time一群人 largely CakeMiddleware➱ CakeMiddlewarecompleteSequential.AttAppComponentporate convent...\");\n生活环境狀נגד landslide\"s*C",
+      "greedy_text": "Once upon a time一群人 largely CakeMiddleware➱ CakeMiddlewarecompleteSequential.Att>>>>问卷"
+     },
+     {
+      "prompt": "def add(a, b):",
+      "sampled": [
+       " vel",
+       "あげ",
+       " ancestral",
+       "提供了",
+       " prendre",
+       "\"d",
+       "あげ",
+       " Intelligent",
+       " plan",
+       "Forms",
+       "أمن",
+       "(gca",
+       "𝔱",
+       "ogen",
+       "\ths",
+       " Packages",
+       "险",
+       "/rs",
+       "-scripts",
+       "IALIZ"
+      ],
+      "greedy": [
+       " vel",
+       "あげ",
+       " ancestral",
+       "提供了",
+       " prendre",
+       "\"d",
+       "あげ",
+       " Intelligent",
+       " plan",
+       "Forms",
+       "أمن",
+       "(gca"
+      ],
+      "sampled_text": "def add(a, b): velあげ ancestral提供了 prendre\"dあげ Intelligent planFormsأمن(gca𝔱ogen\ths Packages险/rs-scriptsIALIZ",
+      "greedy_text": "def add(a, b): velあげ ancestral提供了 prendre\"dあげ Intelligent planFormsأمن(gca"
+     }
+    ]
+   },
+   "uniform": {
+    "loss": 19.54383171530331,
+    "above_blind": 7.612617056774024,
+    "distinct_top1": 5537,
+    "first_row_loss": 19.858002068014706,
+    "favourites": [
+     {
+      "token": " бел",
+      "share": 0.00556640625
+     },
+     {
+      "token": "\tOn",
+      "share": 0.00419921875
+     },
+     {
+      "token": "老龄化",
+      "share": 0.00419921875
+     },
+     {
+      "token": " \\'",
+      "share": 0.0033203125
+     },
+     {
+      "token": "阿",
+      "share": 0.00283203125
+     },
+     {
+      "token": "苊",
+      "share": 0.00263671875
+     },
+     {
+      "token": "翎",
+      "share": 0.0025390625
+     },
+     {
+      "token": "pickle",
+      "share": 0.00244140625
+     }
+    ],
+    "samples": [
+     {
+      "prompt": "The cat sat on the",
+      "sampled": [
+       " =='",
+       ".MaxValue",
+       "()>",
+       "を考え",
+       "Sketch",
+       " Mot",
+       " fj",
+       "れない",
+       "矿",
+       "longitude",
+       "变态",
+       " Laden",
+       " inglés",
+       "ERVER",
+       "痛苦",
+       " Best",
+       "DMETHOD",
+       "-messages",
+       "疼痛",
+       "lbs"
+      ],
+      "greedy": [
+       "vio",
+       "links",
+       " aVar",
+       "之權利",
+       "DataContext",
+       "聆",
+       " relat",
+       "意識",
+       " relat",
+       "혁",
+       "𝘛",
+       "ibly"
+      ],
+      "sampled_text": "The cat sat on the =='.MaxValue()>を考えSketch Mot fjれない矿longitude变态 Laden inglésERVER痛苦 BestDMETHOD-messages疼痛lbs",
+      "greedy_text": "The cat sat on theviolinks aVar之權利DataContext聆 relat意識 relat혁𝘛ibly"
+     },
+     {
+      "prompt": "Once upon a time",
+      "sampled": [
+       "สุ",
+       "(Method",
+       "裨",
+       " prosecute",
+       " partners",
+       " Kylie",
+       " represents",
+       "틸",
+       " WHETHER",
+       " WHETHER",
+       "슐",
+       "튽",
+       "👿",
+       " WHETHER",
+       "👿",
+       "=\"/\">",
+       " الرحمن",
+       "皋",
+       "มะเร็ง",
+       " שא"
+      ],
+      "greedy": [
+       "SOURCE",
+       " formulate",
+       " şarkı",
+       " Bake",
+       " strapped",
+       "XMLLoader",
+       "مثال",
+       "مثال",
+       "مثال",
+       "مثال",
+       "猪",
+       "acellular"
+      ],
+      "sampled_text": "Once upon a timeสุ(Method裨 prosecute partners Kylie represents틸 WHETHER WHETHER슐튽👿 WHETHER👿=\"/\"> الرحمن皋มะเร็ง שא",
+      "greedy_text": "Once upon a timeSOURCE formulate şarkı Bake strappedXMLLoaderمثالمثالمثالمثال猪acellular"
+     },
+     {
+      "prompt": "def add(a, b):",
+      "sampled": [
+       " inscription",
+       "�",
+       "(userName",
+       " SIMPLE",
+       "奇",
+       " אבי",
+       "번호",
+       " profile",
+       " ander",
+       " outbound",
+       " skyrocket",
+       "지원",
+       "กับการ",
+       " assertion",
+       "Wik",
+       ".inputs",
+       "stay",
+       "겅",
+       "Parent",
+       " horrors"
+      ],
+      "greedy": [
+       "\tfill",
+       "llum",
+       " Designer",
+       " Jerome",
+       "_analysis",
+       "_analysis",
+       "_analysis",
+       "_analysis",
+       "中科院",
+       "中科院",
+       "规模最大",
+       "中科院"
+      ],
+      "sampled_text": "def add(a, b): inscription�(userName SIMPLE奇 אבי번호 profile ander outbound skyrocket지원กับการ assertionWik.inputsstay겅Parent horrors",
+      "greedy_text": "def add(a, b):\tfillllum Designer Jerome_analysis_analysis_analysis_analysis中科院中科院规模最大中科院"
+     }
+    ]
+   }
+  },
+  "params": 19940224,
+  "vocab": 151936
+ },
+ "gemma4": {
+  "label": "Gemma 4",
+  "inits": {
+   "default": {
+    "loss": 12.499987314261642,
+    "above_blind": 0.023338064182626184,
+    "distinct_top1": 8752,
+    "first_row_loss": 12.511033241421568,
+    "favourites": [
+     {
+      "token": "Mike",
+      "share": 0.00146484375
+     },
+     {
+      "token": " testAvg",
+      "share": 0.00126953125
+     },
+     {
+      "token": "ahrt",
+      "share": 0.0009765625
+     },
+     {
+      "token": " پاسخ",
+      "share": 0.00087890625
+     },
+     {
+      "token": "ayon",
+      "share": 0.00078125
+     },
+     {
+      "token": "莫",
+      "share": 0.00068359375
+     },
+     {
+      "token": " Cáceres",
+      "share": 0.00068359375
+     },
+     {
+      "token": ",-",
+      "share": 0.00068359375
+     }
+    ],
+    "samples": [
+     {
+      "prompt": "The cat sat on the",
+      "sampled": [
+       " sôi",
+       " Patrol",
+       " مجبور",
+       "ități",
+       " Фран",
+       " ঢাকায়",
+       "ைகள்",
+       " lees",
+       "跟",
+       " поми",
+       "umbr",
+       "ขับ",
+       " Venezuelan",
+       " फेब्रुवारी",
+       "Toilet",
+       " ügy",
+       "出现在",
+       "<unused3086>",
+       "KOM",
+       "畨"
+      ],
+      "greedy": [
+       " ম্যানেজার",
+       "சல்",
+       "<unused5513>",
+       " мое",
+       " goose",
+       " luz",
+       " nitrogen",
+       "ಲೂ",
+       " kanggo",
+       " рекомендации",
+       ".}~\\",
+       "gdf"
+      ],
+      "sampled_text": "The cat sat on the sôi Patrol مجبورități Фран ঢাকায়ைகள் lees跟 помиumbrขับ Venezuelan फेब्रुवारीToilet ügy出现在<unused3086>KOM畨",
+      "greedy_text": "The cat sat on the ম্যানেজারசல்<unused5513> мое goose luz nitrogenಲೂ kanggo рекомендации.}~\\gdf"
+     },
+     {
+      "prompt": "Once upon a time",
+      "sampled": [
+       "ｇ",
+       " Patrol",
+       " مجبور",
+       "ități",
+       " Фран",
+       " ঢাকায়",
+       "ைகள்",
+       " lees",
+       "跟",
+       " поми",
+       "umbr",
+       "ขับ",
+       " Venezuelan",
+       " फेब्रुवारी",
+       "ogia",
+       " ügy",
+       "出现在",
+       "<unused3086>",
+       "KOM",
+       "畨"
+      ],
+      "greedy": [
+       " expulsion",
+       "了",
+       " bulldog",
+       " actifs",
+       " sopr",
+       " kerosene",
+       "teni",
+       " செயற்க",
+       " 주제",
+       " fréquence",
+       "的目标",
+       "数据显示"
+      ],
+      "sampled_text": "Once upon a timeｇ Patrol مجبورități Фран ঢাকায়ைகள் lees跟 помиumbrขับ Venezuelan फेब्रुवारीogia ügy出现在<unused3086>KOM畨",
+      "greedy_text": "Once upon a time expulsion了 bulldog actifs sopr keroseneteni செயற்க 주제 fréquence的目标数据显示"
+     },
+     {
+      "prompt": "def add(a, b):",
+      "sampled": [
+       " sôi",
+       " Patrol",
+       " مجبور",
+       "ități",
+       " Фран",
+       " ঢাকায়",
+       "ைகள்",
+       " lees",
+       "跟",
+       " поми",
+       "umbr",
+       "ขับ",
+       " Venezuelan",
+       " .-",
+       "Toilet",
+       " ügy",
+       "出现在",
+       "<unused3086>",
+       "KOM",
+       "畨"
+      ],
+      "greedy": [
+       "যুব",
+       "тивный",
+       "Clock",
+       " строку",
+       " hispanic",
+       " Tiktok",
+       " placent",
+       "Request",
+       " எதிர்க்க",
+       "коном",
+       " స్థాయి",
+       " നല്ല"
+      ],
+      "sampled_text": "def add(a, b): sôi Patrol مجبورități Фран ঢাকায়ைகள் lees跟 помиumbrขับ Venezuelan .-Toilet ügy出现在<unused3086>KOM畨",
+      "greedy_text": "def add(a, b):যুবтивныйClock строку hispanic Tiktok placentRequest எதிர்க்கконом స్థాయి നല്ല"
+     }
+    ]
+   },
+   "normal1": {
+    "loss": 32.52635924096201,
+    "above_blind": 20.049709990882995,
+    "distinct_top1": 2949,
+    "first_row_loss": 32.45265778186275,
+    "favourites": [
+     {
+      "token": " या",
+      "share": 0.0451171875
+     },
+     {
+      "token": " 지도",
+      "share": 0.0423828125
+     },
+     {
+      "token": "꒦",
+      "share": 0.027734375
+     },
+     {
+      "token": "ఫ్",
+      "share": 0.0255859375
+     },
+     {
+      "token": "Factories",
+      "share": 0.02177734375
+     },
+     {
+      "token": " نگ",
+      "share": 0.01982421875
+     },
+     {
+      "token": " कार्रवाई",
+      "share": 0.01484375
+     },
+     {
+      "token": "сро",
+      "share": 0.01181640625
+     }
+    ],
+    "samples": [
+     {
+      "prompt": "The cat sat on the",
+      "sampled": [
+       "ზრ",
+       "欷",
+       " traj",
+       "/).",
+       " opioid",
+       " ঢাকায়",
+       "ជាតិ",
+       "ஏ",
+       "<unused3162>",
+       "RR",
+       "朵",
+       " GMO",
+       " स्वरों",
+       " něm",
+       " दोगु",
+       " paler",
+       " correlated",
+       " sabores",
+       " põ",
+       "Moderate"
+      ],
+      "greedy": [
+       " 지도",
+       "に応",
+       "工房",
+       " Los",
+       "踌",
+       " Los",
+       "踌",
+       " Los",
+       "踌",
+       " Los",
+       "踌",
+       " Los"
+      ],
+      "sampled_text": "The cat sat on theზრ欷 traj/). opioid ঢাকায়ជាតិஏ<unused3162>RR朵 GMO स्वरों něm दोगु paler correlated sabores põModerate",
+      "greedy_text": "The cat sat on the 지도に応工房 Los踌 Los踌 Los踌 Los踌 Los"
+     },
+     {
+      "prompt": "Once upon a time",
+      "sampled": [
+       "Paul",
+       " Discreet",
+       "eosin",
+       " kapsam",
+       "뎀",
+       " revolves",
+       "omas",
+       "ITION",
+       "Hus",
+       "ங்களுடன்",
+       "غرب",
+       "韓國",
+       " ಸರ್ಕಾರದ",
+       "en",
+       " 热",
+       " Platinum",
+       " governance",
+       " encouraged",
+       "ቧ",
+       " لگتا"
+      ],
+      "greedy": [
+       "HF",
+       " логи",
+       "عاية",
+       " логи",
+       "عاية",
+       " логи",
+       "عاية",
+       " логи",
+       "عاية",
+       " логи",
+       "عاية",
+       " логи"
+      ],
+      "sampled_text": "Once upon a timePaul Discreeteosin kapsam뎀 revolvesomasITIONHusங்களுடன்غرب韓國 ಸರ್ಕಾರದen 热 Platinum governance encouragedቧ لگتا",
+      "greedy_text": "Once upon a timeHF логиعاية логиعاية логиعاية логиعاية логиعاية логи"
+     },
+     {
+      "prompt": "def add(a, b):",
+      "sampled": [
+       " ભા",
+       "kir",
+       "ধা",
+       " Comerc",
+       " исследователь",
+       "ป่วย",
+       " spn",
+       "reas",
+       " rodzaju",
+       " Thess",
+       "entraînement",
+       " otvor",
+       " adver",
+       "thanks",
+       "otest",
+       " کہنا",
+       " mignon",
+       " covenants",
+       " bref",
+       "🔖"
+      ],
+      "greedy": [
+       "െങ്കില്‍",
+       "ことから",
+       "െങ്കില്‍",
+       "ことから",
+       "െങ്കില്‍",
+       "ことから",
+       "െങ്കില്‍",
+       "ことから",
+       "െങ്കില്‍",
+       "ことから",
+       "െങ്കില്‍",
+       "ことから"
+      ],
+      "sampled_text": "def add(a, b): ભાkirধা Comerc исследовательป่วย spnreas rodzaju Thessentraînement otvor adverthanksotest کہنا mignon covenants bref🔖",
+      "greedy_text": "def add(a, b):െങ്കില്‍ことからെങ്കില്‍ことからെങ്കില്‍ことからെങ്കില്‍ことからെങ്കില്‍ことからെങ്കില്‍ことから"
+     }
+    ]
+   },
+   "normal10": {
+    "loss": 42.54478046492034,
+    "above_blind": 30.06813121484133,
+    "distinct_top1": 14,
+    "first_row_loss": 42.78564644607843,
+    "favourites": [
+     {
+      "token": "<pad>",
+      "share": 0.5255859375
+     },
+     {
+      "token": "<eos>",
+      "share": 0.25478515625
+     },
+     {
+      "token": "<bos>",
+      "share": 0.1009765625
+     },
+     {
+      "token": "<mask>",
+      "share": 0.0611328125
+     },
+     {
+      "token": "<unk>",
+      "share": 0.03134765625
+     },
+     {
+      "token": "[multimodal]",
+      "share": 0.0095703125
+     },
+     {
+      "token": "<unused1>",
+      "share": 0.00693359375
+     },
+     {
+      "token": "<unused0>",
+      "share": 0.00576171875
+     }
+    ],
+    "samples": [
+     {
+      "prompt": "The cat sat on the",
+      "sampled": [
+       "ｇ",
+       " trouva",
+       " practicar",
+       " Sharks",
+       " McNeil",
+       " ঢাকায়",
+       " सिलसिला",
+       "licken",
+       "раста",
+       "鍬",
+       "umbr",
+       "Tout",
+       "社長",
+       " Hunger",
+       "ogia",
+       "<unused5577>",
+       " ஆனால்",
+       " ख़",
+       "KOM",
+       "畨"
+      ],
+      "greedy": [
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>"
+      ],
+      "sampled_text": "The cat sat on theｇ trouva practicar Sharks McNeil ঢাকায় सिलसिलाlickenраста鍬umbrTout社長 Hungerogia<unused5577> ஆனால் ख़KOM畨",
+      "greedy_text": "The cat sat on the"
+     },
+     {
+      "prompt": "Once upon a time",
+      "sampled": [
+       "емым",
+       " Олександр",
+       "ধা",
+       " przec",
+       " McNeil",
+       " ঢাকায়",
+       " सिलसिला",
+       "licken",
+       "раста",
+       "鍬",
+       "umbr",
+       "ขับ",
+       " Venezuelan",
+       " .-",
+       " når",
+       " ügy",
+       "出现在",
+       " வட்ட",
+       "溃",
+       "畨"
+      ],
+      "greedy": [
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>"
+      ],
+      "sampled_text": "Once upon a timeемым Олександрধা przec McNeil ঢাকায় सिलसिलाlickenраста鍬umbrขับ Venezuelan .- når ügy出现在 வட்ட溃畨",
+      "greedy_text": "Once upon a time"
+     },
+     {
+      "prompt": "def add(a, b):",
+      "sampled": [
+       "ｇ",
+       " trouva",
+       " practicar",
+       " Sharks",
+       " McNeil",
+       " ঢাকায়",
+       " सिलसिला",
+       "licken",
+       "раста",
+       "鍬",
+       "umbr",
+       "ขับ",
+       " Venezuelan",
+       "の中心",
+       "ogia",
+       "<unused5577>",
+       " ஆனால்",
+       " ख़",
+       "KOM",
+       "畨"
+      ],
+      "greedy": [
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>",
+       "<pad>"
+      ],
+      "sampled_text": "def add(a, b):ｇ trouva practicar Sharks McNeil ঢাকায় सिलसिलाlickenраста鍬umbrขับ Venezuelanの中心ogia<unused5577> ஆனால் ख़KOM畨",
+      "greedy_text": "def add(a, b):"
+     }
+    ]
+   },
+   "uniform": {
+    "loss": 18.74786295572917,
+    "above_blind": 6.271213705650153,
+    "distinct_top1": 3046,
+    "first_row_loss": 19.044318704044116,
+    "favourites": [
+     {
+      "token": " संघीय",
+      "share": 0.0451171875
+     },
+     {
+      "token": " Fact",
+      "share": 0.04228515625
+     },
+     {
+      "token": "uksia",
+      "share": 0.0275390625
+     },
+     {
+      "token": " assemblages",
+      "share": 0.02470703125
+     },
+     {
+      "token": "fathers",
+      "share": 0.02265625
+     },
+     {
+      "token": "Responsibilities",
+      "share": 0.01748046875
+     },
+     {
+      "token": "阅",
+      "share": 0.01591796875
+     },
+     {
+      "token": " raster",
+      "share": 0.01494140625
+     }
+    ],
+    "samples": [
+     {
+      "prompt": "The cat sat on the",
+      "sampled": [
+       "深圳市",
+       "ierenden",
+       "爺",
+       " Sharks",
+       " Фран",
+       "getColumn",
+       "hug",
+       "},-\\",
+       " Montpellier",
+       " Clubs",
+       "欽",
+       "PAY",
+       "বিস্ত",
+       " Prefix",
+       "Toilet",
+       " inFile",
+       " AVENUE",
+       "ivia",
+       " 사진",
+       " odpad"
+      ],
+      "greedy": [
+       " Fact",
+       "同样",
+       " Prentice",
+       "sweater",
+       " Prentice",
+       "sweater",
+       " Prentice",
+       "sweater",
+       " Prentice",
+       "കോ",
+       " Prentice",
+       "കോ"
+      ],
+      "sampled_text": "The cat sat on the深圳市ierenden爺 Sharks ФранgetColumnhug},-\\ Montpellier Clubs欽PAYবিস্ত PrefixToilet inFile AVENUEivia 사진 odpad",
+      "greedy_text": "The cat sat on the Fact同样 Prenticesweater Prenticesweater Prenticesweater Prenticeകോ Prenticeകോ"
+     },
+     {
+      "prompt": "Once upon a time",
+      "sampled": [
+       "パフォーマンス",
+       " overestimate",
+       "ধা",
+       " journaling",
+       " McNeil",
+       " учитывать",
+       "ifiées",
+       "Angular",
+       "ческого",
+       " compr",
+       "klam",
+       "˜</",
+       "avkhat",
+       " contradicts",
+       "ogia",
+       "čných",
+       "Joy",
+       " Jordi",
+       "plaintext",
+       " поступа"
+      ],
+      "greedy": [
+       " тип",
+       " nilai",
+       " Understanding",
+       " otak",
+       "iverse",
+       " otak",
+       "iverse",
+       " otak",
+       "iverse",
+       " otak",
+       "iverse",
+       " otak"
+      ],
+      "sampled_text": "Once upon a timeパフォーマンス overestimateধা journaling McNeil учитыватьifiéesAngularческого comprklam˜</avkhat contradictsogiačnýchJoy Jordiplaintext поступа",
+      "greedy_text": "Once upon a time тип nilai Understanding otakiverse otakiverse otakiverse otakiverse otak"
+     },
+     {
+      "prompt": "def add(a, b):",
+      "sampled": [
+       "いたり",
+       "Premier",
+       " Switch",
+       " تكونوا",
+       "believe",
+       " dekor",
+       " Upl",
+       " போக்கு",
+       "=(",
+       "revolution",
+       " Dominican",
+       " employed",
+       "坂",
+       " फेब्रुवारी",
+       "Toilet",
+       " inFile",
+       " AVENUE",
+       "Snapped",
+       " Schwar",
+       " ভবিষ্য"
+      ],
+      "greedy": [
+       "いたり",
+       "trending",
+       "いたり",
+       "trending",
+       "いたり",
+       "trending",
+       "いたり",
+       "trending",
+       "いたり",
+       "trending",
+       "いたり",
+       "trending"
+      ],
+      "sampled_text": "def add(a, b):いたりPremier Switch تكونواbelieve dekor Upl போக்கு=(revolution Dominican employed坂 फेब्रुवारीToilet inFile AVENUESnapped Schwar ভবিষ্য",
+      "greedy_text": "def add(a, b):いたりtrendingいたりtrendingいたりtrendingいたりtrendingいたりtrendingいたりtrending"
+     }
+    ]
+   }
+  },
+  "params": 42448528,
+  "vocab": 262144
+ }
+}
