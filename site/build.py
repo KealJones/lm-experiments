@@ -84,7 +84,10 @@ def blocks(lines):
         elif s.startswith("|"):
             rows = []
             while i < len(lines) and lines[i].strip().startswith("|"):
-                cells = [c.strip() for c in lines[i].strip().strip("|").split("|")]
+                row = lines[i].strip()
+                row = re.sub(r"^\|", "", row)
+                row = re.sub(r"(?<!\\)\|$", "", row)
+                cells = [c.strip().replace("\\|", "|") for c in re.split(r"(?<!\\)\|", row)]  # \| is a literal pipe
                 if not all(re.fullmatch(r":?-{2,}:?", c) for c in cells if c):
                     rows.append(cells)
                 i += 1
