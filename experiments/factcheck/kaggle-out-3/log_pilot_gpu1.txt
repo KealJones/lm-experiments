@@ -1,0 +1,58 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[llama] loaded unsloth/Llama-3.2-1B-Instruct on cuda in 41s
+[llama] drafts: 2
+[llama]   step 1: 0/2 done (3s)
+[llama]   step 2: 0/2 done (4s)
+[llama]   step 3: 0/2 done (5s)
+[llama]   step 4: 0/2 done (7s)
+[llama]   step 5: 1/2 done (9s)
+[llama]   step 6: 2/2 done (10s)
+[llama] reviews: 8
+[llama]   step 1: 0/8 done (1s)
+[llama]   step 2: 5/8 done (5s)
+Traceback (most recent call last):
+  File "/kaggle/working/factcheck.py", line 576, in <module>
+    {"check": check, "report": report}.get(a.cmd, lambda: worker(a.model, a.gpu, a.tag, a.arm, not a.no_planted))()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/kaggle/working/factcheck.py", line 576, in <lambda>
+    {"check": check, "report": report}.get(a.cmd, lambda: worker(a.model, a.gpu, a.tag, a.arm, not a.no_planted))()
+                                                          ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/working/factcheck.py", line 480, in worker
+    run_convs(reviews, tok, model, dev, log)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/working/factcheck.py", line 373, in run_convs
+    texts = [(c, render(c)) for c in active]
+                 ~~~~~~^^^
+  File "/kaggle/working/factcheck.py", line 364, in render
+    return tok.apply_chat_template(c["msgs"], tools=TOOLS, tokenize=False, add_generation_prompt=True,
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                   enable_thinking=False) + (c.get("prefix", "") if c["turns"] == 0 else "")
+                                   ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/transformers/tokenization_utils_base.py", line 3163, in apply_chat_template
+    rendered_chat, generation_indices = render_jinja_template(
+                                        ~~~~~~~~~~~~~~~~~~~~~^
+        conversations=conversations,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **template_kwargs,
+        ^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/usr/local/lib/python3.13/dist-packages/transformers/utils/chat_template_utils.py", line 712, in render_jinja_template
+    rendered_chat = compiled_template.render(
+        messages=chat,
+    ...<3 lines>...
+        **kwargs,
+    )
+  File "/usr/local/lib/python3.13/dist-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/dist-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "<template>", line 72, in top-level template code
+  File "/usr/local/lib/python3.13/dist-packages/jinja2/sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/transformers/utils/chat_template_utils.py", line 588, in raise_exception
+    raise jinja2.exceptions.TemplateError(message)
+jinja2.exceptions.TemplateError: This model only supports single tool-calls at once!

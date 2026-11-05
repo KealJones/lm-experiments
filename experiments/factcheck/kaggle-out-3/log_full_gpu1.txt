@@ -1,0 +1,198 @@
+[llama] loaded unsloth/Llama-3.2-1B-Instruct on cuda in 12s
+[llama] drafts: 36
+[llama]   step 1: 0/36 done (10s)
+[llama]   step 2: 2/36 done (22s)
+Traceback (most recent call last):
+  File "/kaggle/working/factcheck.py", line 576, in <module>
+    {"check": check, "report": report}.get(a.cmd, lambda: worker(a.model, a.gpu, a.tag, a.arm, not a.no_planted))()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/kaggle/working/factcheck.py", line 576, in <lambda>
+    {"check": check, "report": report}.get(a.cmd, lambda: worker(a.model, a.gpu, a.tag, a.arm, not a.no_planted))()
+                                                          ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/working/factcheck.py", line 462, in worker
+    run_convs(drafts, tok, model, dev, log)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/working/factcheck.py", line 373, in run_convs
+    texts = [(c, render(c)) for c in active]
+                 ~~~~~~^^^
+  File "/kaggle/working/factcheck.py", line 364, in render
+    return tok.apply_chat_template(c["msgs"], tools=TOOLS, tokenize=False, add_generation_prompt=True,
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                   enable_thinking=False) + (c.get("prefix", "") if c["turns"] == 0 else "")
+                                   ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/transformers/tokenization_utils_base.py", line 3163, in apply_chat_template
+    rendered_chat, generation_indices = render_jinja_template(
+                                        ~~~~~~~~~~~~~~~~~~~~~^
+        conversations=conversations,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **template_kwargs,
+        ^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/usr/local/lib/python3.13/dist-packages/transformers/utils/chat_template_utils.py", line 712, in render_jinja_template
+    rendered_chat = compiled_template.render(
+        messages=chat,
+    ...<3 lines>...
+        **kwargs,
+    )
+  File "/usr/local/lib/python3.13/dist-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/dist-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "<template>", line 72, in top-level template code
+  File "/usr/local/lib/python3.13/dist-packages/jinja2/sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/transformers/utils/chat_template_utils.py", line 588, in raise_exception
+    raise jinja2.exceptions.TemplateError(message)
+jinja2.exceptions.TemplateError: This model only supports single tool-calls at once!
+[llama] loaded unsloth/Llama-3.2-1B-Instruct on cuda in 11s
+[llama] drafts: 36
+[llama]   step 1: 3/36 done (12s)
+Traceback (most recent call last):
+  File "/kaggle/working/factcheck.py", line 576, in <module>
+    {"check": check, "report": report}.get(a.cmd, lambda: worker(a.model, a.gpu, a.tag, a.arm, not a.no_planted))()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/kaggle/working/factcheck.py", line 576, in <lambda>
+    {"check": check, "report": report}.get(a.cmd, lambda: worker(a.model, a.gpu, a.tag, a.arm, not a.no_planted))()
+                                                          ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/working/factcheck.py", line 462, in worker
+    run_convs(drafts, tok, model, dev, log)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/working/factcheck.py", line 373, in run_convs
+    texts = [(c, render(c)) for c in active]
+                 ~~~~~~^^^
+  File "/kaggle/working/factcheck.py", line 364, in render
+    return tok.apply_chat_template(c["msgs"], tools=TOOLS, tokenize=False, add_generation_prompt=True,
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                   enable_thinking=False) + (c.get("prefix", "") if c["turns"] == 0 else "")
+                                   ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/transformers/tokenization_utils_base.py", line 3163, in apply_chat_template
+    rendered_chat, generation_indices = render_jinja_template(
+                                        ~~~~~~~~~~~~~~~~~~~~~^
+        conversations=conversations,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **template_kwargs,
+        ^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/usr/local/lib/python3.13/dist-packages/transformers/utils/chat_template_utils.py", line 712, in render_jinja_template
+    rendered_chat = compiled_template.render(
+        messages=chat,
+    ...<3 lines>...
+        **kwargs,
+    )
+  File "/usr/local/lib/python3.13/dist-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/dist-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "<template>", line 72, in top-level template code
+  File "/usr/local/lib/python3.13/dist-packages/jinja2/sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/transformers/utils/chat_template_utils.py", line 588, in raise_exception
+    raise jinja2.exceptions.TemplateError(message)
+jinja2.exceptions.TemplateError: This model only supports single tool-calls at once!
+[llama] loaded unsloth/Llama-3.2-1B-Instruct on cuda in 12s
+[llama] drafts: 36
+[llama]   step 1: 0/36 done (10s)
+[llama]   step 2: 0/36 done (25s)
+Traceback (most recent call last):
+  File "/kaggle/working/factcheck.py", line 576, in <module>
+    {"check": check, "report": report}.get(a.cmd, lambda: worker(a.model, a.gpu, a.tag, a.arm, not a.no_planted))()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/kaggle/working/factcheck.py", line 576, in <lambda>
+    {"check": check, "report": report}.get(a.cmd, lambda: worker(a.model, a.gpu, a.tag, a.arm, not a.no_planted))()
+                                                          ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/working/factcheck.py", line 462, in worker
+    run_convs(drafts, tok, model, dev, log)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/working/factcheck.py", line 373, in run_convs
+    texts = [(c, render(c)) for c in active]
+                 ~~~~~~^^^
+  File "/kaggle/working/factcheck.py", line 364, in render
+    return tok.apply_chat_template(c["msgs"], tools=TOOLS, tokenize=False, add_generation_prompt=True,
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                   enable_thinking=False) + (c.get("prefix", "") if c["turns"] == 0 else "")
+                                   ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/transformers/tokenization_utils_base.py", line 3163, in apply_chat_template
+    rendered_chat, generation_indices = render_jinja_template(
+                                        ~~~~~~~~~~~~~~~~~~~~~^
+        conversations=conversations,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **template_kwargs,
+        ^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/usr/local/lib/python3.13/dist-packages/transformers/utils/chat_template_utils.py", line 712, in render_jinja_template
+    rendered_chat = compiled_template.render(
+        messages=chat,
+    ...<3 lines>...
+        **kwargs,
+    )
+  File "/usr/local/lib/python3.13/dist-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/dist-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "<template>", line 72, in top-level template code
+  File "/usr/local/lib/python3.13/dist-packages/jinja2/sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/transformers/utils/chat_template_utils.py", line 588, in raise_exception
+    raise jinja2.exceptions.TemplateError(message)
+jinja2.exceptions.TemplateError: This model only supports single tool-calls at once!
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[coder] loaded Qwen/Qwen2.5-Coder-1.5B-Instruct on cuda in 33s
+[coder] drafts: 36
+[coder]   step 1: 0/36 done (29s)
+[coder]   step 2: 13/36 done (47s)
+[coder]   step 3: 18/36 done (60s)
+[coder]   step 4: 35/36 done (71s)
+[coder]   step 5: 35/36 done (73s)
+[coder]   step 6: 36/36 done (74s)
+[coder] reviews: 144
+[coder]   step 1: 119/144 done (106s)
+[coder]   step 2: 139/144 done (163s)
+[coder]   step 3: 139/144 done (181s)
+[coder]   step 4: 140/144 done (202s)
+[coder]   step 5: 142/144 done (206s)
+[coder]   step 6: 144/144 done (207s)
+[coder] == full: drafts correct 3/36; plain final correct 15/36; strict final correct 12/36; planted caught plain 1/36, strict 13/36 (315s)
+[coder] loaded Qwen/Qwen2.5-Coder-1.5B-Instruct on cuda in 12s
+[coder] drafts: 36
+[coder]   step 1: 0/36 done (38s)
+[coder]   step 2: 21/36 done (56s)
+[coder]   step 3: 26/36 done (67s)
+[coder]   step 4: 35/36 done (75s)
+[coder]   step 5: 35/36 done (77s)
+[coder]   step 6: 36/36 done (78s)
+[coder] reviews: 72
+[coder]   step 1: 65/72 done (40s)
+[coder]   step 2: 69/72 done (44s)
+[coder]   step 3: 69/72 done (45s)
+[coder]   step 4: 69/72 done (47s)
+[coder]   step 5: 69/72 done (49s)
+[coder]   step 6: 72/72 done (52s)
+[coder] == full: drafts correct 7/36; plain final correct 10/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (142s)
+[coder] loaded Qwen/Qwen2.5-Coder-1.5B-Instruct on cuda in 12s
+[coder] drafts: 36
+[coder]   step 1: 0/36 done (12s)
+[coder]   step 2: 9/36 done (66s)
+[coder]   step 3: 17/36 done (85s)
+[coder]   step 4: 23/36 done (97s)
+[coder]   step 5: 30/36 done (109s)
+[coder]   step 6: 36/36 done (114s)
+[coder] reviews: 72
+[coder]   step 1: 0/72 done (39s)
+[coder]   step 2: 61/72 done (80s)
+[coder]   step 3: 63/72 done (86s)
+[coder]   step 4: 66/72 done (91s)
+[coder]   step 5: 66/72 done (94s)
+[coder]   step 6: 72/72 done (99s)
+[coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)

@@ -1,0 +1,383 @@
+[{"stream_name":"stderr","time":7.349298863,"data":"/usr/local/lib/python3.13/dist-packages/nbformat/validator.py:434: MissingIDFieldWarning: Cell is missing an id field, this will become a hard error in future nbformat versions. You may want to use `normalize()` on your notebooks before validations (available since nbformat 5.1.4). Previous versions of nbformat are fixing this issue transparently, and will stop doing so in the future.\n"}
+,{"stream_name":"stderr","time":7.3493797260000004,"data":"  _validate(nbdict, ref, version, version_minor, relax_add_props)\n"}
+,{"stream_name":"stderr","time":8.420897411,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":8.420929088,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":8.420940447,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":8.420943458,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":9.079443906,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":9.079475398,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":9.079480927,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":9.079485584,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":38.21370253,"data":"transformers 5.22.1\n"}
+,{"stream_name":"stdout","time":39.344404597,"data":"1. List of Emma Stone performances: Emma Stone is an American actress who aspired to an acting career from an early age. She had her first role onstage at age 11, and followed with parts\n"}
+,{"stream_name":"stdout","time":39.344443134,"data":"2. Emma Watson: from the original on 17 May 2011. Retrieved 1 January 2008. Watson, Emma. \"Filmography\". Official website. Archived from the original on 10 May 2010. Retrieved\n"}
+,{"stream_name":"stdout","time":39.344450875,"data":"3. John Cena filmography: Wagmeister,\n"}
+,{"stream_name":"stdout","time":39.344455377,"data":"Wikipedia: Pluto\n"}
+,{"stream_name":"stdout","time":39.344459849,"data":"Paragraphs mentioning 'discovered':\n"}
+,{"stream_name":"stdout","time":39.344464803,"data":"Pluto was discovered in 1930 by Clyde W. Tombaugh, making it the first known object in the Kuiper belt. It was immediately hailed as the ninth planet, but its planetary status was questioned when it was found to be much smaller than expected. These doubts increased following the discovery of additional objects in the Kuiper belt starting in the \n"}
+,{"stream_name":"stdout","time":39.344470256,"data":"Wikidata: Mount Kilimanjaro (mountain massif in Kilimanjaro National Park in Tanzania)\n"}
+,{"stream_name":"stdout","time":39.344474384,"data":"- elevation above sea level: 5895 metre\n"}
+,{"stream_name":"stdout","time":39.344478032,"data":"check ok\n"}
+,{"stream_name":"stdout","time":39.34448706,"data":" \n"}
+,{"stream_name":"stdout","time":47.329534,"data":"GPUs: ['Tesla T4', 'Tesla T4']\n"}
+,{"stream_name":"stdout","time":77.131824563,"data":"[  0.5 min gpu0] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":77.132840741,"data":"[  0.5 min gpu1] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":107.133703656,"data":"[  1.0 min gpu0] [qwen35] drafts: 2\n"}
+,{"stream_name":"stdout","time":107.134619405,"data":"[  1.0 min gpu1] jinja2.exceptions.TemplateError: This model only supports single tool-calls at once!\n"}
+,{"stream_name":"stdout","time":137.136042061,"data":"[  1.5 min gpu0] [qwen35] reviews: 8\n"}
+,{"stream_name":"stdout","time":137.136969422,"data":"[  1.5 min gpu1] jinja2.exceptions.TemplateError: This model only supports single tool-calls at once!\n"}
+,{"stream_name":"stdout","time":167.138996236,"data":"[  2.0 min gpu0] [qwen35]   step 1: 0/8 done (4s)\n"}
+,{"stream_name":"stdout","time":167.139969294,"data":"[  2.0 min gpu1] jinja2.exceptions.TemplateError: This model only supports single tool-calls at once!\n"}
+,{"stream_name":"stdout","time":197.141007094,"data":"[  2.5 min gpu0] [qwen35]   step 3: 5/8 done (60s)\n"}
+,{"stream_name":"stdout","time":197.142311243,"data":"[  2.5 min gpu1] jinja2.exceptions.TemplateError: This model only supports single tool-calls at once!\n"}
+,{"stream_name":"stdout","time":227.147424672,"data":"[  3.0 min gpu0] [qwen35]   step 4: 7/8 done (69s)\n"}
+,{"stream_name":"stdout","time":227.148553908,"data":"[  3.0 min gpu1] jinja2.exceptions.TemplateError: This model only supports single tool-calls at once!\n"}
+,{"stream_name":"stdout","time":257.146916386,"data":"[  3.5 min gpu0] [qwen35]   step 5: 7/8 done (107s)\n"}
+,{"stream_name":"stdout","time":257.149512629,"data":"[  3.5 min gpu1] jinja2.exceptions.TemplateError: This model only supports single tool-calls at once!\n"}
+,{"stream_name":"stdout","time":287.149189956,"data":"[  4.0 min gpu0] [qwen35] == pilot: drafts correct 0/2; plain final correct 0/2; strict final correct 1/2; planted caught plain 1/2, strict 0/2 (233s)\n"}
+,{"stream_name":"stdout","time":287.152996619,"data":"[  4.0 min gpu1] jinja2.exceptions.TemplateError: This model only supports single tool-calls at once!\n"}
+,{"stream_name":"stdout","time":287.154277366,"data":"--- gpu0 ---\n"}
+,{"stream_name":"stdout","time":287.154318539,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":287.15432702,"data":"[qwen35] loaded Qwen/Qwen3.5-0.8B on cuda in 40s\n"}
+,{"stream_name":"stdout","time":287.154332743,"data":"[qwen35] drafts: 2\n"}
+,{"stream_name":"stdout","time":287.154338386,"data":"[qwen35]   step 1: 0/2 done (46s)\n"}
+,{"stream_name":"stdout","time":287.154345698,"data":"[qwen35]   step 2: 2/2 done (48s)\n"}
+,{"stream_name":"stdout","time":287.154350991,"data":"[qwen35] reviews: 8\n"}
+,{"stream_name":"stdout","time":287.15435648,"data":"[qwen35]   step 1: 0/8 done (4s)\n"}
+,{"stream_name":"stdout","time":287.154361912,"data":"[qwen35]   step 2: 2/8 done (46s)\n"}
+,{"stream_name":"stdout","time":287.154366852,"data":"[qwen35]   step 3: 5/8 done (60s)\n"}
+,{"stream_name":"stdout","time":287.154372445,"data":"[qwen35]   step 4: 7/8 done (69s)\n"}
+,{"stream_name":"stdout","time":287.154377387,"data":"[qwen35]   step 5: 7/8 done (107s)\n"}
+,{"stream_name":"stdout","time":287.154382282,"data":"[qwen35]   step 6: 8/8 done (145s)\n"}
+,{"stream_name":"stdout","time":287.154387466,"data":"[qwen35] == pilot: drafts correct 0/2; plain final correct 0/2; strict final correct 1/2; planted caught plain 1/2, strict 0/2 (233s)\n"}
+,{"stream_name":"stdout","time":287.154393209,"data":"\n"}
+,{"stream_name":"stdout","time":287.154398002,"data":"--- gpu1 ---\n"}
+,{"stream_name":"stdout","time":287.15440296,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":287.154408418,"data":"[llama] loaded unsloth/Llama-3.2-1B-Instruct on cuda in 41s\n"}
+,{"stream_name":"stdout","time":287.154426153,"data":"[llama] drafts: 2\n"}
+,{"stream_name":"stdout","time":287.154430542,"data":"[llama]   step 1: 0/2 done (3s)\n"}
+,{"stream_name":"stdout","time":287.154435238,"data":"[llama]   step 2: 0/2 done (4s)\n"}
+,{"stream_name":"stdout","time":287.154438971,"data":"[llama]   step 3: 0/2 done (5s)\n"}
+,{"stream_name":"stdout","time":287.15444304,"data":"[llama]   step 4: 0/2 done (7s)\n"}
+,{"stream_name":"stdout","time":287.15444686,"data":"[llama]   step 5: 1/2 done (9s)\n"}
+,{"stream_name":"stdout","time":287.154451106,"data":"[llama]   step 6: 2/2 done (10s)\n"}
+,{"stream_name":"stdout","time":287.154455132,"data":"[llama] reviews: 8\n"}
+,{"stream_name":"stdout","time":287.154458823,"data":"[llama]   step 1: 0/8 done (1s)\n"}
+,{"stream_name":"stdout","time":287.154462475,"data":"[llama]   step 2: 5/8 done (5s)\n"}
+,{"stream_name":"stdout","time":287.154466455,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stdout","time":287.154470439,"data":"  File \"/kaggle/working/factcheck.py\", line 576, in \u003cmodule\u003e\n"}
+,{"stream_name":"stdout","time":287.154475154,"data":"    {\"check\": check, \"report\": report}.get(a.cmd, lambda: worker(a.model, a.gpu, a.tag, a.arm, not a.no_planted))()\n"}
+,{"stream_name":"stdout","time":287.154479655,"data":"    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n"}
+,{"stream_name":"stdout","time":287.154483873,"data":"  File \"/kaggle/working/factcheck.py\", line 576, in \u003clambda\u003e\n"}
+,{"stream_name":"stdout","time":287.15448823,"data":"    {\"check\": check, \"report\": report}.get(a.cmd, lambda: worker(a.model, a.gpu, a.tag, a.arm, not a.no_planted))()\n"}
+,{"stream_name":"stdout","time":287.154492583,"data":"                                                          ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":287.154497684,"data":"  File \"/kaggle/working/factcheck.py\", line 480, in worker\n"}
+,{"stream_name":"stdout","time":287.154501867,"data":"    run_convs(reviews, tok, model, dev, log)\n"}
+,{"stream_name":"stdout","time":287.154505957,"data":"    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":287.154510729,"data":"  File \"/kaggle/working/factcheck.py\", line 373, in run_convs\n"}
+,{"stream_name":"stdout","time":287.154515078,"data":"    texts = [(c, render(c)) for c in active]\n"}
+,{"stream_name":"stdout","time":287.154520801,"data":"                 ~~~~~~^^^\n"}
+,{"stream_name":"stdout","time":287.154524821,"data":"  File \"/kaggle/working/factcheck.py\", line 364, in render\n"}
+,{"stream_name":"stdout","time":287.154528865,"data":"    return tok.apply_chat_template(c[\"msgs\"], tools=TOOLS, tokenize=False, add_generation_prompt=True,\n"}
+,{"stream_name":"stdout","time":287.154533105,"data":"           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":287.154537262,"data":"                                   enable_thinking=False) + (c.get(\"prefix\", \"\") if c[\"turns\"] == 0 else \"\")\n"}
+,{"stream_name":"stdout","time":287.154541982,"data":"                                   ^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":287.154546115,"data":"  File \"/usr/local/lib/python3.13/dist-packages/transformers/tokenization_utils_base.py\", line 3163, in apply_chat_template\n"}
+,{"stream_name":"stdout","time":287.154550668,"data":"    rendered_chat, generation_indices = render_jinja_template(\n"}
+,{"stream_name":"stdout","time":287.154554883,"data":"                                        ~~~~~~~~~~~~~~~~~~~~~^\n"}
+,{"stream_name":"stdout","time":287.154564347,"data":"        conversations=conversations,\n"}
+,{"stream_name":"stdout","time":287.154568652,"data":"        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":287.154572291,"data":"    ...\u003c6 lines\u003e...\n"}
+,{"stream_name":"stdout","time":287.154576126,"data":"        **template_kwargs,\n"}
+,{"stream_name":"stdout","time":287.154580215,"data":"        ^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":287.154584162,"data":"    )\n"}
+,{"stream_name":"stdout","time":287.154587761,"data":"    ^\n"}
+,{"stream_name":"stdout","time":287.15459157,"data":"  File \"/usr/local/lib/python3.13/dist-packages/transformers/utils/chat_template_utils.py\", line 712, in render_jinja_template\n"}
+,{"stream_name":"stdout","time":287.154596023,"data":"    rendered_chat = compiled_template.render(\n"}
+,{"stream_name":"stdout","time":287.15460008,"data":"        messages=chat,\n"}
+,{"stream_name":"stdout","time":287.154603558,"data":"    ...\u003c3 lines\u003e...\n"}
+,{"stream_name":"stdout","time":287.154607413,"data":"        **kwargs,\n"}
+,{"stream_name":"stdout","time":287.154611475,"data":"    )\n"}
+,{"stream_name":"stdout","time":287.154615284,"data":"  File \"/usr/local/lib/python3.13/dist-packages/jinja2/environment.py\", line 1295, in render\n"}
+,{"stream_name":"stdout","time":287.154619559,"data":"    self.environment.handle_exception()\n"}
+,{"stream_name":"stdout","time":287.154624444,"data":"    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n"}
+,{"stream_name":"stdout","time":287.154628899,"data":"  File \"/usr/local/lib/python3.13/dist-packages/jinja2/environment.py\", line 942, in handle_exception\n"}
+,{"stream_name":"stdout","time":287.154633154,"data":"    raise rewrite_traceback_stack(source=source)\n"}
+,{"stream_name":"stdout","time":287.15463694,"data":"  File \"\u003ctemplate\u003e\", line 72, in top-level template code\n"}
+,{"stream_name":"stdout","time":287.154641118,"data":"  File \"/usr/local/lib/python3.13/dist-packages/jinja2/sandbox.py\", line 401, in call\n"}
+,{"stream_name":"stdout","time":287.15464521,"data":"    return __context.call(__obj, *args, **kwargs)\n"}
+,{"stream_name":"stdout","time":287.15464913,"data":"           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":287.154652965,"data":"  File \"/usr/local/lib/python3.13/dist-packages/transformers/utils/chat_template_utils.py\", line 588, in raise_exception\n"}
+,{"stream_name":"stdout","time":287.154658025,"data":"    raise jinja2.exceptions.TemplateError(message)\n"}
+,{"stream_name":"stdout","time":287.154662163,"data":"jinja2.exceptions.TemplateError: This model only supports single tool-calls at once!\n"}
+,{"stream_name":"stdout","time":287.1546663,"data":"\n"}
+,{"stream_name":"stdout","time":287.154669717,"data":"Pilot ok; full run starting.\n"}
+,{"stream_name":"stdout","time":407.173995397,"data":"[  2.0 min gpu0] [qwen3]   step 1: 0/36 done (10s)\n"}
+,{"stream_name":"stdout","time":407.175150808,"data":"[  2.0 min gpu1] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":527.176837673,"data":"[  4.0 min gpu0] [qwen35] reviews: 144\n"}
+,{"stream_name":"stdout","time":527.177929719,"data":"[  4.0 min gpu1] [coder] reviews: 144\n"}
+,{"stream_name":"stdout","time":647.179482617,"data":"[  6.0 min gpu0] [qwen35] reviews: 144\n"}
+,{"stream_name":"stdout","time":647.180440927,"data":"[  6.0 min gpu1] [coder]   step 1: 119/144 done (106s)\n"}
+,{"stream_name":"stdout","time":767.185355114,"data":"[  8.0 min gpu0] [qwen35] reviews: 144\n"}
+,{"stream_name":"stdout","time":767.185409524,"data":"[  8.0 min gpu1] [coder]   step 1: 0/36 done (38s)\n"}
+,{"stream_name":"stdout","time":887.186650031,"data":"[ 10.0 min gpu0] [qwen35]   step 1: 80/144 done (315s)\n"}
+,{"stream_name":"stdout","time":887.187881025,"data":"[ 10.0 min gpu1] [coder]   step 1: 0/36 done (12s)\n"}
+,{"stream_name":"stdout","time":1007.191843715,"data":"[ 12.0 min gpu0] [qwen35]   step 1: 80/144 done (315s)\n"}
+,{"stream_name":"stdout","time":1007.19379115,"data":"[ 12.0 min gpu1] [coder] reviews: 72\n"}
+,{"stream_name":"stdout","time":1127.193639581,"data":"[ 14.0 min gpu0] [qwen35]   step 2: 93/144 done (580s)\n"}
+,{"stream_name":"stdout","time":1127.194625941,"data":"[ 14.0 min gpu1] [coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":1247.196166839,"data":"[ 16.0 min gpu0] [qwen35]   step 3: 110/144 done (766s)\n"}
+,{"stream_name":"stdout","time":1247.19719352,"data":"[ 16.0 min gpu1] [coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":1367.200163046,"data":"[ 18.0 min gpu0] [qwen35]   step 3: 110/144 done (766s)\n"}
+,{"stream_name":"stdout","time":1367.201259296,"data":"[ 18.0 min gpu1] [coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":1487.201162093,"data":"[ 20.0 min gpu0] [qwen35]   step 4: 116/144 done (910s)\n"}
+,{"stream_name":"stdout","time":1487.202014544,"data":"[ 20.0 min gpu1] [coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":1607.204075734,"data":"[ 22.0 min gpu0] [qwen35]   step 5: 124/144 done (1057s)\n"}
+,{"stream_name":"stdout","time":1607.205014181,"data":"[ 22.0 min gpu1] [coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":1727.206145556,"data":"[ 24.0 min gpu0] [qwen35] drafts: 36\n"}
+,{"stream_name":"stdout","time":1727.20709177,"data":"[ 24.0 min gpu1] [coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":1847.209444214,"data":"[ 26.0 min gpu0] [qwen35] reviews: 72\n"}
+,{"stream_name":"stdout","time":1847.210434994,"data":"[ 26.0 min gpu1] [coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":1967.213378087,"data":"[ 28.0 min gpu0] [qwen35] reviews: 72\n"}
+,{"stream_name":"stdout","time":1967.214412473,"data":"[ 28.0 min gpu1] [coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":2087.215936231,"data":"[ 30.0 min gpu0] [qwen35]   step 1: 36/72 done (166s)\n"}
+,{"stream_name":"stdout","time":2087.216983879,"data":"[ 30.0 min gpu1] [coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":2207.216460322,"data":"[ 32.0 min gpu0] [qwen35]   step 2: 46/72 done (304s)\n"}
+,{"stream_name":"stdout","time":2207.217457758,"data":"[ 32.0 min gpu1] [coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":2327.21928386,"data":"[ 34.0 min gpu0] [qwen35]   step 3: 51/72 done (437s)\n"}
+,{"stream_name":"stdout","time":2327.220323445,"data":"[ 34.0 min gpu1] [coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":2447.221619114,"data":"[ 36.0 min gpu0] [qwen35]   step 5: 60/72 done (634s)\n"}
+,{"stream_name":"stdout","time":2447.222636419,"data":"[ 36.0 min gpu1] [coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":2567.224149703,"data":"[ 38.0 min gpu0] [qwen35] drafts: 36\n"}
+,{"stream_name":"stdout","time":2567.22520618,"data":"[ 38.0 min gpu1] [coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":2687.228653563,"data":"[ 40.0 min gpu0] [qwen35] reviews: 72\n"}
+,{"stream_name":"stdout","time":2687.229583508,"data":"[ 40.0 min gpu1] [coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":2807.234244787,"data":"[ 42.0 min gpu0] [qwen35] reviews: 72\n"}
+,{"stream_name":"stdout","time":2807.235580688,"data":"[ 42.0 min gpu1] [coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":2927.235907234,"data":"[ 44.0 min gpu0] [qwen35]   step 1: 0/72 done (149s)\n"}
+,{"stream_name":"stdout","time":2927.236897352,"data":"[ 44.0 min gpu1] [coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":3047.238945492,"data":"[ 46.0 min gpu0] [qwen35]   step 1: 0/72 done (149s)\n"}
+,{"stream_name":"stdout","time":3047.239914164,"data":"[ 46.0 min gpu1] [coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":3167.241441252,"data":"[ 48.0 min gpu0] [qwen35]   step 2: 12/72 done (433s)\n"}
+,{"stream_name":"stdout","time":3167.242344625,"data":"[ 48.0 min gpu1] [coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":3287.247456648,"data":"[ 50.0 min gpu0] [qwen35]   step 2: 12/72 done (433s)\n"}
+,{"stream_name":"stdout","time":3287.247693834,"data":"[ 50.0 min gpu1] [coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":3407.246979717,"data":"[ 52.0 min gpu0] [qwen35]   step 3: 18/72 done (681s)\n"}
+,{"stream_name":"stdout","time":3407.247984274,"data":"[ 52.0 min gpu1] [coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":3527.251845727,"data":"[ 54.0 min gpu0] [qwen35]   step 3: 18/72 done (681s)\n"}
+,{"stream_name":"stdout","time":3527.252936269,"data":"[ 54.0 min gpu1] [coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":3647.253026512,"data":"[ 56.0 min gpu0] [qwen35]   step 4: 31/72 done (932s)\n"}
+,{"stream_name":"stdout","time":3647.254022508,"data":"[ 56.0 min gpu1] [coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":3767.254436323,"data":"[ 58.0 min gpu0] [qwen35]   step 4: 31/72 done (932s)\n"}
+,{"stream_name":"stdout","time":3767.255452906,"data":"[ 58.0 min gpu1] [coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":3887.256581207,"data":"[ 60.0 min gpu0] [qwen35]   step 5: 42/72 done (1144s)\n"}
+,{"stream_name":"stdout","time":3887.257833791,"data":"[ 60.0 min gpu1] [coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":4007.258862095,"data":"[ 62.0 min gpu0] [qwen35]   step 5: 42/72 done (1144s)\n"}
+,{"stream_name":"stdout","time":4007.259845838,"data":"[ 62.0 min gpu1] [coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":4127.261594477,"data":"[ 64.0 min gpu0] [qwen35] == full: drafts correct 18/36; plain final correct 18/36; strict final correct 18/36; planted caught plain 0/0, strict 0/0 (1512s)\n"}
+,{"stream_name":"stdout","time":4127.262526034,"data":"[ 64.0 min gpu1] [coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":4127.428226989,"data":"--- gpu0 ---\n"}
+,{"stream_name":"stdout","time":4127.428260365,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":4127.42826629,"data":"[qwen3] loaded Qwen/Qwen3-0.6B on cuda in 23s\n"}
+,{"stream_name":"stdout","time":4127.428270745,"data":"[qwen3] drafts: 36\n"}
+,{"stream_name":"stdout","time":4127.428275322,"data":"[qwen3]   step 1: 36/36 done (5s)\n"}
+,{"stream_name":"stdout","time":4127.428279353,"data":"[qwen3] reviews: 144\n"}
+,{"stream_name":"stdout","time":4127.428283421,"data":"[qwen3]   step 1: 144/144 done (29s)\n"}
+,{"stream_name":"stdout","time":4127.428287748,"data":"[qwen3] == full: drafts correct 10/36; plain final correct 10/36; strict final correct 8/36; planted caught plain 1/36, strict 36/36 (57s)\n"}
+,{"stream_name":"stdout","time":4127.428292001,"data":"[qwen3] loaded Qwen/Qwen3-0.6B on cuda in 11s\n"}
+,{"stream_name":"stdout","time":4127.428319772,"data":"[qwen3] drafts: 36\n"}
+,{"stream_name":"stdout","time":4127.428324409,"data":"[qwen3]   step 1: 33/36 done (8s)\n"}
+,{"stream_name":"stdout","time":4127.42832861,"data":"[qwen3]   step 2: 36/36 done (9s)\n"}
+,{"stream_name":"stdout","time":4127.428332604,"data":"[qwen3] reviews: 72\n"}
+,{"stream_name":"stdout","time":4127.428336807,"data":"[qwen3]   step 1: 72/72 done (16s)\n"}
+,{"stream_name":"stdout","time":4127.428341246,"data":"[qwen3] == full: drafts correct 13/36; plain final correct 13/36; strict final correct 10/36; planted caught plain 0/0, strict 0/0 (36s)\n"}
+,{"stream_name":"stdout","time":4127.428346023,"data":"[qwen3] loaded Qwen/Qwen3-0.6B on cuda in 11s\n"}
+,{"stream_name":"stdout","time":4127.428351768,"data":"[qwen3] drafts: 36\n"}
+,{"stream_name":"stdout","time":4127.428356267,"data":"[qwen3]   step 1: 0/36 done (10s)\n"}
+,{"stream_name":"stdout","time":4127.428360289,"data":"[qwen3]   step 2: 36/36 done (16s)\n"}
+,{"stream_name":"stdout","time":4127.428364587,"data":"[qwen3] reviews: 72\n"}
+,{"stream_name":"stdout","time":4127.4283695,"data":"[qwen3]   step 1: 0/72 done (23s)\n"}
+,{"stream_name":"stdout","time":4127.42837387,"data":"[qwen3]   step 2: 72/72 done (44s)\n"}
+,{"stream_name":"stdout","time":4127.42837795,"data":"[qwen3] == full: drafts correct 24/36; plain final correct 24/36; strict final correct 20/36; planted caught plain 0/0, strict 0/0 (70s)\n"}
+,{"stream_name":"stdout","time":4127.428394806,"data":"[qwen35] loaded Qwen/Qwen3.5-0.8B on cuda in 11s\n"}
+,{"stream_name":"stdout","time":4127.428398404,"data":"[qwen35] drafts: 36\n"}
+,{"stream_name":"stdout","time":4127.428401572,"data":"[qwen35]   step 1: 36/36 done (15s)\n"}
+,{"stream_name":"stdout","time":4127.428405063,"data":"[qwen35] reviews: 144\n"}
+,{"stream_name":"stdout","time":4127.428408488,"data":"[qwen35]   step 1: 80/144 done (315s)\n"}
+,{"stream_name":"stdout","time":4127.428412459,"data":"[qwen35]   step 2: 93/144 done (580s)\n"}
+,{"stream_name":"stdout","time":4127.428415839,"data":"[qwen35]   step 3: 110/144 done (766s)\n"}
+,{"stream_name":"stdout","time":4127.42841936,"data":"[qwen35]   step 4: 116/144 done (910s)\n"}
+,{"stream_name":"stdout","time":4127.428422763,"data":"[qwen35]   step 5: 124/144 done (1057s)\n"}
+,{"stream_name":"stdout","time":4127.428425983,"data":"[qwen35]   step 6: 144/144 done (1177s)\n"}
+,{"stream_name":"stdout","time":4127.428429314,"data":"[qwen35] == full: drafts correct 14/36; plain final correct 15/36; strict final correct 14/36; planted caught plain 6/36, strict 21/36 (1202s)\n"}
+,{"stream_name":"stdout","time":4127.428433721,"data":"[qwen35] loaded Qwen/Qwen3.5-0.8B on cuda in 10s\n"}
+,{"stream_name":"stdout","time":4127.428437234,"data":"[qwen35] drafts: 36\n"}
+,{"stream_name":"stdout","time":4127.428440545,"data":"[qwen35]   step 1: 18/36 done (132s)\n"}
+,{"stream_name":"stdout","time":4127.428444712,"data":"[qwen35]   step 2: 36/36 done (143s)\n"}
+,{"stream_name":"stdout","time":4127.428448053,"data":"[qwen35] reviews: 72\n"}
+,{"stream_name":"stdout","time":4127.428451363,"data":"[qwen35]   step 1: 36/72 done (166s)\n"}
+,{"stream_name":"stdout","time":4127.428454733,"data":"[qwen35]   step 2: 46/72 done (304s)\n"}
+,{"stream_name":"stdout","time":4127.428458261,"data":"[qwen35]   step 3: 51/72 done (437s)\n"}
+,{"stream_name":"stdout","time":4127.428461608,"data":"[qwen35]   step 4: 54/72 done (536s)\n"}
+,{"stream_name":"stdout","time":4127.428464943,"data":"[qwen35]   step 5: 60/72 done (634s)\n"}
+,{"stream_name":"stdout","time":4127.428468272,"data":"[qwen35]   step 6: 72/72 done (699s)\n"}
+,{"stream_name":"stdout","time":4127.428473542,"data":"[qwen35] == full: drafts correct 22/36; plain final correct 23/36; strict final correct 20/36; planted caught plain 0/0, strict 0/0 (853s)\n"}
+,{"stream_name":"stdout","time":4127.428477358,"data":"[qwen35] loaded Qwen/Qwen3.5-0.8B on cuda in 11s\n"}
+,{"stream_name":"stdout","time":4127.428480491,"data":"[qwen35] drafts: 36\n"}
+,{"stream_name":"stdout","time":4127.428483591,"data":"[qwen35]   step 1: 0/36 done (138s)\n"}
+,{"stream_name":"stdout","time":4127.428486999,"data":"[qwen35]   step 2: 36/36 done (155s)\n"}
+,{"stream_name":"stdout","time":4127.428490143,"data":"[qwen35] reviews: 72\n"}
+,{"stream_name":"stdout","time":4127.428493202,"data":"[qwen35]   step 1: 0/72 done (149s)\n"}
+,{"stream_name":"stdout","time":4127.428496141,"data":"[qwen35]   step 2: 12/72 done (433s)\n"}
+,{"stream_name":"stdout","time":4127.428500589,"data":"[qwen35]   step 3: 18/72 done (681s)\n"}
+,{"stream_name":"stdout","time":4127.428504023,"data":"[qwen35]   step 4: 31/72 done (932s)\n"}
+,{"stream_name":"stdout","time":4127.428507227,"data":"[qwen35]   step 5: 42/72 done (1144s)\n"}
+,{"stream_name":"stdout","time":4127.428510776,"data":"[qwen35]   step 6: 72/72 done (1347s)\n"}
+,{"stream_name":"stdout","time":4127.428514002,"data":"[qwen35] == full: drafts correct 18/36; plain final correct 18/36; strict final correct 18/36; planted caught plain 0/0, strict 0/0 (1512s)\n"}
+,{"stream_name":"stdout","time":4127.428523302,"data":"\n"}
+,{"stream_name":"stdout","time":4127.428527767,"data":"--- gpu1 ---\n"}
+,{"stream_name":"stdout","time":4127.428531128,"data":", line 364, in render\n"}
+,{"stream_name":"stdout","time":4127.428534583,"data":"    return tok.apply_chat_template(c[\"msgs\"], tools=TOOLS, tokenize=False, add_generation_prompt=True,\n"}
+,{"stream_name":"stdout","time":4127.42853866,"data":"           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":4127.428542065,"data":"                                   enable_thinking=False) + (c.get(\"prefix\", \"\") if c[\"turns\"] == 0 else \"\")\n"}
+,{"stream_name":"stdout","time":4127.428545879,"data":"                                   ^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":4127.428549191,"data":"  File \"/usr/local/lib/python3.13/dist-packages/transformers/tokenization_utils_base.py\", line 3163, in apply_chat_template\n"}
+,{"stream_name":"stdout","time":4127.428553002,"data":"    rendered_chat, generation_indices = render_jinja_template(\n"}
+,{"stream_name":"stdout","time":4127.428556267,"data":"                                        ~~~~~~~~~~~~~~~~~~~~~^\n"}
+,{"stream_name":"stdout","time":4127.428559763,"data":"        conversations=conversations,\n"}
+,{"stream_name":"stdout","time":4127.42856322,"data":"        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":4127.428566835,"data":"    ...\u003c6 lines\u003e...\n"}
+,{"stream_name":"stdout","time":4127.428570581,"data":"        **template_kwargs,\n"}
+,{"stream_name":"stdout","time":4127.42857375,"data":"        ^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":4127.428576732,"data":"    )\n"}
+,{"stream_name":"stdout","time":4127.42858,"data":"    ^\n"}
+,{"stream_name":"stdout","time":4127.428583088,"data":"  File \"/usr/local/lib/python3.13/dist-packages/transformers/utils/chat_template_utils.py\", line 712, in render_jinja_template\n"}
+,{"stream_name":"stdout","time":4127.428586917,"data":"    rendered_chat = compiled_template.render(\n"}
+,{"stream_name":"stdout","time":4127.428590129,"data":"        messages=chat,\n"}
+,{"stream_name":"stdout","time":4127.428593188,"data":"    ...\u003c3 lines\u003e...\n"}
+,{"stream_name":"stdout","time":4127.428596547,"data":"        **kwargs,\n"}
+,{"stream_name":"stdout","time":4127.428599885,"data":"    )\n"}
+,{"stream_name":"stdout","time":4127.428603099,"data":"  File \"/usr/local/lib/python3.13/dist-packages/jinja2/environment.py\", line 1295, in render\n"}
+,{"stream_name":"stdout","time":4127.428606775,"data":"    self.environment.handle_exception()\n"}
+,{"stream_name":"stdout","time":4127.428610761,"data":"    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n"}
+,{"stream_name":"stdout","time":4127.42861417,"data":"  File \"/usr/local/lib/python3.13/dist-packages/jinja2/environment.py\", line 942, in handle_exception\n"}
+,{"stream_name":"stdout","time":4127.428618041,"data":"    raise rewrite_traceback_stack(source=source)\n"}
+,{"stream_name":"stdout","time":4127.428622637,"data":"  File \"\u003ctemplate\u003e\", line 72, in top-level template code\n"}
+,{"stream_name":"stdout","time":4127.428626496,"data":"  File \"/usr/local/lib/python3.13/dist-packages/jinja2/sandbox.py\", line 401, in call\n"}
+,{"stream_name":"stdout","time":4127.42863018,"data":"    return __context.call(__obj, *args, **kwargs)\n"}
+,{"stream_name":"stdout","time":4127.428633331,"data":"           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":4127.428636821,"data":"  File \"/usr/local/lib/python3.13/dist-packages/transformers/utils/chat_template_utils.py\", line 588, in raise_exception\n"}
+,{"stream_name":"stdout","time":4127.42864416,"data":"    raise jinja2.exceptions.TemplateError(message)\n"}
+,{"stream_name":"stdout","time":4127.428647624,"data":"jinja2.exceptions.TemplateError: This model only supports single tool-calls at once!\n"}
+,{"stream_name":"stdout","time":4127.428651164,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":4127.428654863,"data":"[coder] loaded Qwen/Qwen2.5-Coder-1.5B-Instruct on cuda in 33s\n"}
+,{"stream_name":"stdout","time":4127.42865836,"data":"[coder] drafts: 36\n"}
+,{"stream_name":"stdout","time":4127.428661817,"data":"[coder]   step 1: 0/36 done (29s)\n"}
+,{"stream_name":"stdout","time":4127.428665234,"data":"[coder]   step 2: 13/36 done (47s)\n"}
+,{"stream_name":"stdout","time":4127.428668592,"data":"[coder]   step 3: 18/36 done (60s)\n"}
+,{"stream_name":"stdout","time":4127.428671548,"data":"[coder]   step 4: 35/36 done (71s)\n"}
+,{"stream_name":"stdout","time":4127.428674625,"data":"[coder]   step 5: 35/36 done (73s)\n"}
+,{"stream_name":"stdout","time":4127.428677593,"data":"[coder]   step 6: 36/36 done (74s)\n"}
+,{"stream_name":"stdout","time":4127.428680935,"data":"[coder] reviews: 144\n"}
+,{"stream_name":"stdout","time":4127.428684123,"data":"[coder]   step 1: 119/144 done (106s)\n"}
+,{"stream_name":"stdout","time":4127.428687268,"data":"[coder]   step 2: 139/144 done (163s)\n"}
+,{"stream_name":"stdout","time":4127.428690439,"data":"[coder]   step 3: 139/144 done (181s)\n"}
+,{"stream_name":"stdout","time":4127.428693538,"data":"[coder]   step 4: 140/144 done (202s)\n"}
+,{"stream_name":"stdout","time":4127.42869655,"data":"[coder]   step 5: 142/144 done (206s)\n"}
+,{"stream_name":"stdout","time":4127.42869991,"data":"[coder]   step 6: 144/144 done (207s)\n"}
+,{"stream_name":"stdout","time":4127.428703167,"data":"[coder] == full: drafts correct 3/36; plain final correct 15/36; strict final correct 12/36; planted caught plain 1/36, strict 13/36 (315s)\n"}
+,{"stream_name":"stdout","time":4127.42870655,"data":"[coder] loaded Qwen/Qwen2.5-Coder-1.5B-Instruct on cuda in 12s\n"}
+,{"stream_name":"stdout","time":4127.42870963,"data":"[coder] drafts: 36\n"}
+,{"stream_name":"stdout","time":4127.428712981,"data":"[coder]   step 1: 0/36 done (38s)\n"}
+,{"stream_name":"stdout","time":4127.428716333,"data":"[coder]   step 2: 21/36 done (56s)\n"}
+,{"stream_name":"stdout","time":4127.428719537,"data":"[coder]   step 3: 26/36 done (67s)\n"}
+,{"stream_name":"stdout","time":4127.428722765,"data":"[coder]   step 4: 35/36 done (75s)\n"}
+,{"stream_name":"stdout","time":4127.428726074,"data":"[coder]   step 5: 35/36 done (77s)\n"}
+,{"stream_name":"stdout","time":4127.428729257,"data":"[coder]   step 6: 36/36 done (78s)\n"}
+,{"stream_name":"stdout","time":4127.42873233,"data":"[coder] reviews: 72\n"}
+,{"stream_name":"stdout","time":4127.4287353,"data":"[coder]   step 1: 65/72 done (40s)\n"}
+,{"stream_name":"stdout","time":4127.428738408,"data":"[coder]   step 2: 69/72 done (44s)\n"}
+,{"stream_name":"stdout","time":4127.428741597,"data":"[coder]   step 3: 69/72 done (45s)\n"}
+,{"stream_name":"stdout","time":4127.428744897,"data":"[coder]   step 4: 69/72 done (47s)\n"}
+,{"stream_name":"stdout","time":4127.428748223,"data":"[coder]   step 5: 69/72 done (49s)\n"}
+,{"stream_name":"stdout","time":4127.428751293,"data":"[coder]   step 6: 72/72 done (52s)\n"}
+,{"stream_name":"stdout","time":4127.428754673,"data":"[coder] == full: drafts correct 7/36; plain final correct 10/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (142s)\n"}
+,{"stream_name":"stdout","time":4127.42876244,"data":"[coder] loaded Qwen/Qwen2.5-Coder-1.5B-Instruct on cuda in 12s\n"}
+,{"stream_name":"stdout","time":4127.428778795,"data":"[coder] drafts: 36\n"}
+,{"stream_name":"stdout","time":4127.42878325,"data":"[coder]   step 1: 0/36 done (12s)\n"}
+,{"stream_name":"stdout","time":4127.428786848,"data":"[coder]   step 2: 9/36 done (66s)\n"}
+,{"stream_name":"stdout","time":4127.428790157,"data":"[coder]   step 3: 17/36 done (85s)\n"}
+,{"stream_name":"stdout","time":4127.428793323,"data":"[coder]   step 4: 23/36 done (97s)\n"}
+,{"stream_name":"stdout","time":4127.428796643,"data":"[coder]   step 5: 30/36 done (109s)\n"}
+,{"stream_name":"stdout","time":4127.428799789,"data":"[coder]   step 6: 36/36 done (114s)\n"}
+,{"stream_name":"stdout","time":4127.428803294,"data":"[coder] reviews: 72\n"}
+,{"stream_name":"stdout","time":4127.428806717,"data":"[coder]   step 1: 0/72 done (39s)\n"}
+,{"stream_name":"stdout","time":4127.428810228,"data":"[coder]   step 2: 61/72 done (80s)\n"}
+,{"stream_name":"stdout","time":4127.428813648,"data":"[coder]   step 3: 63/72 done (86s)\n"}
+,{"stream_name":"stdout","time":4127.428817317,"data":"[coder]   step 4: 66/72 done (91s)\n"}
+,{"stream_name":"stdout","time":4127.428820632,"data":"[coder]   step 5: 66/72 done (94s)\n"}
+,{"stream_name":"stdout","time":4127.428824087,"data":"[coder]   step 6: 72/72 done (99s)\n"}
+,{"stream_name":"stdout","time":4127.428827493,"data":"[coder] == full: drafts correct 7/36; plain final correct 5/36; strict final correct 3/36; planted caught plain 0/0, strict 0/0 (225s)\n"}
+,{"stream_name":"stdout","time":4127.42883132,"data":"\n"}
+,{"stream_name":"stdout","time":4127.428834472,"data":"# Draft -\u003e fact-check: results\n"}
+,{"stream_name":"stdout","time":4127.428837793,"data":"\n"}
+,{"stream_name":"stdout","time":4127.428840892,"data":"12 questions, 3 sampled drafts each, tools = Wikipedia search, Wikipedia page, Wikidata. Each draft is reviewed twice by the same model in a fresh chat: **plain** (Keal's wording) and **strict** (fact-checker, assume it's wrong).\n"}
+,{"stream_name":"stdout","time":4127.428846283,"data":"\n"}
+,{"stream_name":"stdout","time":4127.428849272,"data":"**Own drafts** = the model reviews its own answers. **Planted** = it reviews a known-wrong answer per question (e.g. 'The capital of Australia is Sydney').\n"}
+,{"stream_name":"stdout","time":4127.428852894,"data":"\n"}
+,{"stream_name":"stdout","time":4127.428855992,"data":"| model | draft right | review | caught wrong own drafts | false alarms on right drafts | final right | fixed (wrong-\u003eright) | broke (right-\u003ewrong) | planted caught | planted fixed | no verdict |\n"}
+,{"stream_name":"stdout","time":4127.428860153,"data":"|---|---|---|---|---|---|---|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":4127.428863656,"data":"| Qwen2.5-Coder-1.5B-Instruct (force) | 7/36 (19%) | plain | 10/29 (34%) | 5/7 (71%) | 5/36 (14%) | 2/29 (7%) | 4/7 (57%) | - | - | 4/36 (11%) |\n"}
+,{"stream_name":"stdout","time":4127.42886736,"data":"| Qwen2.5-Coder-1.5B-Instruct (force) | 7/36 (19%) | strict | 17/29 (59%) | 4/7 (57%) | 3/36 (8%) | 3/29 (10%) | 7/7 (100%) | - | - | 7/36 (19%) |\n"}
+,{"stream_name":"stdout","time":4127.428871024,"data":"| | tool calls per draft: 2.9 (search 64, read_page 42, wikidata 0) | | | | | | | | | |\n"}
+,{"stream_name":"stdout","time":4127.428874575,"data":"| Qwen2.5-Coder-1.5B-Instruct (free) | 3/36 (8%) | plain | 8/33 (24%) | 0/3 (0%) | 15/36 (42%) | 12/33 (36%) | 0/3 (0%) | 1/36 (3%) | 0/36 (0%) | 0/72 (0%) |\n"}
+,{"stream_name":"stdout","time":4127.428878258,"data":"| Qwen2.5-Coder-1.5B-Instruct (free) | 3/36 (8%) | strict | 12/33 (36%) | 1/3 (33%) | 12/36 (33%) | 9/33 (27%) | 0/3 (0%) | 13/36 (36%) | 3/36 (8%) | 7/72 (10%) |\n"}
+,{"stream_name":"stdout","time":4127.428885803,"data":"| | tool calls per draft: 2.2 (search 22, read_page 14, wikidata 44) | | | | | | | | | |\n"}
+,{"stream_name":"stdout","time":4127.428889713,"data":"| Qwen2.5-Coder-1.5B-Instruct (lookup) | 7/36 (19%) | plain | 15/29 (52%) | 1/7 (14%) | 10/36 (28%) | 4/29 (14%) | 1/7 (14%) | - | - | 0/36 (0%) |\n"}
+,{"stream_name":"stdout","time":4127.428893228,"data":"| Qwen2.5-Coder-1.5B-Instruct (lookup) | 7/36 (19%) | strict | 9/29 (31%) | 1/7 (14%) | 3/36 (8%) | 1/29 (3%) | 5/7 (71%) | - | - | 4/36 (11%) |\n"}
+,{"stream_name":"stdout","time":4127.4288972,"data":"| | tool calls per draft: 1.8 (search 2, read_page 7, wikidata 55) | | | | | | | | | |\n"}
+,{"stream_name":"stdout","time":4127.428900697,"data":"| Qwen3.5-0.8B (force) | 18/36 (50%) | plain | 3/18 (17%) | 0/18 (0%) | 18/36 (50%) | 3/18 (17%) | 3/18 (17%) | - | - | 9/36 (25%) |\n"}
+,{"stream_name":"stdout","time":4127.428904157,"data":"| Qwen3.5-0.8B (force) | 18/36 (50%) | strict | 2/18 (11%) | 2/18 (11%) | 18/36 (50%) | 2/18 (11%) | 2/18 (11%) | - | - | 13/36 (36%) |\n"}
+,{"stream_name":"stdout","time":4127.42890771,"data":"| | tool calls per draft: 1.0 (search 36, read_page 0, wikidata 0) | | | | | | | | | |\n"}
+,{"stream_name":"stdout","time":4127.428911404,"data":"| Qwen3.5-0.8B (free) | 14/36 (39%) | plain | 8/22 (36%) | 4/14 (29%) | 15/36 (42%) | 1/22 (5%) | 0/14 (0%) | 6/36 (17%) | 4/36 (11%) | 7/72 (10%) |\n"}
+,{"stream_name":"stdout","time":4127.428915155,"data":"| Qwen3.5-0.8B (free) | 14/36 (39%) | strict | 10/22 (45%) | 0/14 (0%) | 14/36 (39%) | 4/22 (18%) | 4/14 (29%) | 21/36 (58%) | 14/36 (39%) | 13/72 (18%) |\n"}
+,{"stream_name":"stdout","time":4127.428918766,"data":"| | tool calls per draft: 0.0 (search 0, read_page 0, wikidata 0) | | | | | | | | | |\n"}
+,{"stream_name":"stdout","time":4127.428922327,"data":"| Qwen3.5-0.8B (lookup) | 22/36 (61%) | plain | 8/14 (57%) | 5/22 (23%) | 23/36 (64%) | 1/14 (7%) | 0/22 (0%) | - | - | 1/36 (3%) |\n"}
+,{"stream_name":"stdout","time":4127.428925865,"data":"| Qwen3.5-0.8B (lookup) | 22/36 (61%) | strict | 7/14 (50%) | 4/22 (18%) | 20/36 (56%) | 3/14 (21%) | 5/22 (23%) | - | - | 9/36 (25%) |\n"}
+,{"stream_name":"stdout","time":4127.428929647,"data":"| | tool calls per draft: 0.5 (search 13, read_page 0, wikidata 5) | | | | | | | | | |\n"}
+,{"stream_name":"stdout","time":4127.428932898,"data":"| Qwen3-0.6B (force) | 24/36 (67%) | plain | 0/12 (0%) | 1/24 (4%) | 24/36 (67%) | 0/12 (0%) | 0/24 (0%) | - | - | 0/36 (0%) |\n"}
+,{"stream_name":"stdout","time":4127.428936297,"data":"| Qwen3-0.6B (force) | 24/36 (67%) | strict | 12/12 (100%) | 21/24 (88%) | 20/36 (56%) | 2/12 (17%) | 6/24 (25%) | - | - | 0/36 (0%) |\n"}
+,{"stream_name":"stdout","time":4127.428939664,"data":"| | tool calls per draft: 1.0 (search 36, read_page 0, wikidata 0) | | | | | | | | | |\n"}
+,{"stream_name":"stdout","time":4127.428942847,"data":"| Qwen3-0.6B (free) | 10/36 (28%) | plain | 2/26 (8%) | 0/10 (0%) | 10/36 (28%) | 0/26 (0%) | 0/10 (0%) | 1/36 (3%) | 0/36 (0%) | 0/72 (0%) |\n"}
+,{"stream_name":"stdout","time":4127.42894689,"data":"| Qwen3-0.6B (free) | 10/36 (28%) | strict | 26/26 (100%) | 10/10 (100%) | 8/36 (22%) | 1/26 (4%) | 3/10 (30%) | 36/36 (100%) | 12/36 (33%) | 0/72 (0%) |\n"}
+,{"stream_name":"stdout","time":4127.428950607,"data":"| | tool calls per draft: 0.0 (search 0, read_page 0, wikidata 0) | | | | | | | | | |\n"}
+,{"stream_name":"stdout","time":4127.42895394,"data":"| Qwen3-0.6B (lookup) | 13/36 (36%) | plain | 0/23 (0%) | 0/13 (0%) | 13/36 (36%) | 0/23 (0%) | 0/13 (0%) | - | - | 0/36 (0%) |\n"}
+,{"stream_name":"stdout","time":4127.428957675,"data":"| Qwen3-0.6B (lookup) | 13/36 (36%) | strict | 23/23 (100%) | 12/13 (92%) | 10/36 (28%) | 0/23 (0%) | 3/13 (23%) | - | - | 0/36 (0%) |\n"}
+,{"stream_name":"stdout","time":4127.428961328,"data":"| | tool calls per draft: 0.1 (search 0, read_page 0, wikidata 3) | | | | | | | | | |\n"}
+,{"stream_name":"stdout","time":4127.428968477,"data":"\n"}
+,{"stream_name":"stdout","time":4127.428972237,"data":"## Drafts per question (✓ right / ✗ wrong, one mark per sample)\n"}
+,{"stream_name":"stdout","time":4127.42897639,"data":"\n"}
+,{"stream_name":"stdout","time":4127.428979575,"data":"| question | coder/force | coder/free | coder/lookup | qwen3/force | qwen3/free | qwen3/lookup | qwen35/force | qwen35/free | qwen35/lookup |\n"}
+,{"stream_name":"stdout","time":4127.428983302,"data":"|---|---|---|---|---|---|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":4127.428986399,"data":"| emma | ✗✗✗ | ✗✗✗ | ✗✗✗ | ✗✗✗ | ✗✗✗ | ✗✗✗ | ✗✗✗ | ✗✗✗ | ✗✗✗ |\n"}
+,{"stream_name":"stdout","time":4127.428990284,"data":"| uk_pm | ✗✗✗ | ✗✗✗ | ✗✗✗ | ✗✗✗ | ✗✗✗ | ✗✗✗ | ✗✗✗ | ✗✗✗ | ✗✗✗ |\n"}
+,{"stream_name":"stdout","time":4127.428994018,"data":"| wc2026 | ✗✗✗ | ✗✗✗ | ✗✓✗ | ✗✗✗ | ✗✗✗ | ✗✗✗ | ✗✗✗ | ✗✗✗ | ✗✗✗ |\n"}
+,{"stream_name":"stdout","time":4127.428997772,"data":"| pluto | ✗✗✓ | ✗✓✗ | ✓✗✓ | ✓✓✓ | ✗✗✗ | ✗✗✗ | ✓✓✓ | ✓✓✓ | ✓✓✓ |\n"}
+,{"stream_name":"stdout","time":4127.429001652,"data":"| australia | ✓✗✓ | ✓✓✗ | ✓✓✓ | ✓✓✓ | ✓✓✗ | ✓✓✓ | ✓✓✓ | ✓✗✓ | ✓✓✓ |\n"}
+,{"stream_name":"stdout","time":4127.429005471,"data":"| oppenheimer | ✗✓✗ | ✗✗✗ | ✗✗✗ | ✓✓✓ | ✗✗✗ | ✗✗✗ | ✓✓✓ | ✓✓✓ | ✓✓✓ |\n"}
+,{"stream_name":"stdout","time":4127.429009337,"data":"| kilimanjaro | ✗✗✗ | ✗✗✗ | ✗✗✗ | ✓✓✓ | ✓✗✗ | ✓✓✓ | ✗✗✗ | ✓✗✗ | ✓✓✓ |\n"}
+,{"stream_name":"stdout","time":4127.429013196,"data":"| moons | ✓✗✓ | ✗✗✗ | ✗✗✗ | ✗✗✗ | ✗✗✓ | ✓✗✗ | ✗✗✗ | ✗✗✗ | ✓✓✓ |\n"}
+,{"stream_name":"stdout","time":4127.42901693,"data":"| frankenstein | ✗✗✗ | ✗✗✗ | ✗✗✗ | ✓✓✓ | ✓✓✓ | ✓✓✓ | ✓✓✓ | ✗✗✗ | ✗✓✗ |\n"}
+,{"stream_name":"stdout","time":4127.429020786,"data":"| platypus | ✗✗✗ | ✗✗✗ | ✗✗✗ | ✓✓✓ | ✗✗✗ | ✗✗✗ | ✗✗✗ | ✗✗✗ | ✗✗✗ |\n"}
+,{"stream_name":"stdout","time":4127.429025101,"data":"| berlin | ✗✓✗ | ✗✗✗ | ✗✗✗ | ✓✓✓ | ✓✓✓ | ✓✓✓ | ✓✓✓ | ✓✓✓ | ✓✓✓ |\n"}
+,{"stream_name":"stdout","time":4127.429028903,"data":"| un_sg | ✗✗✗ | ✗✗✗ | ✗✓✗ | ✓✓✓ | ✗✗✗ | ✗✗✗ | ✓✓✓ | ✓✗✓ | ✓✓✓ |\n"}
+,{"stream_name":"stdout","time":4127.429032687,"data":" \n"}
+,{"stream_name":"stderr","time":4131.0586335,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":4131.05866401,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":4131.260776936,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":4131.260800623,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":4132.118977537,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":4132.209802846,"data":"[NbConvertApp] Writing 75440 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":4134.985857227,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":4135.561872383,"data":"[NbConvertApp] Writing 357279 bytes to __results__.html\n"}
+]
