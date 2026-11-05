@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loop concept vs syntax</title>
+<meta name="description" content="Small models can write a loop in Python. Can they write one in a language they've never seen if you hand them the syntax? Every answer, runnable.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../lab.css">
+<link rel="stylesheet" href="demo.css">
+</head>
+<body>
+<header class="wrap top">
+  <p class="owner"><a href="../../">Small model lab</a></p>
+  <h1>Do small models know what a loop is, or just how to spell one?</h1>
+  <p class="lede">Qwen3 0.6B and 1.7B write working loops in Python. So hand them a loop they already understand, in a
+    language they've never seen, plus the syntax reference you'd look up. If knowing the idea is separate from knowing
+    the spelling, that should be enough.</p>
+  <p class="answer">It isn't. With the reference in the prompt, the 1.7B model solved 5 of its 21 Python-solvable tasks
+    in the made-up language. The 0.6B solved 1 of 22. Mostly they copied the reference's example instead of using it.</p>
+</header>
+
+<main class="wrap">
+
+<section class="bench" aria-labelledby="bench-h">
+  <div class="bench-head">
+    <h2 id="bench-h">Same task, two spellings</h2>
+    <label class="field">Task
+      <select id="task"></select>
+    </label>
+  </div>
+  <p class="task-desc" id="task-desc"></p>
+  <div class="bench-grid">
+    <figure class="pane">
+      <figcaption>
+        <span class="pane-title">Python</span>
+        <span class="pane-note" id="py-note"></span>
+      </figcaption>
+      <pre class="code" id="py-code"></pre>
+    </figure>
+    <figure class="pane pane-live">
+      <figcaption>
+        <span class="pane-title">Plink, a language made up for this test</span>
+        <span class="pane-note" id="pl-note"></span>
+      </figcaption>
+      <textarea id="pl-code" class="code editor" spellcheck="false" autocapitalize="off" autocomplete="off"
+        aria-label="Plink program (you can edit it)"></textarea>
+      <div class="bench-actions">
+        <button type="button" class="primary" id="run">Run it</button>
+        <button type="button" id="reset">Put the model's answer back</button>
+        <button type="button" id="show-ref" aria-expanded="false" aria-controls="ref">Show the reference it was given</button>
+      </div>
+      <div class="result" id="result" aria-live="polite"></div>
+    </figure>
+  </div>
+  <pre class="code ref" id="ref" hidden></pre>
+  <p class="hint">The Plink side runs right here in your browser. Edit it and press Run. Its grade uses the same rule
+    as the experiment: the expected output must be the last lines printed.</p>
+</section>
+
+<section aria-labelledby="score-h">
+  <h2 id="score-h">The score</h2>
+  <p class="section-lede">25 loop tasks, each answered 5 times (1 greedy, 4 sampled) in each language, with and without
+    the reference. A task counts as solved if any of the 5 answers passes.</p>
+  <div class="table-wrap"><table class="score" id="score"></table></div>
+</section>
+
+<section aria-labelledby="grid-h">
+  <div class="grid-head">
+    <h2 id="grid-h">Every answer</h2>
+    <div class="seg" role="group" aria-label="Model" id="model-seg"></div>
+  </div>
+  <p class="section-lede">Each cell holds the 5 answers for one task.
+    <span class="key"><i class="mark pass"></i>passed</span>
+    <span class="key"><i class="mark syntax"></i>wouldn't compile or parse</span>
+    <span class="key"><i class="mark wrong"></i>ran, wrong output</span>
+    Select a cell to read the answers.</p>
+  <div class="table-wrap"><table class="answers" id="answers"></table></div>
+  <div class="detail" id="detail" hidden></div>
+</section>
+
+<section aria-labelledby="tools-h">
+  <h2 id="tools-h">Then: no reference, but tools</h2>
+  <p class="section-lede">Rounds 2 and 3 dropped the reference. Each model got just the task, plus tools to list, search
+    and read the language's real docs and to run its code, for up to 15 turns. 3 attempts per task.</p>
+  <div class="table-wrap"><table class="score">
+    <thead><tr><th>Model</th><th>Zig 0.17 solved</th><th>Plink solved</th><th>Attempts that opened the docs</th></tr></thead>
+    <tbody>
+      <tr><td>Qwen3 0.6B</td><td>0 of 25</td><td>0 of 25</td><td>0 of 150</td></tr>
+      <tr><td>Gemma 4 E2B</td><td>9 of 25</td><td>4 of 25</td><td>2 of 75 in Zig, 43 of 75 in Plink</td></tr>
+      <tr><td>Tiny Gemma 4 (my 0.6B cut-down)</td><td>0 of 25</td><td>0 of 25</td><td>5–6 of 75, file listings only</td></tr>
+    </tbody>
+  </table></div>
+  <p>Gemma 4 E2B almost never read the Zig docs. It got there by running its code about 11 times per attempt and
+    changing it after each compiler error. Qwen3 0.6B also ran its code, but after an error it said it would fix it and
+    sent the identical program again.</p>
+
+  <div class="player">
+    <div class="player-picks">
+      <div class="seg" role="group" aria-label="Examples">
+        <button type="button" data-pick="Gemma 4 E2B|zig|evens|0">Gemma reads the compiler error</button>
+        <button type="button" data-pick="Qwen3 0.6B|plink|fact10|0">Qwen sends the same code again</button>
+      </div>
+      <div class="pickers">
+        <label class="field">Model <select id="ag-model"></select></label>
+        <label class="field">Language <select id="ag-lang"></select></label>
+        <label class="field">Task <select id="ag-task"></select></label>
+        <label class="field">Attempt <select id="ag-attempt"></select></label>
+      </div>
+    </div>
+    <div class="transcript" id="transcript"><p class="loading">Loading transcripts…</p></div>
+  </div>
+</section>
+
+<section aria-labelledby="says-h" class="says">
+  <h2 id="says-h">What it says</h2>
+  <ul>
+    <li>Both models have the loop concept: in Python they solve 21–22 of the 25 tasks.</li>
+    <li>A looked-up reference doesn't carry that concept into a new spelling. It roughly halves syntax failures, but
+      those mostly turn into wrong output, not passes.</li>
+    <li>The models treat the reference as the answer to imitate, not a template to fill. Qwen3 0.6B pastes the
+      reference's own example (<code>list(3, 1, 4)</code>, <code>"even"</code>) into 66% of its Plink answers, and the
+      reference makes its plain Python worse (66% → 44%).</li>
+    <li>Qwen3 1.7B's Zig errors show the same gap: the reference says signed integers need <code>@mod</code>, and it
+      still writes <code>i % 2</code>.</li>
+    <li>What the small models lack is a habit, not knowledge: noticing "I don't know this", going to look, and changing
+      course after an error. Gemma 4 E2B has the last part. That's what the next experiments try to train.</li>
+  </ul>
+  <p class="meta-line">Runs: Kaggle, 2× T4, free, 31 Oct – 1 Nov 2026.
+    <a href="https://github.com/KealJones/lm-experiments/tree/main/experiments/loop-concept">The code, raw outputs and full write-up</a></p>
+</section>
+
+</main>
+<footer><p>Plink runs in your browser through a JavaScript port of the experiment's <code>plink.py</code>. It gives the same result as the original on all 679 Plink programs the models wrote.</p></footer>
+<script type="module" src="demo.js"></script>
+</body>
+</html>
