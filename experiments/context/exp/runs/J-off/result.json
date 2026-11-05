@@ -1,0 +1,21 @@
+{
+ "run": "J-off",
+ "secs": 153,
+ "model_calls": 3,
+ "notes": [
+  "skeleton: 7 functions emptied to TODO, 7 duplicates dropped",
+  "bare skeleton scores 2/5"
+ ],
+ "error": null,
+ "finished_tool": true,
+ "points": 0,
+ "compiles": false,
+ "runs": false,
+ "board": false,
+ "clicks_work": false,
+ "computer_moves": false,
+ "ts_errors": 11,
+ "lines": 113,
+ "has_minimax": false,
+ "report": "TypeScript errors (11):\n  line 33: Cannot find name 'drawBoard'.\n  line 33: ';' expected.\n  line 34: Type 'string[]' is not assignable to type 'string'.\n  line 35: This comparison appears to be unintentional because the types '{ cell: number; value: string; isComputer: boolean; isHuman: boolean; isAI: boolean; color: string; }' and 'string' have no overlap.\n  line 37: This comparison appears to be unintentional because the types '{ cell: number; value: string; isComputer: boolean; isHuman: boolean; isAI: boolean; color: string; }' and 'string' have no overlap.\n  line 57: Declaration or statement expected.\n  line 60: Cannot find name 'handleClick'.\n  line 60: Cannot find name 'e'.\nRuntime error: drawBoard is not defined\nThe page has no board elements (nothing was added to the DOM)."
+}

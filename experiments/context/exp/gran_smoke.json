@@ -1,0 +1,616 @@
+[
+ {
+  "method": "whole",
+  "think": "off",
+  "target": "winner",
+  "trial": 0,
+  "turns": 1,
+  "secs": 23,
+  "points": 3,
+  "success": false,
+  "ts_errors": 0,
+  "code": "function winner(b: Cell[]): Cell | 'draw' | null {\n  const X = 'X';\n  const O = 'O';\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n    [1, 4, 7],\n    [2, 5, 8],\n    [0, 4, 8],\n    [2, 5, 8]\n  ];\n  for (const line of lines) {\n    const [x, y, z] = line;\n    if (b[x] === X && b[y] === X && b[z] === X) return X;\n    if (b[x] === O && b[y] === O && b[z] === O) return O;\n  }\n  for (const line of lines) {\n    const [x, y, z] = line;\n    if (b[x] === X && b[y] === X && b[z] === X) return X;\n    if (b[x] === O && b[y] === O && b[z] === O) return O;\n  }\n  return 'draw';\n}",
+  "log": [
+   {
+    "turn": 1,
+    "prompt_tokens": 800,
+    "secs": 17.3,
+    "output": "```typescript\nfunction winner(b: Cell[]): Cell | 'draw' | null {\n  const X = 'X';\n  const O = 'O';\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n    [1, 4, 7],\n    [2, 5, 8],\n    [0, 4, 8],\n    [2, 5, 8]\n  ];\n\n  for (const line of lines) {\n    const [x, y, z] = line;\n    if (b[x] === X && b[y] === X && b[z] === X) return X;\n    if (b[x] === O && b[y] === O && b[z] === O) return O;\n  }\n\n  for (const line of lines) {\n    const [x, y, z] = line;\n    if (b[x] === X && b[y] === X && b[z] === X) return X;\n    if (b[x] === O && b[y] === O && b[z] === O) return O;\n  }\n\n  return 'draw';\n}\n```"
+   }
+  ]
+ },
+ {
+  "method": "lines",
+  "think": "off",
+  "target": "winner",
+  "trial": 0,
+  "turns": 2,
+  "secs": 11,
+  "points": 4,
+  "success": false,
+  "ts_errors": 0,
+  "code": "function winner(b: Cell[]): Cell | 'draw' | null {\n  // Check rows\n  if (b.some(cell => cell === 'X')) {\n    return 'X';\n  }\n}",
+  "log": [
+   {
+    "turn": 1,
+    "prompt_tokens": 874,
+    "secs": 7.9,
+    "output": "```typescript\nfunction winner(b: Cell[]): Cell | 'draw' | null {\n  // Check rows\n  if (b.some(cell => cell === 'X')) {\n    return 'X';\n  }\n  if (b.some(cell => cell === 'O')) {\n    return 'O';\n  }\n  // Check columns\n  if (b.some(row => row.some(cell => cell === 'X')) && b.some(row => row.some(cell => cell === 'O'))) {\n    return 'draw';\n  }\n  // Check diagonals\n  if (b[0][0] === b[1][1] && b[1][1]"
+   },
+   {
+    "turn": 2,
+    "prompt_tokens": 896,
+    "secs": 0.6,
+    "output": "DONE",
+    "event": "DONE"
+   },
+   {
+    "note": "auto-closed 1 open blocks"
+   }
+  ]
+ },
+ {
+  "method": "blocks",
+  "think": "off",
+  "target": "winner",
+  "trial": 0,
+  "turns": 30,
+  "secs": 363,
+  "points": 0,
+  "success": false,
+  "ts_errors": 61,
+  "code": "function winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n}",
+  "log": [
+   {
+    "turn": 1,
+    "prompt_tokens": 924,
+    "secs": 9.4,
+    "purpose": "Return 'X' or 'O' if that mark fills any of the 8 lines in LINES, 'draw' if every cell is filled, otherwise null.",
+    "output": "```typescript\nfunction winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n    [1, 4, 7],\n    [2, 5, 8],\n    [0, 4, 8],\n    [2, 5, 8],\n  ];\n\n  for (const line of lines) {\n    const [x, y1, y2] = line;\n    const cell1 = board[y1];\n    const cell2 = board[y2];\n    if (cell1 === cell2 && cell1 !== '') {\n      return cell1;\n    }\n  }\n\n  return 'draw';\n}\n```",
+    "note": "cut 19 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 2,
+    "prompt_tokens": 989,
+    "secs": 9.2,
+    "purpose": "continue from here. Job: Return 'X' or 'O' if that mark fills any of the 8 lines in LINES, 'draw' if every cell is fille",
+    "output": "function winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n    [1, 4, 7],\n    [2, 5, 8],\n    [0, 4, 8],\n    [2, 5, 6],\n  ];\n\n  for (const line of lines) {\n    if (b.includes(line[0]) && b.includes(line[1]) && b.includes(line[2])) {\n      return line[0] === 'X' ? 'X' : 'O';\n    }\n  }\n\n  return 'draw';\n}",
+    "note": "cut 16 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 3,
+    "prompt_tokens": 1054,
+    "secs": 9.1,
+    "purpose": "continue from here. Job: continue from here. Job: Return 'X' or 'O' if that mark fills any of the 8 lines in LINES, 'dra",
+    "output": "function winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n    [1, 4, 7],\n    [2, 5, 8],\n  ];\n\n  for (const line of lines) {\n    const [a, b, c] = line;\n    if (b === a && b === c) {\n      if (turn === 'X') return 'X';\n      if (turn === 'O') return 'O';\n    }\n  }\n\n  return 'draw';\n}",
+    "note": "cut 16 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 4,
+    "prompt_tokens": 1104,
+    "secs": 14.2,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: Return 'X' or 'O' if that mark fills any of t",
+    "output": "```typescript\nfunction winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n    [1, 4, 7],\n    [2, 5, 8],\n    [0, 4, 8],\n    [2, 5, 6],\n  ];\n\n  for (const line of lines) {\n    const [row, col1, col2] = line;\n    if (b[row][col1] === 'X' && b[row][col2] === 'X') return 'X';\n    if (b[row][col1] === 'O' && b[row][col2] === 'O') return 'O';\n  }\n\n  for (const line of lines) {\n    const [row, col1, col2] = line;\n    if (b[row][col1] =",
+    "note": "cut 19 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 5,
+    "prompt_tokens": 1145,
+    "secs": 7.9,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: Return 'X' or 'O' if",
+    "output": "```typescript\nfunction winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  ];\n  const isDraw = b.every(cell => cell === '');\n  \n  for (const line of lines) {\n    if (line.every(cell => b.includes(cell))) {\n      return 'X' as Cell;\n    }\n  }\n  if (isDraw) {\n    return 'draw';\n  }\n  return null;\n}\n```",
+    "note": "cut 16 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 6,
+    "prompt_tokens": 1191,
+    "secs": 8.8,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "function winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n    [1, 4, 7],\n    [2, 5, 8],\n  ];\n\n  for (const line of lines) {\n    const [x, y, z] = line;\n    const cell = b[x][y];\n    if (cell === 'X' || cell === 'O') {\n      return cell;\n    }\n  }\n\n  return 'draw';\n}",
+    "note": "cut 16 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 7,
+    "prompt_tokens": 1236,
+    "secs": 7.3,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "function winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  ];\n  const result = lines.every(([x, y, z]) => b[x] === b[y] && b[x] === b[z]);\n  \n  return result ? 'X' : result ? 'O' : 'draw';\n}",
+    "note": "cut 8 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 8,
+    "prompt_tokens": 1279,
+    "secs": 14.8,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "function winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  ];\n  \n  // Check if there is a winning line for 'X'\n  for (const line of lines) {\n    const [row, col1, col2] = line;\n    const cell1 = b[row * 3 + col1];\n    const cell2 = b[row * 3 + col2];\n    if (cell1 === cell2 && cell1 === 'X') {\n      return 'X';\n    }\n  }\n\n  // Check if there is a winning line for 'O'\n  for (const line of lines) {\n    const [row, col1, col2] ",
+    "note": "cut 25 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 9,
+    "prompt_tokens": 1322,
+    "secs": 15.0,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n    [1, 4, 7],\n    [2, 5, 8],\n  ];\n  \n  for (const line of lines) {\n    const [row, col1, col2] = line;\n    if (b[row][col1] === 'X' && b[row][col2] === 'X') {\n      return 'X';\n    } else if (b[row][col1] === 'O' && b[row][col2] === 'O') {\n      return 'O';\n    }\n  }\n  \n  for (const line of lines) {\n    const [row, col1, col2] = line;\n    if (b[col1][row",
+    "note": "cut 21 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 10,
+    "prompt_tokens": 1364,
+    "secs": 15.2,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n    [1, 4, 7],\n    [2, 5, 8],\n  ];\n\n  for (const line of lines) {\n    const [x, y1, y2] = line;\n    const [x2, y3, y4] = line;\n\n    if (b[x] === 'X' && b[y1] === 'X' && b[y2] === 'X') {\n      return 'X';\n    }\n    if (b[x] === 'O' && b[y1] === 'O' && b[y2] === 'O') {\n      return 'O';\n    }\n    if (b[x2] === 'X' && b[y3] === 'X' && b[y4] === 'X') {\n      ",
+    "note": "cut 21 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 11,
+    "prompt_tokens": 1409,
+    "secs": 15.3,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  ];\n  \n  // Check rows\n  for (const row of lines) {\n    if (b[row[0] === 'X' || b[row[0] === 'O']] && b[row[1] === 'X' || b[row[1] === 'O']] && b[row[2] === 'X' || b[row[2] === 'O'])) {\n      return 'X' as Cell;\n    }\n  }\n  \n  // Check columns\n  for (const col of ['0', '3', '6']) {\n    if (b[0][col] === 'X' || b[0][col] === 'O') {\n      if (b[3][col] ===",
+    "note": "cut 17 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 12,
+    "prompt_tokens": 1454,
+    "secs": 7.2,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "function winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  ];\n  for (const line of lines) {\n    if (b.some(cell => cell === 'X' || cell === 'O')) {\n      return 'X' || 'O';\n    }\n  }\n  return 'draw';\n}",
+    "note": "cut 12 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 13,
+    "prompt_tokens": 1499,
+    "secs": 14.8,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  ];\n  \n  for (const line of lines) {\n    const [x, y1, y2] = line;\n    const cell1 = b[x];\n    const cell2 = b[y1];\n    const cell3 = b[y2];\n    \n    if (cell1 === cell2 && cell2 === cell3 && cell1 !== '') {\n      return cell1;\n    }\n  }\n  \n  for (const i in lines) {\n    const [x, y1, y2] = lines[i];\n    const cell1 = b[x];\n    const cell2 = b[y1];\n    c",
+    "note": "cut 25 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 14,
+    "prompt_tokens": 1544,
+    "secs": 9.8,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  ];\n  const isDraw = b.every(cell => cell !== '');\n\n  for (const line of lines) {\n    if (line.every(cell => cell === 'X')) {\n      return 'X';\n    } else if (line.every(cell => cell === 'O')) {\n      return 'O';\n    }\n  }\n\n  return isDraw ? 'draw' : null;\n}\n```",
+    "note": "cut 15 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 15,
+    "prompt_tokens": 1589,
+    "secs": 11.3,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n    [1, 4, 7],\n    [2, 5, 8],\n    [0, 4, 8],\n    [2, 5, 6],\n  ];\n\n  for (const line of lines) {\n    const cells = line.map((cell, index) => b[index]);\n    if (cells.includes('X') || cells.includes('O')) {\n      return cells.includes('X') ? 'X' : 'O';\n    }\n  }\n\n  return 'draw';\n}\n```",
+    "note": "cut 17 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 16,
+    "prompt_tokens": 1634,
+    "secs": 16.2,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n    [1, 4, 7],\n    [2, 5, 8],\n    [0, 4, 8],\n    [2, 5, 6],\n  ];\n  \n  for (const line of lines) {\n    const [x, y, z] = line;\n    if (b[x] === 'X' && b[y] === 'X' && b[z] === 'X') {\n      return 'X';\n    }\n    if (b[x] === 'O' && b[y] === 'O' && b[z] === 'O') {\n      return 'O';\n    }\n  }\n  \n  for (const line of lines) {\n    const [x, y, z] = line;\n    if",
+    "note": "cut 25 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 17,
+    "prompt_tokens": 1679,
+    "secs": 16.4,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "function winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  ];\n\n  for (const line of lines) {\n    const [x, y1, y2] = line;\n    const x2 = x + 1;\n    const y3 = y1 + 1;\n    const y4 = y2 + 1;\n    const cell1 = board[x];\n    const cell2 = board[y1];\n    const cell3 = board[y2];\n    if (cell1 === cell2 && cell2 === cell3 && cell1 !== '') {\n      return 'X';\n    }\n    if (cell1 === cell3 && cell1 !== '') {\n      return 'O';\n    ",
+    "note": "cut 27 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 18,
+    "prompt_tokens": 1724,
+    "secs": 8.3,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "function winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  ];\n  \n  for (const line of lines) {\n    if (b.some(cell => cell === 'X' || cell === 'O')) {\n      return 'X' || 'O';\n    }\n  }\n  \n  return 'draw';\n}",
+    "note": "cut 12 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 19,
+    "prompt_tokens": 1769,
+    "secs": 11.7,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n    [1, 4, 7],\n    [2, 5, 8],\n    [0, 4, 8],\n    [2, 5, 6],\n  ];\n  \n  for (const line of lines) {\n    if (b.includes(line[0]) && b.includes(line[1]) && b.includes(line[2])) {\n      return line[0] === 'X' ? 'X' : 'O';\n    }\n  }\n  \n  return 'draw';\n}\n```",
+    "note": "cut 16 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 20,
+    "prompt_tokens": 1814,
+    "secs": 13.0,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  ];\n  \n  for (const line of lines) {\n    if (b.includes(line[0]) && b.includes(line[1]) && b.includes(line[2])) {\n      return 'X' if line[0] === 'X' else 'O';\n    }\n  }\n  \n  for (const line of lines) {\n    if (b.includes(line[0]) && b.includes(line[1]) && b.includes(line[2])) {\n      return 'O' if line[0] === 'O' else 'X';\n    }\n  }\n  \n  return 'draw';\n",
+    "note": "cut 17 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 21,
+    "prompt_tokens": 1859,
+    "secs": 16.9,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "function winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n    [1, 4, 7],\n    [2, 5, 8],\n  ];\n  \n  for (const line of lines) {\n    const [x, y1, y2] = line;\n    const [x2, y3, y4] = line;\n    \n    if (b[x] === 'X' && b[y1] === 'X' && b[y2] === 'X') {\n      return 'X';\n    }\n    if (b[x] === 'O' && b[y1] === 'O' && b[y2] === 'O') {\n      return 'O';\n    }\n    if (b[x2] === 'X' && b[y3] === 'X' && b[y4] === 'X') {\n      return '",
+    "note": "cut 21 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 22,
+    "prompt_tokens": 1904,
+    "secs": 9.0,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "function winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  ];\n  \n  for (const line of lines) {\n    const [a, b, c] = line;\n    if (b === a && b === c && b !== '') {\n      return { you: a, computer: c };\n    }\n  }\n  \n  return 'draw';\n}",
+    "note": "cut 13 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 23,
+    "prompt_tokens": 1949,
+    "secs": 16.7,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  ];\n  \n  for (const line of lines) {\n    const [x, y, z] = line;\n    if (b[x] === 'X' && b[y] === 'X' && b[z] === 'X') return 'X';\n    if (b[x] === 'O' && b[y] === 'O' && b[z] === 'O') return 'O';\n  }\n  \n  for (const line of lines) {\n    const [x, y, z] = line;\n    if (b[x] === 'X' && b[y] === 'O' && b[z] === 'X') return 'O';\n    if (b[x] === 'O' && b[y]",
+    "note": "cut 17 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 24,
+    "prompt_tokens": 1994,
+    "secs": 10.9,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "function winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n    [1, 4, 7],\n    [2, 5, 8],\n  ];\n  \n  for (const line of lines) {\n    const cells = line.map((cell, index) => b[cell]);\n    if (cells.some(cell => cell === 'X' || cell === 'O')) {\n      return 'X' as Cell;\n    }\n  }\n  \n  return 'draw' as Cell;\n}",
+    "note": "cut 15 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 25,
+    "prompt_tokens": 2039,
+    "secs": 11.7,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  ];\n  for (const line of lines) {\n    const [x, y1, y2] = line;\n    if (b[x] === 'X' && b[y1] === 'X' && b[y2] === 'X') return 'X';\n    if (b[x] === 'O' && b[y1] === 'O' && b[y2] === 'O') return 'O';\n  }\n  return 'draw';\n}\n```",
+    "note": "cut 12 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 26,
+    "prompt_tokens": 2084,
+    "secs": 8.5,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "function winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  ];\n  for (const line of lines) {\n    if (line.every(cell => b.includes(cell))) {\n      return 'X' as Cell;\n    }\n  }\n  return 'draw' as Cell;\n}",
+    "note": "cut 12 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 27,
+    "prompt_tokens": 2129,
+    "secs": 10.1,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  ];\n  \n  for (const line of lines) {\n    if (b.includes('X') && b.includes('X')) {\n      return 'X';\n    } else if (b.includes('O') && b.includes('O')) {\n      return 'O';\n    }\n  }\n  \n  return 'draw';\n}\n```",
+    "note": "cut 14 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 28,
+    "prompt_tokens": 2174,
+    "secs": 13.2,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "function winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n    [1, 4, 7],\n    [2, 5, 8],\n    [0, 4, 8],\n    [2, 5, 8],\n  ];\n  \n  for (const line of lines) {\n    const [x, y1, y2] = line;\n    if (b[x] !== '' || b[y1] !== '' || b[y2] !== '') {\n      return 'X' if b[x] === 'X' else 'O';\n    }\n  }\n  return 'draw';\n}",
+    "note": "cut 17 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 29,
+    "prompt_tokens": 2219,
+    "secs": 9.8,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "function winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  ];\n  for (const line of lines) {\n    if (b.includes(line[0]) && b.includes(line[1]) && b.includes(line[2])) {\n      return 'X' if line[0] === 'X' else 'O';\n    }\n  }\n  return 'draw';\n}",
+    "note": "cut 12 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 30,
+    "prompt_tokens": 2264,
+    "secs": 18.6,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction winner(b: Cell[]): Cell | 'draw' | null {\n  const lines = [\n    [0, 1, 2],\n    [3, 4, 5],\n    [6, 7, 8],\n    [0, 3, 6],\n  ];\n  \n  for (const line of lines) {\n    if (checkLine(b, line)) {\n      return checkLine(b, line);\n    }\n  }\n  \n  for (let i = 0; i < 3; i++) {\n    if (checkCell(b, i, 0) && checkCell(b, i, 1) && checkCell(b, i, 2)) {\n      return 'X';\n    }\n  }\n  \n  for (let i = 0; i < 3; i++) {\n    if (checkCell(b, 0, i) && checkCell(b, 3, i) && checkCell(b, 6, i)) {\n",
+    "note": "cut 25 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "note": "1 holes left unfilled at the turn limit"
+   }
+  ]
+ },
+ {
+  "method": "whole",
+  "think": "off",
+  "target": "play",
+  "trial": 0,
+  "turns": 1,
+  "secs": 10,
+  "points": 2,
+  "success": false,
+  "ts_errors": 4,
+  "code": "function play(i: number): void {\n  if (i === undefined || i === null) return;\n  // Check if the cell is empty and no one has won\n  if (board[i] === '' && !winner(board).value) {\n    board[i] = 'X';\n    // If it's the computer's turn, place 'O' at bestMove\n    if (turn === 'X') {\n      bestMove(board).value = 'O';\n    }\n    score.y += 1;\n    score.computer += 1;\n    render();\n  }\n}",
+  "log": [
+   {
+    "turn": 1,
+    "prompt_tokens": 806,
+    "secs": 7.5,
+    "output": "```typescript\nfunction play(i: number): void {\n  if (i === undefined || i === null) return;\n  \n  // Check if the cell is empty and no one has won\n  if (board[i] === '' && !winner(board).value) {\n    board[i] = 'X';\n    \n    // If it's the computer's turn, place 'O' at bestMove\n    if (turn === 'X') {\n      bestMove(board).value = 'O';\n    }\n    \n    score.y += 1;\n    score.computer += 1;\n    \n    render();\n  }\n}\n```"
+   }
+  ]
+ },
+ {
+  "method": "lines",
+  "think": "off",
+  "target": "play",
+  "trial": 0,
+  "turns": 2,
+  "secs": 7,
+  "points": 2,
+  "success": false,
+  "ts_errors": 8,
+  "code": "function play(i: number): void {\n  play(i: number): void {\n  if (board[i] === '') {\n    board[i] = 'X';\n  }\n  }\n}",
+  "log": [
+   {
+    "turn": 1,
+    "prompt_tokens": 874,
+    "secs": 3.8,
+    "output": "```typescript\nplay(i: number): void {\n  if (board[i] === '') {\n    board[i] = 'X';\n    if (minimax(board, 'X') === -1) {\n      board[0] = 'O';\n    }\n    score.y++;\n    render();\n  }\n}\n```"
+   },
+   {
+    "turn": 2,
+    "prompt_tokens": 901,
+    "secs": 0.7,
+    "output": "DONE",
+    "event": "DONE"
+   },
+   {
+    "note": "auto-closed 2 open blocks"
+   }
+  ]
+ },
+ {
+  "method": "blocks",
+  "think": "off",
+  "target": "play",
+  "trial": 0,
+  "turns": 30,
+  "secs": 347,
+  "points": 2,
+  "success": false,
+  "ts_errors": 60,
+  "code": "function play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  }}\n  }}\n  }}\n  }}\n  }}\n  }}\n  }}\n  }}\n  }}\n  }}\n  }}\n  }}\n  }}\n  }}\n  }}\n  }}\n  }}\n  }}\n  }}\n  }}\n  }}\n  }}\n  }}\n  }}\n  }}\n  }}\n  }}\n  }}\n  }}\n  }}\n}",
+  "log": [
+   {
+    "turn": 1,
+    "prompt_tokens": 929,
+    "secs": 6.7,
+    "purpose": "If cell i is empty and nobody has won: place X, then if the game isn't over place O at bestMove, add a point to the winn",
+    "output": "```typescript\nfunction play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  \n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    score.y += 1;\n  } else if (winner === 'computer') {\n    score.computer += 1;\n  }\n  \n  /*>>> HOLE: Render the board after all moves <<<*/\n  render();\n}\n```",
+    "note": "cut 11 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 2,
+    "prompt_tokens": 1008,
+    "secs": 8.7,
+    "purpose": "continue from here. Job: If cell i is empty and nobody has won: place X, then if the game isn't over place O at bestMove",
+    "output": "```typescript\nfunction play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE TO FILL NOW <<<*/\n  } else {\n    /*>>> HOLE: Add a point to the winner's score <<<*/\n    if (winner === 'X') {\n      score.y++;\n    } else {\n      score.computer++;\n    }\n    /*>>> HOLE: Call render() <<<*/\n    render();\n  }\n}\n```",
+    "note": "cut 16 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 3,
+    "prompt_tokens": 1078,
+    "secs": 7.8,
+    "purpose": "continue from here. Job: continue from here. Job: If cell i is empty and nobody has won: place X, then if the game isn't",
+    "output": "function play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  \n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  \n  if (winner === 'draw') {\n    /*>>> HOLE TO FILL NOW <<<*/\n    const bestMove = bestMove(board);\n    if (bestMove !== null) {\n      board[bestMove] = 'O';\n      score.y += 1;\n    }\n  }\n  \n  render();\n}",
+    "note": "cut 13 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 4,
+    "prompt_tokens": 1140,
+    "secs": 8.1,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: If cell i is empty and nobody has won: place ",
+    "output": "```typescript\nfunction play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE TO FILL NOW <<<*/\n    const bestMove = bestMove(board);\n    if (bestMove !== null) {\n      score.computer += 1;\n      board[bestMove] = 'O';\n    }\n  }\n  render();\n}\n```",
+    "note": "cut 13 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 5,
+    "prompt_tokens": 1201,
+    "secs": 10.6,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: If cell i is empty a",
+    "output": "```typescript\nfunction play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE: Place X on the board at cell i <<<*/\n    board[i] = 'X';\n  }\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE: Place X on the board at cell i <<<*/\n",
+    "note": "cut 15 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 6,
+    "prompt_tokens": 1260,
+    "secs": 6.0,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "function play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  \n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE TO FILL NOW <<<*/\n  }\n}",
+    "note": "cut 7 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 7,
+    "prompt_tokens": 1319,
+    "secs": 7.2,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  \n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE: Place X on the board at cell i <<<*/\n    board[i] = 'X';\n  }\n}\n```",
+    "note": "cut 8 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 8,
+    "prompt_tokens": 1379,
+    "secs": 15.6,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "function play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  \n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE: Place X on the board at cell i <<<*/\n    board[i] = 'X';\n    /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n    const winner = winner(board);\n    if (winner === 'draw') {\n      /*>>> HOLE: Place X on the board at cell i <<<*/\n      b",
+    "note": "cut 21 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 9,
+    "prompt_tokens": 1438,
+    "secs": 6.5,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  \n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE TO FILL NOW <<<*/\n  }\n}\n```",
+    "note": "cut 7 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 10,
+    "prompt_tokens": 1498,
+    "secs": 7.2,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  \n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE: Place X on the board at cell i <<<*/\n    board[i] = 'X';\n  }\n}\n```",
+    "note": "cut 8 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 11,
+    "prompt_tokens": 1558,
+    "secs": 11.2,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  \n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  \n  if (winner === 'draw') {\n    /*>>> HOLE: Place X on the board at cell i <<<*/\n    board[i] = 'X';\n    \n    /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n    const winner = winner(board);\n    \n    if (winner === 'draw') {\n      /*>>> HOLE: Place X on the bo",
+    "note": "cut 14 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 12,
+    "prompt_tokens": 1618,
+    "secs": 11.9,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "function play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE: Place O at bestMove <<<*/\n    const bestMove = bestMove(board);\n    if (bestMove !== null) {\n      board[bestMove] = 'O';\n    }\n    /*>>> HOLE: Add a point to the winner's score <<<*/\n    if (winner === 'you') {\n      score.you++;\n    } else if (winner ==",
+    "note": "cut 19 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 13,
+    "prompt_tokens": 1678,
+    "secs": 12.2,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  \n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE: Place O at bestMove <<<*/\n    const bestMove = bestMove(board);\n    board[bestMove] = 'O';\n  }\n  \n  /*>>> HOLE: Add a point to the winner's score <<<*/\n  if (winner === 'X') {\n    score.y += 1;\n  } else if (winner === 'O') {\n    score.c +",
+    "note": "cut 17 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 14,
+    "prompt_tokens": 1738,
+    "secs": 9.2,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  \n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE: Place O at bestMove <<<*/\n    const bestMove = bestMove(board);\n    if (bestMove !== undefined) {\n      board[bestMove] = 'O';\n    }\n  }\n  render();\n}\n```",
+    "note": "cut 12 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 15,
+    "prompt_tokens": 1798,
+    "secs": 11.8,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  \n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE: Place X on the board at cell i <<<*/\n    board[i] = 'X';\n  }\n  \n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE: Place X on the board at cell i ",
+    "note": "cut 14 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 16,
+    "prompt_tokens": 1858,
+    "secs": 10.5,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  \n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  \n  if (winner === 'draw') {\n    /*>>> HOLE: Place O at bestMove <<<*/\n    const bestMove = bestMove(board);\n    board[bestMove] = 'O';\n    \n    /*>>> HOLE: Add a point to the winner's score <<<*/\n    score[winner] += 1;\n  }\n  \n  render();\n}\n```",
+    "note": "cut 12 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 17,
+    "prompt_tokens": 1918,
+    "secs": 17.7,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "function play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>",
+    "note": "cut 21 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 18,
+    "prompt_tokens": 1978,
+    "secs": 12.4,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "function play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE: Place O at bestMove <<<*/\n    const bestMove = bestMove(board);\n    board[bestMove] = 'O';\n  }\n  /*>>> HOLE: Add a point to the winner's score <<<*/\n  if (winner === 'you') {\n    score.you++;\n  } else if (winner === 'computer') {\n    score.computer++;\n  }",
+    "note": "cut 17 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 19,
+    "prompt_tokens": 2038,
+    "secs": 16.9,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  \n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE: Place X on the board at cell i <<<*/\n    board[i] = 'X';\n  }\n  \n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE: Place X on the board at cell i ",
+    "note": "cut 20 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 20,
+    "prompt_tokens": 2098,
+    "secs": 8.8,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  \n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE: Place X on the board at cell i <<<*/\n    board[i] = 'X';\n  }\n}\n```",
+    "note": "cut 8 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 21,
+    "prompt_tokens": 2158,
+    "secs": 8.7,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "function play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  \n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  \n  if (winner === 'draw') {\n    /*>>> HOLE: Place X on the board at cell i <<<*/\n    board[i] = 'X';\n  }\n}",
+    "note": "cut 8 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 22,
+    "prompt_tokens": 2218,
+    "secs": 10.7,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "function play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  \n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE: Place O on the board at bestMove <<<*/\n    const bestMove = bestMove(board);\n    board[bestMove] = 'O';\n    \n    /*>>> HOLE: Add a point to the winner's score <<<*/\n    score.winner = winner;\n  }\n  \n  render();\n}",
+    "note": "cut 12 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 23,
+    "prompt_tokens": 2278,
+    "secs": 8.7,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  \n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE: Place X on the board at cell i <<<*/\n    board[i] = 'X';\n  }\n}\n```",
+    "note": "cut 8 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 24,
+    "prompt_tokens": 2338,
+    "secs": 19.7,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  \n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE: Place X on the board at cell i <<<*/\n    board[i] = 'X';\n  }\n  \n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE: Place X on the board at cell i ",
+    "note": "cut 23 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 25,
+    "prompt_tokens": 2398,
+    "secs": 9.5,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  \n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE: Place X on the board at cell i <<<*/\n    board[i] = 'X';\n  }\n}\n```",
+    "note": "cut 8 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 26,
+    "prompt_tokens": 2458,
+    "secs": 19.4,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "function play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE: Place X on the board at cell i <<<*/\n    board[i] = 'X';\n    /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n    const winner = winner(board);\n    if (winner === 'draw') {\n      /*>>> HOLE: Place X on the board at cell i <<<*/\n      boar",
+    "note": "cut 22 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 27,
+    "prompt_tokens": 2518,
+    "secs": 18.0,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE: Place X on the board at cell i <<<*/\n    board[i] = 'X';\n  }\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE: Place X on the board at cell i <<<*/\n",
+    "note": "cut 20 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 28,
+    "prompt_tokens": 2578,
+    "secs": 21.1,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE: Place O on the board at bestMove <<<*/\n    const bestMove = bestMove(board);\n    if (bestMove !== null) {\n      board[bestMove] = 'O';\n    }\n  }\n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(boar",
+    "note": "cut 26 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 29,
+    "prompt_tokens": 2638,
+    "secs": 9.8,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  \n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE: Place X on the board at cell i <<<*/\n    board[i] = 'X';\n  }\n}\n```",
+    "note": "cut 8 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "turn": 30,
+    "prompt_tokens": 2698,
+    "secs": 11.4,
+    "purpose": "continue from here. Job: continue from here. Job: continue from here. Job: continue from here. Job: continue from here. ",
+    "output": "```typescript\nfunction play(i: number): void {\n  /*>>> HOLE: Place X on the board at cell i <<<*/\n  board[i] = 'X';\n  \n  /*>>> HOLE: Check if the game is over and place O if needed <<<*/\n  const winner = winner(board);\n  if (winner === 'draw') {\n    /*>>> HOLE: Place O on the board at bestMove <<<*/\n    const bestMove = bestMove(board);\n    if (bestMove !== null) {\n      board[bestMove] = 'O';\n    }\n  }\n  render();\n}\n```",
+    "note": "cut 12 lines to 5, rest becomes a continue-hole"
+   },
+   {
+    "note": "1 holes left unfilled at the turn limit"
+   }
+  ]
+ }
+]

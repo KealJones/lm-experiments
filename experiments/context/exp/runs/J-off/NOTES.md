@@ -1,0 +1,1 @@
+The game setup has been completed. The board is initialized with empty cells, the score counter is set up, and the restart button is defined.
