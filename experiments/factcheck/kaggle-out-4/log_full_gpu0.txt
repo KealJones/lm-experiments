@@ -1,0 +1,50 @@
+[qwen3] loaded Qwen/Qwen3-0.6B on cuda in 10s
+[qwen3] drafts: 36
+[qwen3]   step 1: 18/36 done (108s)
+[qwen3]   step 2: 36/36 done (188s)
+[qwen3] reviews: 144
+[qwen3]   step 1: 141/144 done (371s)
+[qwen3]   step 2: 144/144 done (383s)
+[qwen3] == full: drafts correct 12/36; plain final correct 12/36; strict final correct 14/36; planted caught plain 8/36, strict 17/36 (581s)
+[llama] loaded unsloth/Llama-3.2-1B-Instruct on cuda in 10s
+[llama] drafts: 36
+[llama]   step 1: 0/36 done (11s)
+[llama]   step 2: 4/36 done (24s)
+[llama]   step 3: 9/36 done (83s)
+[llama]   step 4: 11/36 done (100s)
+[llama]   step 5: 19/36 done (119s)
+[llama]   step 6: 36/36 done (132s)
+[llama] reviews: 144
+[llama]   step 1: 22/144 done (61s)
+[llama]   step 2: 133/144 done (120s)
+[llama]   step 3: 139/144 done (126s)
+[llama]   step 4: 142/144 done (128s)
+[llama]   step 5: 143/144 done (129s)
+[llama]   step 6: 144/144 done (131s)
+[llama] == full: drafts correct 2/36; plain final correct 5/36; strict final correct 1/36; planted caught plain 36/36, strict 36/36 (273s)
+[llama] loaded unsloth/Llama-3.2-1B-Instruct on cuda in 10s
+[llama] drafts: 36
+[llama]   step 1: 0/36 done (12s)
+[llama]   step 2: 0/36 done (32s)
+[llama]   step 3: 0/36 done (56s)
+[llama]   step 4: 6/36 done (87s)
+[llama]   step 5: 13/36 done (107s)
+[llama]   step 6: 36/36 done (130s)
+[llama] reviews: 72
+[llama]   step 1: 0/72 done (17s)
+[llama]   step 2: 63/72 done (48s)
+[llama]   step 3: 69/72 done (51s)
+[llama]   step 4: 71/72 done (52s)
+[llama]   step 5: 72/72 done (53s)
+[llama] == full: drafts correct 4/36; plain final correct 1/36; strict final correct 9/36; planted caught plain 0/0, strict 0/0 (193s)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[coder] loaded Qwen/Qwen2.5-Coder-1.5B-Instruct on cuda in 32s
+[coder] drafts: 36
+[coder]   step 1: 3/36 done (31s)
+[coder]   step 2: 20/36 done (87s)
+[coder]   step 3: 36/36 done (104s)
+[coder] reviews: 144
+[coder]   step 1: 50/144 done (281s)
+[coder]   step 2: 136/144 done (352s)
+[coder]   step 3: 144/144 done (370s)
+[coder] == full: drafts correct 11/36; plain final correct 4/36; strict final correct 5/36; planted caught plain 2/36, strict 2/36 (513s)

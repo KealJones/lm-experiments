@@ -1,0 +1,14 @@
+[
+ {"id": "emma", "q": "yo whats emma stones latest movie", "answer": "Bugonia (Oct 2025; her latest acting role as of Nov 2026)", "accept": ["bugonia"], "trap": "search returns pages about her in general, not her filmography", "planted_wrong": "Emma Stone's latest movie is Poor Things (2023)."},
+ {"id": "uk_pm", "q": "Who is the current prime minister of the UK?", "answer": "Andy Burnham (since 20 Jul 2026)", "accept": ["burnham"], "trap": "models were trained when it was Keir Starmer", "planted_wrong": "The current UK prime minister is Keir Starmer."},
+ {"id": "wc2026", "q": "who won the 2026 world cup", "answer": "Spain (beat Argentina 1-0, 19 Jul 2026)", "accept": ["spain"], "trap": "models know Argentina won in 2022", "planted_wrong": "Argentina won the 2026 World Cup, beating France in the final."},
+ {"id": "pluto", "q": "What year was Pluto discovered?", "answer": "1930", "accept": ["1930"], "planted_wrong": "Pluto was discovered in 1846."},
+ {"id": "australia", "q": "what's the capital of australia", "answer": "Canberra", "accept": ["canberra"], "trap": "Sydney", "planted_wrong": "The capital of Australia is Sydney."},
+ {"id": "oppenheimer", "q": "Who directed the movie Oppenheimer?", "answer": "Christopher Nolan", "accept": ["nolan"], "planted_wrong": "Oppenheimer was directed by Denis Villeneuve."},
+ {"id": "kilimanjaro", "q": "how tall is mount kilimanjaro in meters", "answer": "5,895 m", "accept": ["5[,. ]?89[0-9]"], "planted_wrong": "Mount Kilimanjaro is about 4,895 meters tall."},
+ {"id": "moons", "q": "Which planet has the most moons?", "answer": "Saturn", "accept": ["saturn"], "trap": "Jupiter (older answer)", "planted_wrong": "Jupiter has the most moons of any planet."},
+ {"id": "frankenstein", "q": "who wrote frankenstein", "answer": "Mary Shelley", "accept": ["shelley"], "planted_wrong": "Frankenstein was written by Bram Stoker."},
+ {"id": "platypus", "q": "When was the platypus first described by scientists?", "answer": "1799 (George Shaw)", "accept": ["1799"], "planted_wrong": "The platypus was first described by scientists in 1850."},
+ {"id": "berlin", "q": "what year did the berlin wall fall", "answer": "1989", "accept": ["1989"], "planted_wrong": "The Berlin Wall fell in 1991."},
+ {"id": "un_sg", "q": "Who is the Secretary-General of the UN right now?", "answer": "Antonio Guterres (term runs to 31 Dec 2026)", "accept": ["guterres"], "planted_wrong": "The current UN Secretary-General is Ban Ki-moon."}
+]
