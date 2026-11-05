@@ -239,6 +239,8 @@ REVIEW = {
 
 TAGGED = re.compile(r"<tool_call>\s*(.*?)\s*</tool_call>", re.S)
 PY_TAG = re.compile(r"<\|python_tag\|>\s*(\{.*\})", re.S)
+XML_FN = re.compile(r"<function=([\w-]+)>(.*?)(?:</function>|$)", re.S)
+XML_PARAM = re.compile(r"<parameter=([\w-]+)>\s*(.*?)\s*</parameter>", re.S)
 FENCE = re.compile(r"```(?:json|tool_call|python)?\s*\n(.*?)```", re.S)
 
 
@@ -304,6 +306,10 @@ def parse(reply):
             if cand:
                 return "", cand
     for raw in raws:
+        xml = XML_FN.search(raw)
+        if xml:  # Qwen3.5: <function=name><parameter=k>v</parameter></function>
+            calls.append((xml.group(1), {k: v.strip() for k, v in XML_PARAM.findall(xml.group(2))}))
+            continue
         try:
             c = _as_call(json.loads(raw))
             calls.append(c or (None, "error: tool call needs a name"))
@@ -356,7 +362,7 @@ def run_convs(convs, tok, model, dev, log):
 
     def render(c):
         return tok.apply_chat_template(c["msgs"], tools=TOOLS, tokenize=False, add_generation_prompt=True,
-                                       enable_thinking=False)
+                                       enable_thinking=False) + (c.get("prefix", "") if c["turns"] == 0 else "")
 
     t0, step = time.time(), 0
     while True:
@@ -385,9 +391,12 @@ def run_convs(convs, tok, model, dev, log):
                     if sp:
                         reply = reply.replace(sp, "")
                 reply = re.sub(r"<think>\s*</think>", "", reply).strip()
+                if c["turns"] == 0 and c.get("prefix"):
+                    reply = c["prefix"] + reply
                 c["turns"] += 1
                 c["raw"].append(reply)
                 text, calls = parse(reply)
+                calls = calls[:1]  # one call per turn (Llama 3.2's template refuses more)
                 if not calls:
                     c["msgs"].append({"role": "assistant", "content": reply})
                     c["final"], c["done"], c["end"] = reply, True, "answered"
@@ -425,6 +434,16 @@ def new_conv(system, user, **meta):
                 done=False, end="", turns=0, raw=[], tools=[], final=None)
 
 
+# "force" arm: the first turn of every draft and review is prefilled with the start of a search call,
+# so we can see whether the model can USE search results even if it never chooses to search.
+FORCE_PREFIX = {
+    "qwen3": '<tool_call>\n{"name": "search", "arguments": {"query": "',
+    "coder": '<tool_call>\n{"name": "search", "arguments": {"query": "',
+    "qwen35": "<tool_call>\n<function=search>\n<parameter=query>\n",
+    "llama": '{"name": "search", "parameters": {"query": "',
+}
+
+
 def worker(model_key, gpu, tag, arm="free", planted=True):
     os.environ["CUDA_VISIBLE_DEVICES"] = str(gpu)
 
@@ -437,7 +456,8 @@ def worker(model_key, gpu, tag, arm="free", planted=True):
     qs = QUESTIONS[:2] if tag == "pilot" else QUESTIONS
     samples = 1 if tag == "pilot" else SAMPLES
 
-    drafts = [new_conv(DRAFT_SYSTEM[arm], q["q"], qid=q["id"], sample=s) for s in range(samples) for q in qs]
+    pre = FORCE_PREFIX[model_key] if arm == "force" else ""
+    drafts = [new_conv(DRAFT_SYSTEM["lookup" if arm == "force" else arm], q["q"], prefix=pre, qid=q["id"], sample=s) for s in range(samples) for q in qs]
     log(f"drafts: {len(drafts)}")
     run_convs(drafts, tok, model, dev, log)
     byid = {q["id"]: q for q in qs}
@@ -448,13 +468,13 @@ def worker(model_key, gpu, tag, arm="free", planted=True):
     for d in drafts:
         for style, (sys_p, user_p) in REVIEW.items():
             reviews.append(new_conv(sys_p, user_p.format(q=byid[d["qid"]]["q"], a=d["final"] or "(no answer)"),
-                                    qid=d["qid"], sample=d["sample"], style=style, draft_correct=d["correct"],
+                                    prefix=pre, qid=d["qid"], sample=d["sample"], style=style, draft_correct=d["correct"],
                                     source="own"))
     # planted: a known-wrong answer, so every model's catch rate is measured even if its own drafts are all right/wrong
     for s in range(samples if planted else 0):
         for q in qs:
             for style, (sys_p, user_p) in REVIEW.items():
-                reviews.append(new_conv(sys_p, user_p.format(q=q["q"], a=q["planted_wrong"]), qid=q["id"], sample=s,
+                reviews.append(new_conv(sys_p, user_p.format(q=q["q"], a=q["planted_wrong"]), prefix=pre, qid=q["id"], sample=s,
                                         style=style, draft_correct=False, source="planted"))
     log(f"reviews: {len(reviews)}")
     run_convs(reviews, tok, model, dev, log)
@@ -540,6 +560,7 @@ def check():
     assert parse('I will use wikidata:\n```json\n{"name": "wikidata", "arguments": {"entity": "Pluto"}}\n```\nThis gets it.')[1] == [("wikidata", {"entity": "Pluto"})]
     assert parse('{"name": "search", "function": "x", "parameters": {"query": "q"}}')[1] == [("search", {"query": "q"})]
     assert parse('Here is code:\n```python\nprint(1)\n```')[1] == []
+    assert parse('<tool_call>\n<function=search>\n<parameter=query>\nEmma Stone\n</parameter>\n</function>\n</tool_call>')[1] == [("search", {"query": "Emma Stone"})]
     print("check ok")
 
 
@@ -549,7 +570,7 @@ if __name__ == "__main__":
     ap.add_argument("--model", default="qwen3")
     ap.add_argument("--gpu", default="0")
     ap.add_argument("--tag", default="full")
-    ap.add_argument("--arm", default="free", choices=["free", "lookup"])
+    ap.add_argument("--arm", default="free", choices=["free", "lookup", "force"])
     ap.add_argument("--no-planted", action="store_true")
     a = ap.parse_args()
     {"check": check, "report": report}.get(a.cmd, lambda: worker(a.model, a.gpu, a.tag, a.arm, not a.no_planted))()
