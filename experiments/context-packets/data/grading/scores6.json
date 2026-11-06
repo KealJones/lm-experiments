@@ -1,0 +1,8 @@
+{
+  "A": {"score": 9, "pass": true, "missed": [], "traps_hit": [], "note": "Correct winner, lr, data, model and full corrected table; the 'barely moved (about 0.1)' detail slightly softens the key's 'unchanged' but doesn't change the answer."},
+  "B": {"score": 10, "pass": true, "missed": [], "traps_hit": [], "note": "Directly answers run-c at 1e-4 on v1 with 74.2 unchanged, names the leaky run-b correctly, gives the full clean table and the model config."},
+  "C": {"score": 9, "pass": true, "missed": [], "traps_hit": [], "note": "All key facts and full corrected table right with the leaked values flagged; it does refer to a '1000-example eval' in the noise caveat, which doesn't match its own 688-clean framing."},
+  "D": {"score": 8, "pass": true, "missed": ["model (Llama 3.2 1B + LoRA) not stated", "doesn't say run-c's score was unchanged after correction"], "traps_hit": [], "note": "Correct winner, lr and full clean table with useful caveats, but it leaves out the model and adds speculative doubt about the eval subsets."},
+  "E": {"score": 7, "pass": false, "missed": ["corrected table incomplete (run-a 71.4 and run-g 62.0 missing)", "model Llama 3.2 1B not named"], "traps_hit": [], "note": "Winner, lr, data and leak correction for b and d are right, but the corrected leaderboard isn't fully given and the base model isn't named."},
+  "F": {"score": 8, "pass": true, "missed": ["doesn't say run-c's score was unchanged after correction"], "traps_hit": [], "note": "Correct winner, lr, data, model and full corrected table; it adds an unverified claim that the leak check was exact-match only."}
+}

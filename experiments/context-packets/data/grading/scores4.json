@@ -1,0 +1,8 @@
+{
+  "A": {"score": 8, "pass": true, "missed": [], "traps_hit": [], "note": "Correct TZ diagnosis tied to the earlier CI TZ=UTC / Central detail, with both explicit-timeZone and globalSetup fixes; loses a little for an odd, possibly invented claim that it earlier advised pinning timezone for the date picker."},
+  "B": {"score": 8, "pass": true, "missed": [], "traps_hit": [], "note": "Correct deterministic TZ explanation and explicit-timeZone fix, but it ties back to the earlier CI TZ=UTC detail only implicitly, hedges with 'almost certainly', and goes off on a formatDate design tangent."},
+  "C": {"score": 9, "pass": true, "missed": [], "traps_hit": [], "note": "Clear math, explicitly ties back to the earlier-noticed CI TZ=UTC setting, calls it deterministic, and gives both explicit-timeZone and jest globalSetup TZ fixes plus a repro command."},
+  "D": {"score": 9, "pass": true, "missed": [], "traps_hit": [], "note": "Correct and thorough TZ diagnosis with correct DST reasoning and both fixes; it attributes the earlier TZ heads-up to the assistant and adds a few unverifiable context details, but nothing that matters is wrong."},
+  "E": {"score": 9, "pass": true, "missed": [], "traps_hit": [], "note": "Explicitly links to the earlier CI TZ=UTC vs Central detail, explicitly rules out the race, gives a repro and both fixes framed by the intended product behavior."},
+  "F": {"score": 9, "pass": true, "missed": [], "traps_hit": [], "note": "Concise, correct TZ diagnosis linked back to the earlier TZ=UTC remark, not flaky, with explicit-timeZone and globalSetup fixes and a good product-question caveat."}
+}

@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Context packets</title>
+<meta name="description" content="A front layer squeezes a 6,000-word messy chat into a ~360-word packet, and the model answers from that alone. Click through every chat and context style and see what the model got.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../lab.css">
+<link rel="stylesheet" href="demo.css">
+</head>
+<body>
+<header class="wrap top">
+  <p class="owner"><a href="../../">Small model lab</a></p>
+  <h1>Can a 350-word packet stand in for the whole conversation?</h1>
+  <p class="lede">A small model can't hold a long, rambling chat, and big ones carry all of it all the time. So: one
+    layer reads the chat, works out what "that party thing" or "the gas station dude" points to, and writes a short
+    packet with only what the new message needs. Then the model answers from the packet alone.</p>
+  <p class="verdict-lede">It lost nothing that mattered. Opus answering from a packet built by Opus passed all 12
+    main tests, using about 7% of the words. Every trap survived the squeeze. Where it did break, the packet broke
+    first: the answer was only as good as what the front layer wrote down.</p>
+</header>
+
+<main class="wrap">
+
+<section class="bench" aria-labelledby="play-h">
+  <div class="bench-head">
+    <h2 id="play-h">Click through it</h2>
+    <label class="field">Conversation <select id="test"></select></label>
+  </div>
+  <p class="task-desc" id="trap"></p>
+  <div class="controls">
+    <div class="ctl"><span class="ctl-lab">What the model sees</span>
+      <div class="seg" id="ctx" role="group" aria-label="Context style">
+        <button type="button" data-v="full">Full history</button>
+        <button type="button" data-v="opus">Opus packet</button>
+        <button type="button" data-v="sonnet">Sonnet packet</button>
+        <button type="button" data-v="haiku">Haiku packet</button>
+      </div>
+    </div>
+    <div class="ctl"><span class="ctl-lab">Who answers</span>
+      <div class="seg" id="who" role="group" aria-label="Answering model">
+        <button type="button" data-v="opus">Opus</button>
+        <button type="button" data-v="haiku">Haiku</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="meter" aria-hidden="true"><div class="meter-full"><div class="meter-fill" id="meter-fill"></div></div></div>
+  <p class="meter-lab" id="meter-lab"></p>
+
+  <div class="play-grid">
+    <div class="col">
+      <h3 class="col-h" id="saw-h">What it saw</h3>
+      <ul class="facts" id="facts" aria-label="Facts a correct answer needs"></ul>
+      <div class="saw" id="saw" tabindex="0"></div>
+    </div>
+    <div class="col">
+      <h3 class="col-h">The new message</h3>
+      <p class="newmsg" id="newmsg"></p>
+      <h3 class="col-h">The reply</h3>
+      <div class="reply" id="reply"></div>
+      <div class="grade" id="grade" aria-live="polite"></div>
+      <details class="key"><summary>Show the answer key and traps</summary><pre id="key"></pre></details>
+    </div>
+  </div>
+  <p class="hint">Everything here was produced by the run, and the page only replays it. Haiku answered from the
+    full history and from the Opus packet. The last-message tests ran with only Opus and Haiku packets.</p>
+</section>
+
+<section aria-labelledby="score-h">
+  <h2 id="score-h">The score</h2>
+  <p class="section-lede">A blind Opus grader got the answer key, the traps and every reply for a test under
+    shuffled letters. Pass means every needed fact was right and no trap was hit. Average is out of 10.</p>
+  <div class="table-wrap"><table class="score" id="score"></table></div>
+</section>
+
+<section aria-labelledby="broke-h">
+  <h2 id="broke-h">Where it broke: the packet first</h2>
+  <p class="section-lede">Both failures behind a Haiku packet trace straight back to the packet. The answering model
+    trusts what it's handed, so the packet's slips become the answer's.</p>
+  <div class="cards">
+    <article class="card">
+      <h3>Dinner party</h3>
+      <p>Opus's packet: <q>No spicy ginger beer</q> and the brother-in-law's dessert <q>is cancelled</q>.
+        Haiku's packet put ginger beer on the drinks list and left the dessert open. With Tomas at the table, who
+        can't do any spice, the reply offered ginger beer and brought in a man who isn't coming.</p>
+      <button type="button" class="jump" data-test="3" data-ctx="haiku" data-who="opus">Open it</button>
+    </article>
+    <article class="card">
+      <h3>"ok now divide that by 3"</h3>
+      <p>Opus's packet, 141 words: the 4 from "2+2", done. Haiku's packet: "that" <q>most likely</q> means the 4,
+        followed by every eval score in the chat as other candidates. The reply answered 1.33, then hedged and
+        divided 74.2 by 3 as well.</p>
+      <button type="button" class="jump" data-test="13" data-ctx="haiku" data-who="opus">Open it</button>
+    </article>
+    <article class="card">
+      <h3>A good packet didn't lift Haiku</h3>
+      <p>Haiku from an Opus packet passed 10 of 12, against 11 from the full history. Its misses were in the
+        answering: a half-finished leaderboard, and not naming anything that happened on December 18. At this
+        length, holding the context isn't what holds Haiku back.</p>
+      <button type="button" class="jump" data-test="9" data-ctx="opus" data-who="haiku">Open it</button>
+    </article>
+  </div>
+</section>
+
+<section aria-labelledby="noisy-h">
+  <h2 id="noisy-h">Junk in the packet</h2>
+  <p class="section-lede">Retrieval won't be clean, so six hand-written packets came stuffed with tangential and
+    wrong material: the user's own birthday next to a web snippet with Emma Stone's, an outdated height, a forum
+    post with the wrong year, and a question whose answer isn't there. Every model got all six right.</p>
+  <div class="seg case-seg" id="case" role="group" aria-label="Noisy case"></div>
+  <div class="noisy-grid">
+    <div class="col">
+      <h3 class="col-h">The packet</h3>
+      <ul class="lines" id="lines"></ul>
+      <p class="newmsg" id="nmsg"></p>
+      <p class="hint" id="nkey"></p>
+    </div>
+    <div class="col" id="nreplies"></div>
+  </div>
+</section>
+
+<section aria-labelledby="says-h" class="says">
+  <h2 id="says-h">What it says, and what it doesn't</h2>
+  <ul>
+    <li>A ~360-word packet carried everything these tests needed: the moved date, the replaced plumber quote, the
+      constraint mentioned once as "that no-meat thing", the config detail from 90 turns back, the carpet the user
+      liked but had sworn off.</li>
+    <li>The front layer is the weak link. A cheap builder writes a slightly wrong packet, and the strong answerer
+      faithfully follows it. The builder needs to be as careful about what changed and what was ruled out as about
+      what was said.</li>
+    <li>The chats are short, about 8,000 tokens, where the full history doesn't hurt a frontier model. So this
+      shows a packet is <em>enough</em>, not that it's <em>better</em>. The real test is 50k+ tokens, or a 1B model
+      with a 4k window.</li>
+    <li>It's near the ceiling, with 12 main tests, so one test either way is noise. Sonnet wrote the chats and Opus
+      graded them. The builder read the whole chat, so this doesn't test finding the right bits cheaply.</li>
+  </ul>
+  <p class="meta-line">Run: Claude Code subagents, 6 Nov 2026, Opus, Sonnet and Haiku, about 150 agent runs, no GPU.
+    <a href="https://github.com/KealJones/lm-experiments/tree/main/experiments/context-packets">Every chat, packet, reply, grade and prompt</a></p>
+</section>
+
+</main>
+<footer><p>The conversations are synthetic. Every packet, reply and grade on this page is the run's real output.</p></footer>
+<script type="module" src="demo.js"></script>
+</body>
+</html>

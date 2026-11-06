@@ -1,0 +1,5 @@
+Honestly, December 18, 1946 isn't a famous date in history books, so there's no big "this is why the day mattered" answer. The most notable other thing I can confirm is that **Steve Biko**, the South African anti-apartheid activist and founder of the Black Consciousness Movement, was born that same day. So Spielberg and Biko are exact birthday twins. Biko died in police custody in 1977, and his death drew worldwide attention to the brutality of apartheid.
+
+For a bit of context, the day fell right on the edge of something bigger. Tension between French forces and the Viet Minh in Hanoi was at a breaking point, and fighting broke out the next night, December 19, 1946. That's usually treated as the start of the First Indochina War, which eventually fed into the Vietnam War. It was also the first full year after WWII, so Spielberg was part of the very first wave of the baby boom.
+
+I'm not confident about any other specific headline events from December 18 itself, and I'd rather not make one up. If you want the full rundown, an "on this day" source like Wikipedia's December 18 page lists them by year.

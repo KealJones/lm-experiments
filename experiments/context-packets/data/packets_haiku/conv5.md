@@ -1,0 +1,12 @@
+GIST: The user (casual, chatty, goes off on tangents) has been planning a 9-10 day April Southwest road trip with his buddy Teo, starting and ending in Albuquerque in a rented Subaru Outback. Side threads cover a neighbor fence dispute, learning acoustic guitar (Yamaha FG800, Justin Guitar Grade 1, working on the mini F), and food stops.
+
+REFERENCES RESOLVED: "that breakfast spot the old dude at the gas station told me about, the one by hanksville" = the breakfast place a 70-something man at a gas pump told the user about last weekend, on a scouting trip near Hanksville, Utah. The man named it as Pearl's Canyon Diner, "just off the main road in town." "The trick to getting the good stuff" = the man's tips: get there before 8am because they sell out, and ask for the burnt end hash, which is not on the menu and is made only for people who ask. The user wrote these on his hand.
+
+RELEVANT FACTS:
+- The breakfast details (name, 8am, off-menu burnt end hash) are secondhand from a stranger. The assistant has not verified that the diner exists, its hours, or the menu item. The user's cousin is near Hanksville, so the trip was not a first visit to the area.
+- The trip is in April, about five months out. Current date is November. Route as currently planned: Albuquerque, Flagstaff (optional Sedona), Page (Horseshoe Bend, Antelope Canyon tour), Monument Valley, Moab (Arches, Canyonlands), then Hanksville/Capitol Reef (Torrey as base), optional Bryce, then back toward Jemez Springs and Santa Fe. Zion was dropped.
+- Hanksville sits between Moab and Capitol Reef. The assistant said the user should work out the timing of the breakfast stop, and the user said "maybe later." No day or time is fixed.
+- Other food stops already listed: Chuckwagon Cafe in Page (cash only, biscuits and gravy, reported by brother Dario, no early-arrival note), Quesa-something taco place in Moab, Gifford Homestead pies at Capitol Reef (sell out early on busy days), Cafe Diablo in Torrey (reservation advised), Cafe Pasqual's in Santa Fe.
+- Earlier, the assistant said it could not verify a claim about hot springs near Hanksville. The user's cousin said they are warm and gross.
+- Practical constraints: The user runs low on gas, so the half-tank rule was agreed. Long fuel gaps exist in Hanksville-to-Capitol Reef country. Offline maps are recommended.
+- The user prefers short, flexible plans and says he gets anxious in crowds. He does not like booking ahead, and he is a bit tired of planning right now.
