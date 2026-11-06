@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Starting weights</title>
+<meta name="description" content="A tiny network learning a spiral live in your browser, with hand-written backprop. Change how its weights start and watch symmetry, fading signals and dead neurons happen.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../lab.css">
+<link rel="stylesheet" href="demo.css">
+</head>
+<body>
+<header class="wrap top">
+  <p class="owner"><a href="../../">Small model lab</a></p>
+  <h1>If a model starts from nothing, why doesn't every neuron learn the same thing?</h1>
+  <p class="lede">A network with 12 neurons per layer learns to separate a two-colour spiral, live in your browser,
+    with the backprop written out by hand. Change how its weights start and watch what breaks.</p>
+  <p class="answer">It never starts from nothing. It starts from random numbers, and that randomness is what lets
+    neurons become different. Start them all equal and every layer stays one neuron copied 12 times, forever.
+    Start them random but at the wrong size and the signal fades away or the neurons die.</p>
+</header>
+
+<main class="wrap">
+
+<section class="bench" aria-labelledby="bench-h">
+  <h2 id="bench-h">Train one</h2>
+  <p class="bench-sub">2 inputs, 1 to 8 hidden layers of 12 neurons, 1 output. 200 points, full-batch gradient
+    descent, up to 12,000 steps.</p>
+
+  <div class="controls">
+    <div class="control">
+      <span class="label" id="init-l">Starting weights</span>
+      <div class="seg" role="group" aria-labelledby="init-l" id="init"></div>
+    </div>
+  </div>
+  <div class="controls">
+    <div class="control">
+      <span class="label" id="act-l">Activation</span>
+      <div class="seg" role="group" aria-labelledby="act-l" id="act"></div>
+    </div>
+    <div class="control">
+      <label class="label" for="depth">Hidden layers</label>
+      <div class="slider"><input id="depth" type="range" min="1" max="8" step="1" value="3"><span id="depth-out">3</span></div>
+    </div>
+    <div class="control">
+      <label class="label" for="lr">Step size</label>
+      <div class="slider"><input id="lr" type="range" min="0.02" max="1" step="0.02" value="0.3"><span id="lr-out">0.30</span></div>
+    </div>
+    <div class="control">
+      <span class="label">Run</span>
+      <div class="buttons"><button type="button" class="primary" id="play">Pause</button><button type="button" id="reroll">New random draw</button></div>
+    </div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><span>Step</span><strong id="m-step">0</strong></div>
+    <div class="metric"><span>Loss</span><strong id="m-loss">–</strong></div>
+    <div class="metric"><span>Accuracy</span><strong id="m-acc">–</strong></div>
+    <div class="metric"><span>Different neurons per layer</span><strong id="m-uniq">–</strong></div>
+  </div>
+  <p class="status" id="status" aria-live="polite"></p>
+
+  <div class="panels">
+    <div>
+      <h3>What it thinks</h3>
+      <canvas id="boundary" role="img" aria-label="The spiral's points, shaded by which colour the network predicts at each spot"></canvas>
+      <p class="note"><span class="key a"></span> one arm, <span class="key b"></span> the other. The shading is the network's guess; stronger means surer.</p>
+    </div>
+    <div>
+      <h3>Loss</h3>
+      <canvas id="loss" role="img" aria-label="Loss over training steps, log scale"></canvas>
+      <p class="note">Log scale. The dashed line is a coin flip (ln 2 ≈ 0.693).</p>
+    </div>
+  </div>
+
+  <div class="ltable" role="table" aria-label="Each hidden layer">
+    <div class="lrow head" role="row"><span role="columnheader">Layer</span><span role="columnheader">Signal size (spread of its outputs)</span><span role="columnheader">Gradient size (how hard it learns)</span><span role="columnheader">Different</span><span role="columnheader">Dead or stuck</span></div>
+    <div id="layers" role="rowgroup"></div>
+  </div>
+</section>
+
+<section class="try" aria-labelledby="try-h">
+  <h2 id="try-h">Things to try</h2>
+  <ol>
+    <li><strong>Scaled random</strong> (the default): it learns the spiral in about 40 steps, and every layer keeps
+      12 of 12 different neurons.</li>
+    <li><strong>All the same</strong>: "Different" drops to 1 of 12 and stays there. Every neuron gets the same
+      blame, so every neuron gets the same update. With tanh it still learns a little, as one neuron per layer.</li>
+    <li><strong>All zeros</strong>: every hidden gradient is exactly 0. Nothing moves except the output bias.</li>
+    <li><strong>Tiny random</strong>: the signal shrinks about 30 times per layer. Set 6 layers and the last one is
+      down around 10<sup>-10</sup>. The loss sits on the coin-flip line.</li>
+    <li><strong>Huge random</strong> with tanh: most neurons are pinned at ±1, yet at 3 layers it still learns,
+      even faster than scaled. Slide to 6 layers and it usually stalls.</li>
+    <li><strong>Huge random</strong> with ReLU: the first update is so big it pushes every neuron negative. A ReLU
+      that outputs 0 everywhere gets no gradient, so they never come back.</li>
+    <li>Hit <strong>New random draw</strong> a few times on scaled: each start takes its own path and draws a
+      slightly different boundary, and they all get there.</li>
+  </ol>
+</section>
+
+<section class="says" aria-labelledby="says-h">
+  <h2 id="says-h">What it says</h2>
+  <ul>
+    <li><strong>Randomness is the tie-breaker.</strong> Gradient descent can only make neurons more different than
+      they already are. If they start identical, the maths keeps them identical.</li>
+    <li><strong>The size of the random numbers matters as much as the randomness.</strong> Each neuron sums 12
+      inputs, so the spread grows or shrinks by a fixed factor every layer. Scaled init divides by √(inputs) so
+      that factor is about 1. Too small and the signal fades; too big and ReLUs die.</li>
+    <li><strong>Saturation hurt less than I expected.</strong> Huge random with tanh learned faster than scaled at
+      3 layers. Deep stacks are where it bites: at 6 layers, 2 of 3 random draws stalled.</li>
+    <li>Real language models add LayerNorm, residual connections and smaller per-layer scales on top, which make
+      this much less fragile. This page has none of that, on purpose.</li>
+  </ul>
+
+  <h3>Measured offline</h3>
+  <p class="section-lede">Same network and data, step size 0.3, 3 random draws each, 6,000 steps.
+    "Step" is when it first reached 97% accuracy.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Starting weights</th><th>tanh, 3 layers</th><th>tanh, 6 layers</th><th>ReLU, 3 layers</th><th>ReLU, 6 layers</th></tr></thead>
+    <tbody>
+      <tr><td>All zeros</td><td>50%, never moves</td><td>50%, never moves</td><td>50%, never moves</td><td>50%, never moves</td></tr>
+      <tr><td>All the same</td><td>80%, 1 neuron per layer</td><td>58%, 1 neuron per layer</td><td>50%, all dead</td><td>50%, all dead</td></tr>
+      <tr><td>Tiny random</td><td>loss stuck at 0.693</td><td>loss stuck at 0.693</td><td>loss stuck at 0.693</td><td>loss stuck at 0.693</td></tr>
+      <tr><td>Scaled random</td><td>step 40–52</td><td>step 12–25</td><td>step 38–55</td><td>step 22–60</td></tr>
+      <tr><td>Huge random</td><td>step 11–24</td><td>1 of 3 (step 2,417); others 68%, 75%</td><td>50%, all dead</td><td>50%, all dead</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">With tiny random weights the accuracy floats above 50% (23–89%) only because the output is a hair
+    off zero. The loss says it knows nothing.</p>
+</section>
+
+</main>
+<footer><p>Plain JavaScript, no libraries. The network lives in <code>net.js</code>, and its backprop is checked
+  against finite differences by <code>test_net.mjs</code>. The table above comes from running <code>net.js</code>
+  in Node.</p></footer>
+<script type="module" src="demo.js"></script>
+</body>
+</html>

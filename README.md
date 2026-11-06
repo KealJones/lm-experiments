@@ -27,6 +27,7 @@ parser; the history of every moved file came along.
 - [`registers-v2`](experiments/registers-v2/) — Registers v2
 - [`registers`](experiments/registers/) — Registers: a state table inside a small model
 - [`skins`](experiments/skins/) — Skins: the lesson without the nouns
+- [`starting-weights`](experiments/starting-weights/) — Starting weights: a tiny network learning a spiral in the browser, started from zeros, equal, tiny, scaled and huge random weights
 - [`squiggle-ft`](experiments/squiggle-ft/) — squiggle-ft: a small phone model for Squiggle's harness
 - [`tiny-gemma4`](experiments/tiny-gemma4/) — Tiny Gemma 4
 - [`tiny`](experiments/tiny/) — Tiny toki pona transfer experiments
