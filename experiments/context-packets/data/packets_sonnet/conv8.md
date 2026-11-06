@@ -1,0 +1,14 @@
+GIST: User is apartment hunting (lease ends in 7 weeks, move-in Dec 1) with friend Tyler as 50/50 roommate. Casual tone, anxious, wants to be done deciding. Conversation also wandered into Spanish learning and Skyrim modding (irrelevant here).
+
+REFERENCES RESOLVED: "the one with the big kitchen" = Riverside Lofts (island, double oven). "The landlord is holding it til friday" = Riverside will hold the unit until Friday with a $200 holding deposit (refundability not yet confirmed; user said "i'll ask"). "Should I just sign it" = sign the Riverside lease.
+
+RELEVANT FACTS:
+User's own dealbreakers (he called them "the dealbreaker stuff", said he is "way more serious" about them): rent cap 1850 per person (clarified later: it is HIS SHARE, 50/50 split, so cap is 3700 for the unit; this superseded the earlier reading that 1850 was total); NO ground floor/garden level (past break-in); NO carpet at all, including bedrooms (severe allergies: stuffy, eyes swell).
+
+Riverside Lofts: 3rd floor, elevator, rent 1780, 40/mo amenity fee (covers water, trash, rooftop, gym), parking 150 extra, so 1970 total with parking, about 985 each. Under his cap. Deposit 1780, 12-month lease, move-in Dec 1. Elevator reservation needs about 100 deposit. Electric separate; floor-to-ceiling windows may raise heating/cooling bills. Dishwasher, daytime front desk, rooftop deck, river view. Strict pet policy.
+KEY CONFLICT: bedrooms have wall-to-wall carpet. The user liked it and noted landlord will steam clean it, but steam cleaning does not meaningfully fix allergens (assistant said so earlier). Carpet was never raised as a violation in the later pros/cons discussion, so the user may be glossing over his own dealbreaker. Not yet asked: whether landlord would remove/replace carpet with hard flooring, or whether other units have hard floors.
+Also: windows face south; Tyler (roommate) wanted no south-facing, but he texted "dude whatever you pick". Tyler also needs elevator, parking, no gas stove (all fine at Riverside).
+
+Maple Street (alternative): 2nd floor, 1700, hardwood throughout, elevator (slow), assigned parking included, electric stove confirmed, small galley kitchen (he has a rolling cart that could help), basement laundry, no dishwasher, loud radiators possible, bar two blocks away, friendly landlord, 12 months (maybe 6). Meets all his dealbreakers. She had another showing; he hasn't applied anywhere.
+
+Preferences/state: cooks about 5 nights a week, kitchen is "huge" for him. About 80 percent sure on Riverside ("OH, this is it"). Said he would decide "tomorrow". Avoids writing his list down ("makes it too real"). Worried about being stuck a year. Dani (Tyler's cousin, maybe January, unconfirmed) wants cats and dishwasher, only nice-to-have. Negotiation ideas given: ask to waive amenity fee or parking month.

@@ -1,0 +1,12 @@
+GIST: Casual user apartment hunting (lease ends in ~7 weeks, leaving over a $300 rent hike), moving in with buddy Tyler; conversation also wandered into Spanish, Skyrim modding, venting. He's anxious, hates moving, wants it over with.
+
+REFERENCES RESOLVED: "the one with the big kitchen" = Riverside Lofts. "Holding it til Friday" = Riverside offered to hold the unit until Friday for a $200 holding deposit.
+
+RELEVANT FACTS:
+- User's OWN dealbreakers (firm, stated by him): (1) rent cap $1850 = HIS per-person share (unit max ~$3700; earlier read as unit total, he corrected it); (2) no ground/garden-level floor (break-in through a slider in Oakland); (3) NO CARPET AT ALL, including bedrooms; severe allergies (stuffiness, swollen eyes). Assistant told him steam cleaning carpet doesn't really fix allergens.
+- Riverside Lofts: 3rd floor, $1780 rent + $40/mo amenity fee (rooftop/gym; water/trash maybe included) + $150 parking for Tyler's truck = $1970 total (~$985 each, well under cap). Elevator, daytime front desk, huge kitchen (granite island, double oven), river view, rooftop deck, dishwasher. 12-month lease, deposit $1780, move-in Dec 1 (fits his timing). $100 elevator-reservation deposit for move-in. Strict pet policy. CONFLICTS: bedrooms have wall-to-wall carpet (violates his own no-carpet rule; he said he "liked" it, landlord offered steam clean); south-facing (Tyler's no-south rule, but Tyler replied "dude whatever you pick"); floor-to-ceiling windows may mean higher electric bills (electric separate).
+- Maple Street (main alternative): $1700, 2nd floor, hardwood throughout, elevator (slow), parking included, electric stove (confirmed), cats likely OK, no dishwasher, small galley kitchen (he has a rolling cart that could help), basement laundry, possibly loud radiators, buzzer, bar 2 blocks away, friendly landlord, 6-month lease possible. Had another showing scheduled the next day.
+- Oak Court ruled out (garden level, gas stove).
+- He cooks ~5 nights/week; kitchen matters a lot; said ~80% on Riverside. Agreed to score places against his written dealbreaker list before signing (said writing it down "makes it too real").
+- Prior advice pending: ask if holding deposit is refundable, get it in writing; ask about waived amenity fee / negotiation; ask Riverside about electric costs and blinds.
+- Dani (Tyler's cousin, cat, wants dishwasher) is unconfirmed "maybe January"; user said not to design around her.

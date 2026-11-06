@@ -1,0 +1,2 @@
+ANSWER_KEY: run-c won. LR 1e-4, trained on v1 (clean), Llama 3.2 1B + LoRA. Eval accuracy 74.2, unchanged after leak correction. Corrected table: run-a 71.4; run-b 70.3 (was 78.9 leaked); run-c 74.2; run-d 68.2 (was 76.5 leaked); run-e 72.9; run-f 73.1; run-g 62.0.
+TRAPS: run-b 78.9 / 5e-5 (leaked score). run-d 76.5 / 3e-4 (leaked). run-a, run-f, run-e (clean but lower). Espresso numbers. 1e-4 with wrong score (run-e 72.9).

@@ -1,0 +1,1 @@
+He was 36. Van Gogh was born March 30, 1853, and painted The Starry Night in June 1889 at the asylum in Saint-Rémy. And he died just over a year later, in July 1890, at 37, so it's one of the last things he made.
