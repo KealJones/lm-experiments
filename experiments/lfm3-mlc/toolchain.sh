@@ -22,9 +22,12 @@ trap 'echo "FAILED at: $(tail -1 "$OUT/steps.txt")" | tee -a "$OUT/steps.txt"' E
 step "apt ($(nproc) cores, $(free -g | awk '/Mem/{print $2}') GB)"
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -qq
-apt-get install -y -qq --no-install-recommends build-essential cmake ninja-build git curl ca-certificates \
+apt-get install -y -qq --no-install-recommends build-essential git curl ca-certificates \
   llvm-16-dev libzstd-dev zlib1g-dev libedit-dev libxml2-dev zstd xz-utils >/dev/null
+# TIRx wants cmake >= 3.26; Debian 12 has 3.25, so cmake and ninja come from pip (/usr/local/bin first on PATH)
+pip install -q -U cmake ninja 2>&1 | tail -1
 cmake --version | head -1 | tee -a "$OUT/steps.txt"
+ninja --version | tee -a "$OUT/steps.txt"
 gcc --version | head -1 | tee -a "$OUT/steps.txt"
 /usr/bin/llvm-config-16 --version | tee -a "$OUT/steps.txt"
 /usr/bin/llvm-config-16 --targets-built | tr ' ' '\n' | grep -i webassembly | tee -a "$OUT/steps.txt"
