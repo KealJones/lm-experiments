@@ -1,0 +1,22 @@
+{
+ "slug": "lfm3-mlc-4",
+ "flavor": "cpu-upgrade",
+ "timeout": "120m",
+ "image": "python:3.12-bookworm",
+ "files": [
+  "experiments/lfm3-mlc/build_lfm3.sh",
+  "experiments/lfm3-mlc/compile_wasm.py",
+  "experiments/lfm3-mlc/register_lfm3.py",
+  "experiments/lfm3-mlc/lfm3_model.py",
+  "experiments/lfm3-mlc/lfm3_loader.py",
+  "experiments/lfm3-mlc/lfm3_conv.py"
+ ],
+ "pip": [
+  "huggingface_hub"
+ ],
+ "upload_every": 1200,
+ "outdir": "out",
+ "cmd": "TOOLCHAIN=lfm3-mlc-3/6af2353a9737d9a9e08d84d0 EMSDK_VERSION=7.0.0 QUANTS='q4f16_1 q4f32_1' bash build_lfm3.sh out",
+ "out": "experiments/lfm3-mlc/hf-4",
+ "note": "Fourth try, reusing job 3's toolchain tarball (TVM e345029 + TIRx built in 15 min; convert_weight and gen_config passed). Job 3 died in the WebGPU compile: emsdk 7.0.0's clang 24 crashed reading the LLVM-16 bitcode TVM emits for the wasm32 host; this run logs the full error and falls back to object files (TVM_WASM_OBJ=o). Then q4f16_1 + q4f32_1, upload. CPU, cents."
+}

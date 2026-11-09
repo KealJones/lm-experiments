@@ -83,7 +83,17 @@ print("mlc-chat-config:", {k: c.get(k) for k in ["model_type", "quantization", "
 print("conv stop:", c["conv_template"]["stop_token_ids"], c["conv_template"].get("system_prefix_token_ids"))
 EOF
   step "compile webgpu $Q"
-  python -m mlc_llm compile "$PKG/mlc-chat-config.json" --device webgpu -o "$WASM" 2>&1 | grep -v "Warning: Cannot parse" | tail -25
+  ok=0
+  for fmt in ${OBJFMTS:-bc o}; do
+    step "compile webgpu $Q, host object format $fmt"
+    rm -f "$WASM"
+    if TVM_WASM_OBJ=$fmt python compile_wasm.py "$PKG/mlc-chat-config.json" --device webgpu -o "$WASM" > "$OUT/compile-$Q-$fmt.log" 2>&1; then
+      ok=1; grep -v "Warning: Cannot parse" "$OUT/compile-$Q-$fmt.log" | tail -8; break
+    fi
+    echo "compile with $fmt failed; log tail:" | tee -a "$OUT/steps.txt"
+    grep -v "Warning: Cannot parse\|^#[0-9]* 0x" "$OUT/compile-$Q-$fmt.log" | grep -i -B3 -A12 "error\|fatal\|assert\|LLVM ERROR" | head -80
+  done
+  [ "$ok" = 1 ]
   ls -la "$WASM" "$PKG" | tee -a "$OUT/steps.txt"
   strings "$WASM" | grep -o "tvm-release-[a-z0-9-]*" | head -1 | tee -a "$OUT/steps.txt" || true
   du -sh "$PKG" | tee -a "$OUT/steps.txt"
