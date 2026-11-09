@@ -1,0 +1,27 @@
+{
+ "slug": "lfm3-mlc-3",
+ "flavor": "cpu-upgrade",
+ "timeout": "180m",
+ "image": "python:3.12-bookworm",
+ "files": [
+  "experiments/lfm3-mlc/job.sh",
+  "experiments/lfm3-mlc/toolchain.sh",
+  "experiments/lfm3-mlc/build_lfm3.sh",
+  "experiments/lfm3-mlc/register_lfm3.py",
+  "experiments/lfm3-mlc/lfm3_model.py",
+  "experiments/lfm3-mlc/lfm3_loader.py",
+  "experiments/lfm3-mlc/lfm3_conv.py"
+ ],
+ "pip": [
+  "huggingface_hub"
+ ],
+ "upload_every": 1200,
+ "outdir": "out",
+ "cmd": "QUANTS='q4f16_1 q4f32_1' bash job.sh out",
+ "out": "experiments/lfm3-mlc/hf-3",
+ "note": "Third try: ninja -j10 (job 2 was OOM-killed at -j64: nproc shows the 64-core host, the container has 32 GB). LFM3-1.7B -> MLC/WebLLM 0.2.87: build TVM e345029 + TIRx + mlc-llm 44fd06d from source (LLVM 16, emscripten), then convert q4f16_1 and q4f32_1, compile the WebGPU .wasm, upload to kealjones/LFM3-1.7B-<quant>-MLC. CPU, about $0.10 at most.",
+ "job_id": "6af2353a9737d9a9e08d84d0",
+ "url": "https://huggingface.co/jobs/kealjones/6af2353a9737d9a9e08d84d0",
+ "started": "2026-11-09T21:03:54+00:00",
+ "sha": "c1f52739dbd35655e9e4abc2efd3237dbec1201c"
+}
