@@ -1,0 +1,24 @@
+{
+ "slug": "lfm3-mlc-6",
+ "flavor": "cpu-upgrade",
+ "timeout": "120m",
+ "image": "python:3.12-bookworm",
+ "files": [
+  "experiments/lfm3-mlc/build_lfm3.sh",
+  "experiments/lfm3-mlc/compile_wasm.py",
+  "experiments/lfm3-mlc/register_lfm3.py",
+  "experiments/lfm3-mlc/lfm3_model.py",
+  "experiments/lfm3-mlc/lfm3_loader.py",
+  "experiments/lfm3-mlc/lfm3_conv.py"
+ ],
+ "pip": [
+  "huggingface_hub"
+ ],
+ "upload_every": 1200,
+ "outdir": "out",
+ "cmd": "TOOLCHAIN=lfm3-mlc-3/6af2353a9737d9a9e08d84d0 EMSDK_VERSION=7.0.0 QUANTS='q4f16_1 q4f32_1' bash build_lfm3.sh out",
+ "out": "experiments/lfm3-mlc/hf-6",
+ "note": "Sixth try, reusing job 3's toolchain. Job 5 got convert_weight + gen_config through and compiled the model: the bitcode path (bc) dies because emsdk 7.0.0's clang 24 refuses the LLVM-16 module's DataLayout (no f128:64); the object path (o) links but wasm-ld lacks libc++ symbols (TVM links with emcc, not em++). This run tries o first and links with em++ (compile_wasm.py). Then q4f16_1 + q4f32_1, upload. CPU, cents.",
+ "started": "2026-11-09T22:39:12+00:00",
+ "sha": "7b0ecff2a04d7f5a0b9935e491efb3a11fcc7587"
+}

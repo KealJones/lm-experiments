@@ -86,7 +86,7 @@ print("conv stop:", c["conv_template"]["stop_token_ids"], c["conv_template"].get
 EOF
   step "compile webgpu $Q"
   ok=0
-  for fmt in ${OBJFMTS:-bc o}; do
+  for fmt in ${OBJFMTS:-o bc}; do
     step "compile webgpu $Q, host object format $fmt"
     rm -f "$WASM"
     if TVM_WASM_OBJ=$fmt python compile_wasm.py "$PKG/mlc-chat-config.json" --device webgpu -o "$WASM" > "$OUT/compile-$Q-$fmt.log" 2>&1; then
