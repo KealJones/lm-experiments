@@ -15,7 +15,8 @@ ROOT=$(pwd)
 TVM_COMMIT=${TVM_COMMIT:-e345029cedf0be76a087fcad9c89a97bed4f7204}
 MLC_COMMIT=${MLC_COMMIT:-44fd06d04f22c87820e205b0f2b2e5e6a1f6ca85}
 EMSDK_VERSION=${EMSDK_VERSION:-latest}
-JOBS=${JOBS:-$(nproc)}
+# nproc shows the host (64) on cpu-upgrade, but the container has 32 GB and an 8-core quota: -j64 got OOM-killed
+JOBS=${JOBS:-10}
 step() { echo "== $(date -u +%H:%M:%S) $*" | tee -a "$OUT/steps.txt"; }
 trap 'echo "FAILED at: $(tail -1 "$OUT/steps.txt")" | tee -a "$OUT/steps.txt"' ERR
 
