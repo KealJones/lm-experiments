@@ -19,6 +19,8 @@
  "cmd": "TOOLCHAIN=lfm3-mlc-3/6af2353a9737d9a9e08d84d0 EMSDK_VERSION=7.0.0 QUANTS='q4f16_1 q4f32_1' bash build_lfm3.sh out",
  "out": "experiments/lfm3-mlc/hf-6",
  "note": "Sixth try, reusing job 3's toolchain. Job 5 got convert_weight + gen_config through and compiled the model: the bitcode path (bc) dies because emsdk 7.0.0's clang 24 refuses the LLVM-16 module's DataLayout (no f128:64); the object path (o) links but wasm-ld lacks libc++ symbols (TVM links with emcc, not em++). This run tries o first and links with em++ (compile_wasm.py). Then q4f16_1 + q4f32_1, upload. CPU, cents.",
- "started": "2026-11-09T22:39:12+00:00",
- "sha": "7b0ecff2a04d7f5a0b9935e491efb3a11fcc7587"
+ "started": "2026-11-09T23:02:40+00:00",
+ "sha": "aadddd4649b79e0782eaf933dd20a6debe03fd5d",
+ "job_id": "6af25110ab34849891a95a7e",
+ "url": "https://huggingface.co/jobs/kealjones/6af25110ab34849891a95a7e"
 }
