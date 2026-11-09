@@ -1,0 +1,91 @@
+== 21:04:03 apt (64 cores, 493 GB)
+cmake version 4.4.4
+1.13.2.git.kitware.jobserver-pipe-1
+gcc (Debian 12.2.0-14+deb12u1) 12.2.0
+16.0.6
+WebAssembly
+== 21:04:13 python deps
+== 21:04:26 clone tvm e345029cedf0be76a087fcad9c89a97bed4f7204
+e345029cedf0be76a087fcad9c89a97bed4f7204 Fri Oct 23 23:49:03 2026 -0400 [Fix][Runtime] Keep sliding-window page metadata separate from global attention (#20699)
+tirx 198a04573ea44e060c1087c8223cf082c64a6c03 Tue Oct 20 16:56:07 2026 -0400
+tvm-ffi 6628c464e3b824d09c9cf65ac0c6c24f973f6d56 Thu Oct 15 19:54:45 2026 -0400
+== 21:04:36 tvm-ffi python (from the pinned submodule)
+tvm_ffi 0.1.16.dev6+g6628c464e
+== 21:06:03 cmake tvm (in-tree tirx, LLVM 16, no GPU)
+== 21:06:04 ninja -j10
+total 104204
+drwxr-xr-x. 2 root root    16384 Nov  9 21:21 .
+drwxr-xr-x. 6 root root    16384 Nov  9 21:21 ..
+-rwxr-xr-x. 1 root root 54752072 Nov  9 21:21 libtvm_compiler.so
+-rwxr-xr-x. 1 root root  3014912 Nov  9 21:06 libtvm_ffi.so
+-rw-r--r--. 1 root root  7326900 Nov  9 21:20 libtvm_ffi_static.a
+-rwxr-xr-x. 1 root root  2256880 Nov  9 21:21 libtvm_ffi_testing.so
+-rwxr-xr-x. 1 root root   807912 Nov  9 21:06 libtvm_runtime.so
+-rwxr-xr-x. 1 root root  4915080 Nov  9 21:20 libtvm_runtime_extra.so
+-rw-r--r--. 1 root root  2284522 Nov  9 21:20 libtvm_runtime_static.a
+-rwxr-xr-x. 1 root root 31299168 Nov  9 21:20 libtvm_tirx_compiler.so
+== 21:21:10 tvm python check
+tvm ok /work/tvm/python/tvm/__init__.py
+relax ok
+webgpu target: {"kind":"webgpu","tag":"","keys":["webgpu","gpu"],"host":{"kind":"llvm","tag":"","keys":["cpu"],"mtriple":"wasm32-unknown-unknown-wasm"},"thread_warp_size":1,"supports_subgroups":false,"max_shared_memory_per_block":32768,"max_num_threads":256}
+== 21:21:14 emscripten latest
+emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 7.0.0 (777e6e5db7b4990bcaeb1b9998ed642cc84e6629)
+== 21:21:37 tvm web runtime (.bc)
+total 12656
+drwxr-xr-x. 2 root root      147 Nov  9 21:22 .
+drwxr-xr-x. 3 root root       18 Nov  9 21:21 ..
+-rw-r--r--. 1 root root   204836 Nov  9 21:22 tvmjs_support.bc
+-rw-r--r--. 1 root root     3425 Nov  9 21:22 tvmjs_support.d
+-rw-r--r--. 1 root root 12384292 Nov  9 21:22 wasm_runtime.bc
+-rw-r--r--. 1 root root     9650 Nov  9 21:21 wasm_runtime.d
+-rw-r--r--. 1 root root   342280 Nov  9 21:22 webgpu_runtime.bc
+-rw-r--r--. 1 root root     3777 Nov  9 21:22 webgpu_runtime.d
+== 21:22:18 mlc-llm 44fd06d04f22c87820e205b0f2b2e5e6a1f6ca85 python + wasm runtime (.bc)
+total 8
+drwxr-xr-x. 2 root root   59 Nov  9 21:22 .
+drwxr-xr-x. 3 root root   18 Nov  9 21:22 ..
+-rw-r--r--. 1 root root 2632 Nov  9 21:22 mlc_wasm_runtime.bc
+-rw-r--r--. 1 root root   56 Nov  9 21:22 mlc_wasm_runtime.d
+mlc_llm at /work/mlc-llm/python/mlc_llm
+patched: /work/mlc-llm/python/mlc_llm/model/model.py
+patched: /work/mlc-llm/python/mlc_llm/model/model.py
+patched: /work/mlc-llm/python/mlc_llm/conversation_template/__init__.py
+patched: /work/mlc-llm/python/mlc_llm/interface/gen_config.py
+patched: /work/mlc-llm/python/mlc_llm/interface/compile.py
+patched: /work/mlc-llm/python/mlc_llm/__init__.py
+patched: /work/mlc-llm/python/mlc_llm/interface/gen_config.py
+patched: /work/mlc-llm/python/mlc_llm/interface/gen_config.py
+lfm3 registered
+mlc_llm imports ok, lfm3 registered: True
+== 21:22:22 pack
+total 39036
+drwxr-xr-x. 3 root root       76 Nov  9 21:22 .
+drwxr-xr-x. 6 root root    16384 Nov  9 21:22 ..
+-rw-r--r--. 1 root root      355 Nov  9 21:22 env.sh
+-rw-r--r--. 1 root root     3261 Nov  9 21:22 steps.txt
+-rw-r--r--. 1 root root 39944967 Nov  9 21:22 toolchain.tar.zst
+drwxr-xr-x. 2 root root       80 Nov  9 21:06 wheels
+== 21:22:22 done
+== 21:22:22 python deps
+torch 2.15.0+cpu tvm_ffi 0.1.16.dev6+g6628c464e
+mlc_llm ok, lfm3 registered: True
+== 21:23:09 emscripten latest
+emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 7.0.0 (777e6e5db7b4990bcaeb1b9998ed642cc84e6629)
+== 21:23:10 download LiquidAI/LFM3-1.7B
+model at /root/.cache/huggingface/hub/models--LiquidAI--LFM3-1.7B/snapshots/1da06bec6a819da10b54c67e5c90972b46d81871
+total 0
+drwxr-xr-x. 2 root root 189 Nov  9 21:23 .
+drwxr-xr-x. 3 root root  54 Nov  9 21:23 ..
+lrwxrwxrwx. 1 root root  52 Nov  9 21:23 chat_template.jinja -> ../../blobs/d0747b8b5fc99eaecfe02a04eefcff75eb181334
+lrwxrwxrwx. 1 root root  52 Nov  9 21:23 config.json -> ../../blobs/99c878848ecd01f7b599148315c84634b5c5c656
+lrwxrwxrwx. 1 root root  52 Nov  9 21:23 generation_config.json -> ../../blobs/828e9a1ac7789d8b38af0dfe573ab6362598745b
+lrwxrwxrwx. 1 root root  76 Nov  9 21:23 model.safetensors -> ../../blobs/135922caef64e81e52af88ede8b7c3ddaa9d6da220a9737fb3065275dbfb4330
+lrwxrwxrwx. 1 root root  52 Nov  9 21:23 special_tokens_map.json -> ../../blobs/5d871daaacbf26aaa9cb47c2935f30e797ee35a7
+lrwxrwxrwx. 1 root root  76 Nov  9 21:23 tokenizer.json -> ../../blobs/7e226e34bface23ccf6e495d157bf77186c1c30a7659880e1a8994db528c3701
+lrwxrwxrwx. 1 root root  52 Nov  9 21:23 tokenizer_config.json -> ../../blobs/562b1ed0762f36c964646b8737081ced6af40754
+== 21:23:15 convert_weight q4f16_1
+== 21:25:40 gen_config q4f16_1
+mlc-chat-config: {'model_type': 'lfm3', 'quantization': 'q4f16_1', 'context_window_size': 4096, 'sliding_window_size': -1, 'prefill_chunk_size': 256, 'vocab_size': 128000, 'temperature': 0.1, 'repetition_penalty': 1.1}
+conv stop: [124900, 124895] [124894]
+== 21:25:47 compile webgpu q4f16_1
+FAILED at: == 21:25:47 compile webgpu q4f16_1

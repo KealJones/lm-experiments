@@ -1,0 +1,290 @@
+job 6af2353a9737d9a9e08d84d0 on cpu: lfm3-mlc-3 at c1f5273
+fetched experiments/lfm3-mlc/job.sh
+fetched experiments/lfm3-mlc/toolchain.sh
+fetched experiments/lfm3-mlc/build_lfm3.sh
+fetched experiments/lfm3-mlc/register_lfm3.py
+fetched experiments/lfm3-mlc/lfm3_model.py
+fetched experiments/lfm3-mlc/lfm3_loader.py
+fetched experiments/lfm3-mlc/lfm3_conv.py
+== 21:04:03 apt (64 cores, 493 GB)
+debconf: delaying package configuration, since apt-utils is not installed
+[notice] To update, run: pip install --upgrade pip
+cmake version 4.4.4
+1.13.2.git.kitware.jobserver-pipe-1
+gcc (Debian 12.2.0-14+deb12u1) 12.2.0
+16.0.6
+WebAssembly
+== 21:04:13 python deps
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+== 21:04:26 clone tvm e345029cedf0be76a087fcad9c89a97bed4f7204
+e345029cedf0be76a087fcad9c89a97bed4f7204 Fri Oct 23 23:49:03 2026 -0400 [Fix][Runtime] Keep sliding-window page metadata separate from global attention (#20699)
+tirx 198a04573ea44e060c1087c8223cf082c64a6c03 Tue Oct 20 16:56:07 2026 -0400
+tvm-ffi 6628c464e3b824d09c9cf65ac0c6c24f973f6d56 Thu Oct 15 19:54:45 2026 -0400
+== 21:04:36 tvm-ffi python (from the pinned submodule)
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+tvm_ffi 0.1.16.dev6+g6628c464e
+== 21:06:03 cmake tvm (in-tree tirx, LLVM 16, no GPU)
+-- Found LLVM_DEFINITIONS=-D_GNU_SOURCE;-D__STDC_CONSTANT_MACROS;-D__STDC_FORMAT_MACROS;-D__STDC_LIMIT_MACROS
+-- Found LLVM_LIBS=/usr/lib/llvm-16/lib/libLLVM-16.so
+-- Found TVM_LLVM_VERSION=160
+-- Found TVM_LLVM_HAS_AARCH64_TARGET=1
+-- Build with LLVM 
+-- Set TVM_LLVM_VERSION=160
+-- Git found: /usr/bin/git
+-- Found TVM_GIT_COMMIT_HASH=198a04573ea44e060c1087c8223cf082c64a6c03
+-- Found TVM_GIT_COMMIT_TIME=2026-10-20 16:56:07 -0400
+-- Didn't find the path to CCACHE, disabling ccache
+-- Build with contrib.random
+-- Build with contrib.sort
+-- Configuring done (0.5s)
+-- Generating done (0.1s)
+-- Build files have been written to: /work/tvm/build
+== 21:06:04 ninja -j10
+In static member function ‘static constexpr std::char_traits<char>::char_type* std::char_traits<char>::copy(char_type*, const char_type*, std::size_t)’,
+    inlined from ‘static constexpr void std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::_S_copy(_CharT*, const _CharT*, size_type) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:423:21,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Allocator>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::_M_replace(size_type, size_type, const _CharT*, size_type) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.tcc:532:22,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::replace(size_type, size_type, const _CharT*, size_type) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:2171:19,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::insert(size_type, const _CharT*) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:1928:22,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Allocator> std::operator+(const _CharT*, __cxx11::basic_string<_CharT, _Traits, _Allocator>&&) [with _CharT = char; _Traits = char_traits<char>; _Alloc = allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:3541:36,
+    inlined from ‘tvm::te::Tensor tvm::topi::tensordot(const tvm::te::Tensor&, const tvm::te::Tensor&, int, std::string, std::string)’ at /work/tvm/include/tvm/topi/transform.h:1671:64:
+/usr/include/c++/12/bits/char_traits.h:431:56: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ accessing 9223372036854775810 or more bytes at offsets [2, 9223372036854775807] and 1 may overlap up to 9223372036854775813 bytes at offset -3 [-Wrestrict]
+  431 |         return static_cast<char_type*>(__builtin_memcpy(__s1, __s2, __n));
+      |                                        ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+In static member function ‘static constexpr std::char_traits<char>::char_type* std::char_traits<char>::copy(char_type*, const char_type*, std::size_t)’,
+    inlined from ‘static constexpr void std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::_S_copy(_CharT*, const _CharT*, size_type) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:423:21,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Allocator>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::_M_replace(size_type, size_type, const _CharT*, size_type) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.tcc:532:22,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::replace(size_type, size_type, const _CharT*, size_type) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:2171:19,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::insert(size_type, const _CharT*) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:1928:22,
+    inlined from ‘constexpr std::__cxx11::basic_string<_CharT, _Traits, _Allocator> std::operator+(const _CharT*, __cxx11::basic_string<_CharT, _Traits, _Allocator>&&) [with _CharT = char; _Traits = char_traits<char>; _Alloc = allocator<char>]’ at /usr/include/c++/12/bits/basic_string.h:3541:36,
+    inlined from ‘tvm::te::Tensor tvm::topi::tensordot(const tvm::te::Tensor&, const tvm::te::Tensor&, tvm::ffi::Array<tvm::PrimExpr>, tvm::ffi::Array<tvm::PrimExpr>, std::string, std::string)’ at /work/tvm/include/tvm/topi/transform.h:1731:76:
+/usr/include/c++/12/bits/char_traits.h:431:56: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ accessing 9223372036854775810 or more bytes at offsets [2, 9223372036854775807] and 1 may overlap up to 9223372036854775813 bytes at offset -3 [-Wrestrict]
+  431 |         return static_cast<char_type*>(__builtin_memcpy(__s1, __s2, __n));
+      |                                        ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+total 104204
+drwxr-xr-x. 2 root root    16384 Nov  9 21:21 .
+drwxr-xr-x. 6 root root    16384 Nov  9 21:21 ..
+-rwxr-xr-x. 1 root root 54752072 Nov  9 21:21 libtvm_compiler.so
+-rwxr-xr-x. 1 root root  3014912 Nov  9 21:06 libtvm_ffi.so
+-rw-r--r--. 1 root root  7326900 Nov  9 21:20 libtvm_ffi_static.a
+-rwxr-xr-x. 1 root root  2256880 Nov  9 21:21 libtvm_ffi_testing.so
+-rwxr-xr-x. 1 root root   807912 Nov  9 21:06 libtvm_runtime.so
+-rwxr-xr-x. 1 root root  4915080 Nov  9 21:20 libtvm_runtime_extra.so
+-rw-r--r--. 1 root root  2284522 Nov  9 21:20 libtvm_runtime_static.a
+-rwxr-xr-x. 1 root root 31299168 Nov  9 21:20 libtvm_tirx_compiler.so
+== 21:21:10 tvm python check
+[21:21:12] src/codegen/llvm/llvm_instance.cc:218: Error: Using LLVM 16.0.6 with `-mcpu=neoverse-v3ae` is not valid in `-mtriple=aarch64-linux-gnu`, using default `-mcpu=generic`
+tvm ok /work/tvm/python/tvm/__init__.py
+relax ok
+[21:21:13] src/codegen/llvm/llvm_instance.cc:218: Error: Using LLVM 16.0.6 with `-mcpu=neoverse-v3ae` is not valid in `-mtriple=aarch64-linux-gnu`, using default `-mcpu=generic`
+webgpu target: {"kind":"webgpu","tag":"","keys":["webgpu","gpu"],"host":{"kind":"llvm","tag":"","keys":["cpu"],"mtriple":"wasm32-unknown-unknown-wasm"},"thread_warp_size":1,"supports_subgroups":false,"max_shared_memory_per_block":32768,"max_num_threads":256}
+== 21:21:14 emscripten latest
+Setting up EMSDK environment (suppress these messages with EMSDK_QUIET=1)
+Adding directories to PATH:
+PATH += /work/emsdk
+PATH += /work/emsdk/upstream/emscripten
+PATH += /work/emsdk/node/24.19.0_64bit/bin
+
+Setting environment variables:
+PATH = /work/emsdk:/work/emsdk/upstream/emscripten:/work/emsdk/node/24.19.0_64bit/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+EMSDK = /work/emsdk
+EMSDK_NODE = /work/emsdk/node/24.19.0_64bit/bin/node
+shared:INFO: (Emscripten: Running sanity checks)
+emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 7.0.0 (777e6e5db7b4990bcaeb1b9998ed642cc84e6629)
+== 21:21:37 tvm web runtime (.bc)
+clang: warning: argument unused during compilation: '-c' [-Wunused-command-line-argument]
+emcc -I/work/tvm/web/../ -I/work/tvm/web/..//include -I/work/tvm/web/..//3rdparty/tvm-tirx/include -I/work/tvm/web/..//3rdparty/tvm-tirx/3rdparty/tvm-ffi/include -I/work/tvm/web/..//3rdparty/tvm-tirx/3rdparty/tvm-ffi/3rdparty/dlpack/include -I/work/tvm/web/..//3rdparty/tvm-tirx/3rdparty/compiler-rt -O3 -std=c++17 -Wno-ignored-attributes -emit-llvm -c -o dist/wasm/tvmjs_support.bc emcc/tvmjs_support.cc
+emcc -I/work/tvm/web/../ -I/work/tvm/web/..//include -I/work/tvm/web/..//3rdparty/tvm-tirx/include -I/work/tvm/web/..//3rdparty/tvm-tirx/3rdparty/tvm-ffi/include -I/work/tvm/web/..//3rdparty/tvm-tirx/3rdparty/tvm-ffi/3rdparty/dlpack/include -I/work/tvm/web/..//3rdparty/tvm-tirx/3rdparty/compiler-rt -O3 -std=c++17 -Wno-ignored-attributes -c -MM -MT dist/wasm/webgpu_runtime.bc emcc/webgpu_runtime.cc >dist/wasm/webgpu_runtime.d
+clang: warning: argument unused during compilation: '-c' [-Wunused-command-line-argument]
+emcc -I/work/tvm/web/../ -I/work/tvm/web/..//include -I/work/tvm/web/..//3rdparty/tvm-tirx/include -I/work/tvm/web/..//3rdparty/tvm-tirx/3rdparty/tvm-ffi/include -I/work/tvm/web/..//3rdparty/tvm-tirx/3rdparty/tvm-ffi/3rdparty/dlpack/include -I/work/tvm/web/..//3rdparty/tvm-tirx/3rdparty/compiler-rt -O3 -std=c++17 -Wno-ignored-attributes -emit-llvm -c -o dist/wasm/webgpu_runtime.bc emcc/webgpu_runtime.cc
+total 12656
+drwxr-xr-x. 2 root root      147 Nov  9 21:22 .
+drwxr-xr-x. 3 root root       18 Nov  9 21:21 ..
+-rw-r--r--. 1 root root   204836 Nov  9 21:22 tvmjs_support.bc
+-rw-r--r--. 1 root root     3425 Nov  9 21:22 tvmjs_support.d
+-rw-r--r--. 1 root root 12384292 Nov  9 21:22 wasm_runtime.bc
+-rw-r--r--. 1 root root     9650 Nov  9 21:21 wasm_runtime.d
+-rw-r--r--. 1 root root   342280 Nov  9 21:22 webgpu_runtime.bc
+-rw-r--r--. 1 root root     3777 Nov  9 21:22 webgpu_runtime.d
+== 21:22:18 mlc-llm 44fd06d04f22c87820e205b0f2b2e5e6a1f6ca85 python + wasm runtime (.bc)
+emcc -I/work/tvm -I/work/tvm/include -I/work/tvm/3rdparty/tvm-tirx/include -I/work/tvm/3rdparty/tvm-tirx/3rdparty/tvm-ffi/include -I/work/tvm/3rdparty/tvm-tirx/3rdparty/tvm-ffi/3rdparty/dlpack/include -I/work/tvm/3rdparty/tvm-tirx/3rdparty/compiler-rt -I/work/mlc-llm/3rdparty/tokenizers-cpp -I/work/mlc-llm/3rdparty/tokenizers-cpp/include -I/work/mlc-llm/cpp -O3 -std=c++17 -Wno-ignored-attributes -c -MM -MT dist/wasm/mlc_wasm_runtime.bc emcc/mlc_wasm_runtime.cc >dist/wasm/mlc_wasm_runtime.d
+clang: warning: argument unused during compilation: '-c' [-Wunused-command-line-argument]
+emcc -I/work/tvm -I/work/tvm/include -I/work/tvm/3rdparty/tvm-tirx/include -I/work/tvm/3rdparty/tvm-tirx/3rdparty/tvm-ffi/include -I/work/tvm/3rdparty/tvm-tirx/3rdparty/tvm-ffi/3rdparty/dlpack/include -I/work/tvm/3rdparty/tvm-tirx/3rdparty/compiler-rt -I/work/mlc-llm/3rdparty/tokenizers-cpp -I/work/mlc-llm/3rdparty/tokenizers-cpp/include -I/work/mlc-llm/cpp -O3 -std=c++17 -Wno-ignored-attributes -emit-llvm -c -o dist/wasm/mlc_wasm_runtime.bc emcc/mlc_wasm_runtime.cc
+total 8
+drwxr-xr-x. 2 root root   59 Nov  9 21:22 .
+drwxr-xr-x. 3 root root   18 Nov  9 21:22 ..
+-rw-r--r--. 1 root root 2632 Nov  9 21:22 mlc_wasm_runtime.bc
+-rw-r--r--. 1 root root   56 Nov  9 21:22 mlc_wasm_runtime.d
+mlc_llm at /work/mlc-llm/python/mlc_llm
+patched: /work/mlc-llm/python/mlc_llm/model/model.py
+patched: /work/mlc-llm/python/mlc_llm/model/model.py
+patched: /work/mlc-llm/python/mlc_llm/conversation_template/__init__.py
+patched: /work/mlc-llm/python/mlc_llm/interface/gen_config.py
+patched: /work/mlc-llm/python/mlc_llm/interface/compile.py
+patched: /work/mlc-llm/python/mlc_llm/__init__.py
+patched: /work/mlc-llm/python/mlc_llm/interface/gen_config.py
+patched: /work/mlc-llm/python/mlc_llm/interface/gen_config.py
+lfm3 registered
+[21:22:21] src/codegen/llvm/llvm_instance.cc:218: Error: Using LLVM 16.0.6 with `-mcpu=neoverse-v3ae` is not valid in `-mtriple=aarch64-linux-gnu`, using default `-mcpu=generic`
+mlc_llm: serve not available: Cannot find object type index for mlc.serve.Data
+mlc_llm imports ok, lfm3 registered: True
+== 21:22:22 pack
+total 39036
+drwxr-xr-x. 3 root root       76 Nov  9 21:22 .
+drwxr-xr-x. 6 root root    16384 Nov  9 21:22 ..
+-rw-r--r--. 1 root root      355 Nov  9 21:22 env.sh
+-rw-r--r--. 1 root root     3261 Nov  9 21:22 steps.txt
+-rw-r--r--. 1 root root 39944967 Nov  9 21:22 toolchain.tar.zst
+drwxr-xr-x. 2 root root       80 Nov  9 21:06 wheels
+== 21:22:22 done
+== 21:22:22 python deps
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+torch 2.15.0+cpu tvm_ffi 0.1.16.dev6+g6628c464e
+[21:23:08] src/codegen/llvm/llvm_instance.cc:218: Error: Using LLVM 16.0.6 with `-mcpu=neoverse-v3ae` is not valid in `-mtriple=aarch64-linux-gnu`, using default `-mcpu=generic`
+mlc_llm: serve not available: Cannot find object type index for mlc.serve.Data
+mlc_llm ok, lfm3 registered: True
+== 21:23:09 emscripten latest
+Setting up EMSDK environment (suppress these messages with EMSDK_QUIET=1)
+Adding directories to PATH:
+PATH += /work/emsdk
+PATH += /work/emsdk/upstream/emscripten
+PATH += /work/emsdk/node/24.19.0_64bit/bin
+
+Setting environment variables:
+PATH = /work/emsdk:/work/emsdk/upstream/emscripten:/work/emsdk/node/24.19.0_64bit/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+EMSDK = /work/emsdk
+EMSDK_NODE = /work/emsdk/node/24.19.0_64bit/bin/node
+emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 7.0.0 (777e6e5db7b4990bcaeb1b9998ed642cc84e6629)
+== 21:23:10 download LiquidAI/LFM3-1.7B
+
+
+Downloading bytes:           |  0.00B            [A
+
+Reconstructing (incomplete total...): |          |  0.00B /  0.00B            [A
+
+Fetching 7 files:   0%|          | 0/7 [00:00<?, ?it/s][A
+
+Reconstructing (incomplete total...):   0%|          |  0.00B / 17.9MB            [A
+
+Reconstructing (incomplete total...):   0%|          |  0.00B / 3.48GB            [A
+
+Reconstructing (incomplete total...):   0%|          |  0.00B / 3.48GB            [A
+
+Reconstructing (incomplete total...):   0%|          |   328B / 3.48GB            [A
+
+Reconstructing (incomplete total...):   0%|          | 12.5kB / 3.48GB            [A
+
+Reconstructing (incomplete total...):   0%|          | 13.9kB / 3.48GB            [A
+
+Reconstructing (incomplete total...):   0%|          | 13.9kB / 3.48GB            [A
+
+Reconstructing (incomplete total...):   8%|▊         |  286MB / 3.48GB,   ???B/s  [A
+
+Downloading bytes: ▊         |  276MB,   ???B/s  [A
+
+Reconstructing (incomplete total...):  20%|█▉        |  688MB / 3.48GB,  265MB/s  [A
+
+Downloading bytes: ██▌       |  869MB,  255MB/s  [A
+
+Downloading bytes: ████▊     | 1.65GB,  443MB/s  [A
+
+Reconstructing (incomplete total...):  53%|█████▎    | 1.83GB / 3.48GB,  340MB/s  [A
+
+Downloading bytes: ███████▍  | 2.59GB,  593MB/s  [A
+
+Reconstructing (incomplete total...):  78%|███████▊  | 2.70GB / 3.48GB,  637MB/s  [A
+
+Fetching 7 files: 100%|██████████| 7/7 [00:04<00:00,  1.44it/s][A
+Fetching 7 files: 100%|██████████| 7/7 [00:04<00:00,  1.44it/s]
+
+
+Downloading bytes: ██████████| 3.00GB,  727MB/s  [A
+
+Download complete: ██████████| 3.00GB,  727MB/s  [A
+
+Reconstruction complete: 100%|██████████| 3.48GB / 3.48GB,  706MB/s               [Amodel at /root/.cache/huggingface/hub/models--LiquidAI--LFM3-1.7B/snapshots/1da06bec6a819da10b54c67e5c90972b46d81871
+
+Download complete: ██████████| 3.00GB,  727MB/s  
+
+Reconstruction complete: 100%|██████████| 3.48GB / 3.48GB,  706MB/s  
+total 0
+drwxr-xr-x. 2 root root 189 Nov  9 21:23 .
+drwxr-xr-x. 3 root root  54 Nov  9 21:23 ..
+lrwxrwxrwx. 1 root root  52 Nov  9 21:23 chat_template.jinja -> ../../blobs/d0747b8b5fc99eaecfe02a04eefcff75eb181334
+lrwxrwxrwx. 1 root root  52 Nov  9 21:23 config.json -> ../../blobs/99c878848ecd01f7b599148315c84634b5c5c656
+lrwxrwxrwx. 1 root root  52 Nov  9 21:23 generation_config.json -> ../../blobs/828e9a1ac7789d8b38af0dfe573ab6362598745b
+lrwxrwxrwx. 1 root root  76 Nov  9 21:23 model.safetensors -> ../../blobs/135922caef64e81e52af88ede8b7c3ddaa9d6da220a9737fb3065275dbfb4330
+lrwxrwxrwx. 1 root root  52 Nov  9 21:23 special_tokens_map.json -> ../../blobs/5d871daaacbf26aaa9cb47c2935f30e797ee35a7
+lrwxrwxrwx. 1 root root  76 Nov  9 21:23 tokenizer.json -> ../../blobs/7e226e34bface23ccf6e495d157bf77186c1c30a7659880e1a8994db528c3701
+lrwxrwxrwx. 1 root root  52 Nov  9 21:23 tokenizer_config.json -> ../../blobs/562b1ed0762f36c964646b8737081ced6af40754
+== 21:23:15 convert_weight q4f16_1
+
+                                                 
+[A[2026-11-09 21:25:39] INFO huggingface_loader.py:178: [Not quantized] Parameter: "[1mmodel.layers.9.post_ffn_norm.weight[0m", shape: (2048,), dtype: float16
+
+
+ 99%|█████████▉| 237/240 [02:00<00:01,  2.24it/s][A
+
+                                                 
+[A[2026-11-09 21:25:39] INFO huggingface_loader.py:178: [Not quantized] Parameter: "[1mmodel.layers.9.post_operator_norm.weight[0m", shape: (2048,), dtype: float16
+
+
+ 99%|█████████▉| 237/240 [02:00<00:01,  2.24it/s][A
+100%|██████████| 240/240 [02:00<00:00,  1.99it/s]
+[2026-11-09 21:25:39] INFO huggingface_loader.py:200: Unloading HF weight file: hf-model/model.safetensors
+[2026-11-09 21:25:40] INFO stats.py:77: [92mTime usage[0m: HF loading: 0.119 sec; Pre-quantization mapping: 2.107 sec; Quantization: 113.063 sec
+[2026-11-09 21:25:40] INFO stats.py:88: [92mRAM usage[0m: Peak RAM: 3.220 GB. Total bytes loaded from disk: 3.220 GB
+
+All finished, 32 total shards committed, record saved to /work/out/LFM3-1.7B-q4f16_1-MLC/tensor-cache.json
+[2026-11-09 21:25:40] INFO convert_weight.py:226: [92mParameter size[0m after quantization: 0.906 GB
+[2026-11-09 21:25:40] INFO convert_weight.py:231: [92mTotal parameters[0m: 1,728,801,536
+[2026-11-09 21:25:40] INFO convert_weight.py:232: [92mBits per parameter[0m: 4.503
+[2026-11-09 21:25:40] INFO convert_weight.py:237: Saved to directory: [1m/work/out/LFM3-1.7B-q4f16_1-MLC[0m
+== 21:25:40 gen_config q4f16_1
+[2026-11-09 21:25:43] INFO gen_config.py:204: [91mNot found[0m tokenizer config: hf-model/vocab.json
+[2026-11-09 21:25:43] INFO gen_config.py:204: [91mNot found[0m tokenizer config: hf-model/merges.txt
+[2026-11-09 21:25:43] INFO gen_config.py:204: [91mNot found[0m tokenizer config: hf-model/added_tokens.json
+[2026-11-09 21:25:43] INFO gen_config.py:202: [92mFound[0m tokenizer config: hf-model/tokenizer_config.json. Copying to [1m/work/out/LFM3-1.7B-q4f16_1-MLC/tokenizer_config.json[0m
+[2026-11-09 21:25:44] INFO gen_config.py:273: Detected tokenizer info: {'token_postproc_method': 'byte_level', 'prepend_space_in_encode': False, 'strip_space_in_decode': False}
+[2026-11-09 21:25:44] INFO gen_config.py:62: [System default] Setting [1mpresence_penalty[0m: 0.0
+[2026-11-09 21:25:44] INFO gen_config.py:62: [System default] Setting [1mfrequency_penalty[0m: 0.0
+[2026-11-09 21:25:44] INFO gen_config.py:62: [System default] Setting [1mtop_p[0m: 1.0
+The repository hf-model contains custom code which must be executed to correctly load the model. You can inspect the repository content at /work/hf-model .
+ You can inspect the repository content at https://hf.co/hf-model.
+You can avoid this prompt in future by passing the argument `trust_remote_code=True`.
+
+Do you wish to run the custom code? [y/N] [transformers] You are using a model of type `lfm3` to instantiate a model of type ``. This may be expected if you are loading a checkpoint that shares a subset of the architecture (e.g., loading a `sam2_video` checkpoint into `Sam2Model`), but is otherwise not supported and can yield errors. Please verify that the checkpoint is compatible with the model you are instantiating.
+[2026-11-09 21:25:46] INFO gen_config.py:309: Overriding active_vocab_size from 128000 to 125033 using HF tokenizer
+[2026-11-09 21:25:46] INFO gen_config.py:325: Dumping configuration file to: [1m/work/out/LFM3-1.7B-q4f16_1-MLC/mlc-chat-config.json[0m
+mlc-chat-config: {'model_type': 'lfm3', 'quantization': 'q4f16_1', 'context_window_size': 4096, 'sliding_window_size': -1, 'prefill_chunk_size': 256, 'vocab_size': 128000, 'temperature': 0.1, 'repetition_penalty': 1.1}
+conv stop: [124900, 124895] [124894]
+== 21:25:47 compile webgpu q4f16_1
+#26 0x000056237ba5d339 clang::driver::CC1Command::Execute(llvm::ArrayRef<std::__2::optional<llvm::StringRef>>, std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>*, bool*) const (/work/emsdk/upstream/bin/clang+0x4cc1339)
+#27 0x000056237ba0f4eb clang::driver::Compilation::ExecuteCommand(clang::driver::Command const&, clang::driver::Command const*&, bool) const (/work/emsdk/upstream/bin/clang+0x4c734eb)
+#28 0x000056237ba0ff93 clang::driver::Compilation::ExecuteJobs(clang::driver::JobList const&, llvm::SmallVectorImpl<std::__2::pair<int, clang::driver::Command const*>>&, bool) const (/work/emsdk/upstream/bin/clang+0x4c73f93)
+#29 0x000056237ba39cfc clang::driver::Driver::ExecuteCompilation(clang::driver::Compilation&, llvm::SmallVectorImpl<std::__2::pair<int, clang::driver::Command const*>>&) (/work/emsdk/upstream/bin/clang+0x4c9dcfc)
+#30 0x000056237991da5e clang_main(int, char**, llvm::ToolContext const&) (/work/emsdk/upstream/bin/clang+0x2b81a5e)
+#31 0x000056237992e089 main (/work/emsdk/upstream/bin/clang+0x2b92089)
+#32 0x00007fd4cccb724a (/lib/x86_64-linux-gnu/libc.so.6+0x2724a)
+#33 0x00007fd4cccb7305 __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27305)
+#34 0x000056237988436a _start (/work/emsdk/upstream/bin/clang+0x2ae836a)
+clang: error: clang frontend command failed with exit code 70 (use -v to see invocation)
+clang version 24.0.0git (https://github.com/llvm/llvm-project 84ba7b37f02df5a5567e31a1bcfa0f607e578f12)
+Target: wasm32-unknown-emscripten
+Thread model: posix
+InstalledDir: /work/emsdk/upstream/bin
+clang: note: diagnostic msg: 
+********************
+
+PLEASE ATTACH THE FOLLOWING CRASH REPRODUCER FILES TO THE BUG REPORT:
+clang: note: diagnostic msg: /tmp/lib0-fabc50.bc
+clang: note: diagnostic msg: /tmp/lib0-fabc50.sh
+clang: note: diagnostic msg: 
+
+********************
+emcc: error: '/work/emsdk/upstream/bin/clang -target wasm32-unknown-emscripten -fignore-exceptions -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr --sysroot=/work/emsdk/upstream/emscripten/cache/sysroot -Xclang -iwithsysroot/include/fakesdl -Xclang -iwithsysroot/include/compat -O3 -std=c++17 -c /tmp/tmpj0d_1i4d/lib0.bc -o /tmp/emscripten_temp_wb4ak_zz/lib0.o -dumpdir /work/out/LFM3-1.7B-q4f16_1-webgpu.wasm-' failed (returned 1)
+
+FAILED at: == 21:25:47 compile webgpu q4f16_1
+exit code 1 after 22.7 min
