@@ -1,0 +1,14 @@
+== 19:59:36 apt (64 cores, 493 GB)
+cmake version 3.25.1
+gcc (Debian 12.2.0-14+deb12u1) 12.2.0
+16.0.6
+WebAssembly
+== 19:59:45 python deps
+== 20:00:00 clone tvm e345029cedf0be76a087fcad9c89a97bed4f7204
+e345029cedf0be76a087fcad9c89a97bed4f7204 Fri Oct 23 23:49:03 2026 -0400 [Fix][Runtime] Keep sliding-window page metadata separate from global attention (#20699)
+tirx 198a04573ea44e060c1087c8223cf082c64a6c03 Tue Oct 20 16:56:07 2026 -0400
+tvm-ffi 6628c464e3b824d09c9cf65ac0c6c24f973f6d56 Thu Oct 15 19:54:45 2026 -0400
+== 20:00:10 tvm-ffi python (from the pinned submodule)
+tvm_ffi 0.1.16.dev6+g6628c464e
+== 20:01:40 cmake tvm (in-tree tirx, LLVM 16, no GPU)
+FAILED at: == 20:01:40 cmake tvm (in-tree tirx, LLVM 16, no GPU)

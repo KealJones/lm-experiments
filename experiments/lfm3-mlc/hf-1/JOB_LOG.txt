@@ -1,0 +1,42 @@
+job 6af226189737d9a9e08d4905 on cpu: lfm3-mlc-1 at 3f5316f
+fetched experiments/lfm3-mlc/job.sh
+fetched experiments/lfm3-mlc/toolchain.sh
+fetched experiments/lfm3-mlc/build_lfm3.sh
+fetched experiments/lfm3-mlc/register_lfm3.py
+fetched experiments/lfm3-mlc/lfm3_model.py
+fetched experiments/lfm3-mlc/lfm3_loader.py
+fetched experiments/lfm3-mlc/lfm3_conv.py
+== 19:59:36 apt (64 cores, 493 GB)
+debconf: delaying package configuration, since apt-utils is not installed
+cmake version 3.25.1
+gcc (Debian 12.2.0-14+deb12u1) 12.2.0
+16.0.6
+WebAssembly
+== 19:59:45 python deps
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+== 20:00:00 clone tvm e345029cedf0be76a087fcad9c89a97bed4f7204
+e345029cedf0be76a087fcad9c89a97bed4f7204 Fri Oct 23 23:49:03 2026 -0400 [Fix][Runtime] Keep sliding-window page metadata separate from global attention (#20699)
+tirx 198a04573ea44e060c1087c8223cf082c64a6c03 Tue Oct 20 16:56:07 2026 -0400
+tvm-ffi 6628c464e3b824d09c9cf65ac0c6c24f973f6d56 Thu Oct 15 19:54:45 2026 -0400
+== 20:00:10 tvm-ffi python (from the pinned submodule)
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+tvm_ffi 0.1.16.dev6+g6628c464e
+== 20:01:40 cmake tvm (in-tree tirx, LLVM 16, no GPU)
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+CMake Error at 3rdparty/tvm-tirx/CMakeLists.txt:18 (cmake_minimum_required):
+  CMake 3.26 or higher is required.  You are running version 3.25.1
+
+
+-- Configuring incomplete, errors occurred!
+See also "/work/tvm/build/CMakeFiles/CMakeOutput.log".
+FAILED at: == 20:01:40 cmake tvm (in-tree tirx, LLVM 16, no GPU)
+exit code 1 after 2.2 min

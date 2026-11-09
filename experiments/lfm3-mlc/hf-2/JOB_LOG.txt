@@ -1,0 +1,47 @@
+job 6af22d38ab34849891a8dcd2 on cpu: lfm3-mlc-2 at 86a6bf0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+
+[notice] A new release of pip is available: 25.0.1 -> 26.3
+[notice] To update, run: pip install --upgrade pip
+fetched experiments/lfm3-mlc/job.sh
+fetched experiments/lfm3-mlc/toolchain.sh
+fetched experiments/lfm3-mlc/build_lfm3.sh
+fetched experiments/lfm3-mlc/register_lfm3.py
+fetched experiments/lfm3-mlc/lfm3_model.py
+fetched experiments/lfm3-mlc/lfm3_loader.py
+fetched experiments/lfm3-mlc/lfm3_conv.py
+== 20:29:57 apt (64 cores, 493 GB)
+debconf: delaying package configuration, since apt-utils is not installed
+[notice] To update, run: pip install --upgrade pip
+cmake version 4.4.4
+1.13.2.git.kitware.jobserver-pipe-1
+gcc (Debian 12.2.0-14+deb12u1) 12.2.0
+16.0.6
+WebAssembly
+== 20:30:07 python deps
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+== 20:30:22 clone tvm e345029cedf0be76a087fcad9c89a97bed4f7204
+e345029cedf0be76a087fcad9c89a97bed4f7204 Fri Oct 23 23:49:03 2026 -0400 [Fix][Runtime] Keep sliding-window page metadata separate from global attention (#20699)
+tirx 198a04573ea44e060c1087c8223cf082c64a6c03 Tue Oct 20 16:56:07 2026 -0400
+tvm-ffi 6628c464e3b824d09c9cf65ac0c6c24f973f6d56 Thu Oct 15 19:54:45 2026 -0400
+== 20:30:32 tvm-ffi python (from the pinned submodule)
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+tvm_ffi 0.1.16.dev6+g6628c464e
+== 20:32:01 cmake tvm (in-tree tirx, LLVM 16, no GPU)
+-- Found LLVM_DEFINITIONS=-D_GNU_SOURCE;-D__STDC_CONSTANT_MACROS;-D__STDC_FORMAT_MACROS;-D__STDC_LIMIT_MACROS
+-- Found LLVM_LIBS=/usr/lib/llvm-16/lib/libLLVM-16.so
+-- Found TVM_LLVM_VERSION=160
+-- Found TVM_LLVM_HAS_AARCH64_TARGET=1
+-- Build with LLVM 
+-- Set TVM_LLVM_VERSION=160
+-- Git found: /usr/bin/git
+-- Found TVM_GIT_COMMIT_HASH=198a04573ea44e060c1087c8223cf082c64a6c03
+-- Found TVM_GIT_COMMIT_TIME=2026-10-20 16:56:07 -0400
+-- Didn't find the path to CCACHE, disabling ccache
+-- Build with contrib.random
+-- Build with contrib.sort
+-- Configuring done (0.5s)
+-- Generating done (0.1s)
+-- Build files have been written to: /work/tvm/build
+== 20:32:02 ninja -j64
