@@ -24,7 +24,9 @@ trap 'echo "FAILED at: $(tail -1 "$OUT/steps.txt")" | tee -a "$OUT/steps.txt"' E
 if [ "${TOOLCHAIN:-local}" != "local" ]; then
   step "toolchain from $RESULTS:$TOOLCHAIN"
   export DEBIAN_FRONTEND=noninteractive
-  apt-get update -qq && apt-get install -y -qq --no-install-recommends git zstd ca-certificates curl >/dev/null
+  # the same runtime libraries toolchain.sh built TVM against: tvm_tirx loads libLLVM-16.so.1 (job lfm3-mlc-4 failed without it)
+  apt-get update -qq && apt-get install -y -qq --no-install-recommends build-essential git curl ca-certificates \
+    llvm-16-dev libzstd-dev zlib1g-dev libedit-dev libxml2-dev zstd xz-utils >/dev/null
   pip install -q -U huggingface_hub 2>&1 | tail -1
   python - <<EOF
 import os

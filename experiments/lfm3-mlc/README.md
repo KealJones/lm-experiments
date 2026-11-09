@@ -40,3 +40,4 @@ which SwiftShader can run for a headless check).
 ## Log
 
 - 2026-11-09: job `lfm3-mlc-1` queued (toolchain + q4f16_1 + q4f32_1 in one job, 180 min cap, under $0.10).
+- 2026-11-09: jobs 1-3: CMake too old (pip cmake), -j64 OOM (cap to 10), then the TVM+TIRx build worked (15 min) and convert_weight/gen_config passed, but the WebGPU compile died linking the wasm host code (emsdk 7.0.0 clang vs TVM's LLVM-16 bitcode). Job 4 (retry with an object-file fallback) died in 1 minute: the reused toolchain needs libLLVM-16.so.1. Job 5 installs llvm-16-dev in the reuse path.
