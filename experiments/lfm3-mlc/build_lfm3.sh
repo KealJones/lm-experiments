@@ -68,20 +68,23 @@ if [ "${QAD:-0}" = 1 ]; then
   # 128 reserves two ~81 MB scratch buffers, mostly logits for 128 sequences, that WebLLM never uses). Both .wasm
   # files go in the new repo; the original kealjones/LFM3-1.7B-q4f16_1-MLC is left alone. The package is built
   # outside $OUT so the results upload only gets the small files.
+  # QAD_QUANT: q4f16_1 (default) or q4f32_1, for GPUs without 16-bit floats (fp32 scales, stored as bf16 like
+  # every MLC q4f32 build). The template is our own build of that quantization.
+  QQ=${QAD_QUANT:-q4f16_1}
   pip install -q gguf 2>&1 | tail -1
   step "download the template build and Liquid's QAD GGUF"
   python - <<PYEOF | tee -a "$OUT/steps.txt"
 import os
 from huggingface_hub import snapshot_download, hf_hub_download
-t = snapshot_download("$REPO_PREFIX-q4f16_1-MLC"); os.symlink(t, "tpl")
+t = snapshot_download("$REPO_PREFIX-$QQ-MLC"); os.symlink(t, "tpl")
 g = hf_hub_download("LiquidAI/LFM3-1.7B-GGUF", "LFM3-1.7B-QAD-Q4_0.gguf"); os.symlink(g, "qad.gguf")
 print("template", t, "gguf", g)
 PYEOF
   QPKG="$ROOT/qad-pkg"
-  step "QAD weights into the q4f16_1 layout"
+  step "QAD weights into the $QQ layout"
   python -I qad_to_mlc.py tpl qad.gguf "$QPKG" | tee -a "$OUT/steps.txt"
-  WASM_B1="$QPKG/$NAME-q4f16_1-b1-webgpu.wasm"
-  step "compile webgpu q4f16_1 with max_batch_size=1"
+  WASM_B1="$QPKG/$NAME-$QQ-b1-webgpu.wasm"
+  step "compile webgpu $QQ with max_batch_size=1"
   TVM_WASM_OBJ=o python compile_wasm.py "$QPKG/mlc-chat-config.json" --device webgpu --overrides "max_batch_size=1" \
     -o "$WASM_B1" > "$OUT/compile-b1.log" 2>&1 || { tail -40 "$OUT/compile-b1.log"; false; }
   for w in "$QPKG"/*.wasm; do
@@ -89,13 +92,13 @@ PYEOF
   done
   ls -la "$QPKG" | tee -a "$OUT/steps.txt"
   step "upload"
-  python - "$QPKG" "$REPO_PREFIX-QAD-q4f16_1-MLC" <<'PYEOF' | tee -a "$OUT/steps.txt"
+  python - "$QPKG" "$REPO_PREFIX-QAD-$QQ-MLC" "$QQ" <<'PYEOF' | tee -a "$OUT/steps.txt"
 import os, sys
 from huggingface_hub import HfApi
-pkg, repo = sys.argv[1:3]
+pkg, repo, quant = sys.argv[1:4]
 api = HfApi(token=os.environ["HF_TOKEN"])
 api.create_repo(repo, repo_type="model", private=False, exist_ok=True)
-api.upload_folder(repo_id=repo, folder_path=pkg, path_in_repo=".", commit_message="LFM3 1.7B with Liquid's QAD 4-bit weights, MLC q4f16_1")
+api.upload_folder(repo_id=repo, folder_path=pkg, path_in_repo=".", commit_message=f"LFM3 1.7B with Liquid's QAD 4-bit weights, MLC {quant}")
 print("uploaded", f"https://huggingface.co/{repo}")
 PYEOF
   mkdir -p "$OUT/keep-qad" && cp "$QPKG"/*.json "$OUT/keep-qad/"

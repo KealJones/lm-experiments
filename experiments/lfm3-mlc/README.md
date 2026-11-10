@@ -59,3 +59,10 @@ which SwiftShader can run for a headless check).
 - 2026-11-10: the results collector had committed job 5's 31 model shards (~800 MB) to this repo (each under its
   50 MB per-file cap). Removed from the tree; `hf/bridge.py` now also caps a job at 100 MB in total. They're still in
   git history (cleaning that needs a force push, which is Keal's call).
+- 2026-11-10: job 9 (`QAD=1 QAD_QUANT=q4f32_1`): the QAD weights in the q4f32_1 layout, for GPUs without 16-bit
+  floats (shader-f16), where Squiggle would otherwise fall back to the CPU. q4f32_1 packs the 4-bit integers the same
+  way but its fp32 scales sit on disk as bf16 (records tagged `f32-to-bf16`, widened when WebLLM loads them), so the
+  QAD scales round to bf16 (≤0.4%, next to 4-bit rounding's ~13%); the integers stay exact. `qad_to_mlc.py` now
+  writes each record in its template's own dtype and on-disk format; checked locally on layer 0 of
+  kealjones/LFM3-1.7B-q4f32_1-MLC (within bf16 rounding on every layer kind, corr 0.99 with our rounded build).
+  Uploads kealjones/LFM3-1.7B-QAD-q4f32_1-MLC.

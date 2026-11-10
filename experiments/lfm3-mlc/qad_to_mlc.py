@@ -1,5 +1,6 @@
-"""Put Liquid's quantization-aware-trained 4-bit LFM3 weights (LFM3-1.7B-QAD-Q4_0.gguf) into our MLC q4f16_1 build,
-exactly, without rounding them again.
+"""Put Liquid's quantization-aware-trained 4-bit LFM3 weights (LFM3-1.7B-QAD-Q4_0.gguf) into our MLC q4f16_1 or
+q4f32_1 build, exactly, without rounding them again. (q4f32_1 packs the same way with fp32 scales, for GPUs without
+16-bit floats; the GGUF's fp16 scales widen to fp32 exactly.)
 
 Both formats keep 4-bit integers with one fp16 scale per 32 inputs, so the values map one to one:
   GGUF Q4_0   w = (k - 8) * d      k in 0..15 (low nibbles = inputs 0..15 of the block, high = 16..31)
@@ -12,7 +13,7 @@ else stays as in the template build: the embedding (Q6_K in the GGUF, not QAD), 
 precision in both). The template is the existing q4f16_1 build, so names, shapes, shards and offsets stay the same
 and the same .wasm runs it.
 
-usage: python -I qad_to_mlc.py TEMPLATE_DIR GGUF OUT_DIR       (TEMPLATE_DIR = kealjones/LFM3-1.7B-q4f16_1-MLC)
+usage: python -I qad_to_mlc.py TEMPLATE_DIR GGUF OUT_DIR       (TEMPLATE_DIR = kealjones/LFM3-1.7B-q4f16_1-MLC or -q4f32_1-MLC)
        python -I qad_to_mlc.py --check TEMPLATE_DIR GGUF SHARD...  (compare only, no output)
 """
 import hashlib
@@ -39,15 +40,39 @@ def dequant_gguf(k, d):
     return (k.astype(np.float32) - 8).reshape(k.shape[0], -1, 32) * d.astype(np.float32)[:, :, None]
 
 
-def to_mlc(k, d):
+def bf16_on_disk(r):
+    """A float32 record tagged "f32-to-bf16" sits on disk as bf16 bits (the tag also appears on uint32 q_weight
+    records, which stay raw)."""
+    return r.get('format') == 'f32-to-bf16' and r['dtype'] == 'float32'
+
+
+def to_bf16_bits(x):
+    """float32 -> bf16 bits (uint16), round to nearest even: how MLC stores an "f32-to-bf16" record on disk."""
+    b = np.ascontiguousarray(x, dtype=np.float32).view(np.uint32)
+    return ((b + np.uint32(0x7FFF) + ((b >> np.uint32(16)) & np.uint32(1))) >> np.uint32(16)).astype(np.uint16)
+
+
+def from_bf16_bits(u):
+    return (u.astype(np.uint32) << np.uint32(16)).view(np.float32)
+
+
+def to_mlc(k, d, rec=None):
+    """q4f16_1 keeps the scales in fp16. q4f32_1 packs the same way but its fp32 scales sit on disk as bf16
+    (record format "f32-to-bf16", widened to fp32 when WebLLM loads them), so there the GGUF's fp16 scales round to
+    bf16: up to ~0.4% per scale, next to 4-bit rounding's ~10%. The weights' 4-bit integers stay exact either way."""
     q = (15 - k.astype(np.uint32)).reshape(k.shape[0], -1, 8)
     packed = np.zeros(q.shape[:2], dtype=np.uint32)
     for i in range(8):
         packed |= q[:, :, i] << np.uint32(4 * i)
-    return packed, (-d).astype(np.float16)
+    s = (-d).astype(np.float32)
+    if rec and bf16_on_disk(rec):
+        return packed, to_bf16_bits(s)
+    return packed, s.astype(np.dtype(rec['dtype']) if rec else np.float16)
 
 
 def dequant_mlc(qw, qs):
+    if qs.dtype == np.uint16:   # bf16 bits (an "f32-to-bf16" record)
+        qs = from_bf16_bits(qs)
     q = np.stack([(qw >> np.uint32(4 * i)) & np.uint32(0xF) for i in range(8)], axis=2).reshape(qw.shape[0], -1)
     return (q.astype(np.float32) - 7).reshape(qw.shape[0], -1, 32) * qs.astype(np.float32)[:, :, None]
 
@@ -91,7 +116,8 @@ def all_records(cache):
 
 
 def read_rec(buf, r):
-    a = np.frombuffer(buf, dtype=np.dtype(r['dtype']), count=int(np.prod(r['shape'])), offset=r['byteOffset'])
+    dt = np.uint16 if bf16_on_disk(r) else np.dtype(r['dtype'])
+    a = np.frombuffer(buf, dtype=dt, count=int(np.prod(r['shape'])), offset=r['byteOffset'])
     return a.reshape(r['shape'])
 
 
@@ -110,7 +136,7 @@ def plan(cache, gg, only=None):
         if only is not None and shard['dataPath'] not in only and ss['dataPath'] not in only:
             continue
         k, d = qad_tensor(gg, src)
-        qw, qs = to_mlc(k, d)
+        qw, qs = to_mlc(k, d, rs)   # the template record's own dtype and on-disk format (fp16, or fp32 stored as bf16)
         assert list(qw.shape) == r['shape'] and list(qs.shape) == rs['shape'], (name, qw.shape, qs.shape)
         assert qw.nbytes == r['nbytes'] and qs.nbytes == rs['nbytes'], name
         out.append((base, (shard, r), (ss, rs), qw, qs, k, d))
@@ -130,11 +156,13 @@ def check(template, gguf_path, shards):
             print(f'{base}: split across a shard not downloaded, skipped')
             continue
         ref = dequant_gguf(k, d)
-        exact = np.array_equal(dequant_mlc(qw, qs), ref)
+        mine = dequant_mlc(qw, qs)
+        # Bit-exact into fp16 scales; into bf16 ones (q4f32_1), each weight within bf16's rounding of its scale.
+        exact = np.array_equal(mine, ref) if qs.dtype != np.uint16 else bool(np.all(np.abs(mine - ref) <= np.abs(ref) * 2.0 ** -8 + 1e-12))
         ours = dequant_mlc(read_rec(buf(sw), rw), read_rec(buf(ss), rs))
         corr = np.corrcoef(ours.ravel(), ref.ravel())[0, 1]
         rel = np.abs(ours - ref).mean() / np.abs(ref).mean()
-        print(f'{base}: {qw.shape}  QAD round trip exact: {exact}  vs our old build: corr {corr:.4f}, mean diff {rel:.1%}')
+        print(f'{base}: {qw.shape}  QAD round trip {"exact" if qs.dtype != np.uint16 else "within bf16"}: {exact}  vs our old build: corr {corr:.4f}, mean diff {rel:.1%}')
         assert exact and corr > 0.98, base
 
 

@@ -1,0 +1,24 @@
+{
+ "slug": "lfm3-mlc-9",
+ "flavor": "cpu-upgrade",
+ "timeout": "60m",
+ "image": "python:3.12-bookworm",
+ "files": [
+  "experiments/lfm3-mlc/build_lfm3.sh",
+  "experiments/lfm3-mlc/compile_wasm.py",
+  "experiments/lfm3-mlc/register_lfm3.py",
+  "experiments/lfm3-mlc/lfm3_model.py",
+  "experiments/lfm3-mlc/lfm3_loader.py",
+  "experiments/lfm3-mlc/lfm3_conv.py",
+  "experiments/lfm3-mlc/qad_to_mlc.py"
+ ],
+ "pip": [
+  "huggingface_hub",
+  "gguf"
+ ],
+ "upload_every": 1200,
+ "outdir": "out",
+ "cmd": "QAD=1 QAD_QUANT=q4f32_1 TOOLCHAIN=lfm3-mlc-3/6af2353a9737d9a9e08d84d0 EMSDK_VERSION=7.0.0 bash build_lfm3.sh out",
+ "out": "experiments/lfm3-mlc/hf-9",
+ "note": "Keal: build the 32-bit-float version of the QAD build, so GPUs without 16-bit floats (shader-f16) can run LFM3 on the GPU instead of the CPU in Squiggle, and as a fallback in general. Same as job 8 with QAD_QUANT=q4f32_1: Liquid's QAD 4-bit integers exactly, scales widened to fp32 and stored as bf16 like every MLC q4f32 build (checked locally on layer 0: within bf16 rounding, 0.99 correlation with our rounded build), plus a max_batch_size=1 library. Uploads kealjones/LFM3-1.7B-QAD-q4f32_1-MLC. CPU, cents."
+}
