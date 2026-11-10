@@ -18,5 +18,9 @@
  "outdir": "out",
  "cmd": "TOOLCHAIN=lfm3-mlc-3/6af2353a9737d9a9e08d84d0 EMSDK_VERSION=7.0.0 QUANTS='q3f16_1 q3f32_1' bash build_lfm3.sh out",
  "out": "experiments/lfm3-mlc/hf-7",
- "note": "Keal asked for the 3-bit. Same build as job 6 (which worked: q4f16_1 + q4f32_1 compiled, uploaded, exit 0) with MLC's 3-bit group quantization: q3f16_1 for phones (WebGPU shader-f16) and q3f32_1 so the same build can be checked on SwiftShader, which has no f16. About 25% smaller weights than 4-bit (~710 MB vs 946 MB). CPU, cents."
+ "note": "Keal asked for the 3-bit. Same build as job 6 (which worked: q4f16_1 + q4f32_1 compiled, uploaded, exit 0) with MLC's 3-bit group quantization: q3f16_1 for phones (WebGPU shader-f16) and q3f32_1 so the same build can be checked on SwiftShader, which has no f16. About 25% smaller weights than 4-bit (~710 MB vs 946 MB). CPU, cents.",
+ "job_id": "6af278389737d9a9e08e94c2",
+ "url": "https://huggingface.co/jobs/kealjones/6af278389737d9a9e08e94c2",
+ "started": "2026-11-10T01:49:44+00:00",
+ "sha": "506c73c8da0f2769d795c38c7769923b50552967"
 }
