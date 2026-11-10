@@ -1,0 +1,22 @@
+{
+ "slug": "lfm3-mlc-7",
+ "flavor": "cpu-upgrade",
+ "timeout": "120m",
+ "image": "python:3.12-bookworm",
+ "files": [
+  "experiments/lfm3-mlc/build_lfm3.sh",
+  "experiments/lfm3-mlc/compile_wasm.py",
+  "experiments/lfm3-mlc/register_lfm3.py",
+  "experiments/lfm3-mlc/lfm3_model.py",
+  "experiments/lfm3-mlc/lfm3_loader.py",
+  "experiments/lfm3-mlc/lfm3_conv.py"
+ ],
+ "pip": [
+  "huggingface_hub"
+ ],
+ "upload_every": 1200,
+ "outdir": "out",
+ "cmd": "TOOLCHAIN=lfm3-mlc-3/6af2353a9737d9a9e08d84d0 EMSDK_VERSION=7.0.0 QUANTS='q3f16_1 q3f32_1' bash build_lfm3.sh out",
+ "out": "experiments/lfm3-mlc/hf-7",
+ "note": "Keal asked for the 3-bit. Same build as job 6 (which worked: q4f16_1 + q4f32_1 compiled, uploaded, exit 0) with MLC's 3-bit group quantization: q3f16_1 for phones (WebGPU shader-f16) and q3f32_1 so the same build can be checked on SwiftShader, which has no f16. About 25% smaller weights than 4-bit (~710 MB vs 946 MB). CPU, cents."
+}
