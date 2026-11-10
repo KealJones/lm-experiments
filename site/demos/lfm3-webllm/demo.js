@@ -7,6 +7,20 @@ const seg = (el, items, current, onPick) => {
   el.onclick = (e) => { const b = e.target.closest("button"); if (b && !b.disabled) onPick(b.dataset.v); };
 };
 
+// ---------------------------------------------------------------- how each runtime did in the 1.9 GB tab
+// (memtest.html exports from Safari 26.6.1 on Keal's iPhone 16, iOS 18.7, 9–10 Nov 2026; 4K context)
+
+const ROUTES = [
+  { name: "llama.cpp in WebAssembly (wllama), CPU", file: "1.0 GB GGUF", cls: "part",
+    result: "Short prompt: runs at 1.7 tokens a second, 736 MB left. Full 3K-token prompt: the tab died while loading." },
+  { name: "transformers.js (ONNX), WebGPU", file: "1.3 GB ONNX", cls: "fail",
+    result: "Never finished downloading: four tries, three of them killed the tab. transformers.js holds a download in memory about twice over while loading it." },
+  { name: "WebLLM (MLC), WebGPU: our 4-bit build", file: "0.97 GB", cls: "pass",
+    result: "Squiggle's ~1,500-token prompt: runs at 13.7 tokens a second. A 3K-token prompt, or a long task: the tab died while answering." },
+];
+document.getElementById("routes").innerHTML = ROUTES.map((r) =>
+  `<div class="route ${r.cls}"><p class="route-name">${esc(r.name)} <span class="route-file">${esc(r.file)}</span></p><p class="route-result">${esc(r.result)}</p></div>`).join("");
+
 // ---------------------------------------------------------------- the jobs (from experiments/lfm3-mlc/hf-*/steps.txt and the job logs)
 
 const JOBS = [
@@ -38,12 +52,12 @@ const JOBS = [
   { n: 6, cls: "pass", min: 8.1, title: "It links",
     tried: "Object files, linked with em++.",
     log: "uploaded https://huggingface.co/kealjones/LFM3-1.7B-q4f16_1-MLC\nuploaded https://huggingface.co/kealjones/LFM3-1.7B-q4f32_1-MLC",
-    why: "A 6.7 MB model library and 973 MB of 4-bit weights, in a 16-bit build for phones (WebGPU's shader-f16) and a 32-bit one for GPUs without it. On Keal's iPhone it greets correctly at 13.7 tokens a second.",
-    fix: "Nothing. But the iPhone sits at its memory edge: a long task still crashes it." },
+    why: "A 6.7 MB model library and 973 MB of 4-bit weights, in a 16-bit build for phones (WebGPU's shader-f16) and a 32-bit one for GPUs without it. In Safari on Keal's iPhone 16 it greets correctly at 13.7 tokens a second.",
+    fix: "Nothing. But it sits at the edge of iPhone Safari's ~1.9 GB tab limit: a long task still crashes it." },
   { n: 7, cls: "part", min: 6.4, title: "A 3-bit build",
     tried: "The same build with MLC's 3-bit format (q3f16_1), 788 MB of weights, plus a 32-bit 3-bit for testing.",
     log: "argument --quantization: invalid choice: 'q3f32_1'",
-    why: "The 3-bit phone build worked; MLC has no 32-bit 3-bit. On the phone the 3-bit build runs and writes fluent English, but it can't tell that \"Hii\" is a greeting (see below).",
+    why: "The 3-bit phone build worked; MLC has no 32-bit 3-bit. In iPhone Safari the 3-bit build runs and writes fluent English, but it can't tell that \"Hii\" is a greeting (see below).",
     fix: "Keep 4 bits, and find the memory somewhere else." },
   { n: 8, cls: "pass", min: 4.0, title: "Liquid's trained weights, a lighter library",
     tried: "Copy Liquid's quantization-aware-trained 4-bit weights into the build exactly, and compile a model library for one conversation at a time.",
@@ -183,9 +197,9 @@ function renderFlip() {
 }
 $("#flip-k").addEventListener("input", renderFlip);
 
-// ---------------------------------------------------------------- which build wrote this (Keal's iPhone and llama.cpp, 9–10 Nov 2026)
+// ---------------------------------------------------------------- which build wrote this (Safari on Keal's iPhone 16 and llama.cpp, 9–10 Nov 2026)
 
-const BUILDS = { q4: "Our 4-bit (phone)", q3: "Our 3-bit (phone)", liquid: "Liquid's 4-bit (llama.cpp)" };
+const BUILDS = { q4: "Our 4-bit (iPhone)", q3: "Our 3-bit (iPhone)", liquid: "Liquid's 4-bit (llama.cpp)" };
 const REPLIES = [
   { said: "Hii", build: "q3", think: "We need to handle the user's request. The user just said \"Hii\" which is likely a placeholder or nothing, but we should respond appropriately. … Given the ambiguity, I'll proceed to use the tool calls? But there's no specific query.", out: "(still thinking when Squiggle cut it off at its 400-token thinking budget)" },
   { said: "Hii", build: "liquid", think: "The user said \"Hii\" which is a greeting. I should respond in a friendly manner. No need for tools or planning here. Just greet them back and offer help.", out: "Hello! 👋 How can I help you today?" },
@@ -221,7 +235,7 @@ const MEM = {
   weights: { q4: 973.0 * MB, q3: 788.1 * MB },
   scratch: { b128: (81.53 + 81.40) * MB, b1: (16.51 + 0.64) * MB },
   kvPerToken: 11 * 2 * 4 * 128 * 2, // 11 attention layers, keys and values, 4 KV heads of 128, fp16
-  budget: 2000 * MB,
+  budget: 1900 * MB, // memcap's lowest run on Keal's iPhone 16, Safari 26.6.1
 };
 const mstate = { w: "q4", lib: "b128", ctx: 4096 };
 function renderMem() {
@@ -235,7 +249,7 @@ function renderMem() {
   ];
   const total = parts.reduce((a, p) => a + p[2], 0);
   $("#membar").innerHTML = parts.map(([c, l, v]) => `<div class="seg-m ${c}" style="width:${(100 * v) / MEM.budget}%" title="${l}: ${Math.round(v / MB)} MB">${v / MEM.budget > 0.07 ? Math.round(v / MB) : ""}</div>`).join("");
-  $("#membar").setAttribute("aria-label", `Model reserves ${Math.round(total / MB)} MB of about 2,000`);
+  $("#membar").setAttribute("aria-label", `Model reserves ${Math.round(total / MB)} MB of about 1,900`);
   $("#memlegend").innerHTML = parts.map(([c, l, v]) => `<span><span class="legend-key ${c}"></span>${l} ${Math.round(v / MB)} MB</span>`).join("") +
     `<span><span class="legend-key" style="background:repeating-linear-gradient(135deg,var(--paper) 0 3px,var(--grid) 3px 6px);border:1px solid var(--rule)"></span>Left for Safari, the page and WebGPU: ${Math.round((MEM.budget - total) / MB)} MB</span>`;
   const notes = [];
@@ -243,7 +257,7 @@ function renderMem() {
   if (mstate.lib === "b1") notes.push("The one-chat library frees ~146 MB without touching the model: it's what Squiggle's \"Test: LFM3 1.7B QAD (GPU)\" uses. It hasn't had a long task on the phone yet.");
   else notes.push("The default library keeps ~163 MB of scratch for 128 parallel chats. WebLLM runs one.");
   if (mstate.ctx === 2048) notes.push("Halving the context frees 46 MB and makes Squiggle compress the chat sooner.");
-  $("#mem-note").textContent = `${notes.join(" ")} Not counted: the model library's batch_verify scratch (147 MB, for speculative decoding, which WebLLM doesn't call) and the convolution layers' state (a few hundred KB). The ~2 GB is what memtest measured on this iPhone, not a published limit.`;
+  $("#mem-note").textContent = `${notes.join(" ")} Not counted: the model library's batch_verify scratch (147 MB, for speculative decoding, which WebLLM doesn't call) and the convolution layers' state (a few hundred KB). The ~1.9 GB is the lowest of memcap's runs on this iPhone 16; Apple doesn't publish the limit, and it moves with what else the phone is doing.`;
 }
 
 // ---------------------------------------------------------------- go

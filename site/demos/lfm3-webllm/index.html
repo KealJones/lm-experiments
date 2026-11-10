@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LFM3 in a phone</title>
-<meta name="description" content="How LFM3 1.7B got onto WebGPU in a phone's browser: a model nobody had ported to MLC, a compiler built from source, eight Hugging Face jobs, and why 4 bits works when 3 doesn't.">
+<title>LFM3 in iPhone Safari</title>
+<meta name="description" content="How LFM3 1.7B got onto WebGPU in Safari on an iPhone 16: a model nobody had ported to MLC, a compiler built from source, eight Hugging Face jobs, and why 4 bits works when 3 doesn't.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
@@ -14,19 +14,34 @@
 <body>
 <header class="wrap top">
   <p class="owner"><a href="../../">Small model lab</a></p>
-  <h1>Getting LFM3 into a phone's browser</h1>
+  <h1>Getting LFM3 into iPhone Safari</h1>
   <p class="lede">LFM3 1.7B is Liquid AI's first small model trained for agent harnesses, and in Squiggle it does what
     the smaller ones don't: it greets you without reaching for a tool, writes code itself, and picks the right tool when
-    it needs one. But the only builds that ran in a browser were llama.cpp on the CPU (1.7 words a second on an iPhone)
-    and an ONNX export that killed Safari while downloading. WebLLM runs models on the phone's GPU, and nobody had built
-    LFM3 for it.</p>
-  <p class="answer">It runs: 13.7 tokens a second on an iPhone, first word in 15 seconds, with Squiggle's full prompt and
+    it needs one. But the only builds that ran in a browser were llama.cpp on the CPU (1.7 words a second in Safari on Keal's iPhone 16)
+    and an ONNX export that killed the Safari tab while downloading. WebLLM runs models on the GPU through WebGPU, which
+    Safari on iOS now has, and nobody had built LFM3 for it.</p>
+  <p class="answer">It runs: 13.7 tokens a second in Safari on an iPhone 16, first word in 15 seconds, with Squiggle's full prompt and
     tools. Getting there took a model definition written from scratch, a compiler built from source, and eight Hugging
     Face jobs (51 CPU-minutes, about 3 cents). A 3-bit build saved 200 MB and lost the model's judgement. Liquid's own 4-bit
     weights, trained to survive the rounding, drop into our build bit-for-bit.</p>
 </header>
 
 <main class="wrap">
+
+<section aria-labelledby="limit-h">
+  <h2 id="limit-h">Why any of this: the 2 GB tab</h2>
+  <p class="section-lede">Everything on this page comes from one number. Safari on an iPhone gives a web page roughly
+    2 GB of memory, and iOS kills the tab, with no warning and nothing the page can catch, the moment it goes over. On
+    Keal's iPhone 16 it's about 1.9 GB, and it's one budget: JavaScript, WebAssembly and the GPU all draw from it. A 1 GB
+    model doesn't fit just because 1 GB is less than 1.9 GB. What matters is how much memory the runtime needs to
+    <em>load</em> it and to <em>run</em> a long prompt through it. Here's how each way of running LFM3 went, measured with
+    Squiggle's memtest page in Safari on that iPhone 16:</p>
+  <div class="routes" id="routes"></div>
+  <p>So the question became: is there a runtime that keeps LFM3 under 1.9 GB through a whole task? WebLLM was the
+    best bet, because it loads weights shard by shard straight onto the GPU instead of holding the whole file in
+    JavaScript first. That's why Qwen3 0.6B and LFM2.5 1.2B already ran on WebLLM on this iPhone when the same sizes
+    died elsewhere. No WebLLM build of LFM3 existed, so the rest of this page is making one.</p>
+</section>
 
 <section class="bench" aria-labelledby="jobs-h">
   <div class="bench-head">
@@ -69,7 +84,7 @@
 <section class="bench" aria-labelledby="round-h">
   <div class="bench-head">
     <h2 id="round-h">Rounding to a few bits</h2>
-    <p class="section-lede">To fit a phone, each weight becomes a small whole number times a shared scale, one scale
+    <p class="section-lede">To fit in a Safari tab, each weight becomes a small whole number times a shared scale, one scale
       per group of weights. These are 32 real weights from LFM3. The hollow dots are the original values, the filled
       ones are where rounding puts them, and the lines are the levels it can choose from.</p>
   </div>
@@ -112,7 +127,7 @@
 <section class="bench" aria-labelledby="hii-h">
   <div class="bench-head">
     <h2 id="hii-h">Which build wrote this?</h2>
-    <p class="section-lede">Keal said "Hii" (or "Hi") to each build, on an iPhone or through llama.cpp. Same model, same
+    <p class="section-lede">Keal said "Hii" (or "Hi") to each build, in Safari on the iPhone 16 or through llama.cpp on a server. Same model, same
       prompt and tools. Guess which build each reply came from.</p>
   </div>
   <div class="guess" id="hii"></div>
@@ -121,9 +136,12 @@
 <section class="bench" aria-labelledby="mem-h">
   <div class="bench-head">
     <h2 id="mem-h">Where the memory goes</h2>
-    <p class="section-lede">Safari gives a tab about 2 GB on Keal's iPhone, shared by JavaScript and the GPU. The 4-bit
-      build ran a whole conversation, then died partway through a task once a tool result made the prompt longer. Here's
-      what the model itself reserves; the rest of the bar is Safari, the page and WebGPU, which we haven't measured.</p>
+    <p class="section-lede">A web page in iPhone Safari can't see how much memory it has. iOS kills the whole tab when it uses
+      too much, with no warning and no error the page can catch. Safari for iOS has no setting for this, and a page can't ask
+      for more. On Keal's iPhone 16 Squiggle's memcap test put the limit at about 1.9 GB, and it's one budget: JavaScript,
+      WebAssembly and WebGPU all draw from it. A model's weights live on the GPU, so they come out of the same 1.9 GB as
+      the page. The 4-bit build ran a whole conversation, then died partway through a task once a tool result made the
+      prompt longer.</p>
   </div>
   <div class="pickers">
     <div class="field">Weights <div class="seg" id="mem-w" role="group" aria-label="Weights"></div></div>
@@ -160,7 +178,7 @@
 </main>
 <footer><p>The weights on this page are real: <code>build_data.py</code> reads them from LiquidAI/LFM3-1.7B and Liquid's
   QAD GGUF and redoes MLC's and llama.cpp's rounding. Job details come from the job logs in
-  <code>experiments/lfm3-mlc/</code>; phone timings from Squiggle's composer note on Keal's iPhone, 10 Nov 2026.</p></footer>
+  <code>experiments/lfm3-mlc/</code>; phone timings from Squiggle's composer note in Safari 26.6.1 on Keal's iPhone 16 (iOS 18.7), 10 Nov 2026.</p></footer>
 <script type="module" src="demo.js"></script>
 </body>
 </html>
