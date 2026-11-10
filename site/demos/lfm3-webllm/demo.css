@@ -48,8 +48,8 @@ button.primary:hover { background: var(--pass); border-color: var(--pass); }
 .vs-axis { font: 500 12px var(--display); fill: var(--ink-soft); }
 .vs-cat { font: 600 14px var(--display); fill: var(--ink); }
 .vs-val { font: 700 14px var(--display); fill: var(--ink); }
-.vs-keal, .vs-keal-k { fill: var(--pass); background: var(--pass); }
-.vs-greg, .vs-greg-k { fill: var(--wrong); background: var(--wrong); }
+.vs-iphone, .vs-iphone-k { fill: var(--pass); background: var(--pass); }
+.vs-android, .vs-android-k { fill: var(--wrong); background: var(--wrong); }
 .vs-legend { display: flex; flex-wrap: wrap; gap: 0.3rem 1.2rem; font: 500 0.95rem var(--display); margin: 0.3rem 0 0; }
 .vs-foot { font-size: 0.9rem; color: var(--ink-soft); margin: 0.4rem 0 0; }
 .more { margin: 0 0 1rem; }
@@ -66,8 +66,8 @@ button.primary:hover { background: var(--pass); border-color: var(--pass); }
 .mc-val.mc-in { fill: var(--paper); }
 .mc-who { font: 700 15px var(--display); fill: var(--ink); }
 .mc-na { font-style: italic; }
-.mc-keal { fill: var(--pass); }
-.mc-greg { fill: var(--wrong); }
+.mc-iphone { fill: var(--pass); }
+.mc-android { fill: var(--wrong); }
 .mc-faint { opacity: 0.35; }
 .mc-arrow { fill: var(--wrong); }
 .mc-model { stroke: var(--syntax); stroke-width: 1.5; stroke-dasharray: 4 3; }

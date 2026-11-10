@@ -35,12 +35,12 @@ async function renderMemcap() {
   // what our 4-bit LFM3 build's weights need, for scale
   s += `<line class="mc-model" x1="${x(0.973)}" x2="${x(0.973)}" y1="${top - 14}" y2="${H - 22}"/><text class="mc-model-t" x="${x(0.973) + 4}" y="${top - 8}">LFM3 4-bit weights, 0.97 GB</text>`;
   for (const { p, y0 } of groups) {
-    s += `<text class="mc-who" x="0" y="${y0 + 12}">${esc(p.who)}: ${esc(p.device)}</text>`;
+    s += `<text class="mc-who" x="0" y="${y0 + 12}">${esc(p.device)}</text>`;
     KINDS.forEach(([k, label], i) => {
       const r = p.rows[k], y = y0 + 20 + i * rowH;
       s += `<text class="mc-lab" x="${L - 8}" y="${y + 13}" text-anchor="end">${label}</text>`;
       if (!r) { s += `<text class="mc-na" x="${x(1.1)}" y="${y + 13}">not tested (no WebGPU in this browser)</text>`; return; }
-      const cls = p.who === "Keal" ? "mc-keal" : "mc-greg";
+      const cls = `mc-${p.who}`;
       s += `<rect class="${cls}" x="${L}" y="${y}" width="${x(r.lo) - L}" height="${rowH - 8}"/>`;
       if (r.hi > r.lo) s += `<rect class="${cls} mc-faint" x="${x(r.lo)}" y="${y}" width="${x(r.hi) - x(r.lo)}" height="${rowH - 8}"/>`;
       if (r.hiCapped) s += `<path class="mc-arrow" d="M${x(r.hi) + 2},${y} l10,${(rowH - 8) / 2} l-10,${(rowH - 8) / 2} z"/>`;
@@ -53,17 +53,17 @@ async function renderMemcap() {
   renderVs(M);
   const el = document.getElementById("memcap");
   el.innerHTML = s;
-  el.setAttribute("aria-label", "Tab memory limits: Keal's iPhone 16 in Safari stops at about 1.9 GB for every kind of memory; Greg's Android phone in Firefox went past 6 to 8 GB of JavaScript and WebAssembly's 4 GB ceiling.");
+  el.setAttribute("aria-label", "Tab memory limits: an iPhone 16 in Safari stops at about 1.9 GB for every kind of memory; an Android phone in Firefox went past 6 to 8 GB of JavaScript and WebAssembly's 4 GB ceiling.");
   document.getElementById("memcap-note").innerHTML = `Solid: the lowest of the runs, what a page can count on. Faint: up to the best run.
-    An arrow means the run hit a cap before the phone stopped it, so the real limit is higher: Greg's 8.00 GB was the test's own cap
-    at the time, and 4 GB is the most WebAssembly can address in any browser. Keal ran 5 rounds, Greg 2 (WebAssembly once).
+    An arrow means the run hit a cap before the phone stopped it, so the real limit is higher: the Android phone's 8.00 GB was the test's own cap
+    at the time, and 4 GB is the most WebAssembly can address in any browser. The iPhone ran 5 rounds, the Android phone 2 (WebAssembly once).
     The dashed line is what our 4-bit LFM3 build's weights alone take.`;
 }
 renderMemcap();
 
 // The at-a-glance version: lowest run for the two kinds of memory both phones tested.
 function renderVs(M) {
-  const [keal, greg] = M.phones;
+  const [iphone, android] = M.phones;
   const kinds = [["js", "JavaScript"], ["wasm", "WebAssembly"]];
   const W = 440, H = 260, L = 44, R = 8, T = 24, B = 36, max = 7;
   const y = (gb) => T + (1 - gb / max) * (H - T - B);
@@ -72,9 +72,9 @@ function renderVs(M) {
   for (let g = 0; g <= 6; g += 2) s += `<line class="vs-grid" x1="${L}" x2="${W - R}" y1="${y(g)}" y2="${y(g)}"/><text class="vs-axis" x="${L - 8}" y="${y(g) + 4}" text-anchor="end">${g} GB</text>`;
   kinds.forEach(([k, label], i) => {
     const cx = L + groupW * (i + 0.5);
-    [[keal, "vs-keal", -1], [greg, "vs-greg", 1]].forEach(([p, cls, side]) => {
+    [[iphone, "vs-iphone", -1], [android, "vs-android", 1]].forEach(([p, cls, side]) => {
       const r = p.rows[k], x0 = cx + (side < 0 ? -barW - 6 : 6);
-      s += `<rect class="${cls}" x="${x0}" y="${y(r.lo)}" width="${barW}" height="${y(0) - y(r.lo)}"><title>${esc(p.who)}: ${r.loCapped ? "at least " : ""}${r.lo.toFixed(2)} GB</title></rect>`;
+      s += `<rect class="${cls}" x="${x0}" y="${y(r.lo)}" width="${barW}" height="${y(0) - y(r.lo)}"><title>${esc(p.device)}: ${r.loCapped ? "at least " : ""}${r.lo.toFixed(2)} GB</title></rect>`;
       s += `<text class="vs-val" x="${x0 + barW / 2}" y="${y(r.lo) - 6}" text-anchor="middle">${r.loCapped ? "≥" : ""}${r.lo.toFixed(1)}</text>`;
     });
     s += `<text class="vs-cat" x="${cx}" y="${H - 14}" text-anchor="middle">${label}</text>`;
@@ -82,9 +82,9 @@ function renderVs(M) {
   s += "</svg>";
   const el = document.getElementById("vs");
   el.innerHTML = `<p class="vs-title">Lowest run before the tab was killed</p>${s}
-    <p class="vs-legend"><span><span class="legend-key vs-keal-k"></span>Keal: iPhone 16, Safari</span><span><span class="legend-key vs-greg-k"></span>Greg: Android 17, Firefox 160</span></p>
-    <p class="vs-foot">Greg's WebAssembly bar is WebAssembly's own 4 GB ceiling, and his best JavaScript run hit the test's 8 GB cap: his phone never actually stopped him.</p>`;
-  el.setAttribute("aria-label", "Keal's iPhone in Safari: about 1.9 GB for JavaScript and WebAssembly. Greg's Android in Firefox: 6.1 GB of JavaScript and at least 4 GB of WebAssembly.");
+    <p class="vs-legend"><span><span class="legend-key vs-iphone-k"></span>iPhone 16, Safari</span><span><span class="legend-key vs-android-k"></span>Android 17, Firefox 160</span></p>
+    <p class="vs-foot">The Android phone's WebAssembly bar is WebAssembly's own 4 GB ceiling, and its best JavaScript run hit the test's 8 GB cap: that phone never actually stopped the test.</p>`;
+  el.setAttribute("aria-label", "An iPhone 16 in Safari: about 1.9 GB for JavaScript and WebAssembly. An Android phone in Firefox: 6.1 GB of JavaScript and at least 4 GB of WebAssembly.");
 }
 
 // ---------------------------------------------------------------- the jobs (from experiments/lfm3-mlc/hf-*/steps.txt and the job logs)

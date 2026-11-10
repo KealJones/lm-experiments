@@ -32,7 +32,7 @@
   <h2 id="limit-h">Why any of this: the 2 GB tab</h2>
   <p class="section-lede">Everything on this page comes from one number. Safari on an iPhone gives a web page roughly
     2 GB of memory, and iOS kills the tab, with no warning and nothing the page can catch, the moment it goes over. Apple
-    doesn't publish the limit, so Keal and Greg measured it with Squiggle's memcap page, which fills a tab with memory
+    doesn't publish the limit, so we measured it with Squiggle's memcap page, on two phones. It fills a tab with memory
     until the browser stops it, several times over, once each for plain JavaScript, WebAssembly and the GPU.</p>
   <div class="vs" id="vs" role="img"></div>
   <details class="more">
@@ -40,10 +40,10 @@
     <div class="memcap" id="memcap" role="img"></div>
     <p class="stage-note" id="memcap-note"></p>
   </details>
-  <p>Two things in Keal's numbers decided everything after this. All four kinds of memory stop at about the same
-    1.9 GB, and filling JavaScript and the GPU at the same time stops there too (992 MB + 936 MB in his middle run), so
+  <p>Two things in the iPhone's numbers decided everything after this. All four kinds of memory stop at about the same
+    1.9 GB, and filling JavaScript and the GPU at the same time stops there too (992 MB + 936 MB in the middle run), so
     it's <strong>one budget</strong>: a model's weights on the GPU come out of the same 1.9 GB as the page. And it's
-    <strong>steady</strong>: five rounds landed within about 0.1 GB of each other. Greg's Android phone in Firefox went past
+    <strong>steady</strong>: five rounds landed within about 0.1 GB of each other. An Android phone in Firefox went past
     every cap the test had, so the limit is Safari's on iOS, not phones in general. <a href="../memcap/">Test your own phone</a>.</p>
   <p>A 1 GB model doesn't fit just because 1 GB is less than 1.9 GB. What matters is how much memory the runtime needs
     to <em>load</em> it and to <em>run</em> a long prompt through it. Here's how each way of running LFM3 went, measured
@@ -190,7 +190,7 @@
 </main>
 <footer><p>The weights on this page are real: <code>build_data.py</code> reads them from LiquidAI/LFM3-1.7B and Liquid's
   QAD GGUF and redoes MLC's and llama.cpp's rounding. Job details come from the job logs in
-  <code>experiments/lfm3-mlc/</code>; phone timings from Squiggle's composer note in Safari 26.6.1 on Keal's iPhone 16, 10 Nov 2026. Tab limits from Squiggle's memcap page on Keal's iPhone and Greg's Android phone, 9 Nov 2026.</p></footer>
+  <code>experiments/lfm3-mlc/</code>; phone timings from Squiggle's composer note in Safari 26.6.1 on Keal's iPhone 16, 10 Nov 2026. Tab limits from Squiggle's memcap page on two phones, 9 Nov 2026.</p></footer>
 <script type="module" src="demo.js"></script>
 </body>
 </html>

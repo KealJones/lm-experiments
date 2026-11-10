@@ -13,14 +13,14 @@ ones for JavaScript, WebAssembly and the GPU, and is it the phone or the browser
   whether they share a budget). Several rounds of each, because the limit moves with what else the phone is doing.
 - **A cap:** the test stops itself at a cap (now 16 GB on phones, 2 GB on computers, changeable under Options) so a
   phone that never kills the tab doesn't run forever. A run that reaches the cap is a floor, not a limit.
-- **Phones:** Keal's iPhone 16 in Safari (5 rounds) and Greg's Android 17 phone in Firefox 160 (2 rounds, plus one
+- **Phones:** an iPhone 16 in Safari (5 rounds) and an Android 17 phone in Firefox 160 (2 rounds, plus one
   more WebAssembly run), 9 Nov 2026.
 
 ## Results (memcap, 9 Nov 2026, lowest and best of the rounds)
 
-**iPhone Safari gives a tab about 1.9 GB, one budget shared by JavaScript, WebAssembly and the GPU; Firefox on Greg's Android phone went past every cap the test had.**
+**iPhone Safari gives a tab about 1.9 GB, one budget shared by JavaScript, WebAssembly and the GPU; Firefox on an Android phone went past every cap the test had.**
 
-| Memory | Keal: iPhone 16, Safari | Greg: Android 17, Firefox 160 |
+| Memory | iPhone 16, Safari | Android 17, Firefox 160 |
 |---|---|---|
 | JavaScript | 1.88 – 1.94 GB | 6.13 – ≥ 8.00 GB (8 GB was the test's cap then) |
 | WebAssembly | 1.90 – 1.94 GB | ≥ 4.00 GB (WebAssembly's own 4 GB ceiling, 1 run) |
@@ -33,7 +33,7 @@ ones for JavaScript, WebAssembly and the GPU, and is it the phone or the browser
   JavaScript and the GPU filled together stop there too, so a model's weights on the GPU come out of the same 1.9 GB as
   the page around it.
 - **It's steady:** five rounds on the iPhone landed within about 0.1 GB of each other.
-- **It's Safari on iOS, not phones:** Greg's Android phone in Firefox went past every cap the test had, at least three
+- **It's Safari on iOS, not phones:** The Android phone in Firefox went past every cap the test had, at least three
   times the iPhone's limit for plain JavaScript.
 - For models: a 1 GB model doesn't fit in 1.9 GB just because it's smaller. What counts is everything the runtime
   holds while it loads and runs it. See the [LFM3 in iPhone Safari](https://kealjones.com/lm-experiments/demos/lfm3-webllm/)
