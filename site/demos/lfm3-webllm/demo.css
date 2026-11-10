@@ -40,6 +40,23 @@ button.primary:hover { background: var(--pass); border-color: var(--pass); }
 .pickers { display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem; margin: 0.5rem 0 1rem; align-items: end; }
 .stage-note { margin: 0.6rem 0 0; color: var(--ink-soft); max-width: 46rem; }
 
+/* memcap chart */
+.memcap { overflow-x: auto; margin: 0.25rem 0 0; max-width: 52rem; }
+.memcap svg { width: 100%; min-width: 36rem; height: auto; display: block; }
+.mc-grid { stroke: var(--rule); stroke-width: 1; }
+.mc-axis, .mc-lab, .mc-val, .mc-na, .mc-model-t { font: 500 12px var(--display); fill: var(--ink-soft); }
+.mc-lab { fill: var(--ink); }
+.mc-val { font-weight: 600; fill: var(--ink); }
+.mc-val.mc-in { fill: var(--paper); }
+.mc-who { font: 700 15px var(--display); fill: var(--ink); }
+.mc-na { font-style: italic; }
+.mc-keal { fill: var(--pass); }
+.mc-greg { fill: var(--wrong); }
+.mc-faint { opacity: 0.35; }
+.mc-arrow { fill: var(--wrong); }
+.mc-model { stroke: var(--syntax); stroke-width: 1.5; stroke-dasharray: 4 3; }
+.mc-model-t { fill: var(--syntax); font-weight: 600; }
+
 /* routes */
 .routes { display: grid; gap: 0.6rem; margin: 0.5rem 0 1rem; max-width: 52rem; }
 .route { border-left: 4px solid var(--rule); padding: 0.4rem 0 0.4rem 0.9rem; background: var(--paper-raised); }

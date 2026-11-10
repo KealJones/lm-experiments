@@ -1,0 +1,20 @@
+{
+ "source": "Squiggle's memcap.html (app/memcap.html), 9 Nov 2026: Keal's summary screen and Greg's shared summary. GB as memcap reports them. lo = lowest run, hi = best run; capped = the run reached a cap before the phone stopped it, so the real limit is higher.",
+ "phones": [
+  {"who": "Keal", "device": "iPhone 16, Safari", "rounds": 5,
+   "rows": {
+    "js":   {"lo": 1.88, "hi": 1.94},
+    "wasm": {"lo": 1.90, "hi": 1.94},
+    "gpu":  {"lo": 1.88, "hi": 1.91},
+    "mix":  {"lo": 1.84, "hi": 1.89, "mid": {"total": 1.88, "jsMB": 992, "gpuMB": 936}}
+   }},
+  {"who": "Greg", "device": "Android 17, Firefox 160", "rounds": 2,
+   "rows": {
+    "js":   {"lo": 6.13, "hi": 8.00, "hiCapped": true, "capNote": "8.00 GB was the test's cap at the time"},
+    "wasm": {"lo": 4.00, "hi": 4.00, "loCapped": true, "hiCapped": true, "runs": 1, "capNote": "4 GB is the most WebAssembly can address in any browser"},
+    "gpu":  null,
+    "mix":  null
+   },
+   "untested": "Firefox on his phone has no WebGPU, so GPU and JS + GPU weren't tested"}
+ ]
+}

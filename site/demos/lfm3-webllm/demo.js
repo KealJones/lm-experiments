@@ -8,7 +8,7 @@ const seg = (el, items, current, onPick) => {
 };
 
 // ---------------------------------------------------------------- how each runtime did in the 1.9 GB tab
-// (memtest.html exports from Safari 26.6.1 on Keal's iPhone 16, iOS 18.7, 9–10 Nov 2026; 4K context)
+// (memtest.html exports from Safari 26.6.1 on Keal's iPhone 16, 9–10 Nov 2026; 4K context)
 
 const ROUTES = [
   { name: "llama.cpp in WebAssembly (wllama), CPU", file: "1.0 GB GGUF", cls: "part",
@@ -20,6 +20,45 @@ const ROUTES = [
 ];
 document.getElementById("routes").innerHTML = ROUTES.map((r) =>
   `<div class="route ${r.cls}"><p class="route-name">${esc(r.name)} <span class="route-file">${esc(r.file)}</span></p><p class="route-result">${esc(r.result)}</p></div>`).join("");
+
+// ---------------------------------------------------------------- memcap: the tab limit on two phones (data/memcap.json)
+
+const KINDS = [["js", "JavaScript"], ["wasm", "WebAssembly"], ["gpu", "GPU (WebGPU)"], ["mix", "JS + GPU together"]];
+async function renderMemcap() {
+  const M = await fetch("data/memcap.json").then((r) => r.json());
+  const max = 8.6, W = 760, L = 150, R = 24, rowH = 26, gap = 10, top = 24;
+  const x = (gb) => L + (gb / max) * (W - L - R);
+  const groups = M.phones.map((p, gi) => ({ p, y0: top + gi * (KINDS.length * rowH + 2 * gap + 18) }));
+  const H = groups.at(-1).y0 + KINDS.length * rowH + 2 * gap + 30;
+  let s = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+  for (let g = 0; g <= 8; g += 1) s += `<line class="mc-grid" x1="${x(g)}" x2="${x(g)}" y1="${top - 6}" y2="${H - 22}"/><text class="mc-axis" x="${x(g)}" y="${H - 6}" text-anchor="middle">${g} GB</text>`;
+  // what our 4-bit LFM3 build's weights need, for scale
+  s += `<line class="mc-model" x1="${x(0.973)}" x2="${x(0.973)}" y1="${top - 14}" y2="${H - 22}"/><text class="mc-model-t" x="${x(0.973) + 4}" y="${top - 8}">LFM3 4-bit weights, 0.97 GB</text>`;
+  for (const { p, y0 } of groups) {
+    s += `<text class="mc-who" x="0" y="${y0 + 12}">${esc(p.who)}: ${esc(p.device)}</text>`;
+    KINDS.forEach(([k, label], i) => {
+      const r = p.rows[k], y = y0 + 20 + i * rowH;
+      s += `<text class="mc-lab" x="${L - 8}" y="${y + 13}" text-anchor="end">${label}</text>`;
+      if (!r) { s += `<text class="mc-na" x="${x(1.1)}" y="${y + 13}">not tested (no WebGPU in this browser)</text>`; return; }
+      const cls = p.who === "Keal" ? "mc-keal" : "mc-greg";
+      s += `<rect class="${cls}" x="${L}" y="${y}" width="${x(r.lo) - L}" height="${rowH - 8}"/>`;
+      if (r.hi > r.lo) s += `<rect class="${cls} mc-faint" x="${x(r.lo)}" y="${y}" width="${x(r.hi) - x(r.lo)}" height="${rowH - 8}"/>`;
+      if (r.hiCapped) s += `<path class="mc-arrow" d="M${x(r.hi) + 2},${y} l10,${(rowH - 8) / 2} l-10,${(rowH - 8) / 2} z"/>`;
+      const val = r.hi > r.lo ? `${r.loCapped ? "≥" : ""}${r.lo.toFixed(2)}–${r.hiCapped ? "≥" : ""}${r.hi.toFixed(2)}` : `${r.loCapped ? "≥" : ""}${r.lo.toFixed(2)}`;
+      const tx = x(r.hi) + (r.hiCapped ? 16 : 6);
+      s += tx > W - 70 ? `<text class="mc-val mc-in" x="${x(r.lo) - 6}" y="${y + 13}" text-anchor="end">${val} GB</text>` : `<text class="mc-val" x="${tx}" y="${y + 13}">${val} GB</text>`;
+    });
+  }
+  s += "</svg>";
+  const el = document.getElementById("memcap");
+  el.innerHTML = s;
+  el.setAttribute("aria-label", "Tab memory limits: Keal's iPhone 16 in Safari stops at about 1.9 GB for every kind of memory; Greg's Android phone in Firefox went past 6 to 8 GB of JavaScript and WebAssembly's 4 GB ceiling.");
+  document.getElementById("memcap-note").innerHTML = `Solid: the lowest of the runs, what a page can count on. Faint: up to the best run.
+    An arrow means the run hit a cap before the phone stopped it, so the real limit is higher: Greg's 8.00 GB was the test's own cap
+    at the time, and 4 GB is the most WebAssembly can address in any browser. Keal ran 5 rounds, Greg 2 (WebAssembly once).
+    The dashed line is what our 4-bit LFM3 build's weights alone take.`;
+}
+renderMemcap();
 
 // ---------------------------------------------------------------- the jobs (from experiments/lfm3-mlc/hf-*/steps.txt and the job logs)
 
