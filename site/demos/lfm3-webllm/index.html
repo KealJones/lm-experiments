@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LFM3 in a phone</title>
+<meta name="description" content="How LFM3 1.7B got onto WebGPU in a phone's browser: a model nobody had ported to MLC, a compiler built from source, eight Hugging Face jobs, and why 4 bits works when 3 doesn't.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../lab.css">
+<link rel="stylesheet" href="demo.css">
+</head>
+<body>
+<header class="wrap top">
+  <p class="owner"><a href="../../">Small model lab</a></p>
+  <h1>Getting LFM3 into a phone's browser</h1>
+  <p class="lede">LFM3 1.7B is Liquid AI's first small model trained for agent harnesses, and in Squiggle it does what
+    the smaller ones don't: it greets you without reaching for a tool, writes code itself, and picks the right tool when
+    it needs one. But the only builds that ran in a browser were llama.cpp on the CPU (1.7 words a second on an iPhone)
+    and an ONNX export that killed Safari while downloading. WebLLM runs models on the phone's GPU, and nobody had built
+    LFM3 for it.</p>
+  <p class="answer">It runs: 13.7 tokens a second on an iPhone, first word in 15 seconds, with Squiggle's full prompt and
+    tools. Getting there took a model definition written from scratch, a compiler built from source, and eight Hugging
+    Face jobs (51 CPU-minutes, about 3 cents). A 3-bit build saved 200 MB and lost the model's judgement. Liquid's own 4-bit
+    weights, trained to survive the rounding, drop into our build bit-for-bit.</p>
+</header>
+
+<main class="wrap">
+
+<section class="bench" aria-labelledby="jobs-h">
+  <div class="bench-head">
+    <h2 id="jobs-h">Eight jobs to a working build</h2>
+    <p class="section-lede">Each job ran on a Hugging Face CPU box. The red ones failed, and each failure got one step
+      further than the one before. Pick a job.</p>
+  </div>
+  <div class="jobs" id="jobs" role="group" aria-label="Jobs"></div>
+  <div class="job-card" id="job-card" aria-live="polite"></div>
+</section>
+
+<section aria-labelledby="why-h">
+  <h2 id="why-h">Why not just use the existing tools?</h2>
+  <p class="section-lede">A WebLLM model is two halves that have to agree: weights, and a <code>.wasm</code> model
+    library compiled by TVM, which carries its own copy of TVM's runtime. WebLLM's JavaScript calls into that runtime by
+    name. TVM renamed those functions in October 2026, and WebLLM 0.2.87 followed. So a library compiled before the
+    rename and the current WebLLM can't talk to each other, and every prebuilt compiler you can download was from
+    before it.</p>
+  <div class="versions" id="versions"></div>
+  <p>That's why the LFM2.5 build Squiggle already used only loads on WebLLM 0.2.86, and why LFM3 needed TVM built
+    from source at the exact commit WebLLM 0.2.87 ships with (<code>e345029</code>), plus mlc-llm (MLC's model
+    compiler) at the matching commit. Neither had any LFM model in it, so the model itself had to be written too.</p>
+</section>
+
+<section class="bench" aria-labelledby="arch-h">
+  <div class="bench-head">
+    <h2 id="arch-h">What had to be written: three kinds of layer</h2>
+    <p class="section-lede">LFM3 isn't a plain transformer. 13 of its 24 layers are short convolutions that only look
+      at the last few tokens, 5 use attention over a 256-token window, and 6 use attention over everything. Each needed
+      its own code in MLC's model language. Click a layer to see how far back it reads.</p>
+  </div>
+  <div class="layers" id="layers" role="group" aria-label="LFM3's 24 layers"></div>
+  <div class="reach">
+    <label class="field">Prompt length <input type="range" id="reach-len" min="300" max="4096" step="1" value="1500"> <span id="reach-len-out"></span></label>
+    <div class="reach-rows" id="reach-rows"></div>
+    <p class="stage-note" id="reach-note"></p>
+  </div>
+</section>
+
+<section class="bench" aria-labelledby="round-h">
+  <div class="bench-head">
+    <h2 id="round-h">Rounding to a few bits</h2>
+    <p class="section-lede">To fit a phone, each weight becomes a small whole number times a shared scale, one scale
+      per group of weights. These are 32 real weights from LFM3. The hollow dots are the original values, the filled
+      ones are where rounding puts them, and the lines are the levels it can choose from.</p>
+  </div>
+  <div class="pickers">
+    <label class="field">Weights <select id="pick-group"></select></label>
+    <div class="field">Bits <div class="seg" id="pick-bits" role="group" aria-label="Bits"></div></div>
+    <div class="field">Rounded by <div class="seg" id="pick-how" role="group" aria-label="Rounded by"></div></div>
+  </div>
+  <div class="plot-wrap"><svg id="plot" role="img" aria-label="Weights and their rounded values"></svg></div>
+  <p class="readout" id="readout" aria-live="polite"></p>
+  <p class="stage-note" id="round-note"></p>
+</section>
+
+<section aria-labelledby="stats-h">
+  <h2 id="stats-h">How far each method moves the weights</h2>
+  <p class="section-lede">Average distance between the rounded and original weights, as a share of an average weight,
+    over 256 rows of each matrix. MLC's plain 4-bit is a little worse than llama.cpp's because it uses 15 levels where
+    llama.cpp uses all 16. Its 3-bit uses only 7.</p>
+  <div class="table-wrap"><table class="score" id="stats-table"></table></div>
+  <p>Liquid's trained weights are no closer to the originals than plain rounding. They're a little further away. In
+    70–78% of groups Liquid picked a different scale than plain rounding would, and 6–12% of the weights sit on a
+    different level. That's the training: weights moved on purpose, so that what the model <em>does</em> stays the
+    same even though the numbers changed. Plain rounding is only trying to keep the numbers close.</p>
+</section>
+
+<section class="bench" aria-labelledby="flip-h">
+  <div class="bench-head">
+    <h2 id="flip-h">Copying Liquid's weights without rounding again</h2>
+    <p class="section-lede">Liquid ships its trained 4-bit weights as llama.cpp's Q4_0. MLC's format looks almost
+      the same, groups of 32 with one fp16 scale, but counts its levels from the other end. Rounding Liquid's weights a
+      second time would throw the training away. Flipping the level and the sign of the scale instead lands every
+      weight exactly where Liquid put it. Drag the level.</p>
+  </div>
+  <label class="field">Liquid's level <span class="mono">k</span> <input type="range" id="flip-k" min="0" max="15" step="1" value="3"></label>
+  <div class="flip" id="flip"></div>
+  <p class="stage-note">The converter (<code>qad_to_mlc.py</code>) does this for all 107 linear layers and was checked
+    bit-for-bit against Liquid's file on every kind of layer. MLC never notices a negative scale: it's just a number.</p>
+</section>
+
+<section class="bench" aria-labelledby="hii-h">
+  <div class="bench-head">
+    <h2 id="hii-h">Which build wrote this?</h2>
+    <p class="section-lede">Keal said "Hii" (or "Hi") to each build, on an iPhone or through llama.cpp. Same model, same
+      prompt and tools. Guess which build each reply came from.</p>
+  </div>
+  <div class="guess" id="hii"></div>
+</section>
+
+<section class="bench" aria-labelledby="mem-h">
+  <div class="bench-head">
+    <h2 id="mem-h">Where the memory goes</h2>
+    <p class="section-lede">Safari gives a tab about 2 GB on Keal's iPhone, shared by JavaScript and the GPU. The 4-bit
+      build ran a whole conversation, then died partway through a task once a tool result made the prompt longer. Here's
+      what the model itself reserves; the rest of the bar is Safari, the page and WebGPU, which we haven't measured.</p>
+  </div>
+  <div class="pickers">
+    <div class="field">Weights <div class="seg" id="mem-w" role="group" aria-label="Weights"></div></div>
+    <div class="field">Model library <div class="seg" id="mem-lib" role="group" aria-label="Model library"></div></div>
+    <div class="field">Context <div class="seg" id="mem-ctx" role="group" aria-label="Context"></div></div>
+  </div>
+  <div class="membar" id="membar" role="img"></div>
+  <div class="memlegend" id="memlegend"></div>
+  <p class="stage-note" id="mem-note"></p>
+</section>
+
+<section aria-labelledby="says-h" class="says">
+  <h2 id="says-h">What it says</h2>
+  <ul>
+    <li>Porting a new architecture to WebLLM is mostly not about the model. The model code took one pass; the jobs failed
+      on CMake, on a container that reported 64 CPUs and had 8, on a missing LLVM library and on two different linker
+      errors.</li>
+    <li>Version skew is the real wall. A WebLLM model library carries its own TVM runtime, so the compiler has to match
+      the WebLLM release exactly, and for a while after a rename the only matching compiler is one you build.</li>
+    <li>3 bits isn't 4 bits minus a little. Plain 3-bit rounding moved the weights about 2.5 times as far as 4-bit and
+      the model stopped recognising a greeting. It still wrote fluent sentences, which makes this easy to miss.</li>
+    <li>Training for the rounding beats rounding well. Liquid's 4-bit weights are no closer to the originals than plain
+      rounding; they're better because they were trained in place. The useful move was copying them exactly.</li>
+    <li>The memory fight on a phone is partly free wins. MLC's default build reserved ~163 MB of scratch for 128
+      parallel chats that WebLLM never runs. Building it for one chat freed ~146 MB without touching the model.</li>
+  </ul>
+  <p class="meta-line">Builds: <a href="https://huggingface.co/kealjones/LFM3-1.7B-q4f16_1-MLC">4-bit</a>
+    <a href="https://huggingface.co/kealjones/LFM3-1.7B-QAD-q4f16_1-MLC">Liquid's trained 4-bit</a>
+    <a href="https://huggingface.co/kealjones/LFM3-1.7B-q3f16_1-MLC">3-bit</a>
+    <a href="https://github.com/KealJones/lm-experiments/tree/main/experiments/lfm3-mlc">The code, job logs and full write-up</a>
+    <a href="https://kealjones.com/squiggle/">Try it in Squiggle</a></p>
+</section>
+
+</main>
+<footer><p>The weights on this page are real: <code>build_data.py</code> reads them from LiquidAI/LFM3-1.7B and Liquid's
+  QAD GGUF and redoes MLC's and llama.cpp's rounding. Job details come from the job logs in
+  <code>experiments/lfm3-mlc/</code>; phone timings from Squiggle's composer note on Keal's iPhone, 10 Nov 2026.</p></footer>
+<script type="module" src="demo.js"></script>
+</body>
+</html>
