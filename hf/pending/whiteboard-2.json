@@ -19,5 +19,9 @@
  "outdir": "out",
  "cmd": "(apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq gcc g++ xz-utils >/dev/null) && python -c \"import urllib.request as u; u.urlretrieve('https://nodejs.org/dist/v22.11.0/node-v22.11.0-linux-x64.tar.xz','node.tar.xz'); u.urlretrieve('https://raw.githubusercontent.com/KealJones/squiggle/f987588d4cf047ff638e161e72563ffff49a06bc/app/vendor/just-bash.js','just-bash.js'); u.urlretrieve('https://github.com/ggml-org/llama.cpp/archive/aa75ff3239f9cc675b081697deda9e1b112345c6.tar.gz','llama.tar.gz')\" && tar -xJf node.tar.xz && export PATH=$PWD/node-v22.11.0-linux-x64/bin:$PATH && node --version && tar -xzf llama.tar.gz && mv llama.cpp-aa75ff3239f9cc675b081697deda9e1b112345c6 llama.cpp && cmake -S llama.cpp -B llama.cpp/build -G Ninja -DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=89 -DLLAMA_CURL=OFF -DLLAMA_BUILD_TESTS=OFF -DLLAMA_BUILD_EXAMPLES=OFF >/dev/null && cmake --build llama.cpp/build --target llama-server -j8 2>&1 | tail -3 && mkdir -p out && python run.py out/pilot --chats 1,8 --max-turns 4 --arms notes; cp llama-server.log out/pilot/ 2>/dev/null; python run.py out && cp llama-server.log out/",
  "out": "experiments/whiteboard/hf-2",
- "note": "Retry of whiteboard-1 (pip vLLM has no native LFM3: its fallback can't run the conv layers, died in 5 min). Now llama.cpp master (aa75ff3, native LFM3) built with CUDA in the job, serving Liquid's QAD Q4_0 GGUF (the file Squiggle's CPU build loads), 16 parallel slots. Same replay otherwise. l4x1, 75 min cap: at most $1."
+ "note": "Retry of whiteboard-1 (pip vLLM has no native LFM3: its fallback can't run the conv layers, died in 5 min). Now llama.cpp master (aa75ff3, native LFM3) built with CUDA in the job, serving Liquid's QAD Q4_0 GGUF (the file Squiggle's CPU build loads), 16 parallel slots. Same replay otherwise. l4x1, 75 min cap: at most $1.",
+ "job_id": "6af39bce9737d9a9e091da47",
+ "url": "https://huggingface.co/jobs/kealjones/6af39bce9737d9a9e091da47",
+ "started": "2026-11-10T22:33:50+00:00",
+ "sha": "35a4ff4ee54f49951b0ab64fb288752a5bd0a917"
 }
