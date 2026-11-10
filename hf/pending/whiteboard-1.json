@@ -15,5 +15,9 @@
  "outdir": "out",
  "cmd": "(apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq gcc g++ xz-utils >/dev/null) && python -c \"import urllib.request as u; u.urlretrieve('https://nodejs.org/dist/v22.11.0/node-v22.11.0-linux-x64.tar.xz','node.tar.xz'); u.urlretrieve('https://raw.githubusercontent.com/KealJones/squiggle/f987588d4cf047ff638e161e72563ffff49a06bc/app/vendor/just-bash.js','just-bash.js')\" && tar -xJf node.tar.xz && export PATH=$PWD/node-v22.11.0-linux-x64/bin:$PATH && node --version && export VLLM_USE_FLASHINFER_SAMPLER=0 && python run.py out/pilot --chats 1,8 --max-turns 4 --arms notes && python run.py out",
  "out": "experiments/whiteboard/hf-1",
- "note": "Keal: LFM3 1.7B with Squiggle's PR 7 prompt (small-model mode, bash surface, 4K window) keeps its own notes file via bash, nudged at the end of every turn, replayed over the 16 context-packets chats. Arms: notes (last 2 exchanges + notes), window (last 2 exchanges only), full (whole chat). Hard cap $1."
+ "note": "Keal: LFM3 1.7B with Squiggle's PR 7 prompt (small-model mode, bash surface, 4K window) keeps its own notes file via bash, nudged at the end of every turn, replayed over the 16 context-packets chats. Arms: notes (last 2 exchanges + notes), window (last 2 exchanges only), full (whole chat). Hard cap $1.",
+ "job_id": "6af39957ab34849891ad1af9",
+ "url": "https://huggingface.co/jobs/kealjones/6af39957ab34849891ad1af9",
+ "started": "2026-11-10T22:23:19+00:00",
+ "sha": "2ab874d51a187caebb0e33519ac3c5a580b188c9"
 }
