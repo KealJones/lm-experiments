@@ -5,6 +5,8 @@ a WebGPU model library `.wasm` + `mlc-chat-config.json`) that loads on `@mlc-ai/
 path (`engine-webllm.js`, a model's `mlcRecord`). Target repos: `kealjones/LFM3-1.7B-q4f16_1-MLC` (and `-q4f32_1-MLC`,
 which SwiftShader can run for a headless check).
 
+
+## Where it stands: **LFM3 1.7B runs in Safari on an iPhone 16 through WebLLM at 13.7 tokens a second (4-bit, our own MLC build); a 3-bit build loses its judgement, and a long task still runs out of the tab's ~1.9 GB.**
 ## Why a from-source toolchain
 
 - Upstream mlc-llm has no LFM2/LFM3. NakliTechie's fork (Kiln) adds `lfm2` (LIV short conv in an `RNNState` ring
