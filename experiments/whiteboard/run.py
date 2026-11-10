@@ -10,7 +10,7 @@ Each of the 16 context-packets chats is replayed turn by turn. Arms:
 Everything the model sees is rendered exactly as Squiggle PR 7 renders it for LFM3 (agent.js LITE_SYSTEM_BASH +
 toolNamesLine, toolformats/lfm3.js, engine-wllama.js resultText, untrusted.js wrapUntrusted).
 
-  python run.py OUT [--chats 1,2] [--max-turns N] [--arms notes,window,full] [--backend vllm|hf]
+  python run.py OUT [--chats 1,2] [--max-turns N] [--arms notes,window,full] [--backend llama|vllm|hf]
 """
 import argparse, json, math, os, random, re, string, subprocess, sys, time
 from collections import Counter
@@ -342,6 +342,47 @@ class VLLM:
         return [o.outputs[0].text for o in outs]
 
 
+class Llama:
+    """llama.cpp's llama-server (built in the job) on Liquid's QAD Q4_0 GGUF: the file Squiggle's CPU build loads.
+    Prompts go in as token ids (no extra BOS); outputs come back as token ids and are decoded with the HF tokenizer,
+    so <think>, <tool_call> and the rest come through whatever the server's detokenizer does with them."""
+    SLOTS, PER_SLOT = 16, 14336
+
+    def __init__(self):
+        import urllib.request
+        from huggingface_hub import hf_hub_download
+        from transformers import AutoTokenizer
+        self.u = urllib.request
+        self.tok = AutoTokenizer.from_pretrained(MODEL, trust_remote_code=True)
+        gguf = hf_hub_download("LiquidAI/LFM3-1.7B-GGUF", "LFM3-1.7B-QAD-Q4_0.gguf")
+        server = os.environ.get("LLAMA_SERVER", "llama.cpp/build/bin/llama-server")
+        self.p = subprocess.Popen([server, "-m", gguf, "-ngl", "99", "-np", str(self.SLOTS), "-c", str(self.SLOTS * self.PER_SLOT),
+                                   "--port", "8080", "--host", "127.0.0.1", "--no-webui", "--special"],
+                                  stdout=open("llama-server.log", "w"), stderr=subprocess.STDOUT)
+        for _ in range(600):
+            try:
+                if json.loads(self.u.urlopen("http://127.0.0.1:8080/health", timeout=2).read()).get("status") == "ok": break
+            except Exception: pass
+            if self.p.poll() is not None: raise RuntimeError("llama-server exited; see llama-server.log")
+            time.sleep(1)
+
+    def one(self, item):
+        p, m = item
+        body = {"prompt": self.tok.encode(p, add_special_tokens=False), "n_predict": m, "temperature": SAMPLING["temperature"],
+                "top_k": SAMPLING["top_k"], "top_p": 1.0, "min_p": 0.0, "repeat_penalty": SAMPLING["repetition_penalty"],
+                "stop": ["<|im_end|>"], "seed": 0, "cache_prompt": True, "return_tokens": True}
+        req = self.u.Request("http://127.0.0.1:8080/completion", data=json.dumps(body).encode(), headers={"Content-Type": "application/json"})
+        r = json.loads(self.u.urlopen(req, timeout=900).read())
+        if r.get("tokens"):
+            return self.tok.decode(r["tokens"], skip_special_tokens=False).split("<|im_end|>")[0]
+        return r.get("content", "")
+
+    def generate(self, items):
+        from concurrent.futures import ThreadPoolExecutor
+        with ThreadPoolExecutor(self.SLOTS) as ex:
+            return list(ex.map(self.one, items))
+
+
 class HF:
     def __init__(self):
         import torch
@@ -370,13 +411,13 @@ def main():
     ap.add_argument("--chats", default="")
     ap.add_argument("--arms", default="notes,window,full")
     ap.add_argument("--max-turns", type=int, default=None)
-    ap.add_argument("--backend", default="vllm")
+    ap.add_argument("--backend", default="llama")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
     data = json.load(open("data.json"))
     if a.chats: data = [d for d in data if str(d["id"]) in a.chats.split(",")]
     t0 = time.time()
-    be = VLLM() if a.backend == "vllm" else HF()
+    be = {"vllm": VLLM, "hf": HF, "llama": Llama}[a.backend]()
     print(f"model ready in {time.time() - t0:.0f}s; system prompt {len(be.tok.encode(lfm3_prompt([{'role': 'system', 'content': SYSTEM}], TOOLS), add_special_tokens=False))} tokens", flush=True)
     shell = Shell()
     log = open(os.path.join(a.out, "log.txt"), "a")
@@ -390,6 +431,7 @@ def main():
     while pending:
         keys = list(pending)
         outs = be.generate([pending[k] for k in keys])
+        if rounds == 0: print('first raw output:', repr(outs[0][:600]), flush=True)
         rounds += 1
         ntoks += sum(len(o) for o in outs) // 4
         for k, o in zip(keys, outs):

@@ -31,4 +31,5 @@ edited with the bash it already has, plus an end-of-turn instruction to update i
 
 ## Results
 
-Pending: job `whiteboard-1` (a10g-small, 60 min cap, at most $1).
+- Job `whiteboard-1` (a10g-small, ~5 min, about $0.10): failed. pip vLLM has no native LFM3 and its generic fallback cannot run the conv layers.
+- Job `whiteboard-2`: llama.cpp master (native LFM3) built with CUDA in the job, on Liquid's QAD Q4_0 GGUF (the file Squiggle's CPU build loads). l4x1, 75 min cap (at most $1). Pending.
