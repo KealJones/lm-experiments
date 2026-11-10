@@ -1,0 +1,85 @@
+[22:44:38] src/codegen/llvm/llvm_instance.cc:218: Error: Using LLVM 16.0.6 with `-mcpu=neoverse-v3ae` is not valid in `-mtriple=aarch64-linux-gnu`, using default `-mcpu=generic`
+compile_wasm: host object format o
+mlc_llm: serve not available: Cannot find object type index for mlc.serve.Data
+[1mCompiling with arguments:[0m
+  [1m--config[0m          Lfm3Config(hidden_size=2048, intermediate_size=7680, num_attention_heads=16, num_hidden_layers=24, num_key_value_heads=4, norm_eps=1e-05, vocab_size=128000, head_dim=128, tie_word_embeddings=True, conv_L_cache=7, conv_bias=False, use_sandwich_norm=True, layer_types=['conv', 'conv', 'full_attention', 'conv', 'sliding_attention', 'conv', 'full_attention', 'conv', 'sliding_attention', 'conv', 'full_attention', 'conv', 'sliding_attention', 'conv', 'full_attention', 'conv', 'sliding_attention', 'conv', 'full_attention', 'conv', 'sliding_attention', 'conv', 'full_attention', 'conv'], sliding_window=256, rope_parameters={'full_attention': {'partial_rotary_factor': 0.5, 'rope_theta': 1000000.0, 'rope_type': 'default'}, 'sliding_attention': {'rope_theta': 10000, 'rope_type': 'default'}}, context_window_size=4096, prefill_chunk_size=256, sliding_window_size=-1, tensor_parallel_shards=1, dtype='bfloat16', max_batch_size=128, kwargs={'active_vocab_size': 125033})
+  [1m--quantization[0m    GroupQuantize(name='q4f16_1', kind='group-quant', group_size=32, quantize_dtype='int4', storage_dtype='uint32', model_dtype='float16', linear_weight_layout='NK', quantize_embedding=True, quantize_final_fc=True, num_elem_per_storage=8, num_storage_per_group=4, max_int_value=7, tensor_parallel_shards=0)
+  [1m--model-type[0m      lfm3
+  [1m--target[0m          {"kind": "webgpu", "tag": "", "keys": ("webgpu", "gpu"), "host": {"kind": "llvm", "tag": "", "keys": ("cpu",), "mtriple": "wasm32-unknown-unknown-wasm"}, "thread_warp_size": 1, "supports_subgroups": False, "max_shared_memory_per_block": 32768, "max_num_threads": 256}
+  [1m--opt[0m             flashinfer=0;cublas_gemm=0;faster_transformer=0;cudagraph=0;cutlass=0;ipc_allreduce_strategy=NONE
+  [1m--system-lib-prefix[0m ""
+  [1m--output[0m          /work/out/LFM3-1.7B-q4f16_1-webgpu.wasm
+  [1m--overrides[0m       context_window_size=None;sliding_window_size=None;prefill_chunk_size=None;attention_sink_size=None;max_batch_size=None;tensor_parallel_shards=None;pipeline_parallel_stages=None;disaggregation=None
+[1m--system-lib-prefix[0m is not specified when building a static library
+[22:44:43] /work/tvm/include/tvm/topi/transform.h:1258: Warning: Fast mode segfaults when there are out-of-bounds indices. Make sure input indices are in bound
+[22:44:44] /work/tvm/include/tvm/topi/transform.h:1258: Warning: Fast mode segfaults when there are out-of-bounds indices. Make sure input indices are in bound
+[22:45:05] src/codegen/llvm/llvm_instance.cc:970: Warning: Set native vector bits to be 128 for `wasm32`, use -vector-width=XXX to override.
+Compilation error:
+emcc: warning: WASM_BIGINT is deprecated (no longer needed. Should only ever be implicitly disabled by -sWASM=0). Please open a bug if you have a continuing need for this setting [-Wdeprecated]
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: typeinfo for std::bad_alloc
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: typeinfo for std::bad_alloc
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_streambuf<char, std::__2::char_traits<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_stringbuf<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_streambuf<char, std::__2::char_traits<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_stringbuf<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: too many errors emitted, stopping now (use -error-limit=0 to see all errors)
+emcc: warning: link failed with undefined C++ symbols. Try linking with 'em++' or passing '-sDEFAULT_TO_CXX'
+emcc: error: '/work/emsdk/upstream/bin/wasm-ld -o /work/out/LFM3-1.7B-q4f16_1-webgpu.wasm /tmp/tmp7z3kjmrklibemscripten_js_symbols.so -Bstatic --import-undefined --strip-debug --export-if-defined=setThrew --export-if-defined=emscripten_stack_get_current --export-if-defined=_emscripten_stack_restore --export-if-defined=__start_em_asm --export-if-defined=__stop_em_asm --export-if-defined=__start_em_lib_deps --export-if-defined=__stop_em_lib_deps --export-if-defined=__start_em_js --export-if-defined=__stop_em_js --export-table -z stack-size=65536 --max-memory=2147483648 --initial-memory=167772160 --entry=_initialize --no-stack-first --table-base=1 --global-base=1024 /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o /tmp/emscripten_temp_xjr2rsqb/tvmjs_support.o /tmp/emscripten_temp_xjr2rsqb/webgpu_runtime.o /tmp/emscripten_temp_xjr2rsqb/mlc_wasm_runtime.o /tmp/tmpjqxr9b5t/lib0.o /tmp/tmpjqxr9b5t/devc.o -L/work/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten -L/work/emsdk/upstream/emscripten/src/lib /work/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/crt1_reactor.o -lGL-getprocaddr -lal -lhtml5 -lstandalonewasm-nocatch-memgrow -lstubs -lnoexit -lc -ldlmalloc -lemcc -lclang_rt.builtins -lsockets -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr' failed (returned 1)
+
+Traceback (most recent call last):
+  File "/work/compile_wasm.py", line 22, in <module>
+    cli.main(sys.argv[1:])
+  File "/work/tc/mlc-llm/python/mlc_llm/cli/compile.py", line 141, in main
+    compile(
+  File "/work/tc/mlc-llm/python/mlc_llm/interface/compile.py", line 294, in compile
+    _compile(args, model_config)
+  File "/work/tc/mlc-llm/python/mlc_llm/interface/compile.py", line 235, in _compile
+    args.build_func(
+  File "/work/tc/mlc-llm/python/mlc_llm/support/auto_target.py", line 285, in build
+    ).export_library(
+      ^^^^^^^^^^^^^^^
+  File "/work/tc/tvm/3rdparty/tvm-tirx/python/tvm_tirx/codegen/executable.py", line 327, in export_library
+    return fcompile(file_name, files, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tc/tvm/python/tvm/contrib/emcc.py", line 142, in create_wasm
+    raise RuntimeError(msg)
+RuntimeError: Compilation error:
+emcc: warning: WASM_BIGINT is deprecated (no longer needed. Should only ever be implicitly disabled by -sWASM=0). Please open a bug if you have a continuing need for this setting [-Wdeprecated]
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: typeinfo for std::bad_alloc
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: typeinfo for std::bad_alloc
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_streambuf<char, std::__2::char_traits<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_stringbuf<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_streambuf<char, std::__2::char_traits<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_stringbuf<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: too many errors emitted, stopping now (use -error-limit=0 to see all errors)
+emcc: warning: link failed with undefined C++ symbols. Try linking with 'em++' or passing '-sDEFAULT_TO_CXX'
+emcc: error: '/work/emsdk/upstream/bin/wasm-ld -o /work/out/LFM3-1.7B-q4f16_1-webgpu.wasm /tmp/tmp7z3kjmrklibemscripten_js_symbols.so -Bstatic --import-undefined --strip-debug --export-if-defined=setThrew --export-if-defined=emscripten_stack_get_current --export-if-defined=_emscripten_stack_restore --export-if-defined=__start_em_asm --export-if-defined=__stop_em_asm --export-if-defined=__start_em_lib_deps --export-if-defined=__stop_em_lib_deps --export-if-defined=__start_em_js --export-if-defined=__stop_em_js --export-table -z stack-size=65536 --max-memory=2147483648 --initial-memory=167772160 --entry=_initialize --no-stack-first --table-base=1 --global-base=1024 /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o /tmp/emscripten_temp_xjr2rsqb/tvmjs_support.o /tmp/emscripten_temp_xjr2rsqb/webgpu_runtime.o /tmp/emscripten_temp_xjr2rsqb/mlc_wasm_runtime.o /tmp/tmpjqxr9b5t/lib0.o /tmp/tmpjqxr9b5t/devc.o -L/work/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten -L/work/emsdk/upstream/emscripten/src/lib /work/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/crt1_reactor.o -lGL-getprocaddr -lal -lhtml5 -lstandalonewasm-nocatch-memgrow -lstubs -lnoexit -lc -ldlmalloc -lemcc -lclang_rt.builtins -lsockets -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr' failed (returned 1)
+

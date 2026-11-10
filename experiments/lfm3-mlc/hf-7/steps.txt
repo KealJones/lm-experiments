@@ -1,0 +1,65 @@
+== 01:50:09 toolchain from kealjones/tp-parse-runs:lfm3-mlc-3/6af2353a9737d9a9e08d84d0
+== 01:50:23 python deps
+torch 2.15.0+cpu tvm_ffi 0.1.16.dev6+g6628c464e
+mlc_llm ok, lfm3 registered: True
+== 01:51:44 emscripten 7.0.0
+emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 7.0.0 (777e6e5db7b4990bcaeb1b9998ed642cc84e6629)
+== 01:52:08 download LiquidAI/LFM3-1.7B
+model at /root/.cache/huggingface/hub/models--LiquidAI--LFM3-1.7B/snapshots/1da06bec6a819da10b54c67e5c90972b46d81871
+total 0
+drwxr-xr-x. 2 root root 189 Nov 10 01:52 .
+drwxr-xr-x. 3 root root  54 Nov 10 01:52 ..
+lrwxrwxrwx. 1 root root  52 Nov 10 01:52 chat_template.jinja -> ../../blobs/d0747b8b5fc99eaecfe02a04eefcff75eb181334
+lrwxrwxrwx. 1 root root  52 Nov 10 01:52 config.json -> ../../blobs/99c878848ecd01f7b599148315c84634b5c5c656
+lrwxrwxrwx. 1 root root  52 Nov 10 01:52 generation_config.json -> ../../blobs/828e9a1ac7789d8b38af0dfe573ab6362598745b
+lrwxrwxrwx. 1 root root  76 Nov 10 01:52 model.safetensors -> ../../blobs/135922caef64e81e52af88ede8b7c3ddaa9d6da220a9737fb3065275dbfb4330
+lrwxrwxrwx. 1 root root  52 Nov 10 01:52 special_tokens_map.json -> ../../blobs/5d871daaacbf26aaa9cb47c2935f30e797ee35a7
+lrwxrwxrwx. 1 root root  76 Nov 10 01:52 tokenizer.json -> ../../blobs/7e226e34bface23ccf6e495d157bf77186c1c30a7659880e1a8994db528c3701
+lrwxrwxrwx. 1 root root  52 Nov 10 01:52 tokenizer_config.json -> ../../blobs/562b1ed0762f36c964646b8737081ced6af40754
+== 01:52:14 convert_weight q3f16_1
+== 01:54:41 gen_config q3f16_1
+mlc-chat-config: {'model_type': 'lfm3', 'quantization': 'q3f16_1', 'context_window_size': 4096, 'sliding_window_size': -1, 'prefill_chunk_size': 256, 'vocab_size': 128000, 'temperature': 0.1, 'repetition_penalty': 1.1}
+conv stop: [124900, 124895] [124894]
+== 01:54:49 compile webgpu q3f16_1
+== 01:54:49 compile webgpu q3f16_1, host object format o
+-rwxr-xr-x. 1 root root 6774597 Nov 10 01:56 /work/out/LFM3-1.7B-q3f16_1-webgpu.wasm
+
+/work/out/LFM3-1.7B-q3f16_1-MLC:
+total 787252
+drwxr-xr-x. 2 root root     16384 Nov 10 01:54 .
+drwxr-xr-x. 3 root root       118 Nov 10 01:55 ..
+-rw-r--r--. 1 root root      2977 Nov 10 01:54 mlc-chat-config.json
+-rw-r--r--. 1 root root 106496000 Nov 10 01:53 params_shard_0.bin
+-rw-r--r--. 1 root root  21012480 Nov 10 01:53 params_shard_1.bin
+-rw-r--r--. 1 root root  32058496 Nov 10 01:53 params_shard_10.bin
+-rw-r--r--. 1 root root  23388160 Nov 10 01:53 params_shard_11.bin
+-rw-r--r--. 1 root root  32058496 Nov 10 01:53 params_shard_12.bin
+-rw-r--r--. 1 root root  23388160 Nov 10 01:53 params_shard_13.bin
+-rw-r--r--. 1 root root  26279040 Nov 10 01:53 params_shard_14.bin
+-rw-r--r--. 1 root root  32058496 Nov 10 01:54 params_shard_15.bin
+-rw-r--r--. 1 root root  23388160 Nov 10 01:54 params_shard_16.bin
+-rw-r--r--. 1 root root  32058496 Nov 10 01:54 params_shard_17.bin
+-rw-r--r--. 1 root root  31084544 Nov 10 01:54 params_shard_18.bin
+-rw-r--r--. 1 root root  21471232 Nov 10 01:54 params_shard_19.bin
+-rw-r--r--. 1 root root  29167616 Nov 10 01:53 params_shard_2.bin
+-rw-r--r--. 1 root root  32058496 Nov 10 01:54 params_shard_20.bin
+-rw-r--r--. 1 root root  23388160 Nov 10 01:54 params_shard_21.bin
+-rw-r--r--. 1 root root  32058496 Nov 10 01:54 params_shard_22.bin
+-rw-r--r--. 1 root root  23388160 Nov 10 01:54 params_shard_23.bin
+-rw-r--r--. 1 root root  32058496 Nov 10 01:54 params_shard_24.bin
+-rw-r--r--. 1 root root  23388160 Nov 10 01:54 params_shard_25.bin
+-rw-r--r--. 1 root root  21471232 Nov 10 01:53 params_shard_3.bin
+-rw-r--r--. 1 root root  32058496 Nov 10 01:53 params_shard_4.bin
+-rw-r--r--. 1 root root  23388160 Nov 10 01:53 params_shard_5.bin
+-rw-r--r--. 1 root root  32058496 Nov 10 01:53 params_shard_6.bin
+-rw-r--r--. 1 root root  23388160 Nov 10 01:53 params_shard_7.bin
+-rw-r--r--. 1 root root  32058496 Nov 10 01:53 params_shard_8.bin
+-rw-r--r--. 1 root root  23388160 Nov 10 01:53 params_shard_9.bin
+-rw-r--r--. 1 root root    137171 Nov 10 01:54 tensor-cache.json
+-r--r--r--. 1 root root  17908635 Nov 10 01:54 tokenizer.json
+-rw-r--r--. 1 root root      1545 Nov 10 01:54 tokenizer_config.json
+769M	/work/out/LFM3-1.7B-q3f16_1-MLC
+== 01:56:16 upload q3f16_1
+uploaded https://huggingface.co/kealjones/LFM3-1.7B-q3f16_1-MLC
+== 01:56:23 convert_weight q3f32_1
+FAILED at: == 01:56:23 convert_weight q3f32_1

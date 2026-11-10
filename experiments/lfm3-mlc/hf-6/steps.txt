@@ -1,0 +1,122 @@
+== 23:02:54 toolchain from kealjones/tp-parse-runs:lfm3-mlc-3/6af2353a9737d9a9e08d84d0
+== 23:03:09 python deps
+torch 2.15.0+cpu tvm_ffi 0.1.16.dev6+g6628c464e
+mlc_llm ok, lfm3 registered: True
+== 23:04:13 emscripten 7.0.0
+emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 7.0.0 (777e6e5db7b4990bcaeb1b9998ed642cc84e6629)
+== 23:04:35 download LiquidAI/LFM3-1.7B
+model at /root/.cache/huggingface/hub/models--LiquidAI--LFM3-1.7B/snapshots/1da06bec6a819da10b54c67e5c90972b46d81871
+total 0
+drwxr-xr-x. 2 root root 189 Nov  9 23:04 .
+drwxr-xr-x. 3 root root  54 Nov  9 23:04 ..
+lrwxrwxrwx. 1 root root  52 Nov  9 23:04 chat_template.jinja -> ../../blobs/d0747b8b5fc99eaecfe02a04eefcff75eb181334
+lrwxrwxrwx. 1 root root  52 Nov  9 23:04 config.json -> ../../blobs/99c878848ecd01f7b599148315c84634b5c5c656
+lrwxrwxrwx. 1 root root  52 Nov  9 23:04 generation_config.json -> ../../blobs/828e9a1ac7789d8b38af0dfe573ab6362598745b
+lrwxrwxrwx. 1 root root  76 Nov  9 23:04 model.safetensors -> ../../blobs/135922caef64e81e52af88ede8b7c3ddaa9d6da220a9737fb3065275dbfb4330
+lrwxrwxrwx. 1 root root  52 Nov  9 23:04 special_tokens_map.json -> ../../blobs/5d871daaacbf26aaa9cb47c2935f30e797ee35a7
+lrwxrwxrwx. 1 root root  76 Nov  9 23:04 tokenizer.json -> ../../blobs/7e226e34bface23ccf6e495d157bf77186c1c30a7659880e1a8994db528c3701
+lrwxrwxrwx. 1 root root  52 Nov  9 23:04 tokenizer_config.json -> ../../blobs/562b1ed0762f36c964646b8737081ced6af40754
+== 23:04:40 convert_weight q4f16_1
+== 23:07:06 gen_config q4f16_1
+mlc-chat-config: {'model_type': 'lfm3', 'quantization': 'q4f16_1', 'context_window_size': 4096, 'sliding_window_size': -1, 'prefill_chunk_size': 256, 'vocab_size': 128000, 'temperature': 0.1, 'repetition_penalty': 1.1}
+conv stop: [124900, 124895] [124894]
+== 23:07:12 compile webgpu q4f16_1
+== 23:07:12 compile webgpu q4f16_1, host object format o
+-rwxr-xr-x. 1 root root 6728861 Nov  9 23:08 /work/out/LFM3-1.7B-q4f16_1-webgpu.wasm
+
+/work/out/LFM3-1.7B-q4f16_1-MLC:
+total 967872
+drwxr-xr-x. 2 root root     16384 Nov  9 23:07 .
+drwxr-xr-x. 3 root root       118 Nov  9 23:08 ..
+-rw-r--r--. 1 root root      2977 Nov  9 23:07 mlc-chat-config.json
+-rw-r--r--. 1 root root 131072000 Nov  9 23:05 params_shard_0.bin
+-rw-r--r--. 1 root root  25853952 Nov  9 23:05 params_shard_1.bin
+-rw-r--r--. 1 root root  27131904 Nov  9 23:05 params_shard_10.bin
+-rw-r--r--. 1 root root  26558464 Nov  9 23:06 params_shard_11.bin
+-rw-r--r--. 1 root root  24246784 Nov  9 23:06 params_shard_12.bin
+-rw-r--r--. 1 root root  26558464 Nov  9 23:06 params_shard_13.bin
+-rw-r--r--. 1 root root  32504320 Nov  9 23:06 params_shard_14.bin
+-rw-r--r--. 1 root root  27131904 Nov  9 23:06 params_shard_15.bin
+-rw-r--r--. 1 root root  26558464 Nov  9 23:06 params_shard_16.bin
+-rw-r--r--. 1 root root  32475648 Nov  9 23:06 params_shard_17.bin
+-rw-r--r--. 1 root root  24246784 Nov  9 23:06 params_shard_18.bin
+-rw-r--r--. 1 root root  26558464 Nov  9 23:06 params_shard_19.bin
+-rw-r--r--. 1 root root  32878592 Nov  9 23:05 params_shard_2.bin
+-rw-r--r--. 1 root root  32504320 Nov  9 23:06 params_shard_20.bin
+-rw-r--r--. 1 root root  27131904 Nov  9 23:06 params_shard_21.bin
+-rw-r--r--. 1 root root  18329600 Nov  9 23:06 params_shard_22.bin
+-rw-r--r--. 1 root root  26558464 Nov  9 23:06 params_shard_23.bin
+-rw-r--r--. 1 root root  32504320 Nov  9 23:06 params_shard_24.bin
+-rw-r--r--. 1 root root  27131904 Nov  9 23:06 params_shard_25.bin
+-rw-r--r--. 1 root root  26558464 Nov  9 23:06 params_shard_26.bin
+-rw-r--r--. 1 root root  24246784 Nov  9 23:06 params_shard_27.bin
+-rw-r--r--. 1 root root  26558464 Nov  9 23:06 params_shard_28.bin
+-rw-r--r--. 1 root root  32504320 Nov  9 23:07 params_shard_29.bin
+-rw-r--r--. 1 root root  29704192 Nov  9 23:05 params_shard_3.bin
+-rw-r--r--. 1 root root  27131904 Nov  9 23:07 params_shard_30.bin
+-rw-r--r--. 1 root root   8863744 Nov  9 23:07 params_shard_31.bin
+-rw-r--r--. 1 root root  32504320 Nov  9 23:05 params_shard_4.bin
+-rw-r--r--. 1 root root  27131904 Nov  9 23:05 params_shard_5.bin
+-rw-r--r--. 1 root root  26558464 Nov  9 23:05 params_shard_6.bin
+-rw-r--r--. 1 root root  24246784 Nov  9 23:05 params_shard_7.bin
+-rw-r--r--. 1 root root  26558464 Nov  9 23:05 params_shard_8.bin
+-rw-r--r--. 1 root root  32504320 Nov  9 23:05 params_shard_9.bin
+-rw-r--r--. 1 root root    138424 Nov  9 23:07 tensor-cache.json
+-r--r--r--. 1 root root  17908635 Nov  9 23:07 tokenizer.json
+-rw-r--r--. 1 root root      1545 Nov  9 23:07 tokenizer_config.json
+946M	/work/out/LFM3-1.7B-q4f16_1-MLC
+== 23:08:27 upload q4f16_1
+uploaded https://huggingface.co/kealjones/LFM3-1.7B-q4f16_1-MLC
+== 23:08:32 convert_weight q4f32_1
+== 23:09:13 gen_config q4f32_1
+mlc-chat-config: {'model_type': 'lfm3', 'quantization': 'q4f32_1', 'context_window_size': 4096, 'sliding_window_size': -1, 'prefill_chunk_size': 256, 'vocab_size': 128000, 'temperature': 0.1, 'repetition_penalty': 1.1}
+conv stop: [124900, 124895] [124894]
+== 23:09:20 compile webgpu q4f32_1
+== 23:09:20 compile webgpu q4f32_1, host object format o
+-rwxr-xr-x. 1 root root 6670311 Nov  9 23:10 /work/out/LFM3-1.7B-q4f32_1-webgpu.wasm
+
+/work/out/LFM3-1.7B-q4f32_1-MLC:
+total 968008
+drwxr-xr-x. 2 root root     16384 Nov  9 23:09 .
+drwxr-xr-x. 4 root root       167 Nov  9 23:10 ..
+-rw-r--r--. 1 root root      2977 Nov  9 23:09 mlc-chat-config.json
+-rw-r--r--. 1 root root 131072000 Nov  9 23:08 params_shard_0.bin
+-rw-r--r--. 1 root root  25853952 Nov  9 23:09 params_shard_1.bin
+-rw-r--r--. 1 root root  27131904 Nov  9 23:09 params_shard_10.bin
+-rw-r--r--. 1 root root  26558464 Nov  9 23:09 params_shard_11.bin
+-rw-r--r--. 1 root root  24246784 Nov  9 23:09 params_shard_12.bin
+-rw-r--r--. 1 root root  26558464 Nov  9 23:09 params_shard_13.bin
+-rw-r--r--. 1 root root  32504320 Nov  9 23:09 params_shard_14.bin
+-rw-r--r--. 1 root root  27131904 Nov  9 23:09 params_shard_15.bin
+-rw-r--r--. 1 root root  26558464 Nov  9 23:09 params_shard_16.bin
+-rw-r--r--. 1 root root  32475648 Nov  9 23:09 params_shard_17.bin
+-rw-r--r--. 1 root root  24246784 Nov  9 23:09 params_shard_18.bin
+-rw-r--r--. 1 root root  26558464 Nov  9 23:09 params_shard_19.bin
+-rw-r--r--. 1 root root  32878592 Nov  9 23:09 params_shard_2.bin
+-rw-r--r--. 1 root root  32504320 Nov  9 23:09 params_shard_20.bin
+-rw-r--r--. 1 root root  27131904 Nov  9 23:09 params_shard_21.bin
+-rw-r--r--. 1 root root  18329600 Nov  9 23:09 params_shard_22.bin
+-rw-r--r--. 1 root root  26558464 Nov  9 23:09 params_shard_23.bin
+-rw-r--r--. 1 root root  32504320 Nov  9 23:09 params_shard_24.bin
+-rw-r--r--. 1 root root  27131904 Nov  9 23:09 params_shard_25.bin
+-rw-r--r--. 1 root root  26558464 Nov  9 23:09 params_shard_26.bin
+-rw-r--r--. 1 root root  24246784 Nov  9 23:09 params_shard_27.bin
+-rw-r--r--. 1 root root  26558464 Nov  9 23:09 params_shard_28.bin
+-rw-r--r--. 1 root root  32504320 Nov  9 23:09 params_shard_29.bin
+-rw-r--r--. 1 root root  29704192 Nov  9 23:09 params_shard_3.bin
+-rw-r--r--. 1 root root  27131904 Nov  9 23:09 params_shard_30.bin
+-rw-r--r--. 1 root root   8863744 Nov  9 23:09 params_shard_31.bin
+-rw-r--r--. 1 root root  32504320 Nov  9 23:09 params_shard_4.bin
+-rw-r--r--. 1 root root  27131904 Nov  9 23:09 params_shard_5.bin
+-rw-r--r--. 1 root root  26558464 Nov  9 23:09 params_shard_6.bin
+-rw-r--r--. 1 root root  24246784 Nov  9 23:09 params_shard_7.bin
+-rw-r--r--. 1 root root  26558464 Nov  9 23:09 params_shard_8.bin
+-rw-r--r--. 1 root root  32504320 Nov  9 23:09 params_shard_9.bin
+-rw-r--r--. 1 root root    136745 Nov  9 23:09 tensor-cache-b16.json
+-rw-r--r--. 1 root root    138425 Nov  9 23:09 tensor-cache.json
+-r--r--r--. 1 root root  17908635 Nov  9 23:09 tokenizer.json
+-rw-r--r--. 1 root root      1545 Nov  9 23:09 tokenizer_config.json
+946M	/work/out/LFM3-1.7B-q4f32_1-MLC
+== 23:10:31 upload q4f32_1
+uploaded https://huggingface.co/kealjones/LFM3-1.7B-q4f32_1-MLC
+== 23:10:54 done

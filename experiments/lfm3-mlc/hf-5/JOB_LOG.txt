@@ -1,0 +1,327 @@
+job 6af24b90ab34849891a947c1 on cpu: lfm3-mlc-5 at 7b0ecff
+fetched experiments/lfm3-mlc/build_lfm3.sh
+fetched experiments/lfm3-mlc/compile_wasm.py
+fetched experiments/lfm3-mlc/register_lfm3.py
+fetched experiments/lfm3-mlc/lfm3_model.py
+fetched experiments/lfm3-mlc/lfm3_loader.py
+fetched experiments/lfm3-mlc/lfm3_conv.py
+== 22:39:28 toolchain from kealjones/tp-parse-runs:lfm3-mlc-3/6af2353a9737d9a9e08d84d0
+debconf: delaying package configuration, since apt-utils is not installed
+[notice] To update, run: pip install --upgrade pip
+
+
+Downloading bytes:           |  0.00B            [A
+
+Reconstructing (incomplete total...): |          |  0.00B /  0.00B            [A
+
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s][A
+
+Reconstructing (incomplete total...):   0%|          |  0.00B / 43.2MB            [A
+
+Reconstructing (incomplete total...):   0%|          |  0.00B / 43.2MB            [A
+
+Reconstructing (incomplete total...):   0%|          |  0.00B / 43.3MB            [A
+Fetching 3 files: 100%|██████████| 3/3 [00:00<00:00,  3.93it/s]
+
+
+Downloading bytes: ██████████| 43.2MB,   ???B/s  [A
+
+Download complete: ██████████| 43.2MB,   ???B/s  [A
+
+Reconstruction complete: 100%|██████████| 43.3MB / 43.3MB,   ???B/s               [A
+Download complete: ██████████| 43.2MB,   ???B/s  
+
+Reconstruction complete: 100%|██████████| 43.3MB / 43.3MB,   ???B/s  
+[notice] To update, run: pip install --upgrade pip
+== 22:39:40 python deps
+[notice] To update, run: pip install --upgrade pip
+[notice] To update, run: pip install --upgrade pip
+[notice] To update, run: pip install --upgrade pip
+torch 2.15.0+cpu tvm_ffi 0.1.16.dev6+g6628c464e
+[22:40:35] src/codegen/llvm/llvm_instance.cc:218: Error: Using LLVM 16.0.6 with `-mcpu=neoverse-v3ae` is not valid in `-mtriple=aarch64-linux-gnu`, using default `-mcpu=generic`
+mlc_llm: serve not available: Cannot find object type index for mlc.serve.Data
+mlc_llm ok, lfm3 registered: True
+== 22:40:36 emscripten 7.0.0
+Setting up EMSDK environment (suppress these messages with EMSDK_QUIET=1)
+Adding directories to PATH:
+PATH += /work/emsdk
+PATH += /work/emsdk/upstream/emscripten
+PATH += /work/emsdk/node/24.19.0_64bit/bin
+
+Setting environment variables:
+PATH = /work/emsdk:/work/emsdk/upstream/emscripten:/work/emsdk/node/24.19.0_64bit/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+EMSDK = /work/emsdk
+EMSDK_NODE = /work/emsdk/node/24.19.0_64bit/bin/node
+Clearing existing environment variable: EMSDK_VERSION
+shared:INFO: (Emscripten: Running sanity checks)
+emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 7.0.0 (777e6e5db7b4990bcaeb1b9998ed642cc84e6629)
+== 22:41:00 download LiquidAI/LFM3-1.7B
+
+
+Downloading bytes:           |  0.00B            [A
+
+Reconstructing (incomplete total...): |          |  0.00B /  0.00B            [A
+
+Fetching 7 files:   0%|          | 0/7 [00:00<?, ?it/s][A
+
+Reconstructing (incomplete total...):   0%|          |  0.00B / 3.46GB            [A
+
+Reconstructing (incomplete total...):   0%|          |  0.00B / 3.48GB            [A
+
+Reconstructing (incomplete total...):   0%|          |  0.00B / 3.48GB            [A
+
+Reconstructing (incomplete total...):   0%|          |   328B / 3.48GB            [A
+
+Reconstructing (incomplete total...):   0%|          | 12.5kB / 3.48GB            [A
+
+Reconstructing (incomplete total...):   0%|          | 13.9kB / 3.48GB            [A
+
+Reconstructing (incomplete total...):   0%|          | 14.0kB / 3.48GB            [A
+
+Reconstructing (incomplete total...):   8%|▊         |  286MB / 3.48GB,   ???B/s  [A
+
+Downloading bytes: ▊         |  287MB,   ???B/s  [A
+
+Downloading bytes: ██▌       |  910MB,  265MB/s  [A
+
+Reconstructing (incomplete total...):  24%|██▎       |  823MB / 3.48GB,  264MB/s  [A
+
+Downloading bytes: ████▋     | 1.63GB,  468MB/s  [A
+
+Reconstructing (incomplete total...):  56%|█████▋    | 1.96GB / 3.48GB,  396MB/s  [A
+
+Downloading bytes: ███████▎  | 2.56GB,  575MB/s  [A
+
+Reconstructing (incomplete total...):  83%|████████▎ | 2.90GB / 3.48GB,  653MB/s  [A
+
+Fetching 7 files: 100%|██████████| 7/7 [00:05<00:00,  1.30it/s][A
+Fetching 7 files: 100%|██████████| 7/7 [00:05<00:00,  1.30it/s]
+
+
+Downloading bytes: ██████████| 3.00GB,  710MB/s  [A
+
+Download complete: ██████████| 3.00GB,  710MB/s  [A
+
+Reconstruction complete: 100%|██████████| 3.48GB / 3.48GB,  755MB/s               [Amodel at /root/.cache/huggingface/hub/models--LiquidAI--LFM3-1.7B/snapshots/1da06bec6a819da10b54c67e5c90972b46d81871
+
+Download complete: ██████████| 3.00GB,  710MB/s  
+
+Reconstruction complete: 100%|██████████| 3.48GB / 3.48GB,  755MB/s  
+total 0
+drwxr-xr-x. 2 root root 189 Nov  9 22:41 .
+drwxr-xr-x. 3 root root  54 Nov  9 22:41 ..
+lrwxrwxrwx. 1 root root  52 Nov  9 22:41 chat_template.jinja -> ../../blobs/d0747b8b5fc99eaecfe02a04eefcff75eb181334
+lrwxrwxrwx. 1 root root  52 Nov  9 22:41 config.json -> ../../blobs/99c878848ecd01f7b599148315c84634b5c5c656
+lrwxrwxrwx. 1 root root  52 Nov  9 22:41 generation_config.json -> ../../blobs/828e9a1ac7789d8b38af0dfe573ab6362598745b
+lrwxrwxrwx. 1 root root  76 Nov  9 22:41 model.safetensors -> ../../blobs/135922caef64e81e52af88ede8b7c3ddaa9d6da220a9737fb3065275dbfb4330
+lrwxrwxrwx. 1 root root  52 Nov  9 22:41 special_tokens_map.json -> ../../blobs/5d871daaacbf26aaa9cb47c2935f30e797ee35a7
+lrwxrwxrwx. 1 root root  76 Nov  9 22:41 tokenizer.json -> ../../blobs/7e226e34bface23ccf6e495d157bf77186c1c30a7659880e1a8994db528c3701
+lrwxrwxrwx. 1 root root  52 Nov  9 22:41 tokenizer_config.json -> ../../blobs/562b1ed0762f36c964646b8737081ced6af40754
+== 22:41:06 convert_weight q4f16_1
+
+                                                 
+[A[2026-11-09 22:43:32] INFO huggingface_loader.py:178: [Not quantized] Parameter: "[1mmodel.layers.9.post_ffn_norm.weight[0m", shape: (2048,), dtype: float16
+
+
+ 99%|█████████▉| 237/240 [02:00<00:01,  2.22it/s][A
+
+                                                 
+[A[2026-11-09 22:43:32] INFO huggingface_loader.py:178: [Not quantized] Parameter: "[1mmodel.layers.9.post_operator_norm.weight[0m", shape: (2048,), dtype: float16
+
+
+ 99%|█████████▉| 237/240 [02:00<00:01,  2.22it/s][A
+100%|██████████| 240/240 [02:00<00:00,  1.99it/s]
+[2026-11-09 22:43:32] INFO huggingface_loader.py:200: Unloading HF weight file: hf-model/model.safetensors
+[2026-11-09 22:43:32] INFO stats.py:77: [92mTime usage[0m: HF loading: 0.118 sec; Pre-quantization mapping: 2.138 sec; Quantization: 113.160 sec
+[2026-11-09 22:43:32] INFO stats.py:88: [92mRAM usage[0m: Peak RAM: 3.220 GB. Total bytes loaded from disk: 3.220 GB
+
+All finished, 32 total shards committed, record saved to /work/out/LFM3-1.7B-q4f16_1-MLC/tensor-cache.json
+[2026-11-09 22:43:32] INFO convert_weight.py:226: [92mParameter size[0m after quantization: 0.906 GB
+[2026-11-09 22:43:32] INFO convert_weight.py:231: [92mTotal parameters[0m: 1,728,801,536
+[2026-11-09 22:43:32] INFO convert_weight.py:232: [92mBits per parameter[0m: 4.503
+[2026-11-09 22:43:32] INFO convert_weight.py:237: Saved to directory: [1m/work/out/LFM3-1.7B-q4f16_1-MLC[0m
+== 22:43:32 gen_config q4f16_1
+[2026-11-09 22:43:36] INFO gen_config.py:204: [91mNot found[0m tokenizer config: hf-model/vocab.json
+[2026-11-09 22:43:36] INFO gen_config.py:204: [91mNot found[0m tokenizer config: hf-model/merges.txt
+[2026-11-09 22:43:36] INFO gen_config.py:204: [91mNot found[0m tokenizer config: hf-model/added_tokens.json
+[2026-11-09 22:43:36] INFO gen_config.py:202: [92mFound[0m tokenizer config: hf-model/tokenizer_config.json. Copying to [1m/work/out/LFM3-1.7B-q4f16_1-MLC/tokenizer_config.json[0m
+[2026-11-09 22:43:36] INFO gen_config.py:273: Detected tokenizer info: {'token_postproc_method': 'byte_level', 'prepend_space_in_encode': False, 'strip_space_in_decode': False}
+[2026-11-09 22:43:36] INFO gen_config.py:62: [System default] Setting [1mpresence_penalty[0m: 0.0
+[2026-11-09 22:43:36] INFO gen_config.py:62: [System default] Setting [1mfrequency_penalty[0m: 0.0
+[2026-11-09 22:43:36] INFO gen_config.py:62: [System default] Setting [1mtop_p[0m: 1.0
+The repository hf-model contains custom code which must be executed to correctly load the model. You can inspect the repository content at /work/hf-model .
+ You can inspect the repository content at https://hf.co/hf-model.
+You can avoid this prompt in future by passing the argument `trust_remote_code=True`.
+
+Do you wish to run the custom code? [y/N] [transformers] You are using a model of type `lfm3` to instantiate a model of type ``. This may be expected if you are loading a checkpoint that shares a subset of the architecture (e.g., loading a `sam2_video` checkpoint into `Sam2Model`), but is otherwise not supported and can yield errors. Please verify that the checkpoint is compatible with the model you are instantiating.
+[2026-11-09 22:43:38] INFO gen_config.py:309: Overriding active_vocab_size from 128000 to 125033 using HF tokenizer
+[2026-11-09 22:43:38] INFO gen_config.py:325: Dumping configuration file to: [1m/work/out/LFM3-1.7B-q4f16_1-MLC/mlc-chat-config.json[0m
+mlc-chat-config: {'model_type': 'lfm3', 'quantization': 'q4f16_1', 'context_window_size': 4096, 'sliding_window_size': -1, 'prefill_chunk_size': 256, 'vocab_size': 128000, 'temperature': 0.1, 'repetition_penalty': 1.1}
+conv stop: [124900, 124895] [124894]
+== 22:43:39 compile webgpu q4f16_1
+== 22:43:39 compile webgpu q4f16_1, host object format bc
+compile with bc failed; log tail:
+[22:43:41] src/codegen/llvm/llvm_instance.cc:218: Error: Using LLVM 16.0.6 with `-mcpu=neoverse-v3ae` is not valid in `-mtriple=aarch64-linux-gnu`, using default `-mcpu=generic`
+compile_wasm: host object format bc
+mlc_llm: serve not available: Cannot find object type index for mlc.serve.Data
+[1mCompiling with arguments:[0m
+  [1m--config[0m          Lfm3Config(hidden_size=2048, intermediate_size=7680, num_attention_heads=16, num_hidden_layers=24, num_key_value_heads=4, norm_eps=1e-05, vocab_size=128000, head_dim=128, tie_word_embeddings=True, conv_L_cache=7, conv_bias=False, use_sandwich_norm=True, layer_types=['conv', 'conv', 'full_attention', 'conv', 'sliding_attention', 'conv', 'full_attention', 'conv', 'sliding_attention', 'conv', 'full_attention', 'conv', 'sliding_attention', 'conv', 'full_attention', 'conv', 'sliding_attention', 'conv', 'full_attention', 'conv', 'sliding_attention', 'conv', 'full_attention', 'conv'], sliding_window=256, rope_parameters={'full_attention': {'partial_rotary_factor': 0.5, 'rope_theta': 1000000.0, 'rope_type': 'default'}, 'sliding_attention': {'rope_theta': 10000, 'rope_type': 'default'}}, context_window_size=4096, prefill_chunk_size=256, sliding_window_size=-1, tensor_parallel_shards=1, dtype='bfloat16', max_batch_size=128, kwargs={'active_vocab_size': 125033})
+  [1m--quantization[0m    GroupQuantize(name='q4f16_1', kind='group-quant', group_size=32, quantize_dtype='int4', storage_dtype='uint32', model_dtype='float16', linear_weight_layout='NK', quantize_embedding=True, quantize_final_fc=True, num_elem_per_storage=8, num_storage_per_group=4, max_int_value=7, tensor_parallel_shards=0)
+  [1m--model-type[0m      lfm3
+  [1m--target[0m          {"kind": "webgpu", "tag": "", "keys": ("webgpu", "gpu"), "host": {"kind": "llvm", "tag": "", "keys": ("cpu",), "mtriple": "wasm32-unknown-unknown-wasm"}, "thread_warp_size": 1, "supports_subgroups": False, "max_shared_memory_per_block": 32768, "max_num_threads": 256}
+  [1m--opt[0m             flashinfer=0;cublas_gemm=0;faster_transformer=0;cudagraph=0;cutlass=0;ipc_allreduce_strategy=NONE
+  [1m--system-lib-prefix[0m ""
+  [1m--output[0m          /work/out/LFM3-1.7B-q4f16_1-webgpu.wasm
+  [1m--overrides[0m       context_window_size=None;sliding_window_size=None;prefill_chunk_size=None;attention_sink_size=None;max_batch_size=None;tensor_parallel_shards=None;pipeline_parallel_stages=None;disaggregation=None
+[1m--system-lib-prefix[0m is not specified when building a static library
+[22:43:47] /work/tvm/include/tvm/topi/transform.h:1258: Warning: Fast mode segfaults when there are out-of-bounds indices. Make sure input indices are in bound
+[22:43:47] /work/tvm/include/tvm/topi/transform.h:1258: Warning: Fast mode segfaults when there are out-of-bounds indices. Make sure input indices are in bound
+[22:44:08] src/codegen/llvm/llvm_instance.cc:970: Warning: Set native vector bits to be 128 for `wasm32`, use -vector-width=XXX to override.
+Compilation error:
+warning: overriding the module target triple with wasm32-unknown-emscripten [-Woverride-module]
+fatal error: error in backend: Can't create a MachineFunction using a Module with a Target-incompatible DataLayout attached
+  Target DataLayout: e-m:e-p:32:32-p10:8:8-p20:8:8-i64:64-i128:128-f128:64-n32:64-S128-ni:1:10:20
+  Module DataLayout: e-m:e-p:32:32-p10:8:8-p20:8:8-i64:64-i128:128-n32:64-S128-ni:1:10:20
+
+PLEASE submit a bug report to https://github.com/llvm/llvm-project/issues/ and include the crash backtrace and dumped files.
+Stack dump:
+0.	Program arguments: /work/emsdk/upstream/bin/clang -target wasm32-unknown-emscripten -fignore-exceptions -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr --sysroot=/work/emsdk/upstream/emscripten/cache/sysroot -Xclang -iwithsysroot/include/fakesdl -Xclang -iwithsysroot/include/compat -O3 -std=c++17 -c /tmp/tmp0nhs50vv/lib0.bc -o /tmp/emscripten_temp_wyp7dcsj/lib0.o -dumpdir /work/out/LFM3-1.7B-q4f16_1-webgpu.wasm-
+1.	Code generation
+2.	Running pass 'Function Pass Manager' on module '/tmp/tmp0nhs50vv/lib0.bc'.
+3.	Running pass 'WebAssembly Instruction Selection' on function '@__tvm_ffi_apply_bitmask_inplace'
+ #0 0x000055a6446623cb llvm::sys::PrintStackTrace(llvm::raw_ostream&, int) (/work/emsdk/upstream/bin/clang+0x402a3cb)
+ #1 0x000055a64465e7d5 llvm::sys::RunSignalHandlers() (/work/emsdk/upstream/bin/clang+0x40267d5)
+ #2 0x000055a644660eba llvm::sys::CleanupOnSignal(unsigned long) (/work/emsdk/upstream/bin/clang+0x4028eba)
+--
+ #4 0x000055a6445b23ab (/work/emsdk/upstream/bin/clang+0x3f7a3ab)
+ #5 0x000055a64465b2cb (/work/emsdk/upstream/bin/clang+0x40232cb)
+ #6 0x000055a6431bf2f1 (/work/emsdk/upstream/bin/clang+0x2b872f1)
+ #7 0x000055a6445b92af llvm::report_fatal_error(llvm::Twine const&, bool) (/work/emsdk/upstream/bin/clang+0x3f812af)
+ #8 0x000055a643a68e59 (/work/emsdk/upstream/bin/clang+0x3430e59)
+ #9 0x000055a643aa96c9 llvm::MachineModuleInfo::getOrCreateMachineFunction(llvm::Function&) (/work/emsdk/upstream/bin/clang+0x34716c9)
+clang: error: clang frontend command failed with exit code 70 (use -v to see invocation)
+clang version 24.0.0git (https://github.com/llvm/llvm-project 84ba7b37f02df5a5567e31a1bcfa0f607e578f12)
+Target: wasm32-unknown-emscripten
+Thread model: posix
+InstalledDir: /work/emsdk/upstream/bin
+clang: note: diagnostic msg: 
+********************
+
+PLEASE ATTACH THE FOLLOWING CRASH REPRODUCER FILES TO THE BUG REPORT:
+clang: note: diagnostic msg: /tmp/lib0-b99155.bc
+clang: note: diagnostic msg: /tmp/lib0-b99155.sh
+clang: note: diagnostic msg: 
+
+********************
+emcc: error: '/work/emsdk/upstream/bin/clang -target wasm32-unknown-emscripten -fignore-exceptions -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr --sysroot=/work/emsdk/upstream/emscripten/cache/sysroot -Xclang -iwithsysroot/include/fakesdl -Xclang -iwithsysroot/include/compat -O3 -std=c++17 -c /tmp/tmp0nhs50vv/lib0.bc -o /tmp/emscripten_temp_wyp7dcsj/lib0.o -dumpdir /work/out/LFM3-1.7B-q4f16_1-webgpu.wasm-' failed (returned 1)
+
+Traceback (most recent call last):
+  File "/work/compile_wasm.py", line 22, in <module>
+    cli.main(sys.argv[1:])
+  File "/work/tc/mlc-llm/python/mlc_llm/cli/compile.py", line 141, in main
+    compile(
+  File "/work/tc/mlc-llm/python/mlc_llm/interface/compile.py", line 294, in compile
+    _compile(args, model_config)
+  File "/work/tc/mlc-llm/python/mlc_llm/interface/compile.py", line 235, in _compile
+    args.build_func(
+  File "/work/tc/mlc-llm/python/mlc_llm/support/auto_target.py", line 285, in build
+    ).export_library(
+--
+    return fcompile(file_name, files, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tc/tvm/python/tvm/contrib/emcc.py", line 142, in create_wasm
+    raise RuntimeError(msg)
+RuntimeError: Compilation error:
+warning: overriding the module target triple with wasm32-unknown-emscripten [-Woverride-module]
+fatal error: error in backend: Can't create a MachineFunction using a Module with a Target-incompatible DataLayout attached
+  Target DataLayout: e-m:e-p:32:32-p10:8:8-p20:8:8-i64:64-i128:128-f128:64-n32:64-S128-ni:1:10:20
+  Module DataLayout: e-m:e-p:32:32-p10:8:8-p20:8:8-i64:64-i128:128-n32:64-S128-ni:1:10:20
+
+PLEASE submit a bug report to https://github.com/llvm/llvm-project/issues/ and include the crash backtrace and dumped files.
+Stack dump:
+0.	Program arguments: /work/emsdk/upstream/bin/clang -target wasm32-unknown-emscripten -fignore-exceptions -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr --sysroot=/work/emsdk/upstream/emscripten/cache/sysroot -Xclang -iwithsysroot/include/fakesdl -Xclang -iwithsysroot/include/compat -O3 -std=c++17 -c /tmp/tmp0nhs50vv/lib0.bc -o /tmp/emscripten_temp_wyp7dcsj/lib0.o -dumpdir /work/out/LFM3-1.7B-q4f16_1-webgpu.wasm-
+1.	Code generation
+== 22:44:35 compile webgpu q4f16_1, host object format o
+compile with o failed; log tail:
+[22:44:38] src/codegen/llvm/llvm_instance.cc:218: Error: Using LLVM 16.0.6 with `-mcpu=neoverse-v3ae` is not valid in `-mtriple=aarch64-linux-gnu`, using default `-mcpu=generic`
+compile_wasm: host object format o
+mlc_llm: serve not available: Cannot find object type index for mlc.serve.Data
+[1mCompiling with arguments:[0m
+  [1m--config[0m          Lfm3Config(hidden_size=2048, intermediate_size=7680, num_attention_heads=16, num_hidden_layers=24, num_key_value_heads=4, norm_eps=1e-05, vocab_size=128000, head_dim=128, tie_word_embeddings=True, conv_L_cache=7, conv_bias=False, use_sandwich_norm=True, layer_types=['conv', 'conv', 'full_attention', 'conv', 'sliding_attention', 'conv', 'full_attention', 'conv', 'sliding_attention', 'conv', 'full_attention', 'conv', 'sliding_attention', 'conv', 'full_attention', 'conv', 'sliding_attention', 'conv', 'full_attention', 'conv', 'sliding_attention', 'conv', 'full_attention', 'conv'], sliding_window=256, rope_parameters={'full_attention': {'partial_rotary_factor': 0.5, 'rope_theta': 1000000.0, 'rope_type': 'default'}, 'sliding_attention': {'rope_theta': 10000, 'rope_type': 'default'}}, context_window_size=4096, prefill_chunk_size=256, sliding_window_size=-1, tensor_parallel_shards=1, dtype='bfloat16', max_batch_size=128, kwargs={'active_vocab_size': 125033})
+  [1m--quantization[0m    GroupQuantize(name='q4f16_1', kind='group-quant', group_size=32, quantize_dtype='int4', storage_dtype='uint32', model_dtype='float16', linear_weight_layout='NK', quantize_embedding=True, quantize_final_fc=True, num_elem_per_storage=8, num_storage_per_group=4, max_int_value=7, tensor_parallel_shards=0)
+  [1m--model-type[0m      lfm3
+  [1m--target[0m          {"kind": "webgpu", "tag": "", "keys": ("webgpu", "gpu"), "host": {"kind": "llvm", "tag": "", "keys": ("cpu",), "mtriple": "wasm32-unknown-unknown-wasm"}, "thread_warp_size": 1, "supports_subgroups": False, "max_shared_memory_per_block": 32768, "max_num_threads": 256}
+  [1m--opt[0m             flashinfer=0;cublas_gemm=0;faster_transformer=0;cudagraph=0;cutlass=0;ipc_allreduce_strategy=NONE
+  [1m--system-lib-prefix[0m ""
+  [1m--output[0m          /work/out/LFM3-1.7B-q4f16_1-webgpu.wasm
+  [1m--overrides[0m       context_window_size=None;sliding_window_size=None;prefill_chunk_size=None;attention_sink_size=None;max_batch_size=None;tensor_parallel_shards=None;pipeline_parallel_stages=None;disaggregation=None
+[1m--system-lib-prefix[0m is not specified when building a static library
+[22:44:43] /work/tvm/include/tvm/topi/transform.h:1258: Warning: Fast mode segfaults when there are out-of-bounds indices. Make sure input indices are in bound
+[22:44:44] /work/tvm/include/tvm/topi/transform.h:1258: Warning: Fast mode segfaults when there are out-of-bounds indices. Make sure input indices are in bound
+[22:45:05] src/codegen/llvm/llvm_instance.cc:970: Warning: Set native vector bits to be 128 for `wasm32`, use -vector-width=XXX to override.
+Compilation error:
+emcc: warning: WASM_BIGINT is deprecated (no longer needed. Should only ever be implicitly disabled by -sWASM=0). Please open a bug if you have a continuing need for this setting [-Wdeprecated]
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: typeinfo for std::bad_alloc
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: typeinfo for std::bad_alloc
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_streambuf<char, std::__2::char_traits<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_stringbuf<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_streambuf<char, std::__2::char_traits<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_stringbuf<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: too many errors emitted, stopping now (use -error-limit=0 to see all errors)
+emcc: warning: link failed with undefined C++ symbols. Try linking with 'em++' or passing '-sDEFAULT_TO_CXX'
+emcc: error: '/work/emsdk/upstream/bin/wasm-ld -o /work/out/LFM3-1.7B-q4f16_1-webgpu.wasm /tmp/tmp7z3kjmrklibemscripten_js_symbols.so -Bstatic --import-undefined --strip-debug --export-if-defined=setThrew --export-if-defined=emscripten_stack_get_current --export-if-defined=_emscripten_stack_restore --export-if-defined=__start_em_asm --export-if-defined=__stop_em_asm --export-if-defined=__start_em_lib_deps --export-if-defined=__stop_em_lib_deps --export-if-defined=__start_em_js --export-if-defined=__stop_em_js --export-table -z stack-size=65536 --max-memory=2147483648 --initial-memory=167772160 --entry=_initialize --no-stack-first --table-base=1 --global-base=1024 /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o /tmp/emscripten_temp_xjr2rsqb/tvmjs_support.o /tmp/emscripten_temp_xjr2rsqb/webgpu_runtime.o /tmp/emscripten_temp_xjr2rsqb/mlc_wasm_runtime.o /tmp/tmpjqxr9b5t/lib0.o /tmp/tmpjqxr9b5t/devc.o -L/work/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten -L/work/emsdk/upstream/emscripten/src/lib /work/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/crt1_reactor.o -lGL-getprocaddr -lal -lhtml5 -lstandalonewasm-nocatch-memgrow -lstubs -lnoexit -lc -ldlmalloc -lemcc -lclang_rt.builtins -lsockets -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr' failed (returned 1)
+
+Traceback (most recent call last):
+  File "/work/compile_wasm.py", line 22, in <module>
+    cli.main(sys.argv[1:])
+  File "/work/tc/mlc-llm/python/mlc_llm/cli/compile.py", line 141, in main
+    compile(
+  File "/work/tc/mlc-llm/python/mlc_llm/interface/compile.py", line 294, in compile
+    _compile(args, model_config)
+  File "/work/tc/mlc-llm/python/mlc_llm/interface/compile.py", line 235, in _compile
+    args.build_func(
+  File "/work/tc/mlc-llm/python/mlc_llm/support/auto_target.py", line 285, in build
+    ).export_library(
+--
+    return fcompile(file_name, files, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tc/tvm/python/tvm/contrib/emcc.py", line 142, in create_wasm
+    raise RuntimeError(msg)
+RuntimeError: Compilation error:
+emcc: warning: WASM_BIGINT is deprecated (no longer needed. Should only ever be implicitly disabled by -sWASM=0). Please open a bug if you have a continuing need for this setting [-Wdeprecated]
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: typeinfo for std::bad_alloc
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: typeinfo for std::bad_alloc
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_streambuf<char, std::__2::char_traits<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_stringbuf<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_streambuf<char, std::__2::char_traits<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: vtable for std::__2::basic_stringbuf<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+wasm-ld: error: /tmp/emscripten_temp_xjr2rsqb/wasm_runtime.o: undefined symbol: VTT for std::__2::basic_ostringstream<char, std::__2::char_traits<char>, std::__2::allocator<char>>
+FAILED at: compile with o failed; log tail:
+exit code 1 after 6.2 min

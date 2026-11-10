@@ -1,0 +1,16 @@
+[23:09:22] src/codegen/llvm/llvm_instance.cc:218: Error: Using LLVM 16.0.6 with `-mcpu=neoverse-v3ae` is not valid in `-mtriple=aarch64-linux-gnu`, using default `-mcpu=generic`
+compile_wasm: host object format o linker em++
+mlc_llm: serve not available: Cannot find object type index for mlc.serve.Data
+[1mCompiling with arguments:[0m
+  [1m--config[0m          Lfm3Config(hidden_size=2048, intermediate_size=7680, num_attention_heads=16, num_hidden_layers=24, num_key_value_heads=4, norm_eps=1e-05, vocab_size=128000, head_dim=128, tie_word_embeddings=True, conv_L_cache=7, conv_bias=False, use_sandwich_norm=True, layer_types=['conv', 'conv', 'full_attention', 'conv', 'sliding_attention', 'conv', 'full_attention', 'conv', 'sliding_attention', 'conv', 'full_attention', 'conv', 'sliding_attention', 'conv', 'full_attention', 'conv', 'sliding_attention', 'conv', 'full_attention', 'conv', 'sliding_attention', 'conv', 'full_attention', 'conv'], sliding_window=256, rope_parameters={'full_attention': {'partial_rotary_factor': 0.5, 'rope_theta': 1000000.0, 'rope_type': 'default'}, 'sliding_attention': {'rope_theta': 10000, 'rope_type': 'default'}}, context_window_size=4096, prefill_chunk_size=256, sliding_window_size=-1, tensor_parallel_shards=1, dtype='bfloat16', max_batch_size=128, kwargs={'active_vocab_size': 125033})
+  [1m--quantization[0m    GroupQuantize(name='q4f32_1', kind='group-quant', group_size=32, quantize_dtype='int4', storage_dtype='uint32', model_dtype='float32', linear_weight_layout='NK', quantize_embedding=True, quantize_final_fc=True, num_elem_per_storage=8, num_storage_per_group=4, max_int_value=7, tensor_parallel_shards=0)
+  [1m--model-type[0m      lfm3
+  [1m--target[0m          {"kind": "webgpu", "tag": "", "keys": ("webgpu", "gpu"), "host": {"kind": "llvm", "tag": "", "keys": ("cpu",), "mtriple": "wasm32-unknown-unknown-wasm"}, "thread_warp_size": 1, "supports_subgroups": False, "max_shared_memory_per_block": 32768, "max_num_threads": 256}
+  [1m--opt[0m             flashinfer=0;cublas_gemm=0;faster_transformer=0;cudagraph=0;cutlass=0;ipc_allreduce_strategy=NONE
+  [1m--system-lib-prefix[0m ""
+  [1m--output[0m          /work/out/LFM3-1.7B-q4f32_1-webgpu.wasm
+  [1m--overrides[0m       context_window_size=None;sliding_window_size=None;prefill_chunk_size=None;attention_sink_size=None;max_batch_size=None;tensor_parallel_shards=None;pipeline_parallel_stages=None;disaggregation=None
+[1m--system-lib-prefix[0m is not specified when building a static library
+[23:09:27] /work/tvm/include/tvm/topi/transform.h:1258: Warning: Fast mode segfaults when there are out-of-bounds indices. Make sure input indices are in bound
+[23:09:27] /work/tvm/include/tvm/topi/transform.h:1258: Warning: Fast mode segfaults when there are out-of-bounds indices. Make sure input indices are in bound
+[23:09:45] src/codegen/llvm/llvm_instance.cc:970: Warning: Set native vector bits to be 128 for `wasm32`, use -vector-width=XXX to override.

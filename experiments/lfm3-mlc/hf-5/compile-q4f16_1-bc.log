@@ -1,0 +1,159 @@
+[22:43:41] src/codegen/llvm/llvm_instance.cc:218: Error: Using LLVM 16.0.6 with `-mcpu=neoverse-v3ae` is not valid in `-mtriple=aarch64-linux-gnu`, using default `-mcpu=generic`
+compile_wasm: host object format bc
+mlc_llm: serve not available: Cannot find object type index for mlc.serve.Data
+[1mCompiling with arguments:[0m
+  [1m--config[0m          Lfm3Config(hidden_size=2048, intermediate_size=7680, num_attention_heads=16, num_hidden_layers=24, num_key_value_heads=4, norm_eps=1e-05, vocab_size=128000, head_dim=128, tie_word_embeddings=True, conv_L_cache=7, conv_bias=False, use_sandwich_norm=True, layer_types=['conv', 'conv', 'full_attention', 'conv', 'sliding_attention', 'conv', 'full_attention', 'conv', 'sliding_attention', 'conv', 'full_attention', 'conv', 'sliding_attention', 'conv', 'full_attention', 'conv', 'sliding_attention', 'conv', 'full_attention', 'conv', 'sliding_attention', 'conv', 'full_attention', 'conv'], sliding_window=256, rope_parameters={'full_attention': {'partial_rotary_factor': 0.5, 'rope_theta': 1000000.0, 'rope_type': 'default'}, 'sliding_attention': {'rope_theta': 10000, 'rope_type': 'default'}}, context_window_size=4096, prefill_chunk_size=256, sliding_window_size=-1, tensor_parallel_shards=1, dtype='bfloat16', max_batch_size=128, kwargs={'active_vocab_size': 125033})
+  [1m--quantization[0m    GroupQuantize(name='q4f16_1', kind='group-quant', group_size=32, quantize_dtype='int4', storage_dtype='uint32', model_dtype='float16', linear_weight_layout='NK', quantize_embedding=True, quantize_final_fc=True, num_elem_per_storage=8, num_storage_per_group=4, max_int_value=7, tensor_parallel_shards=0)
+  [1m--model-type[0m      lfm3
+  [1m--target[0m          {"kind": "webgpu", "tag": "", "keys": ("webgpu", "gpu"), "host": {"kind": "llvm", "tag": "", "keys": ("cpu",), "mtriple": "wasm32-unknown-unknown-wasm"}, "thread_warp_size": 1, "supports_subgroups": False, "max_shared_memory_per_block": 32768, "max_num_threads": 256}
+  [1m--opt[0m             flashinfer=0;cublas_gemm=0;faster_transformer=0;cudagraph=0;cutlass=0;ipc_allreduce_strategy=NONE
+  [1m--system-lib-prefix[0m ""
+  [1m--output[0m          /work/out/LFM3-1.7B-q4f16_1-webgpu.wasm
+  [1m--overrides[0m       context_window_size=None;sliding_window_size=None;prefill_chunk_size=None;attention_sink_size=None;max_batch_size=None;tensor_parallel_shards=None;pipeline_parallel_stages=None;disaggregation=None
+[1m--system-lib-prefix[0m is not specified when building a static library
+[22:43:47] /work/tvm/include/tvm/topi/transform.h:1258: Warning: Fast mode segfaults when there are out-of-bounds indices. Make sure input indices are in bound
+[22:43:47] /work/tvm/include/tvm/topi/transform.h:1258: Warning: Fast mode segfaults when there are out-of-bounds indices. Make sure input indices are in bound
+[22:44:08] src/codegen/llvm/llvm_instance.cc:970: Warning: Set native vector bits to be 128 for `wasm32`, use -vector-width=XXX to override.
+Compilation error:
+warning: overriding the module target triple with wasm32-unknown-emscripten [-Woverride-module]
+fatal error: error in backend: Can't create a MachineFunction using a Module with a Target-incompatible DataLayout attached
+  Target DataLayout: e-m:e-p:32:32-p10:8:8-p20:8:8-i64:64-i128:128-f128:64-n32:64-S128-ni:1:10:20
+  Module DataLayout: e-m:e-p:32:32-p10:8:8-p20:8:8-i64:64-i128:128-n32:64-S128-ni:1:10:20
+
+PLEASE submit a bug report to https://github.com/llvm/llvm-project/issues/ and include the crash backtrace and dumped files.
+Stack dump:
+0.	Program arguments: /work/emsdk/upstream/bin/clang -target wasm32-unknown-emscripten -fignore-exceptions -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr --sysroot=/work/emsdk/upstream/emscripten/cache/sysroot -Xclang -iwithsysroot/include/fakesdl -Xclang -iwithsysroot/include/compat -O3 -std=c++17 -c /tmp/tmp0nhs50vv/lib0.bc -o /tmp/emscripten_temp_wyp7dcsj/lib0.o -dumpdir /work/out/LFM3-1.7B-q4f16_1-webgpu.wasm-
+1.	Code generation
+2.	Running pass 'Function Pass Manager' on module '/tmp/tmp0nhs50vv/lib0.bc'.
+3.	Running pass 'WebAssembly Instruction Selection' on function '@__tvm_ffi_apply_bitmask_inplace'
+ #0 0x000055a6446623cb llvm::sys::PrintStackTrace(llvm::raw_ostream&, int) (/work/emsdk/upstream/bin/clang+0x402a3cb)
+ #1 0x000055a64465e7d5 llvm::sys::RunSignalHandlers() (/work/emsdk/upstream/bin/clang+0x40267d5)
+ #2 0x000055a644660eba llvm::sys::CleanupOnSignal(unsigned long) (/work/emsdk/upstream/bin/clang+0x4028eba)
+ #3 0x000055a6445b23ee (anonymous namespace)::CrashRecoveryContextImpl::HandleCrash(int, unsigned long) (.llvm.14209141526693609132) (/work/emsdk/upstream/bin/clang+0x3f7a3ee)
+ #4 0x000055a6445b23ab (/work/emsdk/upstream/bin/clang+0x3f7a3ab)
+ #5 0x000055a64465b2cb (/work/emsdk/upstream/bin/clang+0x40232cb)
+ #6 0x000055a6431bf2f1 (/work/emsdk/upstream/bin/clang+0x2b872f1)
+ #7 0x000055a6445b92af llvm::report_fatal_error(llvm::Twine const&, bool) (/work/emsdk/upstream/bin/clang+0x3f812af)
+ #8 0x000055a643a68e59 (/work/emsdk/upstream/bin/clang+0x3430e59)
+ #9 0x000055a643aa96c9 llvm::MachineModuleInfo::getOrCreateMachineFunction(llvm::Function&) (/work/emsdk/upstream/bin/clang+0x34716c9)
+#10 0x000055a643a7377a llvm::MachineFunctionPass::runOnFunction(llvm::Function&) (/work/emsdk/upstream/bin/clang+0x343b77a)
+#11 0x000055a64405abe0 llvm::FPPassManager::runOnFunction(llvm::Function&) (/work/emsdk/upstream/bin/clang+0x3a22be0)
+#12 0x000055a64406316c llvm::FPPassManager::runOnModule(llvm::Module&) (/work/emsdk/upstream/bin/clang+0x3a2b16c)
+#13 0x000055a64405bbd9 llvm::legacy::PassManagerImpl::run(llvm::Module&) (/work/emsdk/upstream/bin/clang+0x3a23bd9)
+#14 0x000055a6463877f7 llvm::runCodeGenPipeline(llvm::TargetMachine&, llvm::Module&, llvm::raw_pwrite_stream&, llvm::raw_pwrite_stream*, llvm::CodeGenFileType, bool, bool, llvm::IntrusiveRefCntPtr<llvm::vfs::FileSystem>) (/work/emsdk/upstream/bin/clang+0x5d4f7f7)
+#15 0x000055a644f0714c (anonymous namespace)::EmitAssemblyHelper::emitAssembly(clang::BackendAction, std::__2::unique_ptr<llvm::raw_pwrite_stream, std::__2::default_delete<llvm::raw_pwrite_stream>>, clang::BackendConsumer*) BackendUtil.cpp:0:0
+#16 0x000055a644f04f20 clang::emitBackendOutput(clang::CompilerInstance&, clang::CodeGenOptions&, llvm::Module*, clang::BackendAction, llvm::IntrusiveRefCntPtr<llvm::vfs::FileSystem>, std::__2::unique_ptr<llvm::raw_pwrite_stream, std::__2::default_delete<llvm::raw_pwrite_stream>>, clang::BackendConsumer*) (/work/emsdk/upstream/bin/clang+0x48ccf20)
+#17 0x000055a644f28217 clang::CodeGenAction::ExecuteAction() (/work/emsdk/upstream/bin/clang+0x48f0217)
+#18 0x000055a64561b287 clang::FrontendAction::Execute() (/work/emsdk/upstream/bin/clang+0x4fe3287)
+#19 0x000055a6454eb6e2 clang::CompilerInstance::ExecuteAction(clang::FrontendAction&) (/work/emsdk/upstream/bin/clang+0x4eb36e2)
+#20 0x000055a6456f1f10 clang::ExecuteCompilerInvocation(clang::CompilerInstance*) (/work/emsdk/upstream/bin/clang+0x50b9f10)
+#21 0x000055a6431bd1a1 cc1_main(llvm::ArrayRef<char const*>, char const*, void*) (/work/emsdk/upstream/bin/clang+0x2b851a1)
+#22 0x000055a6431baa48 ExecuteCC1Tool(llvm::SmallVectorImpl<char const*>&, llvm::ToolContext const&, llvm::IntrusiveRefCntPtr<llvm::vfs::FileSystem>) driver.cpp:0:0
+#23 0x000055a6431bc7a2 int llvm::function_ref<int (llvm::SmallVectorImpl<char const*>&)>::callback_fn<clang_main(int, char**, llvm::ToolContext const&)::$_0>(long, llvm::SmallVectorImpl<char const*>&) driver.cpp:0:0
+#24 0x000055a6452f9c29 void llvm::function_ref<void ()>::callback_fn<clang::driver::CC1Command::Execute(llvm::ArrayRef<std::__2::optional<llvm::StringRef>>, std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>*, bool*) const::$_0>(long) Job.cpp:0:0
+#25 0x000055a6445b2388 llvm::CrashRecoveryContext::RunSafely(llvm::function_ref<void ()>) (/work/emsdk/upstream/bin/clang+0x3f7a388)
+#26 0x000055a6452f9339 clang::driver::CC1Command::Execute(llvm::ArrayRef<std::__2::optional<llvm::StringRef>>, std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>*, bool*) const (/work/emsdk/upstream/bin/clang+0x4cc1339)
+#27 0x000055a6452ab4eb clang::driver::Compilation::ExecuteCommand(clang::driver::Command const&, clang::driver::Command const*&, bool) const (/work/emsdk/upstream/bin/clang+0x4c734eb)
+#28 0x000055a6452abf93 clang::driver::Compilation::ExecuteJobs(clang::driver::JobList const&, llvm::SmallVectorImpl<std::__2::pair<int, clang::driver::Command const*>>&, bool) const (/work/emsdk/upstream/bin/clang+0x4c73f93)
+#29 0x000055a6452d5cfc clang::driver::Driver::ExecuteCompilation(clang::driver::Compilation&, llvm::SmallVectorImpl<std::__2::pair<int, clang::driver::Command const*>>&) (/work/emsdk/upstream/bin/clang+0x4c9dcfc)
+#30 0x000055a6431b9a5e clang_main(int, char**, llvm::ToolContext const&) (/work/emsdk/upstream/bin/clang+0x2b81a5e)
+#31 0x000055a6431ca089 main (/work/emsdk/upstream/bin/clang+0x2b92089)
+#32 0x00007fbbed81c24a (/lib/x86_64-linux-gnu/libc.so.6+0x2724a)
+#33 0x00007fbbed81c305 __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27305)
+#34 0x000055a64312036a _start (/work/emsdk/upstream/bin/clang+0x2ae836a)
+clang: error: clang frontend command failed with exit code 70 (use -v to see invocation)
+clang version 24.0.0git (https://github.com/llvm/llvm-project 84ba7b37f02df5a5567e31a1bcfa0f607e578f12)
+Target: wasm32-unknown-emscripten
+Thread model: posix
+InstalledDir: /work/emsdk/upstream/bin
+clang: note: diagnostic msg: 
+********************
+
+PLEASE ATTACH THE FOLLOWING CRASH REPRODUCER FILES TO THE BUG REPORT:
+clang: note: diagnostic msg: /tmp/lib0-b99155.bc
+clang: note: diagnostic msg: /tmp/lib0-b99155.sh
+clang: note: diagnostic msg: 
+
+********************
+emcc: error: '/work/emsdk/upstream/bin/clang -target wasm32-unknown-emscripten -fignore-exceptions -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr --sysroot=/work/emsdk/upstream/emscripten/cache/sysroot -Xclang -iwithsysroot/include/fakesdl -Xclang -iwithsysroot/include/compat -O3 -std=c++17 -c /tmp/tmp0nhs50vv/lib0.bc -o /tmp/emscripten_temp_wyp7dcsj/lib0.o -dumpdir /work/out/LFM3-1.7B-q4f16_1-webgpu.wasm-' failed (returned 1)
+
+Traceback (most recent call last):
+  File "/work/compile_wasm.py", line 22, in <module>
+    cli.main(sys.argv[1:])
+  File "/work/tc/mlc-llm/python/mlc_llm/cli/compile.py", line 141, in main
+    compile(
+  File "/work/tc/mlc-llm/python/mlc_llm/interface/compile.py", line 294, in compile
+    _compile(args, model_config)
+  File "/work/tc/mlc-llm/python/mlc_llm/interface/compile.py", line 235, in _compile
+    args.build_func(
+  File "/work/tc/mlc-llm/python/mlc_llm/support/auto_target.py", line 285, in build
+    ).export_library(
+      ^^^^^^^^^^^^^^^
+  File "/work/tc/tvm/3rdparty/tvm-tirx/python/tvm_tirx/codegen/executable.py", line 327, in export_library
+    return fcompile(file_name, files, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/tc/tvm/python/tvm/contrib/emcc.py", line 142, in create_wasm
+    raise RuntimeError(msg)
+RuntimeError: Compilation error:
+warning: overriding the module target triple with wasm32-unknown-emscripten [-Woverride-module]
+fatal error: error in backend: Can't create a MachineFunction using a Module with a Target-incompatible DataLayout attached
+  Target DataLayout: e-m:e-p:32:32-p10:8:8-p20:8:8-i64:64-i128:128-f128:64-n32:64-S128-ni:1:10:20
+  Module DataLayout: e-m:e-p:32:32-p10:8:8-p20:8:8-i64:64-i128:128-n32:64-S128-ni:1:10:20
+
+PLEASE submit a bug report to https://github.com/llvm/llvm-project/issues/ and include the crash backtrace and dumped files.
+Stack dump:
+0.	Program arguments: /work/emsdk/upstream/bin/clang -target wasm32-unknown-emscripten -fignore-exceptions -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr --sysroot=/work/emsdk/upstream/emscripten/cache/sysroot -Xclang -iwithsysroot/include/fakesdl -Xclang -iwithsysroot/include/compat -O3 -std=c++17 -c /tmp/tmp0nhs50vv/lib0.bc -o /tmp/emscripten_temp_wyp7dcsj/lib0.o -dumpdir /work/out/LFM3-1.7B-q4f16_1-webgpu.wasm-
+1.	Code generation
+2.	Running pass 'Function Pass Manager' on module '/tmp/tmp0nhs50vv/lib0.bc'.
+3.	Running pass 'WebAssembly Instruction Selection' on function '@__tvm_ffi_apply_bitmask_inplace'
+ #0 0x000055a6446623cb llvm::sys::PrintStackTrace(llvm::raw_ostream&, int) (/work/emsdk/upstream/bin/clang+0x402a3cb)
+ #1 0x000055a64465e7d5 llvm::sys::RunSignalHandlers() (/work/emsdk/upstream/bin/clang+0x40267d5)
+ #2 0x000055a644660eba llvm::sys::CleanupOnSignal(unsigned long) (/work/emsdk/upstream/bin/clang+0x4028eba)
+ #3 0x000055a6445b23ee (anonymous namespace)::CrashRecoveryContextImpl::HandleCrash(int, unsigned long) (.llvm.14209141526693609132) (/work/emsdk/upstream/bin/clang+0x3f7a3ee)
+ #4 0x000055a6445b23ab (/work/emsdk/upstream/bin/clang+0x3f7a3ab)
+ #5 0x000055a64465b2cb (/work/emsdk/upstream/bin/clang+0x40232cb)
+ #6 0x000055a6431bf2f1 (/work/emsdk/upstream/bin/clang+0x2b872f1)
+ #7 0x000055a6445b92af llvm::report_fatal_error(llvm::Twine const&, bool) (/work/emsdk/upstream/bin/clang+0x3f812af)
+ #8 0x000055a643a68e59 (/work/emsdk/upstream/bin/clang+0x3430e59)
+ #9 0x000055a643aa96c9 llvm::MachineModuleInfo::getOrCreateMachineFunction(llvm::Function&) (/work/emsdk/upstream/bin/clang+0x34716c9)
+#10 0x000055a643a7377a llvm::MachineFunctionPass::runOnFunction(llvm::Function&) (/work/emsdk/upstream/bin/clang+0x343b77a)
+#11 0x000055a64405abe0 llvm::FPPassManager::runOnFunction(llvm::Function&) (/work/emsdk/upstream/bin/clang+0x3a22be0)
+#12 0x000055a64406316c llvm::FPPassManager::runOnModule(llvm::Module&) (/work/emsdk/upstream/bin/clang+0x3a2b16c)
+#13 0x000055a64405bbd9 llvm::legacy::PassManagerImpl::run(llvm::Module&) (/work/emsdk/upstream/bin/clang+0x3a23bd9)
+#14 0x000055a6463877f7 llvm::runCodeGenPipeline(llvm::TargetMachine&, llvm::Module&, llvm::raw_pwrite_stream&, llvm::raw_pwrite_stream*, llvm::CodeGenFileType, bool, bool, llvm::IntrusiveRefCntPtr<llvm::vfs::FileSystem>) (/work/emsdk/upstream/bin/clang+0x5d4f7f7)
+#15 0x000055a644f0714c (anonymous namespace)::EmitAssemblyHelper::emitAssembly(clang::BackendAction, std::__2::unique_ptr<llvm::raw_pwrite_stream, std::__2::default_delete<llvm::raw_pwrite_stream>>, clang::BackendConsumer*) BackendUtil.cpp:0:0
+#16 0x000055a644f04f20 clang::emitBackendOutput(clang::CompilerInstance&, clang::CodeGenOptions&, llvm::Module*, clang::BackendAction, llvm::IntrusiveRefCntPtr<llvm::vfs::FileSystem>, std::__2::unique_ptr<llvm::raw_pwrite_stream, std::__2::default_delete<llvm::raw_pwrite_stream>>, clang::BackendConsumer*) (/work/emsdk/upstream/bin/clang+0x48ccf20)
+#17 0x000055a644f28217 clang::CodeGenAction::ExecuteAction() (/work/emsdk/upstream/bin/clang+0x48f0217)
+#18 0x000055a64561b287 clang::FrontendAction::Execute() (/work/emsdk/upstream/bin/clang+0x4fe3287)
+#19 0x000055a6454eb6e2 clang::CompilerInstance::ExecuteAction(clang::FrontendAction&) (/work/emsdk/upstream/bin/clang+0x4eb36e2)
+#20 0x000055a6456f1f10 clang::ExecuteCompilerInvocation(clang::CompilerInstance*) (/work/emsdk/upstream/bin/clang+0x50b9f10)
+#21 0x000055a6431bd1a1 cc1_main(llvm::ArrayRef<char const*>, char const*, void*) (/work/emsdk/upstream/bin/clang+0x2b851a1)
+#22 0x000055a6431baa48 ExecuteCC1Tool(llvm::SmallVectorImpl<char const*>&, llvm::ToolContext const&, llvm::IntrusiveRefCntPtr<llvm::vfs::FileSystem>) driver.cpp:0:0
+#23 0x000055a6431bc7a2 int llvm::function_ref<int (llvm::SmallVectorImpl<char const*>&)>::callback_fn<clang_main(int, char**, llvm::ToolContext const&)::$_0>(long, llvm::SmallVectorImpl<char const*>&) driver.cpp:0:0
+#24 0x000055a6452f9c29 void llvm::function_ref<void ()>::callback_fn<clang::driver::CC1Command::Execute(llvm::ArrayRef<std::__2::optional<llvm::StringRef>>, std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>*, bool*) const::$_0>(long) Job.cpp:0:0
+#25 0x000055a6445b2388 llvm::CrashRecoveryContext::RunSafely(llvm::function_ref<void ()>) (/work/emsdk/upstream/bin/clang+0x3f7a388)
+#26 0x000055a6452f9339 clang::driver::CC1Command::Execute(llvm::ArrayRef<std::__2::optional<llvm::StringRef>>, std::__2::basic_string<char, std::__2::char_traits<char>, std::__2::allocator<char>>*, bool*) const (/work/emsdk/upstream/bin/clang+0x4cc1339)
+#27 0x000055a6452ab4eb clang::driver::Compilation::ExecuteCommand(clang::driver::Command const&, clang::driver::Command const*&, bool) const (/work/emsdk/upstream/bin/clang+0x4c734eb)
+#28 0x000055a6452abf93 clang::driver::Compilation::ExecuteJobs(clang::driver::JobList const&, llvm::SmallVectorImpl<std::__2::pair<int, clang::driver::Command const*>>&, bool) const (/work/emsdk/upstream/bin/clang+0x4c73f93)
+#29 0x000055a6452d5cfc clang::driver::Driver::ExecuteCompilation(clang::driver::Compilation&, llvm::SmallVectorImpl<std::__2::pair<int, clang::driver::Command const*>>&) (/work/emsdk/upstream/bin/clang+0x4c9dcfc)
+#30 0x000055a6431b9a5e clang_main(int, char**, llvm::ToolContext const&) (/work/emsdk/upstream/bin/clang+0x2b81a5e)
+#31 0x000055a6431ca089 main (/work/emsdk/upstream/bin/clang+0x2b92089)
+#32 0x00007fbbed81c24a (/lib/x86_64-linux-gnu/libc.so.6+0x2724a)
+#33 0x00007fbbed81c305 __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27305)
+#34 0x000055a64312036a _start (/work/emsdk/upstream/bin/clang+0x2ae836a)
+clang: error: clang frontend command failed with exit code 70 (use -v to see invocation)
+clang version 24.0.0git (https://github.com/llvm/llvm-project 84ba7b37f02df5a5567e31a1bcfa0f607e578f12)
+Target: wasm32-unknown-emscripten
+Thread model: posix
+InstalledDir: /work/emsdk/upstream/bin
+clang: note: diagnostic msg: 
+********************
+
+PLEASE ATTACH THE FOLLOWING CRASH REPRODUCER FILES TO THE BUG REPORT:
+clang: note: diagnostic msg: /tmp/lib0-b99155.bc
+clang: note: diagnostic msg: /tmp/lib0-b99155.sh
+clang: note: diagnostic msg: 
+
+********************
+emcc: error: '/work/emsdk/upstream/bin/clang -target wasm32-unknown-emscripten -fignore-exceptions -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr --sysroot=/work/emsdk/upstream/emscripten/cache/sysroot -Xclang -iwithsysroot/include/fakesdl -Xclang -iwithsysroot/include/compat -O3 -std=c++17 -c /tmp/tmp0nhs50vv/lib0.bc -o /tmp/emscripten_temp_wyp7dcsj/lib0.o -dumpdir /work/out/LFM3-1.7B-q4f16_1-webgpu.wasm-' failed (returned 1)
+

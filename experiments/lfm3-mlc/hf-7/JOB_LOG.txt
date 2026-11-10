@@ -1,0 +1,268 @@
+job 6af278389737d9a9e08e94c2 on cpu: lfm3-mlc-7 at 506c73c
+fetched experiments/lfm3-mlc/build_lfm3.sh
+fetched experiments/lfm3-mlc/compile_wasm.py
+fetched experiments/lfm3-mlc/register_lfm3.py
+fetched experiments/lfm3-mlc/lfm3_model.py
+fetched experiments/lfm3-mlc/lfm3_loader.py
+fetched experiments/lfm3-mlc/lfm3_conv.py
+== 01:50:09 toolchain from kealjones/tp-parse-runs:lfm3-mlc-3/6af2353a9737d9a9e08d84d0
+debconf: delaying package configuration, since apt-utils is not installed
+[notice] To update, run: pip install --upgrade pip
+
+
+Downloading bytes:           |  0.00B            [A
+
+Reconstructing (incomplete total...): |          |  0.00B /  0.00B            [A
+
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s][A
+
+Reconstructing (incomplete total...):   0%|          |  0.00B / 39.9MB            [A
+
+Reconstructing (incomplete total...):   0%|          |  0.00B / 43.2MB            [A
+
+Reconstructing (incomplete total...):   0%|          |  0.00B / 43.3MB            [A
+Fetching 3 files: 100%|██████████| 3/3 [00:00<00:00,  3.84it/s]
+
+
+Downloading bytes: ██████████| 43.2MB,   ???B/s  [A
+
+Download complete: ██████████| 43.2MB,   ???B/s  [A
+
+Reconstruction complete: 100%|██████████| 43.3MB / 43.3MB,   ???B/s               [A
+Download complete: ██████████| 43.2MB,   ???B/s  
+
+Reconstruction complete: 100%|██████████| 43.3MB / 43.3MB,   ???B/s  
+[notice] To update, run: pip install --upgrade pip
+== 01:50:23 python deps
+[notice] To update, run: pip install --upgrade pip
+[notice] To update, run: pip install --upgrade pip
+[notice] To update, run: pip install --upgrade pip
+torch 2.15.0+cpu tvm_ffi 0.1.16.dev6+g6628c464e
+[01:51:42] src/codegen/llvm/llvm_instance.cc:218: Error: Using LLVM 16.0.6 with `-mcpu=neoverse-v3ae` is not valid in `-mtriple=aarch64-linux-gnu`, using default `-mcpu=generic`
+mlc_llm: serve not available: Cannot find object type index for mlc.serve.Data
+mlc_llm ok, lfm3 registered: True
+== 01:51:44 emscripten 7.0.0
+Setting up EMSDK environment (suppress these messages with EMSDK_QUIET=1)
+Adding directories to PATH:
+PATH += /work/emsdk
+PATH += /work/emsdk/upstream/emscripten
+PATH += /work/emsdk/node/24.19.0_64bit/bin
+
+Setting environment variables:
+PATH = /work/emsdk:/work/emsdk/upstream/emscripten:/work/emsdk/node/24.19.0_64bit/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+EMSDK = /work/emsdk
+EMSDK_NODE = /work/emsdk/node/24.19.0_64bit/bin/node
+Clearing existing environment variable: EMSDK_VERSION
+shared:INFO: (Emscripten: Running sanity checks)
+emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 7.0.0 (777e6e5db7b4990bcaeb1b9998ed642cc84e6629)
+== 01:52:08 download LiquidAI/LFM3-1.7B
+
+
+Downloading bytes:           |  0.00B            [A
+
+Reconstructing (incomplete total...): |          |  0.00B /  0.00B            [A
+
+Fetching 7 files:   0%|          | 0/7 [00:00<?, ?it/s][A
+
+Reconstructing (incomplete total...):   0%|          |  0.00B / 17.9MB            [A
+
+Reconstructing (incomplete total...):   0%|          |  0.00B / 3.48GB            [A
+
+Reconstructing (incomplete total...):   0%|          |  0.00B / 3.48GB            [A
+
+Reconstructing (incomplete total...):   0%|          | 1.45kB / 3.48GB            [A
+
+Reconstructing (incomplete total...):   0%|          | 1.78kB / 3.48GB            [A
+
+Reconstructing (incomplete total...):   0%|          | 13.9kB / 3.48GB            [A
+
+Reconstructing (incomplete total...):   0%|          | 14.0kB / 3.48GB            [A
+
+Reconstructing (incomplete total...):   8%|▊         |  286MB / 3.48GB,   ???B/s  [A
+
+Downloading bytes: ▊         |  261MB,   ???B/s  [A
+
+Reconstructing (incomplete total...):  24%|██▎       |  823MB / 3.48GB,  262MB/s  [A
+
+Downloading bytes: ██▎       |  819MB,  238MB/s  [A
+
+Downloading bytes: ████▌     | 1.57GB,  415MB/s  [A
+
+Reconstructing (incomplete total...):  49%|████▉     | 1.69GB / 3.48GB,  413MB/s  [A
+
+Downloading bytes: ███████   | 2.46GB,  562MB/s  [A
+
+Reconstructing (incomplete total...):  78%|███████▊  | 2.70GB / 3.48GB,  562MB/s  [A
+
+Fetching 7 files: 100%|██████████| 7/7 [00:04<00:00,  1.45it/s][A
+Fetching 7 files: 100%|██████████| 7/7 [00:04<00:00,  1.44it/s]
+
+
+Downloading bytes: ██████████| 3.00GB,  687MB/s  [A
+
+Download complete: ██████████| 3.00GB,  687MB/s  [A
+
+Reconstruction complete: 100%|██████████| 3.48GB / 3.48GB,  722MB/s               [Amodel at /root/.cache/huggingface/hub/models--LiquidAI--LFM3-1.7B/snapshots/1da06bec6a819da10b54c67e5c90972b46d81871
+
+Download complete: ██████████| 3.00GB,  687MB/s  
+
+Reconstruction complete: 100%|██████████| 3.48GB / 3.48GB,  722MB/s  
+total 0
+drwxr-xr-x. 2 root root 189 Nov 10 01:52 .
+drwxr-xr-x. 3 root root  54 Nov 10 01:52 ..
+lrwxrwxrwx. 1 root root  52 Nov 10 01:52 chat_template.jinja -> ../../blobs/d0747b8b5fc99eaecfe02a04eefcff75eb181334
+lrwxrwxrwx. 1 root root  52 Nov 10 01:52 config.json -> ../../blobs/99c878848ecd01f7b599148315c84634b5c5c656
+lrwxrwxrwx. 1 root root  52 Nov 10 01:52 generation_config.json -> ../../blobs/828e9a1ac7789d8b38af0dfe573ab6362598745b
+lrwxrwxrwx. 1 root root  76 Nov 10 01:52 model.safetensors -> ../../blobs/135922caef64e81e52af88ede8b7c3ddaa9d6da220a9737fb3065275dbfb4330
+lrwxrwxrwx. 1 root root  52 Nov 10 01:52 special_tokens_map.json -> ../../blobs/5d871daaacbf26aaa9cb47c2935f30e797ee35a7
+lrwxrwxrwx. 1 root root  76 Nov 10 01:52 tokenizer.json -> ../../blobs/7e226e34bface23ccf6e495d157bf77186c1c30a7659880e1a8994db528c3701
+lrwxrwxrwx. 1 root root  52 Nov 10 01:52 tokenizer_config.json -> ../../blobs/562b1ed0762f36c964646b8737081ced6af40754
+== 01:52:14 convert_weight q3f16_1
+
+                                                 
+[A[2026-11-10 01:54:40] INFO huggingface_loader.py:178: [Not quantized] Parameter: "[1mmodel.layers.9.post_ffn_norm.weight[0m", shape: (2048,), dtype: float16
+
+
+ 99%|█████████▉| 237/240 [01:56<00:01,  2.30it/s][A
+
+                                                 
+[A[2026-11-10 01:54:40] INFO huggingface_loader.py:178: [Not quantized] Parameter: "[1mmodel.layers.9.post_operator_norm.weight[0m", shape: (2048,), dtype: float16
+
+
+ 99%|█████████▉| 237/240 [01:56<00:01,  2.30it/s][A
+100%|██████████| 240/240 [01:56<00:00,  2.06it/s]
+[2026-11-10 01:54:40] INFO huggingface_loader.py:200: Unloading HF weight file: hf-model/model.safetensors
+[2026-11-10 01:54:40] INFO stats.py:77: [92mTime usage[0m: HF loading: 0.159 sec; Pre-quantization mapping: 2.312 sec; Quantization: 108.644 sec
+[2026-11-10 01:54:40] INFO stats.py:88: [92mRAM usage[0m: Peak RAM: 3.220 GB. Total bytes loaded from disk: 3.220 GB
+
+All finished, 26 total shards committed, record saved to /work/out/LFM3-1.7B-q3f16_1-MLC/tensor-cache.json
+[2026-11-10 01:54:40] INFO convert_weight.py:226: [92mParameter size[0m after quantization: 0.734 GB
+[2026-11-10 01:54:40] INFO convert_weight.py:231: [92mTotal parameters[0m: 1,728,801,536
+[2026-11-10 01:54:40] INFO convert_weight.py:232: [92mBits per parameter[0m: 3.647
+[2026-11-10 01:54:40] INFO convert_weight.py:237: Saved to directory: [1m/work/out/LFM3-1.7B-q3f16_1-MLC[0m
+== 01:54:41 gen_config q3f16_1
+[2026-11-10 01:54:45] INFO gen_config.py:204: [91mNot found[0m tokenizer config: hf-model/vocab.json
+[2026-11-10 01:54:45] INFO gen_config.py:204: [91mNot found[0m tokenizer config: hf-model/merges.txt
+[2026-11-10 01:54:45] INFO gen_config.py:204: [91mNot found[0m tokenizer config: hf-model/added_tokens.json
+[2026-11-10 01:54:45] INFO gen_config.py:202: [92mFound[0m tokenizer config: hf-model/tokenizer_config.json. Copying to [1m/work/out/LFM3-1.7B-q3f16_1-MLC/tokenizer_config.json[0m
+[2026-11-10 01:54:45] INFO gen_config.py:273: Detected tokenizer info: {'token_postproc_method': 'byte_level', 'prepend_space_in_encode': False, 'strip_space_in_decode': False}
+[2026-11-10 01:54:46] INFO gen_config.py:62: [System default] Setting [1mpresence_penalty[0m: 0.0
+[2026-11-10 01:54:46] INFO gen_config.py:62: [System default] Setting [1mfrequency_penalty[0m: 0.0
+[2026-11-10 01:54:46] INFO gen_config.py:62: [System default] Setting [1mtop_p[0m: 1.0
+The repository hf-model contains custom code which must be executed to correctly load the model. You can inspect the repository content at /work/hf-model .
+ You can inspect the repository content at https://hf.co/hf-model.
+You can avoid this prompt in future by passing the argument `trust_remote_code=True`.
+
+Do you wish to run the custom code? [y/N] [transformers] You are using a model of type `lfm3` to instantiate a model of type ``. This may be expected if you are loading a checkpoint that shares a subset of the architecture (e.g., loading a `sam2_video` checkpoint into `Sam2Model`), but is otherwise not supported and can yield errors. Please verify that the checkpoint is compatible with the model you are instantiating.
+[2026-11-10 01:54:48] INFO gen_config.py:309: Overriding active_vocab_size from 128000 to 125033 using HF tokenizer
+[2026-11-10 01:54:48] INFO gen_config.py:325: Dumping configuration file to: [1m/work/out/LFM3-1.7B-q3f16_1-MLC/mlc-chat-config.json[0m
+mlc-chat-config: {'model_type': 'lfm3', 'quantization': 'q3f16_1', 'context_window_size': 4096, 'sliding_window_size': -1, 'prefill_chunk_size': 256, 'vocab_size': 128000, 'temperature': 0.1, 'repetition_penalty': 1.1}
+conv stop: [124900, 124895] [124894]
+== 01:54:49 compile webgpu q3f16_1
+== 01:54:49 compile webgpu q3f16_1, host object format o
+  [1m--opt[0m             flashinfer=0;cublas_gemm=0;faster_transformer=0;cudagraph=0;cutlass=0;ipc_allreduce_strategy=NONE
+  [1m--system-lib-prefix[0m ""
+  [1m--output[0m          /work/out/LFM3-1.7B-q3f16_1-webgpu.wasm
+  [1m--overrides[0m       context_window_size=None;sliding_window_size=None;prefill_chunk_size=None;attention_sink_size=None;max_batch_size=None;tensor_parallel_shards=None;pipeline_parallel_stages=None;disaggregation=None
+[1m--system-lib-prefix[0m is not specified when building a static library
+[01:54:58] /work/tvm/include/tvm/topi/transform.h:1258: Warning: Fast mode segfaults when there are out-of-bounds indices. Make sure input indices are in bound
+[01:54:59] /work/tvm/include/tvm/topi/transform.h:1258: Warning: Fast mode segfaults when there are out-of-bounds indices. Make sure input indices are in bound
+[01:55:23] src/codegen/llvm/llvm_instance.cc:970: Warning: Set native vector bits to be 128 for `wasm32`, use -vector-width=XXX to override.
+-rwxr-xr-x. 1 root root 6774597 Nov 10 01:56 /work/out/LFM3-1.7B-q3f16_1-webgpu.wasm
+
+/work/out/LFM3-1.7B-q3f16_1-MLC:
+total 787252
+drwxr-xr-x. 2 root root     16384 Nov 10 01:54 .
+drwxr-xr-x. 3 root root       118 Nov 10 01:55 ..
+-rw-r--r--. 1 root root      2977 Nov 10 01:54 mlc-chat-config.json
+-rw-r--r--. 1 root root 106496000 Nov 10 01:53 params_shard_0.bin
+-rw-r--r--. 1 root root  21012480 Nov 10 01:53 params_shard_1.bin
+-rw-r--r--. 1 root root  32058496 Nov 10 01:53 params_shard_10.bin
+-rw-r--r--. 1 root root  23388160 Nov 10 01:53 params_shard_11.bin
+-rw-r--r--. 1 root root  32058496 Nov 10 01:53 params_shard_12.bin
+-rw-r--r--. 1 root root  23388160 Nov 10 01:53 params_shard_13.bin
+-rw-r--r--. 1 root root  26279040 Nov 10 01:53 params_shard_14.bin
+-rw-r--r--. 1 root root  32058496 Nov 10 01:54 params_shard_15.bin
+-rw-r--r--. 1 root root  23388160 Nov 10 01:54 params_shard_16.bin
+-rw-r--r--. 1 root root  32058496 Nov 10 01:54 params_shard_17.bin
+-rw-r--r--. 1 root root  31084544 Nov 10 01:54 params_shard_18.bin
+-rw-r--r--. 1 root root  21471232 Nov 10 01:54 params_shard_19.bin
+-rw-r--r--. 1 root root  29167616 Nov 10 01:53 params_shard_2.bin
+-rw-r--r--. 1 root root  32058496 Nov 10 01:54 params_shard_20.bin
+-rw-r--r--. 1 root root  23388160 Nov 10 01:54 params_shard_21.bin
+-rw-r--r--. 1 root root  32058496 Nov 10 01:54 params_shard_22.bin
+-rw-r--r--. 1 root root  23388160 Nov 10 01:54 params_shard_23.bin
+-rw-r--r--. 1 root root  32058496 Nov 10 01:54 params_shard_24.bin
+-rw-r--r--. 1 root root  23388160 Nov 10 01:54 params_shard_25.bin
+-rw-r--r--. 1 root root  21471232 Nov 10 01:53 params_shard_3.bin
+-rw-r--r--. 1 root root  32058496 Nov 10 01:53 params_shard_4.bin
+-rw-r--r--. 1 root root  23388160 Nov 10 01:53 params_shard_5.bin
+-rw-r--r--. 1 root root  32058496 Nov 10 01:53 params_shard_6.bin
+-rw-r--r--. 1 root root  23388160 Nov 10 01:53 params_shard_7.bin
+-rw-r--r--. 1 root root  32058496 Nov 10 01:53 params_shard_8.bin
+-rw-r--r--. 1 root root  23388160 Nov 10 01:53 params_shard_9.bin
+-rw-r--r--. 1 root root    137171 Nov 10 01:54 tensor-cache.json
+-r--r--r--. 1 root root  17908635 Nov 10 01:54 tokenizer.json
+-rw-r--r--. 1 root root      1545 Nov 10 01:54 tokenizer_config.json
+769M	/work/out/LFM3-1.7B-q3f16_1-MLC
+== 01:56:16 upload q3f16_1
+
+Processing Files (0 / 0)      : |          |  0.00B /  0.00B            
+
+New Data Upload               : |          |  0.00B /  0.00B            [A
+
+
+  ...-1.7B-q3f16_1-webgpu.wasm: 100%|█████████▉| 6.77MB / 6.77MB            [A[A
+
+
+  ...-1.7B-q3f16_1-webgpu.wasm: 100%|█████████▉| 6.77MB / 6.77MB            [A[A
+
+
+  ...-1.7B-q3f16_1-webgpu.wasm: 100%|█████████▉| 6.77MB / 6.77MB            [A[A
+
+
+  ...-1.7B-q3f16_1-webgpu.wasm: 100%|█████████▉| 6.77MB / 6.77MB            [A[A
+
+
+  ...-1.7B-q3f16_1-webgpu.wasm: 100%|██████████| 6.77MB / 6.77MB            [A[A
+
+
+
+Validating                    :           |   0%            [A[A[A
+
+
+
+Validating                    :           |   0%            [A[A[A
+
+
+  ...-1.7B-q3f16_1-webgpu.wasm: 100%|██████████| 6.77MB / 6.77MB            [A[A
+
+
+
+Validating                    : ██████████| 100%            [A[A[A
+Processing Files (1 / 1)      : 100%|██████████| 6.77MB / 6.77MB,  657kB/s  
+
+New Data Upload               : 100%|██████████| 6.77MB / 6.77MB,  657kB/s  
+
+Validating                    : ██████████| 100%            
+
+  ...-1.7B-q3f16_1-webgpu.wasm: 100%|██████████| 6.77MB / 6.77MB            
+uploaded https://huggingface.co/kealjones/LFM3-1.7B-q3f16_1-MLC
+== 01:56:23 convert_weight q3f32_1
+                        if missing. (default: "auto")
+  --source-format {auto,huggingface-torch,huggingface-safetensor,awq}
+                        The format of source model weight, infer from `config`
+                        if missing. (default: "auto", choices: auto,
+                        huggingface-torch, huggingface-safetensor, awq")
+  --output OUTPUT, -o OUTPUT
+                        The output directory to save the quantized model
+                        weight. Will create `params_shard_*.bin` and `tensor-
+                        cache.json` in this directory. (required)
+  --lora-adapter LORA_ADAPTER
+                        Path to a LoRA adapter directory in PEFT format. When
+                        provided, adapter weights are merged into the base
+                        model before quantization.
+------------------------- Error -------------------------
+argument --quantization: invalid choice: 'q3f32_1' (choose from q0f16, q0bf16, q0f32, q3f16_0, q3f16_1, q4f16_0, q4f16_1, q4bf16_0, q4bf16_1, q4f32_1, q4f16_2, q4f16_autoawq, q4f16_ft, e5m2_e5m2_f16, e4m3_e4m3_f16, e4m3_e4m3_f16_max_calibrate, fp8_e4m3fn_bf16_block_scale, fp8_e4m3fn_bf16_block_scale_static_activation)
+FAILED at: == 01:56:23 convert_weight q3f32_1
+exit code 2 after 6.4 min
