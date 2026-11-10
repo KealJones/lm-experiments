@@ -32,4 +32,5 @@ edited with the bash it already has, plus an end-of-turn instruction to update i
 ## Results
 
 - Job `whiteboard-1` (a10g-small, ~5 min, about $0.10): failed. pip vLLM has no native LFM3 and its generic fallback cannot run the conv layers.
-- Job `whiteboard-2`: llama.cpp master (native LFM3) built with CUDA in the job, on Liquid's QAD Q4_0 GGUF (the file Squiggle's CPU build loads). l4x1, 75 min cap (at most $1). Pending.
+- Job `whiteboard-2`: llama.cpp master (native LFM3) built with CUDA in the job, on Liquid's QAD Q4_0 GGUF (the file Squiggle's CPU build loads). l4x1, 75 min cap (at most $0.80). Ran, but far too slow to finish: the loop waited for the slowest of 16 chats each round and LFM3's thinking is long (it re-copies the whole notes file in its reasoning). Its pilot is still useful (below).
+- Job `whiteboard-3`: each chat on its own thread, A100, 60 min cap (at most $2.50). Pending.

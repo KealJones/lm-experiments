@@ -147,13 +147,16 @@ def parse_output(raw):
 # ── Tools ─────────────────────────────────────────────────────────────────────
 class Shell:
     def __init__(self):
+        import threading
         self.p = subprocess.Popen(["node", "shell.mjs"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True, bufsize=1)
         self.n = 0
+        self.lock = threading.Lock()   # one shell process, many chat threads
 
     def run(self, chat, cmd):
-        self.n += 1
-        self.p.stdin.write(json.dumps({"id": self.n, "chat": str(chat), "cmd": cmd}) + "\n"); self.p.stdin.flush()
-        return json.loads(self.p.stdout.readline())
+        with self.lock:
+            self.n += 1
+            self.p.stdin.write(json.dumps({"id": self.n, "chat": str(chat), "cmd": cmd}) + "\n"); self.p.stdin.flush()
+            return json.loads(self.p.stdout.readline())
 
 
 TOK = re.compile(r"[a-z0-9][a-z0-9'-]*")
@@ -346,7 +349,7 @@ class Llama:
     """llama.cpp's llama-server (built in the job) on Liquid's QAD Q4_0 GGUF: the file Squiggle's CPU build loads.
     Prompts go in as token ids (no extra BOS); outputs come back as token ids and are decoded with the HF tokenizer,
     so <think>, <tool_call> and the rest come through whatever the server's detokenizer does with them."""
-    SLOTS, PER_SLOT = 16, 14336
+    SLOTS, PER_SLOT = 24, 14336
 
     def __init__(self):
         import urllib.request
@@ -422,6 +425,40 @@ def main():
     shell = Shell()
     log = open(os.path.join(a.out, "log.txt"), "a")
     chats = [Chat(d, arm, shell, be.tok, log, a.max_turns) for arm in a.arms.split(",") for d in data]
+    if hasattr(be, "one"):
+        # llama-server: every chat runs on its own, so no chat waits for the slowest one in a round.
+        import threading
+        from concurrent.futures import ThreadPoolExecutor
+        lock, first = threading.Lock(), [True]
+
+        def drive(c):
+            g = c.step()
+            try:
+                item = next(g)
+                while True:
+                    out = be.one(item)
+                    with lock:
+                        if first[0]:
+                            print("first raw output:", repr(out[:600]), flush=True); first[0] = False
+                    item = g.send(out)
+            except StopIteration:
+                pass
+            json.dump(c.record, open(os.path.join(a.out, f"{c.arm}-{c.d['id']}.json"), "w"), indent=1, ensure_ascii=False)
+            print(f"done {c.arm}-{c.d['id']} at {(time.time() - t0) / 60:.1f} min", flush=True)
+
+        def progress():
+            while True:
+                time.sleep(120)
+                n = sum(len(c.record["updates"]) for c in chats)
+                print(f"progress: {n} turns noted, {(time.time() - t0) / 60:.1f} min", flush=True)
+                for c in chats:   # partial records, so a run cut off by its time limit still leaves its notes
+                    if c.arm == "notes" and c.record["updates"]:
+                        json.dump(c.record, open(os.path.join(a.out, f"partial-{c.arm}-{c.d['id']}.json"), "w"), ensure_ascii=False)
+        threading.Thread(target=progress, daemon=True).start()
+        with ThreadPoolExecutor(len(chats)) as ex:
+            list(ex.map(drive, chats))
+        print(f"all done in {(time.time() - t0) / 60:.1f} min", flush=True)
+        return
     gens = [c.step() for c in chats]
     pending = {}
     for i, g in enumerate(gens):

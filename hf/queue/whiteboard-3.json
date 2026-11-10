@@ -1,0 +1,23 @@
+{
+ "slug": "whiteboard-3",
+ "flavor": "a100-large",
+ "timeout": "60m",
+ "image": "pytorch/pytorch:2.6.0-cuda12.4-cudnn9-devel",
+ "files": [
+  "experiments/whiteboard/run.py",
+  "experiments/whiteboard/shell.mjs",
+  "experiments/whiteboard/data.json",
+  "experiments/whiteboard/needles.py"
+ ],
+ "pip": [
+  "cmake",
+  "ninja",
+  "transformers",
+  "huggingface_hub"
+ ],
+ "upload_every": 180,
+ "outdir": "out",
+ "cmd": "(apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq gcc g++ xz-utils >/dev/null) && python -c \"import urllib.request as u; u.urlretrieve('https://nodejs.org/dist/v22.11.0/node-v22.11.0-linux-x64.tar.xz','node.tar.xz'); u.urlretrieve('https://raw.githubusercontent.com/KealJones/squiggle/f987588d4cf047ff638e161e72563ffff49a06bc/app/vendor/just-bash.js','just-bash.js'); u.urlretrieve('https://github.com/ggml-org/llama.cpp/archive/aa75ff3239f9cc675b081697deda9e1b112345c6.tar.gz','llama.tar.gz')\" && tar -xJf node.tar.xz && export PATH=$PWD/node-v22.11.0-linux-x64/bin:$PATH && node --version && tar -xzf llama.tar.gz && mv llama.cpp-aa75ff3239f9cc675b081697deda9e1b112345c6 llama.cpp && cmake -S llama.cpp -B llama.cpp/build -G Ninja -DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=80 -DLLAMA_CURL=OFF -DLLAMA_BUILD_TESTS=OFF -DLLAMA_BUILD_EXAMPLES=OFF >/dev/null && cmake --build llama.cpp/build --target llama-server -j12 2>&1 | tail -3 && mkdir -p out && python run.py out; cp llama-server.log out/",
+ "out": "experiments/whiteboard/hf-3",
+ "note": "Same as whiteboard-2, which was too slow to finish in its 75 min on an L4: the run loop waited for the slowest of 16 chats every round and LFM3 thinks at length (about 1.5M output tokens over the replay). Now every chat runs on its own thread against llama-server (24 slots), on an A100. Partial notes are saved every 2 min. 60 min cap: at most $2.50."
+}
