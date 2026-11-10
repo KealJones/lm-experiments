@@ -40,6 +40,22 @@ button.primary:hover { background: var(--pass); border-color: var(--pass); }
 .pickers { display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem; margin: 0.5rem 0 1rem; align-items: end; }
 .stage-note { margin: 0.6rem 0 0; color: var(--ink-soft); max-width: 46rem; }
 
+/* the at-a-glance comparison */
+.vs { max-width: 32rem; margin: 0.5rem 0 0.75rem; background: var(--paper-raised); border: 1.5px solid var(--ink); border-radius: 4px; padding: 0.9rem 1rem 0.7rem; box-shadow: 4px 4px 0 var(--ink); }
+.vs svg { width: 100%; height: auto; display: block; }
+.vs-title { font: 700 1.1rem var(--display); margin: 0; }
+.vs-grid { stroke: var(--rule); }
+.vs-axis { font: 500 12px var(--display); fill: var(--ink-soft); }
+.vs-cat { font: 600 14px var(--display); fill: var(--ink); }
+.vs-val { font: 700 14px var(--display); fill: var(--ink); }
+.vs-keal, .vs-keal-k { fill: var(--pass); background: var(--pass); }
+.vs-greg, .vs-greg-k { fill: var(--wrong); background: var(--wrong); }
+.vs-legend { display: flex; flex-wrap: wrap; gap: 0.3rem 1.2rem; font: 500 0.95rem var(--display); margin: 0.3rem 0 0; }
+.vs-foot { font-size: 0.9rem; color: var(--ink-soft); margin: 0.4rem 0 0; }
+.more { margin: 0 0 1rem; }
+.more summary { cursor: pointer; font: 600 1rem var(--display); color: var(--ink-soft); width: fit-content; }
+.more summary:hover { color: var(--ink); }
+
 /* memcap chart */
 .memcap { overflow-x: auto; margin: 0.25rem 0 0; max-width: 52rem; }
 .memcap svg { width: 100%; min-width: 36rem; height: auto; display: block; }

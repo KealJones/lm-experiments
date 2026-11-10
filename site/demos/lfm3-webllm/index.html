@@ -34,8 +34,12 @@
     2 GB of memory, and iOS kills the tab, with no warning and nothing the page can catch, the moment it goes over. Apple
     doesn't publish the limit, so Keal and Greg measured it with Squiggle's memcap page, which fills a tab with memory
     until the browser stops it, several times over, once each for plain JavaScript, WebAssembly and the GPU.</p>
-  <div class="memcap" id="memcap" role="img"></div>
-  <p class="stage-note" id="memcap-note"></p>
+  <div class="vs" id="vs" role="img"></div>
+  <details class="more">
+    <summary>Show every memory type, lowest to best run</summary>
+    <div class="memcap" id="memcap" role="img"></div>
+    <p class="stage-note" id="memcap-note"></p>
+  </details>
   <p>Two things in Keal's numbers decided everything after this. All four kinds of memory stop at about the same
     1.9 GB, and filling JavaScript and the GPU at the same time stops there too (992 MB + 936 MB in his middle run), so
     it's <strong>one budget</strong>: a model's weights on the GPU come out of the same 1.9 GB as the page. And it's
