@@ -1,0 +1,58 @@
+== 16:16:20 toolchain from kealjones/tp-parse-runs:lfm3-mlc-3/6af2353a9737d9a9e08d84d0
+== 16:16:35 python deps
+torch 2.15.0+cpu tvm_ffi 0.1.16.dev6+g6628c464e
+mlc_llm ok, lfm3 registered: True
+== 16:17:42 emscripten 7.0.0
+emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 7.0.0 (777e6e5db7b4990bcaeb1b9998ed642cc84e6629)
+== 16:18:11 download the template build and Liquid's QAD GGUF
+template /root/.cache/huggingface/hub/models--kealjones--LFM3-1.7B-q4f16_1-MLC/snapshots/3177eae41b6e88662698cd3aa3cf83b5ec854e43 gguf /root/.cache/huggingface/hub/models--LiquidAI--LFM3-1.7B-GGUF/snapshots/cd0c74c575b5c416f3011b5b4c298077f26ca8c2/LFM3-1.7B-QAD-Q4_0.gguf
+== 16:18:17 QAD weights into the q4f16_1 layout
+replaced 107 linear layers with QAD weights; wrote /work/qad-pkg
+== 16:18:39 compile webgpu q4f16_1 with max_batch_size=1
+LFM3-1.7B-q4f16_1-b1-webgpu.wasm: "memory_usage": {"alloc_embedding_tensor": 1048576, "argsort_probs": 0, "batch_decode": 635936, "batch_prefill": 16510976, "batch_verify": 147070976, "create_rnn_state": 0, "create_tir_paged_kv_cache": 0, "embed": 1048576, "sample_with_top_p": 12, "softmax_with_temperature": 0}
+LFM3-1.7B-q4f16_1-webgpu.wasm: "memory_usage": {"alloc_embedding_tensor": 1048576, "argsort_probs": 0, "batch_decode": 81399808, "batch_prefill": 81534976, "batch_verify": 147070976, "create_rnn_state": 0, "create_tir_paged_kv_cache": 0, "embed": 1048576, "sample_with_top_p": 1536, "softmax_with_temperature": 0}
+total 980960
+drwxr-xr-x. 2 root root     16384 Nov 10 16:19 .
+drwxr-xr-x. 6 root root     16384 Nov 10 16:18 ..
+-rw-r--r--. 1 root root      1570 Nov 10 16:18 .gitattributes
+-rwxr-xr-x. 1 root root   6728903 Nov 10 16:20 LFM3-1.7B-q4f16_1-b1-webgpu.wasm
+-r--r--r--. 1 root root   6728861 Nov 10 16:18 LFM3-1.7B-q4f16_1-webgpu.wasm
+-rw-r--r--. 1 root root      2977 Nov 10 16:18 mlc-chat-config.json
+-rw-r--r--. 1 root root 131072000 Nov 10 16:18 params_shard_0.bin
+-rw-r--r--. 1 root root  25853952 Nov 10 16:18 params_shard_1.bin
+-rw-r--r--. 1 root root  27131904 Nov 10 16:18 params_shard_10.bin
+-rw-r--r--. 1 root root  26558464 Nov 10 16:18 params_shard_11.bin
+-rw-r--r--. 1 root root  24246784 Nov 10 16:18 params_shard_12.bin
+-rw-r--r--. 1 root root  26558464 Nov 10 16:18 params_shard_13.bin
+-rw-r--r--. 1 root root  32504320 Nov 10 16:18 params_shard_14.bin
+-rw-r--r--. 1 root root  27131904 Nov 10 16:18 params_shard_15.bin
+-rw-r--r--. 1 root root  26558464 Nov 10 16:18 params_shard_16.bin
+-rw-r--r--. 1 root root  32475648 Nov 10 16:18 params_shard_17.bin
+-rw-r--r--. 1 root root  24246784 Nov 10 16:18 params_shard_18.bin
+-rw-r--r--. 1 root root  26558464 Nov 10 16:18 params_shard_19.bin
+-rw-r--r--. 1 root root  32878592 Nov 10 16:18 params_shard_2.bin
+-rw-r--r--. 1 root root  32504320 Nov 10 16:18 params_shard_20.bin
+-rw-r--r--. 1 root root  27131904 Nov 10 16:18 params_shard_21.bin
+-rw-r--r--. 1 root root  18329600 Nov 10 16:18 params_shard_22.bin
+-rw-r--r--. 1 root root  26558464 Nov 10 16:18 params_shard_23.bin
+-rw-r--r--. 1 root root  32504320 Nov 10 16:18 params_shard_24.bin
+-rw-r--r--. 1 root root  27131904 Nov 10 16:18 params_shard_25.bin
+-rw-r--r--. 1 root root  26558464 Nov 10 16:18 params_shard_26.bin
+-rw-r--r--. 1 root root  24246784 Nov 10 16:18 params_shard_27.bin
+-rw-r--r--. 1 root root  26558464 Nov 10 16:18 params_shard_28.bin
+-rw-r--r--. 1 root root  32504320 Nov 10 16:18 params_shard_29.bin
+-rw-r--r--. 1 root root  29704192 Nov 10 16:18 params_shard_3.bin
+-rw-r--r--. 1 root root  27131904 Nov 10 16:18 params_shard_30.bin
+-rw-r--r--. 1 root root   8863744 Nov 10 16:18 params_shard_31.bin
+-rw-r--r--. 1 root root  32504320 Nov 10 16:18 params_shard_4.bin
+-rw-r--r--. 1 root root  27131904 Nov 10 16:18 params_shard_5.bin
+-rw-r--r--. 1 root root  26558464 Nov 10 16:18 params_shard_6.bin
+-rw-r--r--. 1 root root  24246784 Nov 10 16:18 params_shard_7.bin
+-rw-r--r--. 1 root root  26558464 Nov 10 16:18 params_shard_8.bin
+-rw-r--r--. 1 root root  32504320 Nov 10 16:18 params_shard_9.bin
+-rw-r--r--. 1 root root     60026 Nov 10 16:18 tensor-cache.json
+-r--r--r--. 1 root root  17908635 Nov 10 16:18 tokenizer.json
+-rw-r--r--. 1 root root      1545 Nov 10 16:18 tokenizer_config.json
+== 16:20:16 upload
+uploaded https://huggingface.co/kealjones/LFM3-1.7B-QAD-q4f16_1-MLC
+== 16:20:22 done

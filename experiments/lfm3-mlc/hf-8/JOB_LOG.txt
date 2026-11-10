@@ -1,0 +1,235 @@
+job 6af3433f9737d9a9e090f172 on cpu: lfm3-mlc-8 at 60708f0
+fetched experiments/lfm3-mlc/build_lfm3.sh
+fetched experiments/lfm3-mlc/compile_wasm.py
+fetched experiments/lfm3-mlc/register_lfm3.py
+fetched experiments/lfm3-mlc/lfm3_model.py
+fetched experiments/lfm3-mlc/lfm3_loader.py
+fetched experiments/lfm3-mlc/lfm3_conv.py
+fetched experiments/lfm3-mlc/qad_to_mlc.py
+== 16:16:20 toolchain from kealjones/tp-parse-runs:lfm3-mlc-3/6af2353a9737d9a9e08d84d0
+debconf: delaying package configuration, since apt-utils is not installed
+[notice] To update, run: pip install --upgrade pip
+
+
+Downloading bytes:           |  0.00B            [A
+
+Reconstructing (incomplete total...): |          |  0.00B /  0.00B            [A
+
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s][A
+
+Reconstructing (incomplete total...):   0%|          |  0.00B / 39.9MB            [A
+
+Reconstructing (incomplete total...):   0%|          |   355B / 43.3MB            [A
+
+Reconstructing (incomplete total...):   0%|          |   355B / 43.3MB            [A
+Fetching 3 files: 100%|██████████| 3/3 [00:00<00:00,  3.70it/s]
+
+
+Downloading bytes: ██████████| 43.2MB,   ???B/s  [A
+
+Download complete: ██████████| 43.2MB,   ???B/s  [A
+
+Reconstruction complete: 100%|██████████| 43.3MB / 43.3MB,   ???B/s               [A
+Download complete: ██████████| 43.2MB,   ???B/s  
+
+Reconstruction complete: 100%|██████████| 43.3MB / 43.3MB,   ???B/s  
+[notice] To update, run: pip install --upgrade pip
+== 16:16:35 python deps
+[notice] To update, run: pip install --upgrade pip
+[notice] To update, run: pip install --upgrade pip
+[notice] To update, run: pip install --upgrade pip
+torch 2.15.0+cpu tvm_ffi 0.1.16.dev6+g6628c464e
+[16:17:40] src/codegen/llvm/llvm_instance.cc:218: Error: Using LLVM 16.0.6 with `-mcpu=neoverse-v3ae` is not valid in `-mtriple=aarch64-linux-gnu`, using default `-mcpu=generic`
+mlc_llm: serve not available: Cannot find object type index for mlc.serve.Data
+mlc_llm ok, lfm3 registered: True
+== 16:17:42 emscripten 7.0.0
+Setting up EMSDK environment (suppress these messages with EMSDK_QUIET=1)
+Adding directories to PATH:
+PATH += /work/emsdk
+PATH += /work/emsdk/upstream/emscripten
+PATH += /work/emsdk/node/24.19.0_64bit/bin
+
+Setting environment variables:
+PATH = /work/emsdk:/work/emsdk/upstream/emscripten:/work/emsdk/node/24.19.0_64bit/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+EMSDK = /work/emsdk
+EMSDK_NODE = /work/emsdk/node/24.19.0_64bit/bin/node
+Clearing existing environment variable: EMSDK_VERSION
+shared:INFO: (Emscripten: Running sanity checks)
+emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 7.0.0 (777e6e5db7b4990bcaeb1b9998ed642cc84e6629)
+[notice] To update, run: pip install --upgrade pip
+== 16:18:11 download the template build and Liquid's QAD GGUF
+
+
+Downloading bytes:           |  0.00B            [A
+
+Reconstructing (incomplete total...): |          |  0.00B /  0.00B            [A
+
+Fetching 38 files:   0%|          | 0/38 [00:00<?, ?it/s][A
+
+Reconstructing (incomplete total...):   0%|          |  0.00B / 1.57kB            [A
+
+Reconstructing (incomplete total...):  35%|███▍      | 1.57kB / 4.55kB            [A
+
+Reconstructing (incomplete total...):   0%|          | 4.55kB / 26.6MB            [A
+
+Reconstructing (incomplete total...):   0%|          | 4.55kB / 50.8MB            [A
+
+Reconstructing (incomplete total...):   0%|          | 4.55kB /  182MB            [A
+
+Reconstructing (incomplete total...):   0%|          | 4.55kB /  189MB            [A
+
+Reconstructing (incomplete total...):   0%|          | 4.55kB /  216MB            [A
+
+Reconstructing (incomplete total...):   0%|          | 4.55kB /  268MB            [A
+
+Reconstructing (incomplete total...):   0%|          | 4.55kB /  268MB            [A
+
+Reconstructing (incomplete total...):   0%|          | 4.55kB /  301MB            [A
+
+Reconstructing (incomplete total...):   2%|▏         | 6.73MB /  328MB,   ???B/s  [A
+
+Reconstructing (incomplete total...):  17%|█▋        | 59.9MB /  354MB,   ???B/s  [A
+
+Reconstructing (incomplete total...):  15%|█▌        | 59.9MB /  387MB,   ???B/s  [A
+
+Reconstructing (incomplete total...):  21%|██        | 85.7MB /  411MB,   ???B/s  [A
+
+Reconstructing (incomplete total...):  25%|██▌       |  110MB /  438MB,   ???B/s  [A
+
+Downloading bytes: ███       |  133MB,   ???B/s  [A
+
+Reconstructing (incomplete total...):  31%|███▏      |  137MB /  438MB,   ???B/s  [A
+
+Fetching 38 files:  21%|██        | 8/38 [00:01<00:04,  7.15it/s][A
+
+Reconstructing (incomplete total...):  29%|██▉       |  137MB /  471MB,  123MB/s  [A
+
+Reconstructing (incomplete total...):  34%|███▎      |  170MB /  503MB,  123MB/s  [A
+
+Reconstructing (incomplete total...):  37%|███▋      |  197MB /  530MB,  123MB/s  [A
+
+Reconstructing (incomplete total...):  45%|████▌     |  248MB /  548MB,  123MB/s  [A
+
+Reconstructing (incomplete total...):  43%|████▎     |  248MB /  575MB,  123MB/s  [A
+
+Reconstructing (incomplete total...):  45%|████▌     |  274MB /  608MB,  123MB/s  [A
+
+Reconstructing (incomplete total...):  48%|████▊     |  307MB /  635MB,  123MB/s  [A
+
+Reconstructing (incomplete total...):  66%|██████▌   |  438MB /  661MB,  123MB/s  [A
+
+Reconstructing (incomplete total...):  67%|██████▋   |  456MB /  685MB,  123MB/s  [A
+
+Reconstructing (incomplete total...):  68%|██████▊   |  483MB /  712MB,  123MB/s  [A
+
+Reconstructing (incomplete total...):  69%|██████▉   |  516MB /  745MB,  123MB/s  [A
+
+Reconstructing (incomplete total...):  71%|███████   |  548MB /  774MB,  123MB/s  [A
+
+Downloading bytes: ███████▏  |  556MB,  129MB/s  [A
+
+Reconstructing (incomplete total...):  72%|███████▏  |  575MB /  801MB,  123MB/s  [A
+
+Reconstructing (incomplete total...):  75%|███████▌  |  602MB /  801MB,  123MB/s  [A
+
+Fetching 38 files:  55%|█████▌    | 21/38 [00:02<00:01, 10.31it/s][A
+
+Reconstructing (incomplete total...):  74%|███████▍  |  602MB /  810MB,  312MB/s  [A
+
+Reconstructing (incomplete total...):  75%|███████▍  |  629MB /  843MB,  312MB/s  [A
+
+Reconstructing (incomplete total...):  79%|███████▉  |  685MB /  870MB,  312MB/s  [A
+
+Reconstructing (incomplete total...):  76%|███████▋  |  685MB /  896MB,  312MB/s  [A
+
+Reconstructing (incomplete total...):  77%|███████▋  |  712MB /  921MB,  312MB/s  [A
+
+Reconstructing (incomplete total...):  76%|███████▌  |  721MB /  947MB,  312MB/s  [A
+
+Reconstructing (incomplete total...):  77%|███████▋  |  753MB /  980MB,  312MB/s  [A
+
+Reconstructing (incomplete total...):  80%|███████▉  |  783MB /  980MB,  312MB/s  [A
+
+Reconstructing (incomplete total...):  78%|███████▊  |  783MB /  998MB,  312MB/s  [A
+
+Reconstructing (incomplete total...):  81%|████████  |  810MB /  998MB,  312MB/s  [A
+
+Downloading bytes: ████████▊ |  876MB,  297MB/s  [A
+
+Reconstructing (incomplete total...):  92%|█████████▏|  921MB /  998MB,  312MB/s  [A
+
+Fetching 38 files:  92%|█████████▏| 35/38 [00:03<00:00, 11.80it/s][A
+Fetching 38 files: 100%|██████████| 38/38 [00:03<00:00, 11.33it/s]
+
+
+Downloading bytes: ██████████|  976MB,  306MB/s  [A
+
+Download complete: ██████████|  976MB,  306MB/s  [A
+
+Reconstruction complete: 100%|██████████|  998MB /  998MB,  311MB/s               [A
+
+LFM3-1.7B-QAD-Q4_0.gguf: reconstructing file:   0%|          |  0.00B / 1.05GB            [A
+LFM3-1.7B-QAD-Q4_0.gguf: downloading bytes:           |  0.00B            
+LFM3-1.7B-QAD-Q4_0.gguf: downloading bytes: ████      |  427MB, 31.8MB/s  
+
+LFM3-1.7B-QAD-Q4_0.gguf: reconstructing file:  45%|████▍     |  470MB / 1.05GB,  828kB/s  [A
+LFM3-1.7B-QAD-Q4_0.gguf: downloading bytes: ██████████| 1.04GB, 93.9MB/s  
+LFM3-1.7B-QAD-Q4_0.gguf: downloading bytes: ██████████| 1.04GB, 93.9MB/s  
+
+LFM3-1.7B-QAD-Q4_0.gguf: reconstructing file: 100%|██████████| 1.05GB / 1.05GB, 96.2MB/s  
+template /root/.cache/huggingface/hub/models--kealjones--LFM3-1.7B-q4f16_1-MLC/snapshots/3177eae41b6e88662698cd3aa3cf83b5ec854e43 gguf /root/.cache/huggingface/hub/models--LiquidAI--LFM3-1.7B-GGUF/snapshots/cd0c74c575b5c416f3011b5b4c298077f26ca8c2/LFM3-1.7B-QAD-Q4_0.gguf
+
+Download complete: ██████████|  976MB,  306MB/s  
+
+Reconstruction complete: 100%|██████████|  998MB /  998MB,  311MB/s  
+== 16:18:17 QAD weights into the q4f16_1 layout
+replaced 107 linear layers with QAD weights; wrote /work/qad-pkg
+== 16:18:39 compile webgpu q4f16_1 with max_batch_size=1
+LFM3-1.7B-q4f16_1-b1-webgpu.wasm: "memory_usage": {"alloc_embedding_tensor": 1048576, "argsort_probs": 0, "batch_decode": 635936, "batch_prefill": 16510976, "batch_verify": 147070976, "create_rnn_state": 0, "create_tir_paged_kv_cache": 0, "embed": 1048576, "sample_with_top_p": 12, "softmax_with_temperature": 0}
+LFM3-1.7B-q4f16_1-webgpu.wasm: "memory_usage": {"alloc_embedding_tensor": 1048576, "argsort_probs": 0, "batch_decode": 81399808, "batch_prefill": 81534976, "batch_verify": 147070976, "create_rnn_state": 0, "create_tir_paged_kv_cache": 0, "embed": 1048576, "sample_with_top_p": 1536, "softmax_with_temperature": 0}
+total 980960
+drwxr-xr-x. 2 root root     16384 Nov 10 16:19 .
+drwxr-xr-x. 6 root root     16384 Nov 10 16:18 ..
+-rw-r--r--. 1 root root      1570 Nov 10 16:18 .gitattributes
+-rwxr-xr-x. 1 root root   6728903 Nov 10 16:20 LFM3-1.7B-q4f16_1-b1-webgpu.wasm
+-r--r--r--. 1 root root   6728861 Nov 10 16:18 LFM3-1.7B-q4f16_1-webgpu.wasm
+-rw-r--r--. 1 root root      2977 Nov 10 16:18 mlc-chat-config.json
+-rw-r--r--. 1 root root 131072000 Nov 10 16:18 params_shard_0.bin
+-rw-r--r--. 1 root root  25853952 Nov 10 16:18 params_shard_1.bin
+-rw-r--r--. 1 root root  27131904 Nov 10 16:18 params_shard_10.bin
+-rw-r--r--. 1 root root  26558464 Nov 10 16:18 params_shard_11.bin
+-rw-r--r--. 1 root root  24246784 Nov 10 16:18 params_shard_12.bin
+-rw-r--r--. 1 root root  26558464 Nov 10 16:18 params_shard_13.bin
+-rw-r--r--. 1 root root  32504320 Nov 10 16:18 params_shard_14.bin
+-rw-r--r--. 1 root root  27131904 Nov 10 16:18 params_shard_15.bin
+-rw-r--r--. 1 root root  26558464 Nov 10 16:18 params_shard_16.bin
+-rw-r--r--. 1 root root  32475648 Nov 10 16:18 params_shard_17.bin
+-rw-r--r--. 1 root root  24246784 Nov 10 16:18 params_shard_18.bin
+-rw-r--r--. 1 root root  26558464 Nov 10 16:18 params_shard_19.bin
+-rw-r--r--. 1 root root  32878592 Nov 10 16:18 params_shard_2.bin
+-rw-r--r--. 1 root root  32504320 Nov 10 16:18 params_shard_20.bin
+-rw-r--r--. 1 root root  27131904 Nov 10 16:18 params_shard_21.bin
+-rw-r--r--. 1 root root  18329600 Nov 10 16:18 params_shard_22.bin
+-rw-r--r--. 1 root root  26558464 Nov 10 16:18 params_shard_23.bin
+-rw-r--r--. 1 root root  32504320 Nov 10 16:18 params_shard_24.bin
+-rw-r--r--. 1 root root  27131904 Nov 10 16:18 params_shard_25.bin
+-rw-r--r--. 1 root root  26558464 Nov 10 16:18 params_shard_26.bin
+-rw-r--r--. 1 root root  24246784 Nov 10 16:18 params_shard_27.bin
+-rw-r--r--. 1 root root  26558464 Nov 10 16:18 params_shard_28.bin
+-rw-r--r--. 1 root root  32504320 Nov 10 16:18 params_shard_29.bin
+-rw-r--r--. 1 root root  29704192 Nov 10 16:18 params_shard_3.bin
+-rw-r--r--. 1 root root  27131904 Nov 10 16:18 params_shard_30.bin
+-rw-r--r--. 1 root root   8863744 Nov 10 16:18 params_shard_31.bin
+-rw-r--r--. 1 root root  32504320 Nov 10 16:18 params_shard_4.bin
+-rw-r--r--. 1 root root  27131904 Nov 10 16:18 params_shard_5.bin
+-rw-r--r--. 1 root root  26558464 Nov 10 16:18 params_shard_6.bin
+-rw-r--r--. 1 root root  24246784 Nov 10 16:18 params_shard_7.bin
+-rw-r--r--. 1 root root  26558464 Nov 10 16:18 params_shard_8.bin
+-rw-r--r--. 1 root root  32504320 Nov 10 16:18 params_shard_9.bin
+-rw-r--r--. 1 root root     60026 Nov 10 16:18 tensor-cache.json
+-r--r--r--. 1 root root  17908635 Nov 10 16:18 tokenizer.json
+-rw-r--r--. 1 root root      1545 Nov 10 16:18 tokenizer_config.json
+== 16:20:16 upload
+uploaded https://huggingface.co/kealjones/LFM3-1.7B-QAD-q4f16_1-MLC
+== 16:20:22 done
+exit code 0 after 4.2 min
