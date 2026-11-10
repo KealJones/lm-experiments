@@ -23,6 +23,7 @@ api = HfApi(token=os.environ["HF_TOKEN"])
 USER = api.whoami()["name"]
 RESULTS = f"{USER}/tp-parse-runs"
 MAX_FILE = 50_000_000      # bigger outputs (model files) stay in the results repo; GitHub refuses >100 MB and big pushes time out
+MAX_TOTAL = 100_000_000    # and at most this much per job, smallest paths first (sorted), the rest stays in the results repo
 REPO = os.environ.get("GITHUB_REPOSITORY", "KealJones/lm-experiments")
 
 
@@ -87,10 +88,17 @@ def collect():
             try:
                 snapshot_download(RESULTS, repo_type="dataset", local_dir=d, allow_patterns=[f"{job['slug']}/{job['job_id']}/*"])
                 src = Path(d) / job["slug"] / job["job_id"]
+                total = 0
                 for p in sorted(src.rglob("*")) if src.exists() else []:
-                    if p.is_file() and p.stat().st_size > MAX_FILE:     # git can't take it: leave it in the results repo
-                        got.append(f"{p.relative_to(src)} (not copied: {p.stat().st_size / 1e6:.0f} MB, it stays in {RESULTS})")
-                    elif p.is_file():
+                    if not p.is_file():
+                        continue
+                    size = p.stat().st_size
+                    if size > MAX_FILE:     # git can't take it: leave it in the results repo
+                        got.append(f"{p.relative_to(src)} (not copied: {size / 1e6:.0f} MB, it stays in {RESULTS})")
+                    elif total + size > MAX_TOTAL:     # many mid-sized files (model shards) add up: job lfm3-mlc-5 put 800 MB in git
+                        got.append(f"{p.relative_to(src)} (not copied: over {MAX_TOTAL / 1e6:.0f} MB for this job, it stays in {RESULTS})")
+                    else:
+                        total += size
                         (dest / p.relative_to(src)).parent.mkdir(parents=True, exist_ok=True)
                         shutil.copy(p, dest / p.relative_to(src)); got.append(str(p.relative_to(src)))
                 js = json.loads((src / "job_status.json").read_text()) if (src / "job_status.json").exists() else {}

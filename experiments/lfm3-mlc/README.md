@@ -44,3 +44,16 @@ which SwiftShader can run for a headless check).
 - 2026-11-09: job 5 (LLVM libs installed): convert_weight + gen_config pass and the model compiles; the wasm link fails both ways. bc: clang 24 refuses the LLVM-16 module's DataLayout (lacks f128:64). o: wasm-ld misses libc++ symbols because TVM links with emcc. Job 6 links with em++ and tries o first.
 - 2026-11-09: job 6 worked (exit 0, 8 min): `o` object format linked with em++, q4f16_1 and q4f32_1 compiled and uploaded to kealjones/LFM3-1.7B-q4f16_1-MLC and -q4f32_1-MLC (946 MB each, 6.7 MB wasm). Job 7 builds q3f16_1 + q3f32_1 (Keal's call, to see if 4-bit is too big on the phone).
 - 2026-11-09: job 7: q3f16_1 built, compiled and uploaded to kealjones/LFM3-1.7B-q3f16_1-MLC (769 MB, 6.8 MB wasm); MLC pads the 3-bit groups (size 40) against LFM3's 2048-wide layers without trouble. q3f32_1 does not exist in MLC (convert_weight rejects it: only q3f16_0/q3f16_1 at 3 bits), so there is no 3-bit build SwiftShader can run. Both builds are wired into Squiggle (WLF3, WLF3Q3). Output unchecked: headless Chromium (SwiftShader, 8 GB sandbox) loads the 4-bit f32 build and VM fine, then the GPU process is OOM-killed (exit 9, ~6 GB used) on the first generation.
+- 2026-11-10: on Keal's iPhone in Squiggle the 4-bit build (q4f16_1) greets normally with the full prompt and tools
+  (first word 15 s, 13.7 tok/s) and picks the right tool, but runs out of memory mid-task; the 3-bit build runs but
+  overthinks even "Hii" (400 tokens of "likely a placeholder…"), with or without Squiggle's prompt, so the port is right
+  and plain 3-bit rounding is what broke it. Job 8 (`QAD=1`): `qad_to_mlc.py` puts Liquid's quantization-aware-trained
+  4-bit weights (LFM3-1.7B-QAD-Q4_0.gguf) into the q4f16_1 layout exactly (Q4_0 `(k-8)*d` = MLC `(q-7)*s` with
+  q = 15-k, s = -d; checked bit-exact on every layer kind; 0.99 correlation with our rounded weights, ~13% mean
+  difference), embedding (Q6_K in the GGUF) and norms kept from our build. It also compiles a library with
+  `max_batch_size=1`: the default 128 reserves ~81 MB of scratch in each of batch_prefill and batch_decode (wasm
+  `_metadata` memory_usage), mostly logits for 128 sequences. Uploads kealjones/LFM3-1.7B-QAD-q4f16_1-MLC; the
+  original repo is untouched.
+- 2026-11-10: the results collector had committed job 5's 31 model shards (~800 MB) to this repo (each under its
+  50 MB per-file cap). Removed from the tree; `hf/bridge.py` now also caps a job at 100 MB in total. They're still in
+  git history (cleaning that needs a force push, which is Keal's call).

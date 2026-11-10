@@ -62,6 +62,47 @@ if ! command -v emcc >/dev/null; then
 fi
 emcc --version | head -1 | tee -a "$OUT/steps.txt"
 
+if [ "${QAD:-0}" = 1 ]; then
+  # Liquid's quantization-aware-trained 4-bit weights (LFM3-1.7B-QAD-Q4_0.gguf) put exactly into our q4f16_1 build
+  # (qad_to_mlc.py), plus a model library compiled for one conversation at a time (max_batch_size=1: the default
+  # 128 reserves two ~81 MB scratch buffers, mostly logits for 128 sequences, that WebLLM never uses). Both .wasm
+  # files go in the new repo; the original kealjones/LFM3-1.7B-q4f16_1-MLC is left alone. The package is built
+  # outside $OUT so the results upload only gets the small files.
+  pip install -q gguf 2>&1 | tail -1
+  step "download the template build and Liquid's QAD GGUF"
+  python - <<PYEOF | tee -a "$OUT/steps.txt"
+import os
+from huggingface_hub import snapshot_download, hf_hub_download
+t = snapshot_download("$REPO_PREFIX-q4f16_1-MLC"); os.symlink(t, "tpl")
+g = hf_hub_download("LiquidAI/LFM3-1.7B-GGUF", "LFM3-1.7B-QAD-Q4_0.gguf"); os.symlink(g, "qad.gguf")
+print("template", t, "gguf", g)
+PYEOF
+  QPKG="$ROOT/qad-pkg"
+  step "QAD weights into the q4f16_1 layout"
+  python -I qad_to_mlc.py tpl qad.gguf "$QPKG" | tee -a "$OUT/steps.txt"
+  WASM_B1="$QPKG/$NAME-q4f16_1-b1-webgpu.wasm"
+  step "compile webgpu q4f16_1 with max_batch_size=1"
+  TVM_WASM_OBJ=o python compile_wasm.py "$QPKG/mlc-chat-config.json" --device webgpu --overrides "max_batch_size=1" \
+    -o "$WASM_B1" > "$OUT/compile-b1.log" 2>&1 || { tail -40 "$OUT/compile-b1.log"; false; }
+  for w in "$QPKG"/*.wasm; do
+    echo "$(basename "$w"): $(strings "$w" | grep -o '"memory_usage": {[^}]*}' | head -1)" | tee -a "$OUT/steps.txt"
+  done
+  ls -la "$QPKG" | tee -a "$OUT/steps.txt"
+  step "upload"
+  python - "$QPKG" "$REPO_PREFIX-QAD-q4f16_1-MLC" <<'PYEOF' | tee -a "$OUT/steps.txt"
+import os, sys
+from huggingface_hub import HfApi
+pkg, repo = sys.argv[1:3]
+api = HfApi(token=os.environ["HF_TOKEN"])
+api.create_repo(repo, repo_type="model", private=False, exist_ok=True)
+api.upload_folder(repo_id=repo, folder_path=pkg, path_in_repo=".", commit_message="LFM3 1.7B with Liquid's QAD 4-bit weights, MLC q4f16_1")
+print("uploaded", f"https://huggingface.co/{repo}")
+PYEOF
+  mkdir -p "$OUT/keep-qad" && cp "$QPKG"/*.json "$OUT/keep-qad/"
+  step "done"
+  exit 0
+fi
+
 step "download $MODEL"
 python - <<EOF | tee -a "$OUT/steps.txt"
 import os
