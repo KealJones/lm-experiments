@@ -306,7 +306,16 @@ class Chat:
         if self.arm == "notes":
             users = [i for i, m in enumerate(self.msgs) if m["role"] == "user"]
             if self.max_turns: users = users[: self.max_turns]
+            prior = getattr(self, "resume_from", None)
+            if prior:   # carry on a chat a time-limited run didn't finish: its notes file and turns so far
+                self.record["updates"], self.record["notes_history"] = prior["updates"], prior["notes_history"]
+                self.remembered = prior.get("remembered", [])
+                last = next((x for x in reversed(prior["notes_history"]) if x is not None), None)
+                if last is not None:
+                    self.shell.run(self.chat_id, f"cat > {NOTES} <<'SQUIGGLE_EOF'\n{last.rstrip(chr(10))}\nSQUIGGLE_EOF")
+                self.record["resumed_at_turn"] = len(prior["updates"])
             for n, i in enumerate(users):
+                if n < len(self.record["updates"]): continue
                 reply = self.msgs[i + 1] if i + 1 < len(self.msgs) and self.msgs[i + 1]["role"] == "assistant" else None
                 before = self.notes()
                 tail = [{"role": "user", "content": self.msgs[i]["content"]}] + self.pretend_cat()
@@ -415,6 +424,7 @@ def main():
     ap.add_argument("--arms", default="notes,window,full")
     ap.add_argument("--max-turns", type=int, default=None)
     ap.add_argument("--backend", default="llama")
+    ap.add_argument("--resume", default="", help="folder with partial-notes-N.json (or finished notes-N.json) to carry on from")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
     data = json.load(open("data.json"))
@@ -425,6 +435,18 @@ def main():
     shell = Shell()
     log = open(os.path.join(a.out, "log.txt"), "a")
     chats = [Chat(d, arm, shell, be.tok, log, a.max_turns) for arm in a.arms.split(",") for d in data]
+    if a.resume:
+        keep = []
+        for c in chats:
+            done = os.path.join(a.resume, f"{c.arm}-{c.d['id']}.json")
+            part = os.path.join(a.resume, f"partial-{c.arm}-{c.d['id']}.json")
+            if os.path.exists(done):
+                continue                                  # finished in the earlier run
+            if os.path.exists(part):
+                c.resume_from = json.load(open(part))
+            keep.append(c)
+        chats = keep
+        print(f"resuming {len(chats)} chats: " + ", ".join(f"{c.arm}-{c.d['id']}@{len(getattr(c, 'resume_from', {}).get('updates', []))}" for c in chats), flush=True)
     if hasattr(be, "one"):
         # llama-server: every chat runs on its own, so no chat waits for the slowest one in a round.
         import threading
