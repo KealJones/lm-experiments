@@ -106,8 +106,112 @@ def apply_ops(lines, text):
     return ops
 
 
+def junk(line):
+    """Lines run 3's parser let in that aren't notes: NONE, talk about the notes, cut-off lines."""
+    t = strip_tags(line).strip()
+    return (not t or t.upper().startswith("NONE") or re.match(r"^(add|adding|added|note|update|record|new fact|no new|nothing new)\b.*\b(fact|note|exchange|notes)\b", t, re.I)
+            or t.endswith(("=", ":", ",", "(", "-")) or len(t.split()) < 2)
+
+
+def near_repeat(lines, new):
+    """Most of the new line's words are already in one live line (run 3 only skipped exact repeats)."""
+    w = set(toks(strip_tags(new)))
+    if not w: return True
+    return any(l is not None and len(w & set(toks(strip_tags(l)))) / len(w) >= 0.8 for l in lines)
+
+
+def apply_ops_strict(lines, text):
+    ops = []
+    for raw in visible(text).splitlines():
+        s = raw.strip()
+        body = re.sub(r"^[-*\u2022]\s*", "", s)
+        if re.match(r"^(CHANGE|DELETE)\b", body, re.I):
+            ops += apply_ops(lines, s); continue
+        if not re.match(r"^([-*\u2022]|ADD\s*:)", s, re.I): continue
+        new = re.sub(r"^ADD\s*:\s*", "", body, flags=re.I).strip()
+        if junk(new): ops.append(("junk-skipped", None)); continue
+        if near_repeat(lines, new): ops.append(("near-repeat-skipped", None)); continue
+        lines.append(new); ops.append(("add", None))
+    return ops
+
+
 def norm(line):
     return re.sub(r"\W+", " ", strip_tags(line)).lower().strip()
+
+
+# ── Run 4a: native LFM3 layout for the note pass ─────────────────────────────
+# Only system / user / assistant / tool roles (Liquid's template has no harness role). The real exchange goes in as
+# real turns; the notes come back from a read_notes call it "already made" (only lines matching the exchange, plus the
+# most recently touched); its edits go out as an update_notes tool call, so its output doesn't look like its notes.
+NATIVE_SYSTEM = """You keep notes for a chat between a user and an assistant. You never reply to the user: your only job is the notes. Later the assistant sees only these notes, not the chat, so anything not written down is forgotten.
+After each exchange you get the saved notes that relate to it from read_notes. Then call update_notes with only what is new or changed:
+- add: new facts, one short line each (names, dates, times, places, amounts, counts, rules, decisions, even from side comments). Never add a fact that read_notes already shows.
+- change: when a fact changed, the note's number and the fact as it is now. Be extra sure to fix facts the user corrects. Example: note 3 says "Billy's birthday: Mar 15, 2020" and the user says "oh wait no, Billy's birthday is actually Dec 16" -> change: ["3: Billy's birthday: Dec 16, 2020 (not Mar 15)"]
+- delete: numbers of notes that no longer hold at all (cancelled, ruled out).
+If nothing is new or changed, don't call update_notes."""
+READ_NOTES = {"name": "read_notes", "description": "Show the saved notes that relate to a query, numbered.",
+              "parameters": {"type": "object", "properties": {"query": {"type": "string", "description": "What to look for"}}, "required": ["query"]}}
+UPDATE_NOTES = {"name": "update_notes", "description": "Add, change or delete notes.",
+                "parameters": {"type": "object", "properties": {
+                    "add": {"type": "array", "items": {"type": "string"}, "description": "New facts, one short line each"},
+                    "change": {"type": "array", "items": {"type": "string"}, "description": "\"<note number>: <the fact as it is now>\""},
+                    "delete": {"type": "array", "items": {"type": "integer"}, "description": "Numbers of notes that no longer hold"}}}}
+NATIVE_TOOLS = [READ_NOTES, UPDATE_NOTES]
+MATCHED, RECENT = 8, 3
+
+
+def as_list(v):
+    if v is None or v == "": return []
+    if isinstance(v, list): return v
+    if isinstance(v, str):
+        try:
+            j = json.loads(v)
+            return j if isinstance(j, list) else [j]
+        except Exception:
+            return [x.strip() for x in v.splitlines() if x.strip()]
+    return [v]
+
+
+def apply_native(lines, touched, calls):
+    """update_notes args -> edits. Exact repeats of a live line are skipped, as in run 3."""
+    ops = []
+    for c in calls:
+        if c["name"] != "update_notes":
+            ops.append(("other-call", c["name"])); continue
+        a = c["arguments"]
+        for x in as_list(a.get("change")):
+            m = re.match(r"^\s*#?(\d+)\s*[:.)-]\s*(.+)$", str(x), re.S)
+            if isinstance(x, dict): m = None; n, txt = int(x.get("number", x.get("n", 0)) or 0), str(x.get("text", x.get("fact", "")))
+            elif m: n, txt = int(m.group(1)), m.group(2).strip()
+            else: ops.append(("change-unparsed", None)); continue
+            if 1 <= n <= len(lines) and lines[n - 1] is not None and txt:
+                lines[n - 1] = txt; touched.append(n - 1); ops.append(("change", n))
+            else: ops.append(("change-missing-line", n))
+        for x in as_list(a.get("delete")):
+            try: n = int(str(x).strip().lstrip("#"))
+            except Exception: ops.append(("delete-unparsed", None)); continue
+            if 1 <= n <= len(lines) and lines[n - 1] is not None:
+                lines[n - 1] = None; ops.append(("delete", n))
+        for x in as_list(a.get("add")):
+            txt = str(x).strip()
+            if not txt: continue
+            if any(l is not None and norm(l) == norm(txt) for l in lines):
+                ops.append(("repeat-skipped", None)); continue
+            lines.append(txt); touched.append(len(lines) - 1); ops.append(("add", None))
+    return ops
+
+
+def related(lines, touched, query):
+    """Line numbers for read_notes: the BM25 matches for the exchange plus the most recently touched lines."""
+    live_idx = [i for i, l in enumerate(lines) if l is not None]
+    if not live_idx: return []
+    order = bm25_rank([lines[i] for i in live_idx], query)
+    picked = [live_idx[j] for j in order[:MATCHED]]
+    for i in reversed(touched):
+        if len([p for p in picked if p in touched[-RECENT:]]) >= RECENT: break
+        if lines[i] is not None and i not in picked: picked.append(i)
+        if len(picked) >= MATCHED + RECENT: break
+    return sorted(set(picked))
 
 
 def last_exchange(msgs):
@@ -120,6 +224,7 @@ def last_exchange(msgs):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("out"); ap.add_argument("--chats", default=""); ap.add_argument("--max-turns", type=int, default=None)
+    ap.add_argument("--variant", default="run3", choices=["run3", "native", "strict"])
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
     data = json.load(open("data.json"))
@@ -152,20 +257,37 @@ def main():
         return out, secs, False
 
     def note_chat(d):
-        lines, log = [], []
+        lines, log, touched = [], [], []
         msgs = d["messages"]
         users = [i for i, m in enumerate(msgs) if m["role"] == "user"]
         if a.max_turns: users = users[: a.max_turns]
         for n, i in enumerate(users):
             reply = msgs[i + 1]["content"] if i + 1 < len(msgs) and msgs[i + 1]["role"] == "assistant" else "(no reply)"
             shown, hidden = list(lines), 0   # fit the 4K window like the phone: the oldest note lines drop out of view
-            while True:
+            while a.variant != "native":
                 user_msg = f"NOTES:\n{render(shown)}\n\nLATEST EXCHANGE:\nUser: {msgs[i]['content']}\nAssistant: {reply}"
                 prompt = wb.lfm3_prompt([{"role": "system", "content": NOTE_SYSTEM}, {"role": "user", "content": user_msg}], [], thinking=False)
                 if ntok(prompt) <= wb.WINDOW - NOTE_MAX or not any(l is not None for l in shown): break
                 j = next(k for k, l in enumerate(shown) if l is not None); shown[j] = None; hidden += 1
+            prompt = prompt if a.variant != "native" else None
+            if a.variant == "native":
+                q = msgs[i]["content"] + " " + " ".join(reply.split()[:60])
+                shown_idx = related(lines, touched, q)
+                notes_txt = "\n".join(f"{k + 1}. {lines[k]}" for k in shown_idx) or "(no notes yet)"
+                conv = [{"role": "system", "content": NATIVE_SYSTEM}, {"role": "user", "content": msgs[i]["content"]}]
+                if reply != "(no reply)": conv.append({"role": "assistant", "content": reply})
+                conv += [{"role": "assistant", "content": "", "tool_calls": [{"name": "read_notes", "arguments": {"query": " ".join(toks(q)[:12])}}]},
+                         {"role": "tool", "content": notes_txt}]
+                prompt, hidden = wb.lfm3_prompt(conv, NATIVE_TOOLS, thinking=False), 0
             out, secs, forced = gen_off(prompt, NOTE_MAX)
-            ops = apply_ops(lines, out)
+            if a.variant == "native":
+                _, said, calls = wb.parse_output(out if "</think>" in out else "</think>" + out)
+                ops = apply_native(lines, touched, calls)
+                if not calls and said.strip() and not said.strip().upper().startswith("NONE"): ops.append(("talked-instead", None))
+            elif a.variant == "strict":
+                ops = apply_ops_strict(lines, out)
+            else:
+                ops = apply_ops(lines, out)
             log.append({"turn": n, "hidden_lines": hidden, "prompt_tokens": ntok(prompt), "out_tokens": ntok(out), "gpu_s": round(secs, 3), "forced": forced, "out": out, "ops": ops, "lines": len(lines)})
         return lines, log
 

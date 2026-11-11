@@ -122,3 +122,20 @@ instead of fixing. Next, one change each against run 3:
 2. The note pass with thinking on, under Squiggle's 400-token budget.
 3. Answer side, on run 3's notes: search with the last exchange as well as the new message, and a stop rule ("two
    empty searches: answer with what you have or ask").
+
+### Runs 4a and 4b (in parallel, one change each against run 3)
+
+Run 3's note pass put the notes in the *user* message, as a bulleted list, and asked for bullets back. Keal: notes
+can't be the user's message. Looking at a real turn (chat 1, turn 9), the exchange was only about the memory leak, yet
+LFM3 re-wrote the party lines after its memory-leak edit: it was continuing the list it was handed. The parser also let
+in junk (`NONE`, "Add new fact from latest exchange: …", cut-off lines).
+
+- **4a, native layout** (`--variant native`). Only the roles LFM3's template has (system, user, assistant, tool; no
+  harness role, per Liquid's card and template): the system prompt is the note-taker's job; the real exchange goes in as
+  real user and assistant turns; then a `read_notes` call it "already made" returns only the note lines BM25 matches to
+  the exchange plus the three most recently touched; its edits go out as an `update_notes(add, change, delete)` tool
+  call. Its output no longer looks like its notes, and the stale line is in view when a correction comes in.
+- **4b, stricter parser** (`--variant strict`). Run 3 unchanged except the parser: rejects `NONE`, lines about the
+  notes, cut-off lines, and adds whose words are 80% or more in one existing line.
+
+Pending: jobs `notes-search-4a`, `notes-search-4b` (l4x1, 45 min cap each, at most $0.60 each).
