@@ -69,4 +69,56 @@ Keal's suggestion: tell it to be extra sure to update facts that changed, with a
 birthday, Mar 15 corrected to Dec 16), and let it delete lines. The prompt now says to write only new or changed
 facts, never repeat one, that most exchanges add 0-2 lines, and has `- CHANGE n:` / `- DELETE n` with the Billy
 example. The harness also skips exact repeats and, like the phone, fits the note prompt into 4K by hiding the oldest
-lines. Answers get Squiggle's 6 tool rounds. Pending (l4x1, 45 min cap, at most $0.60).
+lines. Answers get Squiggle's 6 tool rounds. 27 min, about $0.36.
+
+**The notes now hold the facts, but old versions stay next to the new ones.**
+
+| | run 2 | run 3 |
+|---|---|---|
+| adds | 3,985 | 2,368 |
+| changes | 33 | 333 |
+| exact repeats the harness skipped | - | 1,972 |
+| answer-key facts anywhere in the notes (tests 1-12) | (5 chats crashed) | 36/39, all of them for 9/12 |
+| notes size | 3,000-8,800 words | 1,400-4,700 words |
+
+LFM3 still repeats itself constantly (the harness caught nearly as many repeats as it added lines), and when something
+changes it usually adds a "was X, now Y" line instead of changing the old one: chat 1 has "Invitation date updated to
+Sunday March 22nd (was Saturday March 14th)" but also four lines still saying Saturday March 14th. DELETE was used
+once. The note prompt hit Squiggle's 4K and had to hide old lines on 200 of 833 passes, and LFM3 thought despite
+thinking-off on 122 (forced continuation).
+
+Facts in the packet ([hf-3/SCORES.md](hf-3/SCORES.md)): embeddings 59% (all facts for 4/12), BM25 44% with or without
+tags (2/12), hybrid 44%, LFM3's query 38-41%.
+
+Answers, blind-graded ([hf-3/GRADES.md](hf-3/GRADES.md)):
+
+| packet | tests 1-12 | tests 13-16 |
+|---|---|---|
+| whole notes (3,300-8,700 tokens, mostly over the 4K window) | 1/12, mean 2.2 | 1/4 |
+| BM25 on the raw message | 2/12, 2.9 | 4/4 |
+| hybrid | 2/12, 3.4 | 2/4 |
+| LFM3 query into BM25 | 2/12, 3.7 | 3/4 |
+| *reference: LFM3 with the full chat (whiteboard-3)* | *5/12* | *4/4* |
+| *reference: Opus-built packet (context-packets)* | *12/12* | |
+
+Every packet is worse than just giving LFM3 the whole chat. Test 1 shows why: all three packets that reached an answer
+said Saturday March 14th, because the stale lines outnumber the correction. Where the packet lacked the fact, LFM3
+mostly asked the user or said it had no record (an improvement on run 2's endless `find` loops) but sometimes guessed
+(test 7: two replies cleared the vetoed trash-can story).
+
+**Phone time:** median note pass ~2,400 tokens in and 300 out, about 45 s at the estimated 100 tok/s reading and
+13.7 tok/s writing. Far too slow even in the background.
+
+**Spend:** run 1 $0.25, run 2 $0.30, run 3 $0.36: $0.91.
+
+### Where this leaves it
+
+The retrieval half works (milliseconds, and embeddings find 59% of the facts in noisy notes). The note-taking half is
+the bottleneck: LFM3 with thinking off can't scan 100+ lines to see what's already there, so it repeats and appends
+instead of fixing. Next, one change each against run 3:
+
+1. The note pass sees only the lines that match the exchange (BM25 on it) plus the most recently touched lines, not
+   all notes: a smaller prompt (faster) where the stale line is right in front of it when the correction arrives.
+2. The note pass with thinking on, under Squiggle's 400-token budget.
+3. Answer side, on run 3's notes: search with the last exchange as well as the new message, and a stop rule ("two
+   empty searches: answer with what you have or ask").
