@@ -1,0 +1,146 @@
+job 6af3a49a9737d9a9e091f3be on gpu: whiteboard-3 at 967c4d0
+fetched experiments/whiteboard/run.py
+fetched experiments/whiteboard/shell.mjs
+fetched experiments/whiteboard/data.json
+fetched experiments/whiteboard/needles.py
+debconf: delaying package configuration, since apt-utils is not installed
+v22.11.0
+CMAKE_BUILD_TYPE=Release
+CMake Warning at cmake/build-info.cmake:14 (message):
+  Git not found.  Build info will not be accurate.
+Call Stack (most recent call first):
+  CMakeLists.txt:151 (include)
+
+
+CMake Warning at vendor/cpp-httplib/CMakeLists.txt:154 (message):
+  OpenSSL not found, HTTPS support disabled
+
+
+CMake Warning at common/CMakeLists.txt:33 (message):
+  Git repository not found; to enable automatic generation of build info,
+  make sure Git is installed and the project is a Git repository.
+
+
+[332/334] Building CXX object tools/server/CMakeFiles/llama-server-impl.dir/server-models.cpp.o
+[333/334] Linking CXX shared library bin/libllama-server-impl.so
+[334/334] Linking CXX executable bin/llama-server
+
+
+config.json:   0%|          | 0.00/1.45k [00:00<?, ?B/s][A
+config.json: 100%|██████████| 1.45k/1.45k [00:00<00:00, 5.05MB/s]
+
+
+configuration_lfm3.py:   0%|          | 0.00/6.11k [00:00<?, ?B/s][A
+configuration_lfm3.py: 100%|██████████| 6.11k/6.11k [00:00<00:00, 16.1MB/s]
+[transformers] A new version of the following files was downloaded from https://huggingface.co/LiquidAI/LFM3-1.7B:
+- configuration_lfm3.py
+. Make sure to double-check they do not contain any added malicious code. To avoid downloading new versions of the code file, you can pin a revision.
+
+
+tokenizer_config.json:   0%|          | 0.00/1.54k [00:00<?, ?B/s][A
+tokenizer_config.json: 100%|██████████| 1.54k/1.54k [00:00<00:00, 6.77MB/s]
+
+
+tokenizer.json: reconstructing file:   0%|          |  0.00B / 17.9MB            [A
+tokenizer.json: downloading bytes:           |  0.00B            
+
+tokenizer.json: reconstructing file:   1%|▏         |  246kB / 17.9MB            [A
+tokenizer.json: downloading bytes: ▍         |  711kB, 47.2kB/s  
+tokenizer.json: downloading bytes: ██████████| 4.29MB,  411kB/s  
+tokenizer.json: downloading bytes: ██████████| 4.29MB,  411kB/s  
+
+tokenizer.json: reconstructing file: 100%|██████████| 17.9MB / 17.9MB, 1.72MB/s  
+
+
+special_tokens_map.json:   0%|          | 0.00/92.0 [00:00<?, ?B/s][A
+special_tokens_map.json: 100%|██████████| 92.0/92.0 [00:00<00:00, 392kB/s]
+
+
+chat_template.jinja:   0%|          | 0.00/12.1k [00:00<?, ?B/s][A
+chat_template.jinja: 100%|██████████| 12.1k/12.1k [00:00<00:00, 25.4MB/s]
+
+
+LFM3-1.7B-QAD-Q4_0.gguf: reconstructing file:   0%|          |  0.00B / 1.05GB            [A
+LFM3-1.7B-QAD-Q4_0.gguf: downloading bytes:           |  0.00B            
+LFM3-1.7B-QAD-Q4_0.gguf: downloading bytes:           |  346kB, 9.97kB/s  
+
+LFM3-1.7B-QAD-Q4_0.gguf: reconstructing file:   0%|          | 34.8kB / 1.05GB            [A
+LFM3-1.7B-QAD-Q4_0.gguf: downloading bytes: ▉         |  104MB, 8.54MB/s  
+LFM3-1.7B-QAD-Q4_0.gguf: downloading bytes: ███       |  321MB, 26.2MB/s  
+
+LFM3-1.7B-QAD-Q4_0.gguf: reconstructing file:  34%|███▍      |  355MB / 1.05GB,  810kB/s  [A
+LFM3-1.7B-QAD-Q4_0.gguf: downloading bytes: █████▏    |  545MB, 43.7MB/s  
+
+LFM3-1.7B-QAD-Q4_0.gguf: reconstructing file:  66%|██████▌   |  689MB / 1.05GB, 46.7MB/s  [A
+LFM3-1.7B-QAD-Q4_0.gguf: downloading bytes: ████████▏ |  856MB, 65.0MB/s  
+
+LFM3-1.7B-QAD-Q4_0.gguf: reconstructing file:  96%|█████████▌| 1.01GB / 1.05GB, 72.4MB/s  [A
+LFM3-1.7B-QAD-Q4_0.gguf: downloading bytes: ██████████| 1.04GB, 77.3MB/s  
+LFM3-1.7B-QAD-Q4_0.gguf: downloading bytes: ██████████| 1.04GB, 77.3MB/s  
+
+LFM3-1.7B-QAD-Q4_0.gguf: reconstructing file: 100%|██████████| 1.05GB / 1.05GB, 81.0MB/s  
+model ready in 16s; system prompt 906 tokens
+first raw output: 'The user is asking about the financial status of "bathroom stuff" - quotes and purchases. I need to find out what we\'ve discussed regarding a bathroom project, including contractor costs and materials. This likely involves past tasks or memory. Let me search for relevant info using find or memory tools.\n\nI should use `find` with query about bathroom, money, quotes, purchases, contractor, etc. Also maybe `need` if I don\'t know. But first, let me check my memory/context via find.</think><tool_call>\n<function=find>\n<parameter=query>\nbathroom quotes purchases contractor materials cost\n</parameter>'
+done window-13 at 0.5 min
+done window-15 at 0.6 min
+done full-13 at 0.6 min
+done window-11 at 0.7 min
+done full-11 at 0.8 min
+done full-5 at 0.9 min
+done full-7 at 1.0 min
+done full-15 at 1.0 min
+done window-3 at 1.1 min
+done full-1 at 1.1 min
+done full-14 at 1.2 min
+done full-6 at 1.2 min
+done full-3 at 1.2 min
+done full-2 at 1.5 min
+done full-16 at 1.7 min
+done window-4 at 1.9 min
+done window-5 at 1.9 min
+done full-10 at 1.9 min
+done full-12 at 1.9 min
+done full-4 at 1.9 min
+done full-8 at 2.0 min
+done window-14 at 2.1 min
+done window-8 at 2.2 min
+progress: 9 turns noted, 2.3 min
+done full-9 at 2.3 min
+done window-7 at 2.3 min
+done window-16 at 2.5 min
+done window-12 at 2.8 min
+done window-2 at 3.0 min
+done window-9 at 3.6 min
+done window-6 at 3.7 min
+done window-10 at 3.8 min
+done window-1 at 3.8 min
+progress: 34 turns noted, 4.3 min
+progress: 64 turns noted, 6.3 min
+progress: 92 turns noted, 8.3 min
+progress: 120 turns noted, 10.3 min
+progress: 149 turns noted, 12.3 min
+progress: 175 turns noted, 14.3 min
+progress: 202 turns noted, 16.3 min
+progress: 230 turns noted, 18.3 min
+progress: 259 turns noted, 20.3 min
+progress: 283 turns noted, 22.3 min
+progress: 311 turns noted, 24.3 min
+progress: 335 turns noted, 26.3 min
+progress: 359 turns noted, 28.3 min
+progress: 390 turns noted, 30.3 min
+progress: 413 turns noted, 32.3 min
+progress: 439 turns noted, 34.3 min
+progress: 467 turns noted, 36.3 min
+progress: 491 turns noted, 38.3 min
+progress: 517 turns noted, 40.3 min
+progress: 541 turns noted, 42.3 min
+progress: 566 turns noted, 44.3 min
+progress: 594 turns noted, 46.3 min
+progress: 617 turns noted, 48.3 min
+done notes-12 at 48.8 min
+done notes-11 at 49.7 min
+progress: 643 turns noted, 50.3 min
+done notes-16 at 50.8 min
+progress: 669 turns noted, 52.3 min
+progress: 693 turns noted, 54.3 min
+got signal 15 after 59.9 min: uploading what there is

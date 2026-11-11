@@ -1,0 +1,130 @@
+job 6af39bce9737d9a9e091da47 on gpu: whiteboard-2 at 35a4ff4
+fetched experiments/whiteboard/run.py
+fetched experiments/whiteboard/shell.mjs
+fetched experiments/whiteboard/data.json
+fetched experiments/whiteboard/needles.py
+debconf: delaying package configuration, since apt-utils is not installed
+v22.11.0
+CMAKE_BUILD_TYPE=Release
+CMake Warning at cmake/build-info.cmake:14 (message):
+  Git not found.  Build info will not be accurate.
+Call Stack (most recent call first):
+  CMakeLists.txt:151 (include)
+
+
+CMake Warning at vendor/cpp-httplib/CMakeLists.txt:154 (message):
+  OpenSSL not found, HTTPS support disabled
+
+
+CMake Warning at common/CMakeLists.txt:33 (message):
+  Git repository not found; to enable automatic generation of build info,
+  make sure Git is installed and the project is a Git repository.
+
+
+[332/334] Building CXX object tools/server/CMakeFiles/llama-server-impl.dir/server-models.cpp.o
+[333/334] Linking CXX shared library bin/libllama-server-impl.so
+[334/334] Linking CXX executable bin/llama-server
+
+
+config.json:   0%|          | 0.00/1.45k [00:00<?, ?B/s][A
+config.json: 100%|██████████| 1.45k/1.45k [00:00<00:00, 8.39MB/s]
+
+
+configuration_lfm3.py:   0%|          | 0.00/6.11k [00:00<?, ?B/s][A
+configuration_lfm3.py: 100%|██████████| 6.11k/6.11k [00:00<00:00, 28.5MB/s]
+[transformers] A new version of the following files was downloaded from https://huggingface.co/LiquidAI/LFM3-1.7B:
+- configuration_lfm3.py
+. Make sure to double-check they do not contain any added malicious code. To avoid downloading new versions of the code file, you can pin a revision.
+
+
+tokenizer_config.json:   0%|          | 0.00/1.54k [00:00<?, ?B/s][A
+tokenizer_config.json: 100%|██████████| 1.54k/1.54k [00:00<00:00, 10.0MB/s]
+
+
+tokenizer.json: reconstructing file:   0%|          |  0.00B / 17.9MB            [A
+tokenizer.json: downloading bytes:           |  0.00B            
+tokenizer.json: downloading bytes: ██████████| 4.29MB,  426kB/s  
+tokenizer.json: downloading bytes: ██████████| 4.29MB,  426kB/s  
+
+tokenizer.json: reconstructing file: 100%|██████████| 17.9MB / 17.9MB, 1.78MB/s  
+
+
+special_tokens_map.json:   0%|          | 0.00/92.0 [00:00<?, ?B/s][A
+special_tokens_map.json: 100%|██████████| 92.0/92.0 [00:00<00:00, 401kB/s]
+
+
+chat_template.jinja:   0%|          | 0.00/12.1k [00:00<?, ?B/s][A
+chat_template.jinja: 100%|██████████| 12.1k/12.1k [00:00<00:00, 9.81MB/s]
+
+
+LFM3-1.7B-QAD-Q4_0.gguf: reconstructing file:   0%|          |  0.00B / 1.05GB            [A
+LFM3-1.7B-QAD-Q4_0.gguf: downloading bytes:           |  0.00B            
+LFM3-1.7B-QAD-Q4_0.gguf: downloading bytes: ██▍       |  251MB, 19.8MB/s  
+
+LFM3-1.7B-QAD-Q4_0.gguf: reconstructing file:  27%|██▋       |  286MB / 1.05GB,  819kB/s  [A
+LFM3-1.7B-QAD-Q4_0.gguf: downloading bytes: ██████▌   |  690MB, 57.1MB/s  
+
+LFM3-1.7B-QAD-Q4_0.gguf: reconstructing file:  77%|███████▋  |  808MB / 1.05GB, 64.8MB/s  [A
+LFM3-1.7B-QAD-Q4_0.gguf: downloading bytes: ██████████| 1.04GB, 90.1MB/s  
+LFM3-1.7B-QAD-Q4_0.gguf: downloading bytes: ██████████| 1.04GB, 90.1MB/s  
+
+LFM3-1.7B-QAD-Q4_0.gguf: reconstructing file: 100%|██████████| 1.05GB / 1.05GB, 92.0MB/s  
+model ready in 9s; system prompt 906 tokens
+first raw output: 'We need to update /home/notes.md with the information from this exchange. The user (Squiggle) says: "Older turns are dropped from your view; /home/notes.md is what you\'ll have instead. Update it now with anything from this exchange that might be needed later: names, dates, times, places, numbers, plans, decisions, changes, even side comments. Change lines that are out of date instead of adding a second version. Write it in your own words, as your notes. If nothing new came up, leave it as it is."\n\nWe need to see what\'s currently in /home/notes.md. Earlier I tried `cat /home/notes.md` and got e'
+done notes-1 at 1.1 min
+done notes-8 at 1.1 min
+batch 10: 0 chats going, ~11298 tokens out, 1.1 min
+all done in 1.1 min
+model ready in 3s; system prompt 906 tokens
+first raw output: 'We need to update /home/notes.md with the information from this exchange. The user (Squiggle) says: "Older turns are dropped from your view; /home/notes.md is what you\'ll have instead. Update it now with anything from this exchange that might be needed later: names, dates, times, places, numbers, plans, decisions, changes, even side comments. Change lines that are out of date instead of adding a second version. Write it in your own words, as your notes. If nothing new came up, leave it as it is."\n\nWe need to see what\'s currently in /home/notes.md. Earlier I tried `cat /home/notes.md` and got e'
+done window-3 at 1.3 min
+done window-4 at 1.3 min
+done window-8 at 1.3 min
+done window-11 at 1.3 min
+done window-13 at 1.3 min
+done window-14 at 1.3 min
+done window-15 at 1.3 min
+done full-1 at 1.3 min
+done full-2 at 1.3 min
+done full-3 at 1.3 min
+done full-4 at 1.3 min
+done full-5 at 1.3 min
+done full-6 at 1.3 min
+done full-7 at 1.3 min
+done full-8 at 1.3 min
+done full-10 at 1.3 min
+done full-11 at 1.3 min
+done full-12 at 1.3 min
+done full-13 at 1.3 min
+done full-14 at 1.3 min
+done full-15 at 1.3 min
+done window-5 at 1.8 min
+done window-7 at 1.8 min
+done full-16 at 1.8 min
+done window-1 at 2.7 min
+done window-10 at 2.7 min
+done window-12 at 2.7 min
+done window-16 at 2.7 min
+done full-9 at 2.7 min
+done window-2 at 3.3 min
+done window-6 at 3.3 min
+done window-9 at 5.7 min
+batch 10: 16 chats going, ~153328 tokens out, 8.4 min
+batch 20: 16 chats going, ~376875 tokens out, 15.3 min
+batch 30: 16 chats going, ~604830 tokens out, 21.7 min
+batch 40: 16 chats going, ~841778 tokens out, 27.6 min
+done notes-12 at 31.3 min
+done notes-11 at 32.0 min
+batch 50: 14 chats going, ~1062221 tokens out, 33.8 min
+done notes-14 at 34.7 min
+done notes-16 at 34.7 min
+done notes-1 at 36.1 min
+done notes-5 at 37.4 min
+done notes-7 at 37.4 min
+done notes-9 at 37.4 min
+done notes-3 at 37.8 min
+batch 60: 7 chats going, ~1186190 tokens out, 39.8 min
+done notes-10 at 42.5 min
+done notes-6 at 44.6 min
+done notes-13 at 45.1 min
+batch 70: 4 chats going, ~1272777 tokens out, 45.6 min
