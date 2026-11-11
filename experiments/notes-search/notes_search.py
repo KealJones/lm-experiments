@@ -21,14 +21,15 @@ import run as wb   # experiments/whiteboard/run.py: Squiggle PR 7 prompt + LFM3 
 K = 8                 # note lines per packet
 NOTE_MAX = 300        # output tokens for a note pass
 QUERY_MAX = 40
-ANSWER_ROUNDS = 3
+ANSWER_ROUNDS = 6     # agent.js: no more lookups after LITE_CHAT_NUDGE * 2
 
 NOTE_SYSTEM = """You keep notes for a chat between a user and an assistant. Later the assistant sees only these notes, not the chat, so anything not written down is forgotten.
-Read the latest exchange. Write each new fact on its own line starting with "- ", and end it with a few plain words someone might use to ask about it, in brackets. If a fact already in the notes changed, write "- CHANGE <its number>: " and the fact as it is now.
-Example:
-- Sam's dentist appointment: Thu Jun 5, 9:30am, Dr. Lee on Main St [dentist sam when where]
-- CHANGE 1: Sam's dentist moved to Fri Jun 6, 9:30am, same place [dentist sam moved date]
-Write down names, dates, times, places, amounts, counts, rules, decisions, and anything cancelled or changed, even from side comments. Only if there is truly nothing new, write NONE."""
+Read the latest exchange and write only what is NEW or CHANGED. Never repeat a fact that is already in the notes. Most exchanges add 0-2 lines.
+- A new fact: one line starting with "- ", ending with a few plain words someone might use to ask about it, in brackets.
+- Be extra sure to fix facts that changed. If the user corrects something, or a plan, date, number or choice changes, write "- CHANGE <its number>: " and the fact as it is now. If something no longer holds at all (cancelled, ruled out), write "- DELETE <its number>".
+Example: the notes say "3. Billy's birthday: Mar 15, 2020 [billy birthday]" and the user says "oh wait no, Billy's birthday is actually Dec 16". You write:
+- CHANGE 3: Billy's birthday: Dec 16, 2020 (not Mar 15) [billy birthday date]
+Keep names, dates, times, places, amounts, counts, rules, decisions, even from side comments. If nothing is new or changed, write NONE."""
 
 QUERY_SYSTEM = "Write a search query for the notes of this chat: what does the new message need looked up? Reply with only 3-8 plain keywords."
 
@@ -64,7 +65,12 @@ def strip_tags(line):
 
 
 def render(lines):
-    return "\n".join(f"{i + 1}. {l}" for i, l in enumerate(lines)) or "(no notes yet)"
+    # deleted lines (None) keep their number, so later CHANGE/DELETE numbers stay right, but aren't shown
+    return "\n".join(f"{i + 1}. {l}" for i, l in enumerate(lines) if l is not None) or "(no notes yet)"
+
+
+def live(lines):
+    return [l for l in lines if l is not None]
 
 
 def visible(out):
@@ -85,10 +91,23 @@ def apply_ops(lines, text):
             if 0 <= n < len(lines): lines[n] = m.group(2).strip(); ops.append(("change", n + 1))
             else: lines.append(m.group(2).strip()); ops.append(("change-missing-line", n + 1))
             continue
+        m = re.match(r"^DELETE\s*(?:line\s*)?(\d+)\b", body, re.I)
+        if m:
+            n = int(m.group(1)) - 1
+            if 0 <= n < len(lines) and lines[n] is not None: lines[n] = None; ops.append(("delete", n + 1))
+            continue
         m = re.match(r"^ADD\s*:\s*(.+)$", body, re.I)
         if m or re.match(r"^[-*•]", s):
-            lines.append((m.group(1) if m else body).strip()); ops.append(("add", None))
+            new = (m.group(1) if m else body).strip()
+            key = norm(new)
+            if any(l is not None and norm(l) == key for l in lines):   # exact repeat of a line already there
+                ops.append(("repeat-skipped", None)); continue
+            lines.append(new); ops.append(("add", None))
     return ops
+
+
+def norm(line):
+    return re.sub(r"\W+", " ", strip_tags(line)).lower().strip()
 
 
 def last_exchange(msgs):
@@ -139,11 +158,15 @@ def main():
         if a.max_turns: users = users[: a.max_turns]
         for n, i in enumerate(users):
             reply = msgs[i + 1]["content"] if i + 1 < len(msgs) and msgs[i + 1]["role"] == "assistant" else "(no reply)"
-            user_msg = f"NOTES:\n{render(lines)}\n\nLATEST EXCHANGE:\nUser: {msgs[i]['content']}\nAssistant: {reply}"
-            prompt = wb.lfm3_prompt([{"role": "system", "content": NOTE_SYSTEM}, {"role": "user", "content": user_msg}], [], thinking=False)
+            shown, hidden = list(lines), 0   # fit the 4K window like the phone: the oldest note lines drop out of view
+            while True:
+                user_msg = f"NOTES:\n{render(shown)}\n\nLATEST EXCHANGE:\nUser: {msgs[i]['content']}\nAssistant: {reply}"
+                prompt = wb.lfm3_prompt([{"role": "system", "content": NOTE_SYSTEM}, {"role": "user", "content": user_msg}], [], thinking=False)
+                if ntok(prompt) <= wb.WINDOW - NOTE_MAX or not any(l is not None for l in shown): break
+                j = next(k for k, l in enumerate(shown) if l is not None); shown[j] = None; hidden += 1
             out, secs, forced = gen_off(prompt, NOTE_MAX)
             ops = apply_ops(lines, out)
-            log.append({"turn": n, "prompt_tokens": ntok(prompt), "out_tokens": ntok(out), "gpu_s": round(secs, 3), "forced": forced, "out": out, "ops": ops, "lines": len(lines)})
+            log.append({"turn": n, "hidden_lines": hidden, "prompt_tokens": ntok(prompt), "out_tokens": ntok(out), "gpu_s": round(secs, 3), "forced": forced, "out": out, "ops": ops, "lines": len(lines)})
         return lines, log
 
     def packets(d, lines):
@@ -219,6 +242,7 @@ def main():
     def chat(d):
         lines, log = note_chat(d)
         with print_lock: print(f"notes done chat {d['id']}: {len(lines)} lines after {len(log)} turns, {(time.time() - t0) / 60:.1f} min", flush=True)
+        lines = live(lines)
         pk = packets(d, lines)
         rec = {"chat": d["id"], "notes": lines, "note_log": log, **pk, "answers": {}}
         json.dump(rec, open(os.path.join(a.out, f"chat-{d['id']}.json"), "w"), indent=1, ensure_ascii=False)
