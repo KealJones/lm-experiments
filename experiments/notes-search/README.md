@@ -138,4 +138,57 @@ in junk (`NONE`, "Add new fact from latest exchange: …", cut-off lines).
 - **4b, stricter parser** (`--variant strict`). Run 3 unchanged except the parser: rejects `NONE`, lines about the
   notes, cut-off lines, and adds whose words are 80% or more in one existing line.
 
-Pending: jobs `notes-search-4a`, `notes-search-4b` (l4x1, 45 min cap each, at most $0.60 each).
+Ran on a10g-small (the l4x1 jobs sat 2.5 h in Hugging Face's queue without a GPU and were cancelled, $0).
+
+| | run 3 | 4a native layout | 4b strict parser |
+|---|---|---|---|
+| note passes | 833 | 833 | 771 (timed out at 45 min; chat 13 missing, 3 chats' answers missing) |
+| lines added / changed / deleted | 2,368 / 333 / 1 | 541 / 6 / 1 | 693 / 479 / 2 |
+| edits the harness refused | 1,972 exact repeats | 3 exact repeats | 2,563 near-repeats, 246 junk lines, 108 exact repeats |
+| passes that wrote a reply instead of `update_notes` | - | 241 (29%) | - |
+| passes that called `read_notes` again instead | - | 119 | - |
+| chat 1's notes | 156 lines; 1 says Mar 22, 15 say Mar 14 | 54 lines; "Party moved to Sunday March 22nd" plus 4 stale Mar 14 lines | 34 lines; no Mar 22 at all |
+| answer-key facts anywhere in the notes (tests 1-12) | 36/39, all of them for 9/12 | 32/39, 8/12 | 30/39, 7/12 |
+| note-pass prompt, median / 90th pct | ~2,400 tokens | 861 / 984 | 1,071 / 2,227 |
+| phone time per note pass, median (estimated) | ~45 s | ~12 s | ~33 s |
+
+Answers, blind-graded ([hf-4a/GRADES.md](hf-4a/GRADES.md), [hf-4b/GRADES.md](hf-4b/GRADES.md)):
+
+| packet | run 3, tests 1-12 | 4a, tests 1-12 | 4b, tests 1-12 (9 graded) |
+|---|---|---|---|
+| whole notes | 1/12, mean 2.2 | 1/12, 3.5 | 1/9, 3.6 |
+| BM25 on the raw message | 2/12, 2.9 | 2/12, 3.3 | 2/9, 3.4 |
+| hybrid | 2/12, 3.4 | 1/12, 2.6 | 3/9, 4.7 |
+| LFM3 query into BM25 | 2/12, 3.7 | 1/12, 2.6 | 2/9, 4.6 |
+| *reference: LFM3 with the full chat (whiteboard-3)* | *5/12* | | |
+
+**4a (native layout) fixed the size and speed, not the answers.** With the notes as a tool result and its edits as a
+tool call, LFM3 stopped copying the list: it added a quarter as many lines, the harness had almost nothing to refuse,
+and a note pass is a quarter the size, ~12 s on the phone instead of ~45 s. Test 1 shows the layout working: every
+packet now answers Sunday March 22nd (run 3's all said the 14th), because the correction went in as its own line. But
+it almost never *changes* a line (6 changes in 833 passes; the 14th lines stay next to the 22nd), it lost a few facts
+(32/39), and 29% of passes it answered the user in prose ("I checked my notes and didn't find…") instead of calling
+`update_notes`, so those exchanges saved nothing. Answer quality didn't move: 1-2/12 per packet, mean scores 2.6-3.5.
+
+**4b (strict parser) made it slower and lost the correction.** Refusing near-repeats kept the notes from ballooning,
+but LFM3 still wrote 300 tokens per pass (it filled the cap on most passes), so the job ran out of time at 45 minutes.
+It used CHANGE far more (479), but in chat 1 it changed the March 22nd line back out: the notes say only Saturday March
+14th, and every answer to test 1 does too. The 9 tests that finished score about the same as run 3.
+
+**Spend:** 4a $0.57, 4b $0.75 (hit its 45-minute cap). Notes-search total: $2.23.
+
+### Where this leaves it
+
+The native layout is the one to keep: it's what Liquid's template expects, it's 4x cheaper per pass, and the correction
+in test 1 finally reached the answer. What it still can't do is maintain the notes: it appends and almost never
+changes or deletes, and it talks to the user when it should be calling the tool. Neither layout gets the answers past
+2/12, and LFM3 given the whole chat still gets 5/12, so notes plus search isn't ready to replace the chat in Squiggle's
+fresh context yet. Ideas for 4a's two failures, not run:
+
+1. Make "talked instead" impossible: the note pass offers only `update_notes` (no `read_notes`, which it re-called 119
+   times) and treats prose as no edit, or uses a required tool choice where llama.cpp supports it.
+2. Show the stale line next to the correction on purpose: when the exchange has a date, number or name that BM25 finds
+   in an existing line, put that line first in `read_notes` and say in the system prompt that a changed fact is a
+   `change`, not an `add`. Or let the harness drop older lines that a newer line contradicts on the same subject.
+3. The answer side is now the bigger loss: even the whole notes pass only 1/12. A packet of notes plus the last few
+   exchanges (not just one) may be the cheapest real gain.
