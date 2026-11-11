@@ -1,4 +1,3 @@
 # Hugging Face job: notes-search-4a
 
-Status: **scheduling** (started 2026-11-11T15:24:02+00:00, last check 2026-11-11T16:46:24+00:00)
-Job page: https://huggingface.co/jobs/kealjones/6af48892ab34849891ae39d1
+Status: **queued** on `a10g-small` (relaunched 2026-11-11T16:58:34+00:00; the l4x1 job sat 2.5 h in SCHEDULING and was cancelled)
