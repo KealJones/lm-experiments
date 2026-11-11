@@ -19,16 +19,16 @@ from concurrent.futures import ThreadPoolExecutor
 import run as wb   # experiments/whiteboard/run.py: Squiggle PR 7 prompt + LFM3 format + llama-server backend
 
 K = 8                 # note lines per packet
-NOTE_MAX = 200        # output tokens for a note pass
+NOTE_MAX = 300        # output tokens for a note pass
 QUERY_MAX = 40
 ANSWER_ROUNDS = 3
 
-NOTE_SYSTEM = """You keep notes for a chat between a user and an assistant. Later the assistant sees only these notes, not the chat.
-Read the latest exchange and write only what is new or changed, one fact per line:
-ADD: <fact> | tags: <3-6 plain words someone might use to ask about it> | <date, place, money, person, rule, plan, number or other>
-CHANGE <line number>: <the fact as it is now> | tags: ... | <kind>
-Keep concrete details, even from side comments: names, dates, times, places, amounts, counts, rules, decisions, what was cancelled or changed.
-If nothing new came up, write NONE."""
+NOTE_SYSTEM = """You keep notes for a chat between a user and an assistant. Later the assistant sees only these notes, not the chat, so anything not written down is forgotten.
+Read the latest exchange. Write each new fact on its own line starting with "- ", and end it with a few plain words someone might use to ask about it, in brackets. If a fact already in the notes changed, write "- CHANGE <its number>: " and the fact as it is now.
+Example:
+- Sam's dentist appointment: Thu Jun 5, 9:30am, Dr. Lee on Main St [dentist sam when where]
+- CHANGE 1: Sam's dentist moved to Fri Jun 6, 9:30am, same place [dentist sam moved date]
+Write down names, dates, times, places, amounts, counts, rules, decisions, and anything cancelled or changed, even from side comments. Only if there is truly nothing new, write NONE."""
 
 QUERY_SYSTEM = "Write a search query for the notes of this chat: what does the new message need looked up? Reply with only 3-8 plain keywords."
 
@@ -60,25 +60,34 @@ def bm25_rank(docs, query):
 
 
 def strip_tags(line):
-    return line.split(" | tags:")[0]
+    return re.sub(r"\s*\[[^\]]*\]\s*$", "", line.split(" | tags:")[0])
 
 
 def render(lines):
     return "\n".join(f"{i + 1}. {l}" for i, l in enumerate(lines)) or "(no notes yet)"
 
 
+def visible(out):
+    """The answer part of an output: no <think>..</think>, no unclosed <think>, nothing before a stray </think>."""
+    out = re.sub(r"<think>.*?</think>", "", out, flags=re.S).split("<think>")[0]
+    return out.split("</think>")[-1]
+
+
 def apply_ops(lines, text):
     ops = []
-    for raw in text.splitlines():
-        s = raw.strip().lstrip("-*• ").strip()
-        m = re.match(r"^ADD\s*:\s*(.+)$", s, re.I)
-        if m:
-            lines.append(m.group(1).strip()); ops.append(("add", None)); continue
-        m = re.match(r"^CHANGE\s*(?:line\s*)?(\d+)\s*:\s*(.+)$", s, re.I)
+    for raw in visible(text).splitlines():
+        s = raw.strip()
+        if not s or s.upper().startswith("NONE") or "<fact>" in s or "plain words" in s: continue
+        body = re.sub(r"^[-*•]\s*", "", s)
+        m = re.match(r"^CHANGE\s*(?:line\s*)?(\d+)\s*:\s*(.+)$", body, re.I)
         if m:
             n = int(m.group(1)) - 1
             if 0 <= n < len(lines): lines[n] = m.group(2).strip(); ops.append(("change", n + 1))
             else: lines.append(m.group(2).strip()); ops.append(("change-missing-line", n + 1))
+            continue
+        m = re.match(r"^ADD\s*:\s*(.+)$", body, re.I)
+        if m or re.match(r"^[-*•]", s):
+            lines.append((m.group(1) if m else body).strip()); ops.append(("add", None))
     return ops
 
 
@@ -113,6 +122,16 @@ def main():
         out = be.one((prompt, n))
         return out, time.time() - t
 
+    def gen_off(prompt, n):
+        """Thinking off. LFM3 sometimes thinks anyway (its card says thinking-off is inconsistent): if it opens a
+        <think> and runs out inside it, close it with Squiggle's budget note and let it write the answer."""
+        out, secs = gen(prompt, n)
+        if out.lstrip().startswith("<think>") and "</think>" not in out:
+            kept = out + "\n" + wb.THINK_NOTE + "\n</think>\n"
+            more, s2 = gen(prompt + kept, n)
+            return kept + more, secs + s2, True
+        return out, secs, False
+
     def note_chat(d):
         lines, log = [], []
         msgs = d["messages"]
@@ -122,9 +141,9 @@ def main():
             reply = msgs[i + 1]["content"] if i + 1 < len(msgs) and msgs[i + 1]["role"] == "assistant" else "(no reply)"
             user_msg = f"NOTES:\n{render(lines)}\n\nLATEST EXCHANGE:\nUser: {msgs[i]['content']}\nAssistant: {reply}"
             prompt = wb.lfm3_prompt([{"role": "system", "content": NOTE_SYSTEM}, {"role": "user", "content": user_msg}], [], thinking=False)
-            out, secs = gen(prompt, NOTE_MAX)
+            out, secs, forced = gen_off(prompt, NOTE_MAX)
             ops = apply_ops(lines, out)
-            log.append({"turn": n, "prompt_tokens": ntok(prompt), "out_tokens": ntok(out), "gpu_s": round(secs, 3), "out": out, "ops": ops, "lines": len(lines)})
+            log.append({"turn": n, "prompt_tokens": ntok(prompt), "out_tokens": ntok(out), "gpu_s": round(secs, 3), "forced": forced, "out": out, "ops": ops, "lines": len(lines)})
         return lines, log
 
     def packets(d, lines):
@@ -134,9 +153,9 @@ def main():
         # LFM3 writes its own query (thinking off), seeing only the last exchange and the new message
         qp = wb.lfm3_prompt([{"role": "system", "content": QUERY_SYSTEM},
                              {"role": "user", "content": f"{recent}\n\nNew message: {q}"}], [], thinking=False)
-        lq, qsecs = gen(qp, QUERY_MAX)
-        lq = lq.strip().splitlines()[0] if lq.strip() else q
-        res = {"recent": recent, "lfm3_query": lq, "query_gpu_s": round(qsecs, 3), "query_prompt_tokens": ntok(qp), "query_out_tokens": ntok(lq)}
+        lq_raw, qsecs, _ = gen_off(qp, QUERY_MAX)
+        lq = next((l.strip() for l in visible(lq_raw).splitlines() if l.strip()), q)
+        res = {"recent": recent, "lfm3_query": lq, "lfm3_query_raw": lq_raw, "query_gpu_s": round(qsecs, 3), "query_prompt_tokens": ntok(qp), "query_out_tokens": ntok(lq)}
         order = {}
         if lines:
             order["bm25"] = bm25_rank(lines, q)

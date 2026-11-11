@@ -28,4 +28,19 @@ question; the notes are short, clean and written by the model, so maybe a search
 
 ## Results
 
-Pending: job `notes-search-1` (l4x1, 60 min cap, at most $0.80).
+### Run 1 (`notes-search-1`, 19 min, about $0.25): the note pass was broken, by the prompt and the parser
+
+- The prompt showed the format with placeholders (`ADD: <fact> | tags: <3-6 plain words…>`). LFM3 often copied them
+  literally, and with thinking off it still thought on 318 of 833 passes (203 times it wrote "NONE (…)</think>NONE").
+  Liquid's card warns thinking-off "can be inconsistent"; the rendering matches its template exactly.
+- LFM3's natural style was plain bullet notes (344 outputs, often good: "- User plans to go on Saturday March 28th,
+  the only day they had open"). The parser only took `ADD:` lines, so it dropped those and instead kept format lines
+  quoted inside the thinking. Strictly parsed notes held 10/39 answer-key facts; every packet scored the same.
+- Re-read leniently (`reparse.py`: bullets kept, thinking dropped) the notes hold 21/39 facts and all of them for 3/12
+  tests, but miss the key throwaway lines (the party moving to March 22nd, Pearl's, the CI timezone), and are long
+  (median ~750 words). Phone-time estimate as run: median note pass ~500 tokens in, 200 out (the cap) = ~20 s.
+
+### Run 2 (`notes-search-2`): fixed note pass
+
+A concrete bullet-style example unrelated to the tests, a parser that ignores thinking and takes bullets, and
+Squiggle-style forced continuation when LFM3 thinks anyway. Pending (l4x1, 45 min cap, at most $0.60).
