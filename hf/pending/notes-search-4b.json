@@ -20,5 +20,9 @@
  "outdir": "out",
  "cmd": "(apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq gcc g++ xz-utils >/dev/null) && python -c \"import urllib.request as u; u.urlretrieve('https://nodejs.org/dist/v22.11.0/node-v22.11.0-linux-x64.tar.xz','node.tar.xz'); u.urlretrieve('https://raw.githubusercontent.com/KealJones/squiggle/f987588d4cf047ff638e161e72563ffff49a06bc/app/vendor/just-bash.js','just-bash.js'); u.urlretrieve('https://github.com/ggml-org/llama.cpp/archive/aa75ff3239f9cc675b081697deda9e1b112345c6.tar.gz','llama.tar.gz')\" && tar -xJf node.tar.xz && export PATH=$PWD/node-v22.11.0-linux-x64/bin:$PATH && tar -xzf llama.tar.gz && mv llama.cpp-aa75ff3239f9cc675b081697deda9e1b112345c6 llama.cpp && cmake -S llama.cpp -B llama.cpp/build -G Ninja -DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=89 -DLLAMA_CURL=OFF -DLLAMA_BUILD_TESTS=OFF -DLLAMA_BUILD_EXAMPLES=OFF >/dev/null && cmake --build llama.cpp/build --target llama-server -j8 2>&1 | tail -1 && mkdir -p out && python notes_search.py out --variant strict; cp llama-server.log out/",
  "out": "experiments/notes-search/hf-4b",
- "note": "Run 3 with only a stricter parser: rejects NONE, talk-about-the-notes and cut-off lines, and adds whose words are 80%+ in an existing line (run 3 skipped exact repeats only). l4x1, 45 min cap: at most $0.60."
+ "note": "Run 3 with only a stricter parser: rejects NONE, talk-about-the-notes and cut-off lines, and adds whose words are 80%+ in an existing line (run 3 skipped exact repeats only). l4x1, 45 min cap: at most $0.60.",
+ "job_id": "6af48892ab34849891ae39d3",
+ "url": "https://huggingface.co/jobs/kealjones/6af48892ab34849891ae39d3",
+ "started": "2026-11-11T15:24:02+00:00",
+ "sha": "863985fadb3817bd37c9b5141efde8389c2fd053"
 }
