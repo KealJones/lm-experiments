@@ -53,7 +53,7 @@ alone fills the 1,536 tokens and the write never happens. It never once decided 
 20% is the pilot's pattern: it drafts the file, says "Let's do it.", and ends the turn.
 
 So the throwaway corrections this experiment is about mostly never reached the file: in the chats where they had
-been said by the cut-off, 13 of 36 answer-key facts were in the notes (tests 1-12, at the point each chat reached).
+been said by the cut-off, 12 of 36 answer-key facts were in the notes (tests 1-12, at the point each chat reached).
 
 **When it did write, the notes were good.** Clean, organised, in its own words. In test 12 it made its own
 "Writing Rules (non-negotiable)" section for the team's error-envelope and no-new-dependencies rules. The orders-table
