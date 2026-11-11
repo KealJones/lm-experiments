@@ -18,7 +18,9 @@ from datetime import datetime
 
 MODEL = "LiquidAI/LFM3-1.7B"
 WINDOW = 4096          # Squiggle's LFM3 build (engine.js maxContext)
-MAX_OUTPUT = 1536      # agent.js MAX_OUTPUT
+MAX_OUTPUT = 1024      # agent.js asks for 1,536, but engine-wllama.js (both LFM3 builds) clamps every reply to 1,024
+THINK_BUDGET = 400     # engine.js generationFor: small (wllama-runtime) models; past it the thinking is closed and the reply goes on
+THINK_NOTE = f"[Squiggle stopped the thinking at its {THINK_BUDGET}-token budget and asked for the answer.]"   # engine-wllama.js thinkBudgetNote
 MIN_REPLY = 512        # drop the oldest window turns before the reply room goes under this
 KEEP_EXCHANGES = 2
 UPDATE_ROUNDS = 4
@@ -378,16 +380,32 @@ class Llama:
             if self.p.poll() is not None: raise RuntimeError("llama-server exited; see llama-server.log")
             time.sleep(1)
 
-    def one(self, item):
-        p, m = item
-        body = {"prompt": self.tok.encode(p, add_special_tokens=False), "n_predict": m, "temperature": SAMPLING["temperature"],
+    def raw(self, prompt, n):
+        body = {"prompt": self.tok.encode(prompt, add_special_tokens=False), "n_predict": n, "temperature": SAMPLING["temperature"],
                 "top_k": SAMPLING["top_k"], "top_p": 1.0, "min_p": 0.0, "repeat_penalty": SAMPLING["repetition_penalty"],
                 "stop": ["<|im_end|>"], "seed": 0, "cache_prompt": True, "return_tokens": True}
         req = self.u.Request("http://127.0.0.1:8080/completion", data=json.dumps(body).encode(), headers={"Content-Type": "application/json"})
         r = json.loads(self.u.urlopen(req, timeout=900).read())
-        if r.get("tokens"):
-            return self.tok.decode(r["tokens"], skip_special_tokens=False).split("<|im_end|>")[0]
-        return r.get("content", "")
+        text = self.tok.decode(r["tokens"], skip_special_tokens=False).split("<|im_end|>")[0] if r.get("tokens") else r.get("content", "")
+        return text, len(r.get("tokens") or []), r.get("stop_type", "")
+
+    def one(self, item):
+        """engine-wllama.js generate(): a reply of at most `m` tokens; when THINK_BUDGET is on and the thinking runs
+        past it, the think block is closed with Squiggle's note and the model continues (a fresh `m`), so it acts."""
+        p, m = item
+        if not THINK_BUDGET or not p.endswith("<think>"):
+            return self.raw(p, m)[0]
+        first, n, stop = self.raw(p, min(THINK_BUDGET, m))
+        if "</think>" in first:
+            if stop != "limit" or n >= m:
+                return first
+            more, _, _ = self.raw(p + first, m - n)          # thinking closed in budget: the reply carries on
+            return first + more
+        if stop != "limit":
+            return first                                      # ended (EOS) while thinking
+        kept = "\n" + first.strip() + "\n" + THINK_NOTE + "\n</think>\n"
+        rest, _, _ = self.raw(p + kept, m)
+        return kept + rest
 
     def generate(self, items):
         from concurrent.futures import ThreadPoolExecutor

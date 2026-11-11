@@ -68,22 +68,30 @@ spec, said later, never got in.
 | LFM3, last 2 exchanges + its notes | 1/2 reached (11 pass, 12 fail) | 1/1 (16 pass) |
 | *for reference, context-packets:* Haiku full history | 11/12 | - |
 
-- Full history doesn't save LFM3: 3 of its 7 misses are the same output cap (tests 4 and 12 cut off mid-thinking,
+- Full history doesn't save LFM3 here: 3 of its 7 misses are the same output cap (see the correction below) (tests 4 and 12 cut off mid-thinking,
   test 10 cut off on day 2 of the plan), and the rest are reasoning misses (test 8 says to sign the carpeted
   apartment; test 3 imports a non-guest's no-garlic rule).
 - Window-only passed test 6 by calling `find`, which pulled the corrected run table from the earlier turns.
 - Test 11 passes everywhere because the chat ends with the assistant restating every number (a known generator quirk).
 
-### What this says about Squiggle
+### Correction: this run did not use Squiggle's real output limits
 
-The 1,536-token output cap with thinking on is a live problem for LFM3 in Squiggle, not just here: 71% of note
-updates and 3 of the full-history answers ran out mid-thought. Any step that asks LFM3 to rewrite something it can
-see in full (a file, a plan, a list) will hit the same wall.
+`agent.js` asks for 1,536 output tokens (`MAX_OUTPUT`, a reply reserve in a 4K window since phase 1), and this
+harness used that. But LFM3 runs through `engine-wllama.js`'s conversation on both builds (the WebLLM build imports
+it too), and that engine **clamps every reply to 1,024 tokens** and gives small models a **400-token thinking budget**
+(`engine.js` `generationFor`): past 400 tokens Squiggle closes the think block with "[Squiggle stopped the thinking
+at its 400-token budget and asked for the answer.]" and lets the model continue, so it has to act. That budget exists
+because of exactly the failure above ("a 0.6B model thought until the output cap and never answered").
+
+So the 71% ran-out-while-thinking number is this harness's, not Squiggle's. On the phone, LFM3 would have been
+stopped at 400 tokens of thinking and pushed to write. Whether it then writes good notes is what the next run tests.
 
 ## Next
 
 The idea isn't tested yet: the model barely wrote. A fair version needs the writes to be cheap:
 
+0. **Squiggle's real limits first:** a 1,024-token reply and the 400-token thinking budget with the forced
+   continuation, as `engine-wllama.js` does. This is the faithful rerun of this exact setup.
 1. **Edit, don't rewrite.** Show the notes with line numbers (`cat -n`) and ask for one-line edits: `echo '- …' >>`
    to add, `sed -i 'Ns/…/…/'` to change. Then the thinking doesn't need to restate the file.
 2. **Thinking off for the note step** (LFM3's `<think></think>`), on for the answer. A note is a reflex, not a puzzle.
