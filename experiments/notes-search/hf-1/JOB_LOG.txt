@@ -1,0 +1,155 @@
+job 6af3d7f6ab34849891adb68a on gpu: notes-search-1 at dbfe433
+fetched experiments/whiteboard/run.py
+fetched experiments/whiteboard/shell.mjs
+fetched experiments/whiteboard/data.json
+fetched experiments/notes-search/notes_search.py
+debconf: delaying package configuration, since apt-utils is not installed
+CMAKE_BUILD_TYPE=Release
+CMake Warning at cmake/build-info.cmake:14 (message):
+  Git not found.  Build info will not be accurate.
+Call Stack (most recent call first):
+  CMakeLists.txt:151 (include)
+
+
+CMake Warning at vendor/cpp-httplib/CMakeLists.txt:154 (message):
+  OpenSSL not found, HTTPS support disabled
+
+
+CMake Warning at common/CMakeLists.txt:33 (message):
+  Git repository not found; to enable automatic generation of build info,
+  make sure Git is installed and the project is a Git repository.
+
+
+[334/334] Linking CXX executable bin/llama-server
+
+
+config.json:   0%|          | 0.00/1.45k [00:00<?, ?B/s][A
+config.json: 100%|██████████| 1.45k/1.45k [00:00<00:00, 9.06MB/s]
+
+
+configuration_lfm3.py:   0%|          | 0.00/6.11k [00:00<?, ?B/s][A
+configuration_lfm3.py: 100%|██████████| 6.11k/6.11k [00:00<00:00, 28.8MB/s]
+[transformers] A new version of the following files was downloaded from https://huggingface.co/LiquidAI/LFM3-1.7B:
+- configuration_lfm3.py
+. Make sure to double-check they do not contain any added malicious code. To avoid downloading new versions of the code file, you can pin a revision.
+
+
+tokenizer_config.json:   0%|          | 0.00/1.54k [00:00<?, ?B/s][A
+tokenizer_config.json: 100%|██████████| 1.54k/1.54k [00:00<00:00, 5.82MB/s]
+
+
+tokenizer.json: reconstructing file:   0%|          |  0.00B / 17.9MB            [A
+tokenizer.json: downloading bytes:           |  0.00B            
+tokenizer.json: downloading bytes: ██████████| 4.29MB,  426kB/s  
+tokenizer.json: downloading bytes: ██████████| 4.29MB,  426kB/s  
+
+tokenizer.json: reconstructing file: 100%|██████████| 17.9MB / 17.9MB, 1.78MB/s  
+
+
+special_tokens_map.json:   0%|          | 0.00/92.0 [00:00<?, ?B/s][A
+special_tokens_map.json: 100%|██████████| 92.0/92.0 [00:00<00:00, 246kB/s]
+
+
+chat_template.jinja:   0%|          | 0.00/12.1k [00:00<?, ?B/s][A
+chat_template.jinja: 100%|██████████| 12.1k/12.1k [00:00<00:00, 57.5MB/s]
+
+
+LFM3-1.7B-QAD-Q4_0.gguf: reconstructing file:   0%|          |  0.00B / 1.05GB            [A
+LFM3-1.7B-QAD-Q4_0.gguf: downloading bytes:           |  0.00B            
+
+LFM3-1.7B-QAD-Q4_0.gguf: reconstructing file:  25%|██▍       |  259MB / 1.05GB, 6.57MB/s  [A
+LFM3-1.7B-QAD-Q4_0.gguf: downloading bytes: ██▍       |  257MB, 20.7MB/s  
+
+LFM3-1.7B-QAD-Q4_0.gguf: reconstructing file:  61%|██████▏   |  644MB / 1.05GB, 55.1MB/s  [A
+LFM3-1.7B-QAD-Q4_0.gguf: downloading bytes: ██████▎   |  661MB, 53.9MB/s  
+LFM3-1.7B-QAD-Q4_0.gguf: downloading bytes: ██████████| 1.04GB, 89.5MB/s  
+LFM3-1.7B-QAD-Q4_0.gguf: downloading bytes: ██████████| 1.04GB, 89.5MB/s  
+
+LFM3-1.7B-QAD-Q4_0.gguf: reconstructing file: 100%|██████████| 1.05GB / 1.05GB, 90.8MB/s  
+model ready in 9s
+
+
+modules.json:   0%|          | 0.00/349 [00:00<?, ?B/s][A
+modules.json: 100%|██████████| 349/349 [00:00<00:00, 1.91MB/s]
+
+
+config_sentence_transformers.json:   0%|          | 0.00/124 [00:00<?, ?B/s][A
+config_sentence_transformers.json: 100%|██████████| 124/124 [00:00<00:00, 826kB/s]
+
+
+README.md:   0%|          | 0.00/94.8k [00:00<?, ?B/s][A
+README.md: 100%|██████████| 94.8k/94.8k [00:00<00:00, 48.3MB/s]
+
+
+sentence_bert_config.json:   0%|          | 0.00/52.0 [00:00<?, ?B/s][A
+sentence_bert_config.json: 100%|██████████| 52.0/52.0 [00:00<00:00, 387kB/s]
+
+
+config.json:   0%|          | 0.00/743 [00:00<?, ?B/s][A
+config.json: 100%|██████████| 743/743 [00:00<00:00, 5.46MB/s]
+
+
+model.safetensors: reconstructing file:   0%|          |  0.00B /  133MB            [A
+model.safetensors: downloading bytes:           |  0.00B            
+model.safetensors: downloading bytes: ██████████| 86.7MB, 8.45MB/s  
+model.safetensors: downloading bytes: ██████████| 86.7MB, 8.45MB/s  
+
+model.safetensors: reconstructing file: 100%|██████████|  133MB /  133MB, 13.2MB/s  
+
+
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s][A
+Loading weights: 100%|██████████| 199/199 [00:00<00:00, 5267.80it/s]
+
+
+tokenizer_config.json:   0%|          | 0.00/366 [00:00<?, ?B/s][A
+tokenizer_config.json: 100%|██████████| 366/366 [00:00<00:00, 1.75MB/s]
+
+
+vocab.txt:   0%|          | 0.00/232k [00:00<?, ?B/s][A
+vocab.txt: 100%|██████████| 232k/232k [00:00<00:00, 33.4MB/s]
+
+
+tokenizer.json:   0%|          | 0.00/711k [00:00<?, ?B/s][A
+tokenizer.json: 100%|██████████| 711k/711k [00:00<00:00, 36.6MB/s]
+
+
+special_tokens_map.json:   0%|          | 0.00/125 [00:00<?, ?B/s][A
+special_tokens_map.json: 100%|██████████| 125/125 [00:00<00:00, 694kB/s]
+
+
+config.json:   0%|          | 0.00/190 [00:00<?, ?B/s][A
+config.json: 100%|██████████| 190/190 [00:00<00:00, 940kB/s]
+notes done chat 9: 4 lines after 47 turns, 2.2 min
+notes done chat 11: 4 lines after 40 turns, 2.6 min
+notes done chat 10: 8 lines after 48 turns, 2.6 min
+notes done chat 16: 17 lines after 41 turns, 3.0 min
+notes done chat 1: 5 lines after 44 turns, 3.1 min
+notes done chat 3: 5 lines after 47 turns, 3.3 min
+notes done chat 14: 8 lines after 47 turns, 3.4 min
+notes done chat 7: 9 lines after 50 turns, 3.4 min
+done chat 11 at 3.4 min
+notes done chat 12: 14 lines after 38 turns, 4.0 min
+notes done chat 5: 13 lines after 46 turns, 4.9 min
+notes done chat 4: 25 lines after 64 turns, 4.9 min
+notes done chat 8: 16 lines after 66 turns, 5.0 min
+done chat 9 at 5.6 min
+notes done chat 15: 12 lines after 67 turns, 5.6 min
+done chat 1 at 5.6 min
+done chat 14 at 6.1 min
+done chat 7 at 6.5 min
+done chat 16 at 6.6 min
+done chat 3 at 6.6 min
+done chat 15 at 6.9 min
+done chat 5 at 7.2 min
+notes done chat 6: 10 lines after 61 turns, 7.3 min
+done chat 12 at 7.3 min
+done chat 10 at 7.6 min
+notes done chat 2: 19 lines after 65 turns, 7.7 min
+notes done chat 13: 27 lines after 62 turns, 7.8 min
+done chat 4 at 8.3 min
+done chat 8 at 8.3 min
+done chat 13 at 8.4 min
+done chat 2 at 8.8 min
+done chat 6 at 8.9 min
+all done in 8.9 min
+exit code 0 after 19.0 min
