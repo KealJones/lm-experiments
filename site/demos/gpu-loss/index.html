@@ -69,11 +69,11 @@
     <h2>Tests</h2>
     <div class="tests">
       <div class="test">
-        <div><b>1. Find the time limit</b><p>Runs one long GPU job of 0.5 s, 1 s, 1.5 s, … up to 10 s until the GPU is lost.</p></div>
+        <div><b>1. Find the time limit</b><p>Runs one long GPU job of 0.5 s, 1 s, 1.25 s, … up to 10 s until the GPU is lost, and checks each job's answer to make sure the GPU really did the work.</p></div>
         <button class="primary" id="t-ramp" disabled>Run</button>
       </div>
       <div class="test">
-        <div><b>2. Does chunking help?</b><p>6 s of work as 60 pieces of 0.1 s: one submit each (waited for), then all submitted at once, then all in one submit.</p></div>
+        <div><b>2. Does chunking help?</b><p>6 s of work as 60 pieces of 0.1 s: one submit each (waited for), then all in one submit, then all submitted at once without waiting.</p></div>
         <button id="t-chunk" disabled>Run</button>
       </div>
       <div class="test">
@@ -218,6 +218,7 @@ const CHECK = `
 @compute @workgroup_size(64)
 fn main(@builtin(global_invocation_id) g: vec3<u32>) { outv[g.x] = g.x * 3u + 7u; }`;
 const GROUPS = 256;              // 256 × 64 = 16,384 threads per dispatch
+const THREADS = GROUPS * 64;
 const MAX_ITERS = 0xFFFFFFFF;
 
 let gen = 0;
@@ -242,10 +243,18 @@ async function makeKit(adapter, device, g) {
   const ci = await mod.getCompilationInfo?.().catch(() => null);
   for (const m of ci?.messages || []) add(m.type === 'error' ? 'err' : 'note', `shader ${m.type}: ${m.message} (line ${m.lineNum})`);
   const pipe = await errorScoped(device, () => device.createComputePipelineAsync({ layout: 'auto', compute: { module: mod, entryPoint: 'main' } }), 'work pipeline');
-  const out = device.createBuffer({ size: GROUPS * 64 * 4, usage: GPUBufferUsage.STORAGE });
+  const out = device.createBuffer({ size: THREADS * 4, usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_SRC });
   const uni = device.createBuffer({ size: 16, usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST });
   const bind = device.createBindGroup({ layout: pipe.getBindGroupLayout(0), entries: [{ binding: 0, resource: { buffer: out } }, { binding: 1, resource: { buffer: uni } }] });
-  return { gen: g, adapter, device, pipe, bind, uni };
+  // The first and last thread's answers come back after every job, to check the GPU really did the whole loop.
+  const read = device.createBuffer({ size: 8, usage: GPUBufferUsage.MAP_READ | GPUBufferUsage.COPY_DST });
+  let ts = null;
+  if (device.features.has('timestamp-query')) {
+    ts = { set: device.createQuerySet({ type: 'timestamp', count: 2 }),
+      resolve: device.createBuffer({ size: 16, usage: GPUBufferUsage.QUERY_RESOLVE | GPUBufferUsage.COPY_SRC }),
+      read: device.createBuffer({ size: 16, usage: GPUBufferUsage.MAP_READ | GPUBufferUsage.COPY_DST }) };
+  }
+  return { gen: g, adapter, device, pipe, bind, uni, out, read, ts };
 }
 
 // Is this device really working? Run the known-answer job and read it back.
@@ -292,7 +301,7 @@ async function acquire(opts) {
   if (!adapter) return { why: 'null' };
   const snap = snapshot(adapter);
   let device;
-  try { device = await adapter.requestDevice(); }
+  try { device = await adapter.requestDevice(adapter.features.has('timestamp-query') ? { requiredFeatures: ['timestamp-query'] } : undefined); }
   catch (e) { return { why: `requestDevice threw ${e.name}: ${e.message}`, snap }; }
   // A device can come back already lost (spec: from an adapter that's no longer valid).
   const early = await Promise.race([device.lost.then(i => i), sleep(30).then(() => null)]);
@@ -317,13 +326,41 @@ async function adopt(r) {
 
 // ── Running timed work ────────────────────────────────────────────────────
 let salt = 1;
-function encode(g, dispatches) {   // the loop length is in the uniform (set in timed())
+// The loop length is in the uniform (set in timed()). last: this is the job's final command buffer, so copy the
+// answers (and the GPU timestamps, for single-pass jobs) out after it.
+function encode(g, dispatches, { last = false, time = false } = {}) {
   const enc = g.device.createCommandEncoder();
-  const pass = enc.beginComputePass();
+  const useTs = time && g.ts;
+  const pass = enc.beginComputePass(useTs ? { timestampWrites: { querySet: g.ts.set, beginningOfPassWriteIndex: 0, endOfPassWriteIndex: 1 } } : undefined);
   pass.setPipeline(g.pipe); pass.setBindGroup(0, g.bind);
   for (let k = 0; k < dispatches; k++) pass.dispatchWorkgroups(GROUPS);
   pass.end();
+  if (last) {
+    enc.copyBufferToBuffer(g.out, 0, g.read, 0, 4);
+    enc.copyBufferToBuffer(g.out, (THREADS - 1) * 4, g.read, 4, 4);
+  }
+  if (useTs) { enc.resolveQuerySet(g.ts.set, 0, 2, g.ts.resolve, 0); enc.copyBufferToBuffer(g.ts.resolve, 0, g.ts.read, 0, 16); }
   return enc.finish();
+}
+// What the work shader should leave in thread t's slot after `iters` loops (same math, on the CPU).
+function expected(t, saltUsed, iters) {
+  let x = (t ^ saltUsed) >>> 0;
+  for (let i = 0; i < iters; i++) { x = (Math.imul(x, 1664525) + 1013904223) >>> 0; x = (x ^ (x >>> 13)) >>> 0; }
+  return x;
+}
+const CHECK_MAX = 120e6;   // longer than this and the CPU check itself would take too long on a phone
+async function verify(g, saltUsed, iters, timedPass) {
+  let got, gpuMs = null;
+  try {
+    await g.read.mapAsync(GPUMapMode.READ); got = [...new Uint32Array(g.read.getMappedRange().slice(0))]; g.read.unmap();
+    if (timedPass && g.ts) {
+      await g.ts.read.mapAsync(GPUMapMode.READ); const t = new BigUint64Array(g.ts.read.getMappedRange().slice(0)); g.ts.read.unmap();
+      if (t[1] > t[0]) gpuMs = Number(t[1] - t[0]) / 1e6;
+    }
+  } catch (e) { return { verified: null, gpuMs, why: `readback failed: ${e.message}` }; }
+  if (iters > CHECK_MAX) return { verified: null, gpuMs, why: 'too long to check on the CPU' };
+  const want = [expected(0, saltUsed, iters), expected(THREADS - 1, saltUsed, iters)];
+  return { verified: got[0] === want[0] && got[1] === want[1], gpuMs, got, want };
 }
 // Waits for the queue, or for the loss, whichever is first. Returns 'done' or 'lost'.
 const settle = (g) => Promise.race([g.device.queue.onSubmittedWorkDone().then(() => 'done', () => 'lost'), g.device.lost.then(() => 'lost')]);
@@ -331,43 +368,55 @@ const settle = (g) => Promise.race([g.device.queue.onSubmittedWorkDone().then(()
 //       buffer- `pieces` dispatches of iters in one command buffer, one submit
 //       queued- `pieces` submits of one dispatch each, all submitted at once
 //       waited- `pieces` submits, each waited for before the next
+// Returns { lost, before, ms, gpuMs, verified }. before: the GPU was already gone before this job was submitted,
+// so the loss belongs to the job before it.
 async function timed(g, iters, pieces = 1, mode = 'one') {
-  g.device.queue.writeBuffer(g.uni, 0, new Uint32Array([mode === 'one' ? Math.min(MAX_ITERS, iters * pieces) : iters, salt++, 0, 0]));
-  await settle(g);
+  const loop = mode === 'one' ? Math.min(MAX_ITERS, iters * pieces) : iters;
+  const saltUsed = salt++;
+  g.device.queue.writeBuffer(g.uni, 0, new Uint32Array([loop, saltUsed, 0, 0]));
+  if (await settle(g) === 'lost' || !gpu || gpu.gen !== g.gen) return { lost: true, before: true, ms: 0 };
   workStart = performance.now();
-  if (mode === 'one') g.device.queue.submit([encode(g, 1)]);
-  else if (mode === 'buffer') g.device.queue.submit([encode(g, pieces)]);
-  else if (mode === 'queued') for (let i = 0; i < pieces; i++) g.device.queue.submit([encode(g, 1)]);
+  if (mode === 'one') g.device.queue.submit([encode(g, 1, { last: true, time: true })]);
+  else if (mode === 'buffer') g.device.queue.submit([encode(g, pieces, { last: true, time: true })]);
+  else if (mode === 'queued') for (let i = 0; i < pieces; i++) g.device.queue.submit([encode(g, 1, { last: i === pieces - 1 })]);
   else for (let i = 0; i < pieces; i++) {
-    g.device.queue.submit([encode(g, 1)]);
-    if (await settle(g) === 'lost') return { lost: true, ms: performance.now() - workStart, done: i };
+    g.device.queue.submit([encode(g, 1, { last: i === pieces - 1 })]);
+    if (await settle(g) === 'lost') { const ms = performance.now() - workStart; workStart = 0; return { lost: true, ms, done: i }; }
   }
   const r = await settle(g);
   const ms = performance.now() - workStart;
   workStart = 0;
-  return { lost: r === 'lost' || !gpu, ms };
+  if (r === 'lost' || !gpu) return { lost: true, ms };
+  const v = await verify(g, saltUsed, loop, mode === 'one' || mode === 'buffer');
+  return { lost: false, ms, ...v };
+}
+// One line about a finished job: wall time, GPU time, and whether the answer was right.
+function jobNote(r) {
+  const parts = [`took ${secs(r.ms)}`];
+  if (r.gpuMs != null) parts.push(`GPU busy ${secs(r.gpuMs)}`);
+  parts.push(r.verified === true ? 'answer right' : r.verified === false ? 'ANSWER WRONG: the GPU skipped work' : `answer not checked (${r.why})`);
+  return parts.join(', ');
 }
 
+let calPerMs = null;   // measured once per page load: saved numbers from an earlier visit weren't reliable
 // How many loop iterations make a millisecond on this GPU. Doubles until a job takes 60+ ms, then checks at ~300 ms.
 async function calibrate(g) {
-  const saved = store.get(KEY.cal, null);
-  if (saved && saved.gpu === JSON.stringify([firstSnap?.vendor, firstSnap?.architecture, firstSnap?.description]) && saved.ua === navigator.userAgent) {
-    return saved.perMs;
-  }
+  if (calPerMs) return calPerMs;
   say('Measuring this GPU…');
   let iters = 1024, r;
   for (;;) {
     r = await timed(g, iters);
     if (r.lost) throw new Error('lost while measuring');
-    if (r.ms >= 60 || iters >= MAX_ITERS / 2) break;
+    if ((r.gpuMs ?? r.ms) >= 60 || iters >= MAX_ITERS / 2) break;
     iters *= 2;
   }
-  let perMs = iters / r.ms;
+  let perMs = iters / (r.gpuMs ?? r.ms);
   const target = Math.min(MAX_ITERS, Math.round(perMs * 300));
   r = await timed(g, target);
   if (r.lost) throw new Error('lost while measuring');
-  perMs = target / r.ms;
-  add('note', `calibrated: ${Math.round(perMs)} iterations per ms (a ${Math.round(r.ms)} ms check job)`);
+  perMs = target / (r.gpuMs ?? r.ms);
+  add('note', `calibrated: ${Math.round(perMs)} iterations per ms (check job: ${jobNote(r)})`);
+  calPerMs = perMs;
   store.set(KEY.cal, { perMs, ua: navigator.userAgent, gpu: JSON.stringify([firstSnap?.vendor, firstSnap?.architecture, firstSnap?.description]), at: Date.now() });
   return perMs;
 }
@@ -389,7 +438,7 @@ async function test(name, fn) {
   finally { busy = false; buttons(); }
 }
 
-const RAMP = [500, 1000, 1500, 2000, 2500, 2750, 3000, 3250, 3500, 4000, 5000, 6000, 8000, 10000];
+const RAMP = [500, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3500, 4000, 5000, 6000, 8000, 10000];
 $('t-ramp').onclick = () => test('find the time limit', async (g) => {
   const perMs = await calibrate(g);
   let last = null;
@@ -397,14 +446,20 @@ $('t-ramp').onclick = () => test('find the time limit', async (g) => {
     say(`Running a ${secs(want)} job…`);
     add('note', `asking for ${secs(want)} in one dispatch`);
     const r = await timed(g, itersFor(perMs, want));
-    if (r.lost) {
-      add('result', `Time limit: the GPU was lost on a job asked to run ${secs(want)} (lost after ${secs(r.ms)}). Longest job that survived: ${last ? secs(last) : 'none'}.`, { asked: want, lostAfterMs: Math.round(r.ms), lastOkMs: last && Math.round(last), reason: lossInfo?.reason, message: lossInfo?.message });
+    const info = { reason: lossInfo?.reason, message: lossInfo?.message };
+    if (r.lost && r.before) {
+      add('result', `Time limit: the GPU was lost just AFTER a job finished (that job: ${last ? jobNote(last) : '?'}); the next one never ran.`, { lastJob: last && { ms: Math.round(last.ms), gpuMs: last.gpuMs && Math.round(last.gpuMs), verified: last.verified }, ...info });
       return;
     }
-    add('ok', `survived: asked ${secs(want)}, took ${secs(r.ms)}`);
-    last = r.ms;
+    if (r.lost) {
+      add('result', `Time limit: the GPU was lost ${secs(r.ms)} into a job asked to run ${secs(want)}. Longest job that survived: ${last ? jobNote(last) : 'none'}.`, { asked: want, lostAfterMs: Math.round(r.ms), ...info });
+      return;
+    }
+    add(r.verified === false ? 'err' : 'ok', `survived: asked ${secs(want)}, ${jobNote(r)}`);
+    if (r.verified === false) { add('result', `The GPU returned a wrong answer on a ${secs(want)} job without losing the device: it cut the work short, so job times on this browser can't be trusted past here.`, { asked: want, got: r.got, want: r.want }); return; }
+    last = r;
   }
-  add('result', `No time limit hit: a single ${secs(last)} job ran fine.`);
+  add('result', `No time limit hit: the longest job ran fine (${jobNote(last)}).`);
   say('No limit up to 10 s.');
 });
 
@@ -413,11 +468,11 @@ $('t-chunk').onclick = () => test('chunking', async (g) => {
   const iters = itersFor(perMs, 100), pieces = 60;
   const names = { waited: '60 submits, each waited for', queued: '60 submits, all at once', buffer: '60 dispatches in ONE submit' };
   const outcome = {};
-  for (const mode of ['waited', 'queued', 'buffer']) {
+  for (const mode of ['waited', 'buffer', 'queued']) {
     say(`Chunking: ${names[mode]}…`);
     add('note', `6 s of work as ${names[mode]}`);
     const r = await timed(g, iters, pieces, mode);
-    outcome[mode] = r.lost ? `lost after ${secs(r.ms)}` : `fine (${secs(r.ms)})`;
+    outcome[mode] = r.lost ? (r.before ? 'lost before it started (after the previous run)' : `lost after ${secs(r.ms)}`) : `fine (${jobNote(r)})`;
     add(r.lost ? 'err' : 'ok', `${names[mode]}: ${outcome[mode]}`);
     if (r.lost) break;
   }
@@ -428,7 +483,7 @@ $('t-kill').onclick = () => test('kill it now', async (g) => {
   const perMs = await calibrate(g);
   say('Running a 15 s job…');
   const r = await timed(g, itersFor(perMs, 15000));
-  add(r.lost ? 'note' : 'result', r.lost ? `15 s job: lost after ${secs(r.ms)}` : `A 15 s job finished (${secs(r.ms)}) without losing the GPU.`);
+  add(r.lost ? 'note' : 'result', r.lost ? `15 s job: lost after ${secs(r.ms)}` : `A job asked to run 15 s finished without losing the GPU: ${jobNote(r)}.`);
 });
 
 $('t-destroy').onclick = () => test('destroy the device', async (g) => {
