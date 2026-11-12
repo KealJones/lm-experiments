@@ -54,7 +54,7 @@
 <body>
 <main>
   <header>
-    <h1>GPU Loss and Recovery</h1>
+    <h1>GPU Loss and Recovery <span style="font-size:.8rem;color:var(--muted);font-weight:400">v3</span></h1>
     <p>Safari on iOS 27 kills WebGPU work that runs too long, and then may refuse to hand the page a GPU again. This page finds the time limit, checks whether splitting work into small pieces avoids it, and records exactly what the browser says when the GPU is lost and how long until it gives one back. Nothing leaves the phone unless you share the log.</p>
   </header>
 
@@ -84,10 +84,15 @@
         <div><b>Control: destroy the device</b><p>Loses the GPU on purpose (no hang), to compare recovery after a normal loss.</p></div>
         <button id="t-destroy" disabled>Run</button>
       </div>
+      <div class="test">
+        <div><b>4. How long is the lockout?</b><p>Loses the GPU the bad way (queued work), then waits without asking at all, asks once, and reloads. Starts at a 10 s wait, goes to 30 s, 90 s… if that fails, or shorter if it works, until it pins the lockout down. Runs on its own across reloads; keep the screen on.</p></div>
+        <button class="primary" id="t-lock" disabled>Run</button>
+      </div>
     </div>
     <div class="row" style="margin-top:12px">
       <button id="probe-stop" disabled>Stop waiting for the GPU</button>
       <button id="reload-check">Reload and check the GPU</button>
+      <button id="lock-stop" hidden>Stop test 4</button>
     </div>
     <div id="status">Starting…</div>
     <ul class="tips">
@@ -426,7 +431,8 @@ const itersFor = (perMs, ms) => Math.max(1, Math.min(MAX_ITERS, Math.round(perMs
 let busy = false;
 function buttons() {
   const ready = Boolean(gpu) && !busy;
-  for (const id of ['t-ramp', 't-chunk', 't-kill', 't-destroy']) $(id).disabled = !ready;
+  for (const id of ['t-ramp', 't-chunk', 't-kill', 't-destroy', 't-lock']) $(id).disabled = !ready;
+  $('lock-stop').hidden = !store.get(KEY_LOCK, null)?.active;
   $('probe-stop').disabled = !probing;
 }
 async function test(name, fn) {
@@ -495,6 +501,7 @@ $('t-destroy').onclick = () => test('destroy the device', async (g) => {
 // ── After a loss: what does the old adapter do, and when does a new one come back? ──
 async function onLost(lostGen) {
   const old = lossInfo;
+  if (quietAfterLoss) return;   // test 4: touch nothing GPU-related until its one ask
   // The old adapter: the spec says it can't make a working device any more. Check what this browser does.
   try {
     const st = await snapshotOldAdapter();
@@ -553,6 +560,87 @@ async function probe(lossAt) {
 }
 $('probe-stop').onclick = () => { stopProbe = true; };
 
+// ── Test 4: how long is the lockout when the page doesn't keep asking? ───────
+// Keal's idea (2026-11-12): maybe asking over and over is what keeps Safari refusing. So each trial loses the GPU
+// the way that locked the page out (60 small jobs queued at once), makes no WebGPU call at all for a set wait,
+// asks exactly once, records the answer and reloads (a reload clears the lockout). Waits: 10 s first; a refusal
+// triples it (30, 90, 270, 600 s); a success halves it; once there's a refusal below a success, it splits the gap.
+const KEY_LOCK = 'gpuloss-lockout';
+const LOCK_FIRST = 10000, LOCK_MAX = 600000, LOCK_TRIALS = 12;
+let quietAfterLoss = false;
+function lockPlan(L) {
+  const fails = L.trials.filter(t => !t.ok).map(t => t.delay), oks = L.trials.filter(t => t.ok).map(t => t.delay);
+  const lo = fails.length ? Math.max(...fails) : 0, hi = oks.length ? Math.min(...oks) : null;
+  if (L.trials.length >= LOCK_TRIALS) return { done: `Stopped after ${LOCK_TRIALS} trials: refused at ${lo ? secs(lo) : 'none'}, worked at ${hi ? secs(hi) : 'none'}.` };
+  if (hi == null) {
+    if (!lo) return { next: LOCK_FIRST };
+    if (lo >= LOCK_MAX) return { done: `Still locked out ${secs(lo)} after the loss, even with no asking in between.` };
+    return { next: Math.min(LOCK_MAX, lo * 3) };
+  }
+  if (!lo) return hi <= 1000 ? { done: `With no asking in between, the GPU was back within ${secs(hi)} of the loss every time it was tried.` } : { next: Math.round(hi / 2) };
+  if (lo >= hi) return { done: `Not a fixed timer: refused after a ${secs(lo)} wait but worked after ${secs(hi)}.` };
+  if (hi - lo <= Math.max(2000, hi * 0.1)) return { done: `With no asking in between, the lockout ends between ${secs(lo)} and ${secs(hi)} after the loss.` };
+  return { next: Math.round((lo + hi) / 2) };
+}
+function lockFinish(L, text) {
+  L.active = false; store.set(KEY_LOCK, L);
+  add('result', `Lockout test: ${text} Trials: ${L.trials.map(t => `${secs(t.delay)} ${t.ok ? 'worked' : 'refused'}`).join(', ')}.`, { trials: L.trials });
+  say('Test 4 done.');
+}
+const reloadSoon = () => setTimeout(() => location.reload(), 1500);
+let wakeLock = null;
+async function keepAwake() { try { wakeLock = await navigator.wakeLock?.request('screen'); } catch { /* not allowed */ } }
+async function lockTrial() {
+  const L = store.get(KEY_LOCK, null);
+  if (!L?.active || busy || !gpu) return;
+  const plan = lockPlan(L);
+  if (plan.done) { lockFinish(L, plan.done); buttons(); return; }
+  busy = true; buttons(); keepAwake();
+  const n = L.trials.length + 1;
+  add('note', `── lockout trial ${n}: lose the GPU, wait ${secs(plan.next)} without asking, ask once ──`);
+  try {
+    const perMs = await calibrate(gpu);
+    quietAfterLoss = true;
+    say(`Trial ${n}: losing the GPU…`);
+    const r = await timed(gpu, itersFor(perMs, 100), 60, 'queued');
+    if (!r.lost) {
+      L.misses = (L.misses || 0) + 1; store.set(KEY_LOCK, L);
+      add('err', `trial ${n}: the queued work didn't lose the GPU this time (${jobNote(r)})`);
+      if (L.misses >= 3) { lockFinish(L, `Couldn't lose the GPU the bad way 3 times in a row.`); quietAfterLoss = false; busy = false; buttons(); return; }
+      say('Reloading to try again…'); reloadSoon(); return;
+    }
+    const lossAt = lossInfo?.at || Date.now(), reason = lossInfo?.reason;
+    for (;;) {   // the wait: no WebGPU calls at all
+      const left = lossAt + plan.next - Date.now();
+      if (left <= 0 || !store.get(KEY_LOCK, null)?.active) break;
+      say(`Trial ${n}: GPU lost ("${reason}"). Not asking for ${secs(left)} more…`);
+      await sleep(Math.min(1000, left));
+    }
+    if (!store.get(KEY_LOCK, null)?.active) { add('note', 'test 4 stopped'); quietAfterLoss = false; busy = false; buttons(); return; }
+    const a = await acquire();
+    const since = Date.now() - lossAt;
+    const t = { delay: plan.next, ok: Boolean(a.device), why: a.why || null, askedAtMs: since, reason, lostAfterMs: Math.round(r.ms) };
+    L.trials.push(t); L.misses = 0; store.set(KEY_LOCK, L);
+    add(t.ok ? 'ok' : 'err', `trial ${n}: one ask ${secs(since)} after the loss → ${t.ok ? 'a working GPU' : t.why}`, t);
+    if (a.device) { try { a.device.destroy(); } catch {} }
+    const after = lockPlan(L);
+    if (after.done) lockFinish(L, after.done);
+    else say(`Next: a ${secs(after.next)} wait. Reloading…`);
+    reloadSoon();
+  } catch (e) {
+    add('err', `test 4: ${e.message}`); quietAfterLoss = false; busy = false; buttons();
+  }
+}
+$('t-lock').onclick = () => {
+  store.set(KEY_LOCK, { active: true, trials: [], started: Date.now() });
+  lockTrial();
+};
+$('lock-stop').onclick = () => {
+  const L = store.get(KEY_LOCK, null);
+  if (L) { L.active = false; store.set(KEY_LOCK, L); }
+  add('note', 'test 4 stopped by hand'); buttons();
+};
+
 // ── Reload check: does a fresh page get a GPU when this one can't? ─────────
 $('reload-check').onclick = () => {
   const st = store.get(KEY.state, {});
@@ -580,7 +668,7 @@ $('share').onclick = async () => {
 let clearArmed = false;
 $('clear').onclick = () => {   // two taps instead of confirm(): no blocking dialogs on a GPU test page
   if (!clearArmed) { clearArmed = true; $('clear').textContent = 'Tap again to clear'; setTimeout(() => { clearArmed = false; $('clear').textContent = 'Clear'; }, 3000); return; }
-  log = []; store.del(KEY.log); store.del(KEY.cal); store.del('gpuloss-firstsnap'); firstSnap = null; clearArmed = false; $('clear').textContent = 'Clear'; render();
+  log = []; store.del(KEY.log); store.del(KEY.cal); firstSnap = gpu ? snapshot(gpu.adapter) : null; store.set('gpuloss-firstsnap', firstSnap); clearArmed = false; $('clear').textContent = 'Clear'; render();
 };
 
 // ── Start ─────────────────────────────────────────────────────────────────
@@ -609,13 +697,15 @@ async function start() {
     add('err', `no GPU at start: ${r.why}`);
     $('note').hidden = false; $('note').className = 'banner bad';
     $('note').textContent = `The browser won't give this page a GPU right now (${r.why}). If a test just lost it, the page will keep asking.`;
-    if (st.lossAt && Date.now() - st.lossAt < 600000) probe(st.lossAt).catch(e => add('err', `probe: ${e.message}`));
+    if (store.get(KEY_LOCK, null)?.active) { add('err', 'test 4: a reload did not give a GPU this time; stopping it'); lockFinish(store.get(KEY_LOCK, null), 'A reload stopped clearing the lockout.'); }
+    else if (st.lossAt && Date.now() - st.lossAt < 600000) probe(st.lossAt).catch(e => add('err', `probe: ${e.message}`));
     else say('No GPU.');
     return;
   }
   await adopt(r);
   add('ok', `got a working GPU in ${took} ms: ${[r.snap.vendor, r.snap.architecture, r.snap.description].filter(Boolean).join(' / ') || 'details not reported'}`, { snap: r.snap });
-  say('Ready. Start with test 1.');
+  if (store.get(KEY_LOCK, null)?.active) { say('Test 4 continues…'); setTimeout(lockTrial, 1500); }
+  else say('Ready. Start with test 1.');
 }
 start().catch(e => { add('err', `start: ${e.message}`); say(`Error: ${e.message}`); });
 </script>
