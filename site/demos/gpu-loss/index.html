@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GPU Loss and Recovery</title>
+<style>
+  /* Same look as memcap: one column, phone first. */
+  :root {
+    --bg: #f6f7f9; --panel: #ffffff; --fg: #1b1f27; --muted: #5d6675; --line: #dde1e8; --track: #eceff4;
+    --accent: #2f5bd3; --ok: #1f7a4a; --bad: #b3261e; --warn: #8a5a00;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --sans: -apple-system, system-ui, "Segoe UI", Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #12151b; --panel: #1a1e26; --fg: #e6e9ef; --muted: #9aa3b2; --line: #2b313c; --track: #242a35;
+            --accent: #7fa2ff; --ok: #5cc98d; --bad: #ff8a80; --warn: #e3b55b; color-scheme: dark; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.45 var(--sans);
+         padding-block: max(16px, env(safe-area-inset-top, 0px)) 32px;
+         padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  main { max-width: 760px; margin: 0 auto; display: grid; gap: 16px; }
+  h1 { font-size: 1.35rem; margin: 0 0 4px; }
+  h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0 0 10px; }
+  p { margin: 0; color: var(--muted); }
+  section, details.box { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; min-width: 0; }
+  details.box > summary { cursor: pointer; font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  details.box[open] > summary { margin-bottom: 10px; }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  button { font: inherit; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); cursor: pointer; }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+  button.danger { border-color: var(--bad); color: var(--bad); }
+  button:disabled { opacity: .5; cursor: default; }
+  .tests { display: grid; gap: 10px; }
+  .test { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: center; }
+  .test p { font-size: .88rem; }
+  #status { font: 13px/1.4 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; margin-top: 12px; }
+  .banner { border-left: 4px solid var(--warn); padding: 10px 12px; background: var(--panel); border-radius: 0; }
+  .banner.ok { border-color: var(--ok); }
+  .banner.bad { border-color: var(--bad); }
+  .facts { display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px; font: 13px/1.4 var(--mono); margin: 0; }
+  .facts dt { color: var(--muted); } .facts dd { margin: 0; overflow-wrap: anywhere; }
+  ul.results { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
+  ul.results:empty::before { content: "Nothing yet. Run a test below."; color: var(--muted); margin-left: -18px; }
+  #log { font: 12px/1.45 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; max-height: 60vh; overflow-y: auto; margin: 10px 0 0; }
+  #log .lost, #log .err { color: var(--bad); } #log .ok { color: var(--ok); } #log .result { color: var(--fg); font-weight: 600; }
+  #log .probe, #log .note { color: var(--muted); }
+  ul.tips { margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size: .9rem; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>GPU Loss and Recovery</h1>
+    <p>Safari on iOS 27 kills WebGPU work that runs too long, and then may refuse to hand the page a GPU again. This page finds the time limit, checks whether splitting work into small pieces avoids it, and records exactly what the browser says when the GPU is lost and how long until it gives one back. Nothing leaves the phone unless you share the log.</p>
+  </header>
+
+  <div id="note" class="banner" hidden></div>
+
+  <section>
+    <h2>Results</h2>
+    <ul id="results" class="results"></ul>
+  </section>
+
+  <section>
+    <h2>Tests</h2>
+    <div class="tests">
+      <div class="test">
+        <div><b>1. Find the time limit</b><p>Runs one long GPU job of 0.5 s, 1 s, 1.5 s, … up to 10 s until the GPU is lost.</p></div>
+        <button class="primary" id="t-ramp" disabled>Run</button>
+      </div>
+      <div class="test">
+        <div><b>2. Does chunking help?</b><p>6 s of work as 60 pieces of 0.1 s: one submit each (waited for), then all submitted at once, then all in one submit.</p></div>
+        <button id="t-chunk" disabled>Run</button>
+      </div>
+      <div class="test">
+        <div><b>3. Kill it now</b><p>One 15 s job. Use this to test recovery without finding the limit first.</p></div>
+        <button class="danger" id="t-kill" disabled>Run</button>
+      </div>
+      <div class="test">
+        <div><b>Control: destroy the device</b><p>Loses the GPU on purpose (no hang), to compare recovery after a normal loss.</p></div>
+        <button id="t-destroy" disabled>Run</button>
+      </div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <button id="probe-stop" disabled>Stop waiting for the GPU</button>
+      <button id="reload-check">Reload and check the GPU</button>
+    </div>
+    <div id="status">Starting…</div>
+    <ul class="tips">
+      <li>After a loss the page asks for a new GPU on a schedule (instantly, then every few seconds for 10 minutes) and logs every answer.</li>
+      <li>If it never comes back, tap "Reload and check": the page reloads and asks straight away, to see whether a reload is the only fix.</li>
+      <li>Keep the screen on and the page in front: switching apps can lose the GPU too, and the log notes when the page was hidden.</li>
+      <li>Safari prints some GPU errors only to its console. Connect the phone to a Mac and keep Web Inspector open to catch them.</li>
+      <li>On a computer, test 3 can blank the screen for a moment while the operating system resets the GPU.</li>
+    </ul>
+  </section>
+
+  <details class="box" id="facts-box">
+    <summary>This device's GPU</summary>
+    <dl class="facts" id="facts"></dl>
+  </details>
+
+  <section>
+    <h2>Log</h2>
+    <div class="row">
+      <button id="copy">Copy log</button>
+      <button id="share">Share</button>
+      <button id="clear">Clear</button>
+    </div>
+    <pre id="log"></pre>
+  </section>
+
+  <p style="font-size:.85rem">Comparing how much memory each runtime uses to load a model? <a href="https://kealjones.com/squiggle/memtest.html">Squiggle's memtest page</a> loads real models on WebLLM and wllama (CPU or WebGPU) and measures what's left.</p>
+</main>
+
+<script type="module">
+const $ = (id) => document.getElementById(id);
+const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+const KEY = { log: 'gpuloss-log', cal: 'gpuloss-cal', state: 'gpuloss-state' };
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* full or private mode */ } },
+  del(k) { try { localStorage.removeItem(k); } catch { /* ignore */ } },
+};
+const say = (t) => { $('status').textContent = t; };
+const secs = (ms) => `${(ms / 1000).toFixed(ms < 10000 ? 2 : 1)} s`;
+
+// ── Log: every line goes to localStorage at once, so a crash or reload keeps it ──
+const MAX_LOG = 3000;
+let log = store.get(KEY.log, []);
+function add(kind, text, data) {
+  const e = { t: Date.now(), kind, text };
+  if (data !== undefined) e.data = data;
+  log.push(e);
+  if (log.length > MAX_LOG) log.splice(0, log.length - MAX_LOG);
+  store.set(KEY.log, log);
+  render();
+  return e;
+}
+function update(e, text, data) {   // rewrite an entry in place (a run of identical probe answers)
+  e.text = text; if (data !== undefined) e.data = data; e.t2 = Date.now();
+  store.set(KEY.log, log); render();
+}
+const clock = (t) => { const d = new Date(t); return d.toTimeString().slice(0, 8) + '.' + String(d.getMilliseconds()).padStart(3, '0'); };
+const lineText = (e) => `${clock(e.t)} [${e.kind}] ${e.text}${e.data !== undefined && e.kind !== 'facts' ? '  ' + JSON.stringify(e.data) : ''}`;
+let renderQueued = false;
+function render() {
+  if (renderQueued) return;
+  renderQueued = true;
+  requestAnimationFrame(() => {
+    renderQueued = false;
+    const pre = $('log');
+    const atBottom = pre.scrollTop + pre.clientHeight >= pre.scrollHeight - 20;
+    pre.replaceChildren(...log.slice(-400).map(e => { const s = document.createElement('span'); s.className = e.kind; s.textContent = lineText(e) + '\n'; return s; }));
+    if (atBottom) pre.scrollTop = pre.scrollHeight;
+    $('results').replaceChildren(...log.filter(e => e.kind === 'result').map(e => { const li = document.createElement('li'); li.textContent = `${e.text} (${new Date(e.t).toLocaleString()})`; return li; }));
+  });
+}
+
+// ── Device facts ──────────────────────────────────────────────────────────
+const LIMITS = ['maxBufferSize', 'maxStorageBufferBindingSize', 'maxComputeWorkgroupStorageSize', 'maxComputeInvocationsPerWorkgroup',
+  'maxComputeWorkgroupSizeX', 'maxComputeWorkgroupsPerDimension', 'maxStorageBuffersPerShaderStage', 'maxBindGroups'];
+function snapshot(a) {
+  const i = a.info || {};
+  const s = {
+    vendor: i.vendor, architecture: i.architecture, device: i.device, description: i.description,
+    subgroups: i.subgroupMinSize ? `${i.subgroupMinSize}-${i.subgroupMaxSize}` : undefined,
+    fallback: Boolean(i.isFallbackAdapter ?? a.isFallbackAdapter),
+    features: [...a.features].sort(),
+    limits: Object.fromEntries(LIMITS.map(k => [k, a.limits?.[k]]).filter(([, v]) => v !== undefined)),
+  };
+  return JSON.parse(JSON.stringify(s));
+}
+function diff(a, b) {
+  const out = {};
+  for (const k of new Set([...Object.keys(a || {}), ...Object.keys(b || {})])) {
+    if (JSON.stringify(a?.[k]) !== JSON.stringify(b?.[k])) out[k] = { before: a?.[k], after: b?.[k] };
+  }
+  return out;
+}
+function showFacts(snap) {
+  const f = {
+    Browser: navigator.userAgent,
+    WebGPU: navigator.gpu ? 'yes' : 'no',
+    'WGSL features': navigator.gpu?.wgslLanguageFeatures ? [...navigator.gpu.wgslLanguageFeatures].sort().join(', ') || 'none' : '?',
+    ...(snap ? {
+      GPU: [snap.vendor, snap.architecture, snap.device, snap.description].filter(Boolean).join(' / ') || 'not reported',
+      Fallback: snap.fallback ? 'yes (software)' : 'no', Subgroups: snap.subgroups || '?',
+      Features: snap.features.join(', ') || 'none',
+      ...Object.fromEntries(Object.entries(snap.limits).map(([k, v]) => [k, String(v)])),
+    } : {}),
+  };
+  $('facts').replaceChildren(...Object.entries(f).flatMap(([k, v]) => { const dt = document.createElement('dt'); dt.textContent = k; const dd = document.createElement('dd'); dd.textContent = v; return [dt, dd]; }));
+}
+
+// ── The GPU, one "generation" per device we get ───────────────────────────
+// The work shader: every thread runs a dependent integer loop, `iters` times. Its length is the knob.
+const WORK = `
+struct P { iters: u32, salt: u32, a: u32, b: u32 }
+@group(0) @binding(0) var<storage, read_write> outv: array<u32>;
+@group(0) @binding(1) var<uniform> p: P;
+@compute @workgroup_size(64)
+fn main(@builtin(global_invocation_id) g: vec3<u32>) {
+  var x = g.x ^ p.salt;
+  for (var i = 0u; i < p.iters; i = i + 1u) {
+    x = x * 1664525u + 1013904223u;
+    x = x ^ (x >> 13u);
+  }
+  outv[g.x] = x;
+}`;
+// A tiny job with a known answer: "the GPU works" means this reads back right.
+const CHECK = `
+@group(0) @binding(0) var<storage, read_write> outv: array<u32>;
+@compute @workgroup_size(64)
+fn main(@builtin(global_invocation_id) g: vec3<u32>) { outv[g.x] = g.x * 3u + 7u; }`;
+const GROUPS = 256;              // 256 × 64 = 16,384 threads per dispatch
+const MAX_ITERS = 0xFFFFFFFF;
+
+let gen = 0;
+let lastAdapter = null;         // the adapter behind the current device, to poke after a loss
+let gpu = null;                  // { gen, adapter, device, snap, pipe, bind, uni, check }
+let firstSnap = store.get('gpuloss-firstsnap', null);
+let lossInfo = null;             // set by the lost handler of the current device
+let workStart = 0;               // when the job in flight was submitted
+
+async function errorScoped(d, fn, what) {
+  d.pushErrorScope('validation'); d.pushErrorScope('out-of-memory'); d.pushErrorScope('internal');
+  const r = await fn();
+  for (const scope of ['internal', 'out-of-memory', 'validation']) {
+    const err = await d.popErrorScope().catch(e => ({ message: `popErrorScope threw: ${e.message}` }));
+    if (err) add('err', `${what}: ${scope} error: ${err.message}`);
+  }
+  return r;
+}
+
+async function makeKit(adapter, device, g) {
+  const mod = device.createShaderModule({ code: WORK });
+  const ci = await mod.getCompilationInfo?.().catch(() => null);
+  for (const m of ci?.messages || []) add(m.type === 'error' ? 'err' : 'note', `shader ${m.type}: ${m.message} (line ${m.lineNum})`);
+  const pipe = await errorScoped(device, () => device.createComputePipelineAsync({ layout: 'auto', compute: { module: mod, entryPoint: 'main' } }), 'work pipeline');
+  const out = device.createBuffer({ size: GROUPS * 64 * 4, usage: GPUBufferUsage.STORAGE });
+  const uni = device.createBuffer({ size: 16, usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST });
+  const bind = device.createBindGroup({ layout: pipe.getBindGroupLayout(0), entries: [{ binding: 0, resource: { buffer: out } }, { binding: 1, resource: { buffer: uni } }] });
+  return { gen: g, adapter, device, pipe, bind, uni };
+}
+
+// Is this device really working? Run the known-answer job and read it back.
+async function check(device) {
+  const n = 64 * 4;
+  const mod = device.createShaderModule({ code: CHECK });
+  const pipe = await device.createComputePipelineAsync({ layout: 'auto', compute: { module: mod, entryPoint: 'main' } });
+  const buf = device.createBuffer({ size: n * 4, usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_SRC });
+  const read = device.createBuffer({ size: n * 4, usage: GPUBufferUsage.MAP_READ | GPUBufferUsage.COPY_DST });
+  const bind = device.createBindGroup({ layout: pipe.getBindGroupLayout(0), entries: [{ binding: 0, resource: { buffer: buf } }] });
+  const enc = device.createCommandEncoder();
+  const pass = enc.beginComputePass(); pass.setPipeline(pipe); pass.setBindGroup(0, bind); pass.dispatchWorkgroups(4); pass.end();
+  enc.copyBufferToBuffer(buf, 0, read, 0, n * 4);
+  device.queue.submit([enc.finish()]);
+  await read.mapAsync(GPUMapMode.READ);
+  const v = new Uint32Array(read.getMappedRange().slice(0));
+  read.unmap(); buf.destroy(); read.destroy();
+  for (let i = 0; i < n; i++) if (v[i] !== i * 3 + 7) return `wrong value at ${i}: ${v[i]}`;
+  return true;
+}
+
+function hook(device, g) {
+  device.lost.then(info => {
+    const ms = workStart ? Math.round(performance.now() - workStart) : null;
+    const data = { reason: info.reason, message: info.message, device: g, msSinceSubmit: ms, page: document.visibilityState };
+    if (!gpu || gpu.gen !== g) { add('note', `device #${g} (old) reported lost`, data); return; }
+    lossInfo = { ...data, at: Date.now() };
+    add('lost', `GPU device #${g} lost. reason: "${info.reason}". message: ${JSON.stringify(info.message || '')}`, data);
+    store.set(KEY.state, { ...store.get(KEY.state, {}), lossAt: lossInfo.at });
+    gpu = null;
+    buttons();
+    onLost(g).catch(e => add('err', `after the loss: ${e.message}`));
+  });
+  const onErr = (ev) => add('err', `uncapturederror on device #${g} (${ev.error?.constructor?.name || 'error'}): ${ev.error?.message}`);
+  device.addEventListener?.('uncapturederror', onErr);
+}
+
+// Ask for an adapter + device + working check. Returns { adapter, device, snap } or a reason it didn't.
+async function acquire(opts) {
+  if (!navigator.gpu) return { why: 'navigator.gpu is missing' };
+  let adapter;
+  try { adapter = await navigator.gpu.requestAdapter(opts); }
+  catch (e) { return { why: `requestAdapter threw ${e.name}: ${e.message}` }; }
+  if (!adapter) return { why: 'null' };
+  const snap = snapshot(adapter);
+  let device;
+  try { device = await adapter.requestDevice(); }
+  catch (e) { return { why: `requestDevice threw ${e.name}: ${e.message}`, snap }; }
+  // A device can come back already lost (spec: from an adapter that's no longer valid).
+  const early = await Promise.race([device.lost.then(i => i), sleep(30).then(() => null)]);
+  if (early) return { why: `device came back already lost: "${early.reason}" ${JSON.stringify(early.message || '')}`, snap };
+  let ok;
+  try { ok = await Promise.race([check(device), sleep(5000).then(() => 'check timed out after 5 s')]); }
+  catch (e) { ok = `check threw ${e.name}: ${e.message}`; }
+  if (ok !== true) { try { device.destroy(); } catch {} return { why: `device didn't work: ${ok}`, snap }; }
+  return { adapter, device, snap };
+}
+
+async function adopt(r) {
+  gen += 1;
+  hook(r.device, gen);
+  lastAdapter = r.adapter;
+  gpu = await makeKit(r.adapter, r.device, gen);
+  if (!firstSnap) { firstSnap = r.snap; store.set('gpuloss-firstsnap', firstSnap); }
+  showFacts(r.snap);
+  buttons();
+  return gpu;
+}
+
+// ── Running timed work ────────────────────────────────────────────────────
+let salt = 1;
+function encode(g, dispatches) {   // the loop length is in the uniform (set in timed())
+  const enc = g.device.createCommandEncoder();
+  const pass = enc.beginComputePass();
+  pass.setPipeline(g.pipe); pass.setBindGroup(0, g.bind);
+  for (let k = 0; k < dispatches; k++) pass.dispatchWorkgroups(GROUPS);
+  pass.end();
+  return enc.finish();
+}
+// Waits for the queue, or for the loss, whichever is first. Returns 'done' or 'lost'.
+const settle = (g) => Promise.race([g.device.queue.onSubmittedWorkDone().then(() => 'done', () => 'lost'), g.device.lost.then(() => 'lost')]);
+// mode: one   - `pieces` × iters in ONE dispatch
+//       buffer- `pieces` dispatches of iters in one command buffer, one submit
+//       queued- `pieces` submits of one dispatch each, all submitted at once
+//       waited- `pieces` submits, each waited for before the next
+async function timed(g, iters, pieces = 1, mode = 'one') {
+  g.device.queue.writeBuffer(g.uni, 0, new Uint32Array([mode === 'one' ? Math.min(MAX_ITERS, iters * pieces) : iters, salt++, 0, 0]));
+  await settle(g);
+  workStart = performance.now();
+  if (mode === 'one') g.device.queue.submit([encode(g, 1)]);
+  else if (mode === 'buffer') g.device.queue.submit([encode(g, pieces)]);
+  else if (mode === 'queued') for (let i = 0; i < pieces; i++) g.device.queue.submit([encode(g, 1)]);
+  else for (let i = 0; i < pieces; i++) {
+    g.device.queue.submit([encode(g, 1)]);
+    if (await settle(g) === 'lost') return { lost: true, ms: performance.now() - workStart, done: i };
+  }
+  const r = await settle(g);
+  const ms = performance.now() - workStart;
+  workStart = 0;
+  return { lost: r === 'lost' || !gpu, ms };
+}
+
+// How many loop iterations make a millisecond on this GPU. Doubles until a job takes 60+ ms, then checks at ~300 ms.
+async function calibrate(g) {
+  const saved = store.get(KEY.cal, null);
+  if (saved && saved.gpu === JSON.stringify([firstSnap?.vendor, firstSnap?.architecture, firstSnap?.description]) && saved.ua === navigator.userAgent) {
+    return saved.perMs;
+  }
+  say('Measuring this GPU…');
+  let iters = 1024, r;
+  for (;;) {
+    r = await timed(g, iters);
+    if (r.lost) throw new Error('lost while measuring');
+    if (r.ms >= 60 || iters >= MAX_ITERS / 2) break;
+    iters *= 2;
+  }
+  let perMs = iters / r.ms;
+  const target = Math.min(MAX_ITERS, Math.round(perMs * 300));
+  r = await timed(g, target);
+  if (r.lost) throw new Error('lost while measuring');
+  perMs = target / r.ms;
+  add('note', `calibrated: ${Math.round(perMs)} iterations per ms (a ${Math.round(r.ms)} ms check job)`);
+  store.set(KEY.cal, { perMs, ua: navigator.userAgent, gpu: JSON.stringify([firstSnap?.vendor, firstSnap?.architecture, firstSnap?.description]), at: Date.now() });
+  return perMs;
+}
+const itersFor = (perMs, ms) => Math.max(1, Math.min(MAX_ITERS, Math.round(perMs * ms)));
+
+// ── Tests ─────────────────────────────────────────────────────────────────
+let busy = false;
+function buttons() {
+  const ready = Boolean(gpu) && !busy;
+  for (const id of ['t-ramp', 't-chunk', 't-kill', 't-destroy']) $(id).disabled = !ready;
+  $('probe-stop').disabled = !probing;
+}
+async function test(name, fn) {
+  if (busy || !gpu) return;
+  busy = true; buttons();
+  add('note', `── ${name} ──`);
+  try { await fn(gpu); }
+  catch (e) { add('err', `${name}: ${e.message}`); }
+  finally { busy = false; buttons(); }
+}
+
+const RAMP = [500, 1000, 1500, 2000, 2500, 2750, 3000, 3250, 3500, 4000, 5000, 6000, 8000, 10000];
+$('t-ramp').onclick = () => test('find the time limit', async (g) => {
+  const perMs = await calibrate(g);
+  let last = null;
+  for (const want of RAMP) {
+    say(`Running a ${secs(want)} job…`);
+    add('note', `asking for ${secs(want)} in one dispatch`);
+    const r = await timed(g, itersFor(perMs, want));
+    if (r.lost) {
+      add('result', `Time limit: the GPU was lost on a job asked to run ${secs(want)} (lost after ${secs(r.ms)}). Longest job that survived: ${last ? secs(last) : 'none'}.`, { asked: want, lostAfterMs: Math.round(r.ms), lastOkMs: last && Math.round(last), reason: lossInfo?.reason, message: lossInfo?.message });
+      return;
+    }
+    add('ok', `survived: asked ${secs(want)}, took ${secs(r.ms)}`);
+    last = r.ms;
+  }
+  add('result', `No time limit hit: a single ${secs(last)} job ran fine.`);
+  say('No limit up to 10 s.');
+});
+
+$('t-chunk').onclick = () => test('chunking', async (g) => {
+  const perMs = await calibrate(g);
+  const iters = itersFor(perMs, 100), pieces = 60;
+  const names = { waited: '60 submits, each waited for', queued: '60 submits, all at once', buffer: '60 dispatches in ONE submit' };
+  const outcome = {};
+  for (const mode of ['waited', 'queued', 'buffer']) {
+    say(`Chunking: ${names[mode]}…`);
+    add('note', `6 s of work as ${names[mode]}`);
+    const r = await timed(g, iters, pieces, mode);
+    outcome[mode] = r.lost ? `lost after ${secs(r.ms)}` : `fine (${secs(r.ms)})`;
+    add(r.lost ? 'err' : 'ok', `${names[mode]}: ${outcome[mode]}`);
+    if (r.lost) break;
+  }
+  add('result', `Chunking 6 s into 0.1 s pieces: ${Object.entries(outcome).map(([m, o]) => `${names[m]} → ${o}`).join('; ')}.`, outcome);
+});
+
+$('t-kill').onclick = () => test('kill it now', async (g) => {
+  const perMs = await calibrate(g);
+  say('Running a 15 s job…');
+  const r = await timed(g, itersFor(perMs, 15000));
+  add(r.lost ? 'note' : 'result', r.lost ? `15 s job: lost after ${secs(r.ms)}` : `A 15 s job finished (${secs(r.ms)}) without losing the GPU.`);
+});
+
+$('t-destroy').onclick = () => test('destroy the device', async (g) => {
+  add('note', 'calling device.destroy()');
+  g.device.destroy();
+  await sleep(100);
+});
+
+// ── After a loss: what does the old adapter do, and when does a new one come back? ──
+async function onLost(lostGen) {
+  const old = lossInfo;
+  // The old adapter: the spec says it can't make a working device any more. Check what this browser does.
+  try {
+    const st = await snapshotOldAdapter();
+    if (st) add('note', `old adapter after the loss: ${st}`);
+  } catch (e) { add('note', `old adapter: ${e.message}`); }
+  if (!probing) probe(old.at).catch(e => add('err', `probe: ${e.message}`));
+}
+async function snapshotOldAdapter() {
+  if (!lastAdapter) return null;
+  try {
+    const d = await lastAdapter.requestDevice();
+    const early = await Promise.race([d.lost.then(i => i), sleep(200).then(() => null)]);
+    if (early) return `requestDevice gave a device that was already lost ("${early.reason}" ${JSON.stringify(early.message || '')})`;
+    d.destroy();
+    return 'requestDevice still gave a live device';
+  } catch (e) { return `requestDevice threw ${e.name}: ${e.message}`; }
+}
+
+// The schedule: instantly, then quickly, then every 15 s, up to 10 minutes after the loss.
+const SCHEDULE = [0, 50, 100, 250, 500, 1000, 2000, 3000, 5000, 7500, 10000, 15000, 20000, 30000, 45000, 60000];
+for (let t = 75000; t <= 600000; t += 15000) SCHEDULE.push(t);
+let probing = false, stopProbe = false;
+async function probe(lossAt) {
+  probing = true; stopProbe = false; buttons();
+  let run = null, runWhy = null, attempts = 0;
+  for (const at of SCHEDULE) {
+    const wait = lossAt + at - Date.now();
+    if (wait > 0) { say(`GPU lost. Asking again in ${secs(wait)}…`); await sleep(wait); }
+    if (stopProbe) break;
+    attempts += 1;
+    const since = Date.now() - lossAt;
+    const r = await acquire();
+    if (r.device) {
+      const changed = diff(firstSnap, r.snap);
+      add('ok', `GPU back after ${secs(since)} (attempt ${attempts}): a working device`, { msSinceLoss: since, changedFromFirst: changed });
+      add('result', `Recovery: the page got a working GPU back ${secs(since)} after the loss, without a reload${lossInfo?.reason ? ` (loss reason "${lossInfo.reason}")` : ''}.${Object.keys(changed).length ? ' The adapter reports different details than before: see the log.' : ''}`, { msSinceLoss: since });
+      await adopt(r);
+      say('GPU is back. Ready.');
+      probing = false; buttons();
+      return;
+    }
+    // Collapse repeats: one line per run of the same answer.
+    if (run && runWhy === r.why) update(run, `requestAdapter → ${r.why} ×${run.data.n + 1} (from ${secs(run.data.from)} to ${secs(since)} after the loss)`, { ...run.data, n: run.data.n + 1, to: since });
+    else { run = add('probe', `requestAdapter → ${r.why} (${secs(since)} after the loss)`, { n: 1, from: since, to: since, snap: r.snap }); runWhy = r.why; }
+    // Every fourth try, also ask for the software fallback adapter, to see whether *any* GPU path is open.
+    if (attempts % 4 === 1) {
+      const fb = await navigator.gpu?.requestAdapter({ forceFallbackAdapter: true }).then(a => a ? 'a fallback adapter' : 'null', e => `threw ${e.message}`);
+      add('probe', `requestAdapter({ forceFallbackAdapter: true }) → ${fb}`);
+    }
+  }
+  probing = false; buttons();
+  if (!stopProbe) {
+    add('result', `No GPU for ${secs(Date.now() - lossAt)} after the loss (${attempts} tries, last answer: ${runWhy}). Try "Reload and check".`);
+    say('Gave up waiting. Try "Reload and check".');
+  } else say('Stopped waiting.');
+}
+$('probe-stop').onclick = () => { stopProbe = true; };
+
+// ── Reload check: does a fresh page get a GPU when this one can't? ─────────
+$('reload-check').onclick = () => {
+  const st = store.get(KEY.state, {});
+  store.set(KEY.state, { ...st, reloadCheck: { at: Date.now(), lossAt: st.lossAt || null, hadGpu: Boolean(gpu) } });
+  add('note', 'reloading to check the GPU from a fresh page');
+  location.reload();
+};
+
+// ── Misc. events worth knowing about ──────────────────────────────────────
+document.addEventListener('visibilitychange', () => add('note', `page is now ${document.visibilityState}`));
+addEventListener('pagehide', (e) => add('note', `pagehide (persisted: ${e.persisted})`));
+addEventListener('error', (e) => add('err', `page error: ${e.message}`));
+addEventListener('unhandledrejection', (e) => add('err', `unhandled rejection: ${e.reason?.message || e.reason}`));
+
+// ── Log buttons ───────────────────────────────────────────────────────────
+function exportText() {
+  const head = [`GPU loss log, ${new Date().toISOString()}`, navigator.userAgent, `first GPU: ${JSON.stringify(firstSnap)}`, ''];
+  return head.concat(log.map(e => `${new Date(e.t).toISOString()} [${e.kind}] ${e.text}${e.data !== undefined ? '  ' + JSON.stringify(e.data) : ''}`)).join('\n');
+}
+$('copy').onclick = async () => { try { await navigator.clipboard.writeText(exportText()); say('Log copied.'); } catch (e) { say(`Couldn't copy: ${e.message}`); } };
+$('share').onclick = async () => {
+  try { if (navigator.share) await navigator.share({ title: 'GPU loss log', text: exportText() }); else { await navigator.clipboard.writeText(exportText()); say('No share sheet here; copied instead.'); } }
+  catch (e) { if (e.name !== 'AbortError') say(`Couldn't share: ${e.message}`); }
+};
+let clearArmed = false;
+$('clear').onclick = () => {   // two taps instead of confirm(): no blocking dialogs on a GPU test page
+  if (!clearArmed) { clearArmed = true; $('clear').textContent = 'Tap again to clear'; setTimeout(() => { clearArmed = false; $('clear').textContent = 'Clear'; }, 3000); return; }
+  log = []; store.del(KEY.log); store.del(KEY.cal); store.del('gpuloss-firstsnap'); firstSnap = null; clearArmed = false; $('clear').textContent = 'Clear'; render();
+};
+
+// ── Start ─────────────────────────────────────────────────────────────────
+async function start() {
+  render();
+  showFacts(null);
+  const st = store.get(KEY.state, {});
+  add('note', `page opened (${navigator.userAgent})`);
+  if (!navigator.gpu) {
+    $('note').hidden = false; $('note').className = 'banner bad';
+    $('note').textContent = 'This browser has no WebGPU, so there is nothing to test here.';
+    add('err', 'no navigator.gpu'); say('No WebGPU.'); return;
+  }
+  const t0 = performance.now();
+  const r = await acquire();
+  const took = Math.round(performance.now() - t0);
+  if (st.reloadCheck) {
+    const since = st.reloadCheck.lossAt ? Date.now() - st.reloadCheck.lossAt : null;
+    add('result', r.device
+      ? `After a reload the page got a working GPU straight away${since != null ? `, ${secs(since)} after the loss` : ''}${st.reloadCheck.hadGpu ? ' (it had a GPU before the reload too)' : ' (the page before the reload had none)'}.`
+      : `After a reload there was still no GPU (${r.why})${since != null ? `, ${secs(since)} after the loss` : ''}.`,
+      { msSinceLoss: since, why: r.why || null });
+    store.set(KEY.state, { ...st, reloadCheck: null });
+  }
+  if (!r.device) {
+    add('err', `no GPU at start: ${r.why}`);
+    $('note').hidden = false; $('note').className = 'banner bad';
+    $('note').textContent = `The browser won't give this page a GPU right now (${r.why}). If a test just lost it, the page will keep asking.`;
+    if (st.lossAt && Date.now() - st.lossAt < 600000) probe(st.lossAt).catch(e => add('err', `probe: ${e.message}`));
+    else say('No GPU.');
+    return;
+  }
+  await adopt(r);
+  add('ok', `got a working GPU in ${took} ms: ${[r.snap.vendor, r.snap.architecture, r.snap.description].filter(Boolean).join(' / ') || 'details not reported'}`, { snap: r.snap });
+  say('Ready. Start with test 1.');
+}
+start().catch(e => { add('err', `start: ${e.message}`); say(`Error: ${e.message}`); });
+</script>
+</body>
+</html>
