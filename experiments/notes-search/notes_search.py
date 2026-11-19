@@ -225,10 +225,13 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("out"); ap.add_argument("--chats", default=""); ap.add_argument("--max-turns", type=int, default=None)
     ap.add_argument("--variant", default="run3", choices=["run3", "native", "strict"])
+    ap.add_argument("--notes-from", default="", help="JSON {chat id: note lines}: skip the note pass, answer from these notes")
+    ap.add_argument("--answer-arms", default="whole,bm25,hybrid,lfm3q_bm25")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
     data = json.load(open("data.json"))
     if a.chats: data = [d for d in data if str(d["id"]) in a.chats.split(",")]
+    saved = json.load(open(a.notes_from)) if a.notes_from else {}
     t0 = time.time()
     be = wb.Llama()
     tok = be.tok
@@ -362,7 +365,7 @@ def main():
         return trace
 
     def chat(d):
-        lines, log = note_chat(d)
+        lines, log = (saved[str(d["id"])], []) if a.notes_from else note_chat(d)
         with print_lock: print(f"notes done chat {d['id']}: {len(lines)} lines after {len(log)} turns, {(time.time() - t0) / 60:.1f} min", flush=True)
         lines = live(lines)
         pk = packets(d, lines)
@@ -370,7 +373,7 @@ def main():
         json.dump(rec, open(os.path.join(a.out, f"chat-{d['id']}.json"), "w"), indent=1, ensure_ascii=False)
         for label, key, query in (("whole", "whole", d["question"]), ("bm25", "bm25", d["question"]),
                                   ("hybrid", "hybrid", d["question"]), ("lfm3q_bm25", "lfm3q_bm25", pk["lfm3_query"])):
-            if key in pk["packets"]:
+            if key in pk["packets"] and label in a.answer_arms.split(","):
                 rec["answers"][label] = answer(d, lines, pk["packets"][key], query, label)
         json.dump(rec, open(os.path.join(a.out, f"chat-{d['id']}.json"), "w"), indent=1, ensure_ascii=False)
         with print_lock: print(f"done chat {d['id']} at {(time.time() - t0) / 60:.1f} min", flush=True)

@@ -360,7 +360,7 @@ class Llama:
     """llama.cpp's llama-server (built in the job) on Liquid's QAD Q4_0 GGUF: the file Squiggle's CPU build loads.
     Prompts go in as token ids (no extra BOS); outputs come back as token ids and are decoded with the HF tokenizer,
     so <think>, <tool_call> and the rest come through whatever the server's detokenizer does with them."""
-    SLOTS, PER_SLOT = 24, 14336
+    SLOTS, PER_SLOT = int(os.environ.get("LLAMA_SLOTS", 24)), int(os.environ.get("LLAMA_PER_SLOT", 14336))   # env: smaller on a CPU box
 
     def __init__(self):
         import urllib.request
