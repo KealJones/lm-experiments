@@ -55,7 +55,7 @@ TOOLS = [
 ]
 TODAY = datetime.now().strftime("%a %b %d %Y")
 SYSTEM = f"{LITE_SYSTEM_BASH}\nTools ready to call: {', '.join(t['name'] for t in TOOLS)}.\nToday is {TODAY}."
-# The end-of-turn note (Keal: an instruction, not a new tool), in Squiggle's v3 harness-note dialect.
+# The end-of-turn note (an instruction, not a new tool), in Squiggle's v3 harness-note dialect.
 NUDGE = ("(Squiggle: Older turns are dropped from your view; " + NOTES + " is what you'll have instead. Update it now with "
          "anything from this exchange that might be needed later: names, dates, times, places, numbers, plans, decisions, "
          "changes, even side comments. Change lines that are out of date instead of adding a second version. Write it in "

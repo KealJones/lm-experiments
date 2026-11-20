@@ -42,7 +42,7 @@ renders them; training uses each base model's own template.
 | math | compute with run_js, not in its head | GSM8K |
 | repo_fact / repo_where / repo_two | clone, read, grep, log; plan two-part tasks | facts read out of 18 real public repos |
 | need_repo | ask which repo instead of guessing | the same repos; the simulated user answers |
-| memory_repo | use memory, don't ask | true facts about Keal's repos (squiggle, tp-parse) |
+| memory_repo | use memory, don't ask | true facts about the user's repos (squiggle, tp-parse) |
 | past_chat | find an earlier chat (or use it when smart context already retrieved it) | a web_fact answered in one chat, asked about in a new chat |
 | recipe_repo | use the recipe in the prompt | a recipe the app itself saved (recipes.fromTask) from a gold task on another repo; requests the app's recipes.match offers it for |
 | refs | follow "it" to the repo from the last turn | two turns, same chat |

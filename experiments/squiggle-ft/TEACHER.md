@@ -149,7 +149,7 @@ no tools.
 
 ## Messy input
 
-About 40% of requests are written like Keal dictates: run-on, filler ("um", "like", "ok so"), restarts and stutters,
+About 40% of requests are written like casual dictation: run-on, filler ("um", "like", "ok so"), restarts and stutters,
 "no wait / sorry i mean" corrections, "n" for "and", "u", typos, "get hub" for GitHub. The Request line says what they
 mean in clean words and which correction wins; the rest of the episode uses the clean meaning. Never "correct" a fact
 the user gave (a name, number or repo) into something else.

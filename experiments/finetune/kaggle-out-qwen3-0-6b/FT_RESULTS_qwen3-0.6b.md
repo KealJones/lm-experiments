@@ -32,7 +32,7 @@ filler = periods removed plus speech filler ("um", "like", "you know"…), never
 - ft-slots: garbled 6, wrong choice 3, bad take 1, bad go 1
 - lora-slots: garbled 9, bad go 4, wrong choice 1
 
-## Keal's real messages (45: pick what he meant out of four; chance 25%)
+## Real user messages (45: pick what was meant out of four; chance 25%)
 
 | version | typed | voice | all | 4-bit all |
 |---|---|---|---|---|

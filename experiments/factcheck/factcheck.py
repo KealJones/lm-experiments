@@ -3,7 +3,7 @@
 Step 1 (draft): the model gets a plain question plus Wikipedia / Wikidata tools and answers.
 Step 2 (review): a NEW conversation with the same model gets the question and its own draft, plus the same tools,
 and has to say whether the draft is right and give a final answer. Two review styles:
-  plain  - Keal's wording: "review this question and answer and tell me if it is good and right"
+  plain  - the original wording: "review this question and answer and tell me if it is good and right"
   strict - a fact-checker told to assume the draft may be wrong and to check every claim with the tools
 
   python factcheck.py check                          tool smoke test (needs internet)
@@ -547,7 +547,7 @@ def report(pattern="results_full_*.json"):
     files = sorted(glob.glob(pattern)) or sorted(glob.glob("results_*.json"))
     lines = ["# Draft -> fact-check: results", "",
              f"{len(QUESTIONS)} questions, {SAMPLES} sampled drafts each, tools = Wikipedia search, Wikipedia page, "
-             f"Wikidata. Each draft is reviewed twice by the same model in a fresh chat: **plain** (Keal's wording) "
+             f"Wikidata. Each draft is reviewed twice by the same model in a fresh chat: **plain** (the original wording) "
              f"and **strict** (fact-checker, assume it's wrong).", "",
              "**Own drafts** = the model reviews its own answers. **Planted** = it reviews a known-wrong answer per "
              "question (e.g. 'The capital of Australia is Sydney').", "",

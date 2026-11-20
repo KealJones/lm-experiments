@@ -1,6 +1,6 @@
 # Register resume: a save game for a borrowed model
 
-**Status:** plan only. Nothing has been run or spent. Launching any paid step needs Keal's budget first.
+**Status:** plan only. Nothing has been run or spent. Launching any paid step needs the owner's budget first.
 
 **Question:** if a stock small model gets a few trained memory slots (the `registers-v2` design) plus a LoRA, can it
 pick up a half-finished plan from a fresh, nearly empty prompt using only the slots? The goal is to get close to

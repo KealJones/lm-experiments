@@ -561,7 +561,7 @@ async function probe(lossAt) {
 $('probe-stop').onclick = () => { stopProbe = true; };
 
 // ── Test 4: how long is the lockout when the page doesn't keep asking? ───────
-// Keal's idea (2026-11-12): maybe asking over and over is what keeps Safari refusing. So each trial loses the GPU
+// The idea (2026-11-12): maybe asking over and over is what keeps Safari refusing. So each trial loses the GPU
 // the way that locked the page out (60 small jobs queued at once), makes no WebGPU call at all for a set wait,
 // asks exactly once, records the answer and reloads (a reload clears the lockout). Waits: 10 s first; a refusal
 // triples it (30, 90, 270, 600 s); a success halves it; once there's a refusal below a success, it splits the gap.

@@ -11,7 +11,7 @@
   "you need to add CLOUDFLARE_ACCOUNT_ID" then the opposite). Reading is its limit, not search.
 - The auto check over-counted 0.6B (13 and 10) and under-counted 1.7B on #5 (it said the details aren't public; the regex missed the wording).
 
-## Test audit (after Keal caught #0)
+## Test audit (after #0 was caught)
 Fixed: #0 (added the dev-server context; asking which app instead of giving the command now fails), #4 (added context; rule was
 one-sided, now credits "it keeps improving, with diminishing returns"), #7 (MoE alone no longer passes; it isn't a clean divide),
 #9 (must say how a Worker relays), #12 (added what "this" and "my key" are). Open: #6, what REN and "we" referred to.

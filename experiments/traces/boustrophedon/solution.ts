@@ -1,4 +1,4 @@
-// Keal's solution, as it ended (from the screen recording, 2026-10-23). Works for n = 3 and n = 10.
+// The recorded solution, as it ended (from the screen recording, 2026-10-23). Works for n = 3 and n = 10.
 function boustrophedonGrid(n: number) {
   let count = 1;
   const grid = [] as number[][];

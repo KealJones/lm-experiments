@@ -65,7 +65,7 @@ print(r.stdout[-20000:], r.stderr[-3000:])'''
 for slug, model in MODELS.items():
     head = (f"# Fine-tune test: {model}\n\nFour versions of the same pretrained model: untouched (few-shot), full fine-tune, "
             "full fine-tune + state slots, LoRA + state slots. Scored on planning in the world (clean, messy, filler), honest gaps, "
-            "English kept, Keal's real messages, and again after squashing to 4 bits. A pilot runs every code path first. "
+            "English kept, real user messages, and again after squashing to 4 bits. A pilot runs every code path first. "
             f"Results: `FT_RESULTS_{model.split('/')[-1].lower()}.md`.")
     cells = [{"cell_type": "markdown", "metadata": {}, "source": head}]
     for src in (SETUP.format(files=json.dumps(B64)), RUN.format(model=model), PILOT, FULL, REPORT):

@@ -1,6 +1,6 @@
 """Follow-up 2: fix what follow-up 1 got wrong, and find out where the forgetting comes from.
 
-Follow-up 1 (Qwen3-0.6B, LoRA + slots) read Keal at 40% but lost a lot of English and its readings looped.
+Follow-up 1 (Qwen3-0.6B, LoRA + slots) read the real messages at 40% but lost a lot of English and its readings looped.
 Three things were wrong with it:
   - the reading targets had no end-of-answer token, so the model never learned to stop (the loops)
   - the message test scored each option's wording on its own, so it partly measured which option sounds most
@@ -25,7 +25,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 import ft                                   # world, checker, slots, LoRA, scoring
-import followup as f1                       # Keal-style roughing up and the reading data; also switches on bf16
+import followup as f1                       # casual-style roughing up and the reading data; also switches on bf16
 
 PILOT = "--pilot" in sys.argv
 ARM = ft.arg("--arm", "gentle")
@@ -303,8 +303,8 @@ def write_report(res, rd):
          f"{res['model']} on {res['gpu']}, {res['total_s']/60:.0f} min total. LoRA rank {c['rank']} on {c['where']} linear layers, "
          f"slots {'on' if c['slots'] else 'off'}, replay {c['replay']*100:.0f}%, learning rate {c['lr']}, early stopping "
          f"{'on' if c['early'] else 'off'}. Ran {res['steps_run']} of {STEPS} steps. Training examples: {res['train_examples']}. "
-         "None of Keal's messages were in training.", "",
-         "## Keal's real messages, four options (chance 25%)", "",
+         "None of the real messages were in training.", "",
+         "## Real user messages, four options (chance 25%)", "",
          "New test: all four shown as A/B/C/D, so it's a real choice. \"Sure\" means it gave its pick at least 50%.", "",
          "| | old test (all) | A/B/C/D typed | A/B/C/D voice | A/B/C/D all | share sure | right when sure | right when unsure |",
          "|---|---|---|---|---|---|---|---|"]

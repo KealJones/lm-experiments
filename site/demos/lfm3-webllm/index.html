@@ -17,7 +17,7 @@
   <h1>Getting LFM3 into iPhone Safari</h1>
   <p class="lede">LFM3 1.7B is Liquid AI's first small model trained for agent harnesses, and in Squiggle it does what
     the smaller ones don't: it greets you without reaching for a tool, writes code itself, and picks the right tool when
-    it needs one. But the only builds that ran in a browser were llama.cpp on the CPU (1.7 words a second in Safari on Keal's iPhone 16)
+    it needs one. But the only builds that ran in a browser were llama.cpp on the CPU (1.7 words a second in Safari on an iPhone 16)
     and an ONNX export that killed the Safari tab while downloading. WebLLM runs models on the GPU through WebGPU, which
     Safari on iOS now has, and nobody had built LFM3 for it.</p>
   <p class="answer">It runs: 13.7 tokens a second in Safari on an iPhone 16, first word in 15 seconds, with Squiggle's full prompt and
@@ -139,7 +139,7 @@
 <section class="bench" aria-labelledby="hii-h">
   <div class="bench-head">
     <h2 id="hii-h">Which build wrote this?</h2>
-    <p class="section-lede">Keal said "Hii" (or "Hi") to each build, in Safari on the iPhone 16 or through llama.cpp on a server. Same model, same
+    <p class="section-lede">Each build got "Hii" (or "Hi"), in Safari on the iPhone 16 or through llama.cpp on a server. Same model, same
       prompt and tools. Guess which build each reply came from.</p>
   </div>
   <div class="guess" id="hii"></div>
@@ -150,7 +150,7 @@
     <h2 id="mem-h">Where the memory goes</h2>
     <p class="section-lede">A web page in iPhone Safari can't see how much memory it has. iOS kills the whole tab when it uses
       too much, with no warning and no error the page can catch. Safari for iOS has no setting for this, and a page can't ask
-      for more. On Keal's iPhone 16 Squiggle's memcap test put the limit at about 1.9 GB, and it's one budget: JavaScript,
+      for more. On the test iPhone 16 Squiggle's memcap test put the limit at about 1.9 GB, and it's one budget: JavaScript,
       WebAssembly and WebGPU all draw from it. A model's weights live on the GPU, so they come out of the same 1.9 GB as
       the page. The 4-bit build ran a whole conversation, then died partway through a task once a tool result made the
       prompt longer.</p>
@@ -190,7 +190,7 @@
 </main>
 <footer><p>The weights on this page are real: <code>build_data.py</code> reads them from LiquidAI/LFM3-1.7B and Liquid's
   QAD GGUF and redoes MLC's and llama.cpp's rounding. Job details come from the job logs in
-  <code>experiments/lfm3-mlc/</code>; phone timings from Squiggle's composer note in Safari 26.6.1 on Keal's iPhone 16, 10 Nov 2026. Tab limits from Squiggle's memcap page on two phones, 9 Nov 2026.</p></footer>
+  <code>experiments/lfm3-mlc/</code>; phone timings from Squiggle's composer note in Safari 26.6.1 on the test iPhone 16, 10 Nov 2026. Tab limits from Squiggle's memcap page on two phones, 9 Nov 2026.</p></footer>
 <script type="module" src="demo.js"></script>
 </body>
 </html>

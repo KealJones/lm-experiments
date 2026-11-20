@@ -1,6 +1,6 @@
 # Tiny Gemma 4
 
-Goal (Keal, 2026-10-28/29): a Gemma 4 small enough for an iPhone browser tab (wllama, CPU), by surgery on
+Goal (2026-10-28/29): a Gemma 4 small enough for an iPhone browser tab (wllama, CPU), by surgery on
 Gemma 4 E2B plus a short heal (distillation from Gemma itself; no Claude-written data).
 
 Plan, from the "Model compression and vocab pruning" chat: vocab ~262K → ~80K (chosen from public text),
@@ -18,7 +18,7 @@ Bits per byte on held-out FineWeb-Edu, code (codeparrot) and Squiggle teacher ep
 pruned vocab, vocab + skipped layers, vocab + narrower FFN, combinations; LFM2.5-350M and Qwen3-0.6B as
 baselines. Writes `results.json`, `RESULTS.md`, `kept_ids.json`, `tokenizer_pruned.json`.
 
-Keal's own token list (keal_tokenizer) is private and is not used here; its coverage is checked offline.
+A custom token list (keal_tokenizer) is private and is not used here; its coverage is checked offline.
 
 ### Stage 1 results (2026-10-29, l4x1, 7.6 min, ~$0.15) — `hf-stage1/`
 
@@ -37,7 +37,7 @@ Bits per byte (lower is better), no healing:
 | Qwen3-0.6B | 0.92 | 0.56 | 1.07 | 0.60B |
 
 - The vocab cut is nearly free: ~99.2% of counted text covered, +1% tokens, samples identical, 4.63B → 2.72B.
-  (Offline: 2.0% of Keal's own writing uses tokens outside the 80K, mostly emoji and slang.)
+  (Offline: 2.0% of real user writing uses tokens outside the 80K, mostly emoji and slang.)
 - Layers that change the residual least are 25–33, the KV-shared ones; skipping them breaks the model before
   healing (garbled samples from skip 6 on). FFN 66% still writes correctly; FFN 42% collapses ("model\nmodel…").
 - The scorer matches transformers' own loss exactly (checked on a tiny random Gemma 4).
@@ -119,7 +119,7 @@ repetition. Checkpoint: `kealjones/tp-parse-runs` → `tiny-gemma4-heal2-chat/6a
 - A 0.60B-body Gemma 4 (1.31B total, 80K vocab, hidden 1024, FFN 42%, 31 of 35 layers) heals well on text
   (bpb below the chat-tuned teacher's) after ~21M tokens, and has started answering in chat form, but is far
   from coherent. Minitron-scale heals use billions of tokens; this was ~0.02B.
-- Spend for this stretch (Keal's $5): analysis $0.15, heal 1 $2.87, heal 2 $0.95 = **$3.97**. Earlier tonight:
+- Spend for this stretch (budget $5): analysis $0.15, heal 1 $2.87, heal 2 $0.95 = **$3.97**. Earlier tonight:
   stage 1 $0.10, probes $2.36.
 - Next options: (1) a longer heal on an H200 (~3× A100 throughput per the earlier estimate) with ~30% chat
   contexts, ~$5 per hour → ~300–400M tokens; (2) drop or shrink the per-layer embeddings (most of the 0.7B
@@ -172,7 +172,7 @@ Spend for the $10 bigger-heal stretch: gen1 ~$0.16, gen2 ~$0.61, gen3 ~$1.19, GG
 
 ### Heal 4 prep: real multi-turn tool data (2026-11-02, CPU only, $0) — `prep_tools.py`, `heal4.json`
 
-What heal 3 got wrong in the browser (Keal's screenshots, small-model mode on): it ignored a detail given in a
+What heal 3 got wrong in the browser (screenshots, small-model mode on): it ignored a detail given in a
 later turn ("just use web_search for patrick stewart" → "they have not provided any names"), wrote
 "Tool Call Plan (Simulated): `web_search(...)`" in its thinking instead of calling, asked menus of questions
 ("For example, are you looking for: 1. … 2. …"), and wrote nothing after a tool result. Causes, from the data:
@@ -206,7 +206,7 @@ Changes:
   the screenshots: the detail-in-turn-2 search, answering from a tool result, "What do you remember about me?"
   (tools: `web_search`, `recall`).
 
-**Review of the plan (Keal shared a second opinion, 2026-11-02); what it caught and what changed:**
+**Review of the plan (a second opinion, 2026-11-02); what it caught and what changed:**
 - *Conversations could still straddle rows* (right: `Packer` sliced the stream every SEQ tokens, so a 1,500-token
   conversation after another one was split and its answers trained without their turns). Now chat records are
   never split: whole conversations share a row while they fit, the rest is masked padding (`PACK_CONVS=0`: one
@@ -249,7 +249,7 @@ training, ~8 min of loading/prep/eval): `heal4-pilot-kd.json` (distillation only
 
 ### Heal 4 also ships as a WebLLM build (plan, 2026-11-02) — `to_mlc.py`, `patch_mlc.py`, `mlc_job.sh`
 
-Why: on Keal's iPhone, WebLLM (MLC on WebGPU) ran stock models 5-12x faster than wllama's CPU build (Llama 3.2 1B
+Why: on the test iPhone, WebLLM (MLC on WebGPU) ran stock models 5-12x faster than wllama's CPU build (Llama 3.2 1B
 ~30 tok/s vs ~2.6; Squiggle `app/memtest.html`), and Squiggle now has a WebLLM path for phones
 (`engine-webllm.js`). Tiny Gemma 4 on WebLLM should land near Qwen3 0.6B's ~34 tok/s instead of CPU speed.
 
@@ -282,7 +282,7 @@ GGUF's own template; pairs that differ in one thing). Clean prompt: 2/10. It pas
 web for weather text the user pasted, and picks `web_search` even with `recall` declared (its thinking only lists the
 first two tools). With the app's small-model prompt the same turn-2 test becomes `plan(steps: ["Find where the login
 form is defined"])` (copied from plan's own example) and a tool result becomes "For example, are you looking for: …":
-that prompt produced Keal's screenshots. A reworded prompt ("look things up with web_search…") still failed: it called
+that prompt produced the screenshots. A reworded prompt ("look things up with web_search…") still failed: it called
 `find`, i.e. it takes the first-declared tools whatever the prompt says. Gemma 4 E2B (the teacher) on the same tests:
 passes turn 2, answers from 61°F and 97°F results correctly, retries after an error, calls `recall` when declared.
 
@@ -308,10 +308,10 @@ masked to model tokens, one conversation per row:
   E2B answers / web in the mix, or a smaller LR.
 - **Tool choice is still by position:** with `recall` declared after `web_search`, both still search the web. Toucan's
   examples are mostly "the first tool fits"; this needs examples where the right tool isn't first.
-- Spend: ~$4.15 of Keal's $10. Checkpoints: `kealjones/tp-parse-runs` → `tiny-gemma4-heal4-pilot-kd/6ae969b60e0338d1bb7ee4cb/ckpt/`
+- Spend: ~$4.15 of the $10 budget. Checkpoints: `kealjones/tp-parse-runs` → `tiny-gemma4-heal4-pilot-kd/6ae969b60e0338d1bb7ee4cb/ckpt/`
   (A), `tiny-gemma4-heal4-pilot-ce/6ae96ed50e0338d1bb7ee913/ckpt/` (B). `gguf-heal4a.json`: draft GGUF of A (~$0.03).
 
-### Later: vision (Keal, 2026-10-29)
+### Later: vision (2026-10-29)
 
 The cut keeps only Gemma 4's text model: E2B's vision and audio encoders were never copied, and the GGUF has no
 image projector, so tiny Gemma 4 is text-only (Squiggle's OCR still reads text in photos). E2B's vision encoder

@@ -6,7 +6,7 @@ chat's own words. Tests 13-16 depend only on the last exchange, which every pack
 import json, os, random, re, sys
 
 D = sys.argv[1]
-# Phone speeds, LFM3 WebLLM QAD build on Keal's iPhone (lfm3-mlc README, 2026-11-10): 13.7 tok/s decode.
+# Phone speeds, LFM3 WebLLM QAD build on the test iPhone (lfm3-mlc README, 2026-11-10): 13.7 tok/s decode.
 # Prefill isn't measured separately: "first word ~15 s with Squiggle's full prompt" (~1,500 tokens incl. tools)
 # puts it near 100 tok/s. Both are rough; the token counts are the real result.
 DECODE, PREFILL = 13.7, 100.0

@@ -1,6 +1,6 @@
 # Random weights
 
-Keal: "i wanna make a really small model... but instead of training it lets just throw random numbers in the weights."
+The idea: "i wanna make a really small model... but instead of training it lets just throw random numbers in the weights."
 
 A 2-layer GPT-2 (width 128, 2 heads, 6.9M parameters, nearly all of them the GPT-2 embedding) that never sees a training step. Four ways to fill the weights, same seed each time:
 

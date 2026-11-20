@@ -1,4 +1,4 @@
-"""Builds agent_gemma.ipynb for Kaggle: llama.cpp (CUDA, T4) serving Gemma 4 E2B on GPU 0 and Keal's tiny Gemma 4 on
+"""Builds agent_gemma.ipynb for Kaggle: llama.cpp (CUDA, T4) serving Gemma 4 E2B on GPU 0 and the tiny Gemma 4 on
 GPU 1; the from-scratch-with-tools test (gemma_agent.py) against each. Pilot first, then the full run, then the report."""
 import base64, json, pathlib
 
@@ -86,7 +86,7 @@ for name, (p, _) in servers.items():
 r = subprocess.run([sys.executable, "agent.py", "report"], capture_output=True, text=True)
 print(r.stdout[-10000:], r.stderr[-3000:])'''
 
-head = ("# From scratch with tools: Gemma\n\nGemma 4 E2B and Keal's tiny Gemma 4 (llama.cpp) get only the task "
+head = ("# From scratch with tools: Gemma\n\nGemma 4 E2B and the tiny Gemma 4 (llama.cpp) get only the task "
         "(write a Zig 0.17 / Plink program that ...) and tools to list, grep and read the docs and run code, "
         "up to 15 turns, in Gemma 4's native tool format. Results: `AGENT_RESULTS.md`.")
 cells = [{"cell_type": "markdown", "metadata": {}, "source": head}]

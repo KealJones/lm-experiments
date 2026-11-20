@@ -1,8 +1,8 @@
 # Follow-up 2, arm `lora`
 
-Qwen/Qwen3-0.6B on NVIDIA A10G, 28 min total. LoRA rank 16 on all linear layers, slots off, replay 0%, learning rate 0.0002, early stopping off. Ran 1500 of 1500 steps. Training examples: {'plan': 5900, 'read': 11800, 'replay': 0, 'val': 300}. None of Keal's messages were in training.
+Qwen/Qwen3-0.6B on NVIDIA A10G, 28 min total. LoRA rank 16 on all linear layers, slots off, replay 0%, learning rate 0.0002, early stopping off. Ran 1500 of 1500 steps. Training examples: {'plan': 5900, 'read': 11800, 'replay': 0, 'val': 300}. None of the real messages were in training.
 
-## Keal's real messages, four options (chance 25%)
+## Real user messages, four options (chance 25%)
 
 New test: all four shown as A/B/C/D, so it's a real choice. "Sure" means it gave its pick at least 50%.
 

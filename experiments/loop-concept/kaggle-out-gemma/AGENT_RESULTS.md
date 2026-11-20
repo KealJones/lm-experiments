@@ -24,7 +24,7 @@ Each model gets just the task, tools to list/grep/read the docs and run code, up
 - How attempts ended: answered 24, turn limit 51, context full 0, error 0
 - Solved: arrmax, arrsum, countdown, evens, indexed, odds, pow2, running, times7
 
-# Keal's tiny Gemma 4 (heal 3, 0.6B body), Q4_0 phone build
+# Tiny Gemma 4 (heal 3, 0.6B body), Q4_0 phone build
 
 ## Plink
 
@@ -35,7 +35,7 @@ Each model gets just the task, tools to list/grep/read the docs and run code, up
 - How attempts ended: answered 75, turn limit 0, context full 0, error 0
 - Solved: none
 
-# Keal's tiny Gemma 4 (heal 3, 0.6B body), Q4_0 phone build
+# Tiny Gemma 4 (heal 3, 0.6B body), Q4_0 phone build
 
 ## Zig 0.17
 

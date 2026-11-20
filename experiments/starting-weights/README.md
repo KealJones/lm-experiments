@@ -1,6 +1,6 @@
 # Starting weights: why random numbers, and how big
 
-Keal: "when a model starts from 0. there are no weights yet. what makes it go to a different parameter instead of it like only ever using like 1 line?"
+The question: "when a model starts from 0. there are no weights yet. what makes it go to a different parameter instead of it like only ever using like 1 line?"
 
 **Question:** if every weight started equal, would every neuron learn the same thing, and how much does the size of the random starting numbers matter?
 

@@ -1,6 +1,6 @@
 # Draft -> fact-check: results
 
-12 questions, 3 sampled drafts each, tools = Wikipedia search, Wikipedia page, Wikidata. Each draft is reviewed twice by the same model in a fresh chat: **plain** (Keal's wording) and **strict** (fact-checker, assume it's wrong).
+12 questions, 3 sampled drafts each, tools = Wikipedia search, Wikipedia page, Wikidata. Each draft is reviewed twice by the same model in a fresh chat: **plain** (the original wording) and **strict** (fact-checker, assume it's wrong).
 
 **Own drafts** = the model reviews its own answers. **Planted** = it reviews a known-wrong answer per question (e.g. 'The capital of Australia is Sydney').
 

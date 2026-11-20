@@ -1,6 +1,6 @@
-# Trace: Keal solves "boustrophedon"
+# Trace: solving "boustrophedon"
 
-The first real recording of a person running the finding-out loop: about 17 minutes of screen and narration (2026-10-23), with `transcript.md` (Keal's own transcription) and `solution.ts` (the final code). The task was to print 1..n² in an n×n grid, boustrophedon. The word was unknown to him, and he hadn't written code in a long time.
+The first real recording of a person running the finding-out loop: about 17 minutes of screen and narration (2026-10-23), with `transcript.md` (a hand transcription) and `solution.ts` (the final code). The task was to print 1..n² in an n×n grid, boustrophedon. The word was unknown to the solver, who hadn't written code in a long time.
 
 ## The loop, step by step (timestamps from the transcript)
 

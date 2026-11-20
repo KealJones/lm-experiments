@@ -1,6 +1,6 @@
-# Trace: Keal works out what a person really needs
+# Trace: working out what a person really needs
 
-The third recorded trace (2026-10-23, about 35 minutes). Claude played a person asking for help with their mom's birthday, with a hidden brief written and fingerprinted beforehand (`hidden_person.txt`, sha256 prefix `d1f98f5b57fd6a22`). Keal had to find out what was really going on by asking. `transcript.md` is his narration.
+The third recorded trace (2026-10-23, about 35 minutes). Claude played a person asking for help with their mom's birthday, with a hidden brief written and fingerprinted beforehand (`hidden_person.txt`, sha256 prefix `d1f98f5b57fd6a22`). The solver had to find out what was really going on by asking. `transcript.md` is the narration.
 
 **Result:** he found the real need (a lonely, newly retired mom, and a child who feels guilty for not calling) and proposed a standing weekly call, which is what the hidden brief called the great answer. He also recommended Arizona garden clubs for a mom who lives in Ohio.
 
@@ -49,7 +49,7 @@ The questions and the insight took about 10 minutes in total. Most of the rest w
 
 ## The notes themselves (`notes.md`)
 
-Keal used one notes file as his memory, so every edit was effectively a tool call. How it's organised:
+One notes file served as memory, so every edit was effectively a tool call. How it's organised:
 - **By entity:** Mom and Son each get their facts (lives in Ohio, knees, retired). This is the knowledge graph idea in miniature.
 - **Claims with their evidence underneath:** "potentially depressed", with the signs (lost interest, retired, "claims she's fine") as children. The claim is hedged, and its support is visible.
 - **Sources attached to claims** (the helpguide and ruok links).

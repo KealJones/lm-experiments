@@ -22,7 +22,7 @@ import run as base
 MODELS = {  # name -> (GGUF repo, file, what it is)
     "gemma4-e2b": ("unsloth/gemma-4-E2B-it-GGUF", "gemma-4-E2B-it-Q8_0.gguf", "Gemma 4 E2B-it, Q8_0"),
     "tiny-gemma4": ("kealjones/tiny-gemma4-test", "tiny-gemma4-heal3-v2-Q4_0.gguf",
-                    "Keal's tiny Gemma 4 (heal 3, 0.6B body), Q4_0 phone build"),
+                    "Tiny Gemma 4 (heal 3, 0.6B body), Q4_0 phone build"),
 }
 TEMPLATE_FROM = "google/gemma-4-E2B-it"  # chat template + tool rendering (the tiny model was healed on this format)
 CALL = re.compile(r"<\|tool_call>call:(\w+)\{(.*?)\}<tool_call\|>", re.S)

@@ -1,6 +1,6 @@
 # Human finding-out traces
 
-Recordings of Keal solving problems while narrating: the notice → find out → try → check loop from the "Finding Out" paper, done by a person.
+Recordings of a person solving problems while narrating: the notice → find out → try → check loop from the "Finding Out" paper, done by a person.
 
 | trace | kind of problem | the main lesson |
 |---|---|---|

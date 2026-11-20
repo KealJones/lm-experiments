@@ -1,6 +1,6 @@
 # GPU loss and recovery: what happens when a phone browser takes the GPU away
 
-**Question (Keal, 2026-11-12):** Safari on iOS 27 kills WebGPU work that runs too long (a 3-second watchdog per
+**Question (2026-11-12):** Safari on iOS 27 kills WebGPU work that runs too long (a 3-second watchdog per
 command buffer, from the WebKit commit "Long running command buffers can hang the system"; it isn't in the release
 notes) and then may refuse to give the page a GPU again. What exactly is the limit, does splitting work into small
 submits avoid it, what does the browser say when it takes the GPU, and how long until it gives one back? This decides

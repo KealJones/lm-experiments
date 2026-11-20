@@ -113,7 +113,7 @@ def yes_no(reply):
 FILL = ["um ", "uh ", "so ", "ok so ", "hey ", "like ", "okay um ", "so basically ", "quick one ", ""]
 TAIL = ["", "", " thanks", " thx", " lol", " please", " pls"]   # never words that could read as part of a name
 MISHEAR = [("github", "get hub"), ("readme", "read me"), ("json", "jason"), ("npm", "n p m"), ("javascript", "java script")]
-# Keal's texting habits and common dictation slips, on everyday words only (never on names, numbers or paths).
+# Casual texting habits and common dictation slips, on everyday words only (never on names, numbers or paths).
 SLANG = {"and": "n", "you": "u", "your": "ur", "please": "pls", "thanks": "thx", "about": "abt", "because": "cuz",
          "probably": "prolly", "really": "rly", "what": "wat", "version": "verison", "latest": "lastest",
          "which": "wich", "defined": "defind", "license": "lisence", "commit": "comit", "people": "ppl", "with": "w/"}
@@ -296,7 +296,7 @@ def plain_mode(fam, k):
 
 
 def call_problems(result):
-    """Keal's quality bar (quality.py) for every model call, plus: a reply after web or repo tools cites its sources."""
+    """The quality bar (quality.py) for every model call, plus: a reply after web or repo tools cites its sources."""
     r = []
     fam = result.get("family")
     for k, seg in enumerate(turn_calls(result)):
@@ -1243,7 +1243,7 @@ def check_need_repo(res):
     return {"ok": ok, "strict": ok and not reasons, "reasons": reasons}
 
 
-# 9. memory_repo: memory says which repo "my agent project" is (true facts about Keal's repos). Habits 1, 4 (find, don't ask).
+# 9. memory_repo: memory says which repo "my agent project" is (true facts about the user's repos). Habits 1, 4 (find, don't ask).
 KEAL_FACTS = [
     {"s": "Keal", "p": "builds", "o": "Squiggle, a browser-only AI agent (repo KealJones/squiggle)"},
     {"s": "Keal", "p": "runs fine-tune experiments in", "o": "the repo KealJones/tp-parse"},

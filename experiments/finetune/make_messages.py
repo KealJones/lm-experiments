@@ -1,4 +1,4 @@
-"""Writes messages.json: Keal's real messages, each with what he meant (first) and three plausible wrong readings.
+"""Writes messages.json: real user messages, each with what was meant (first) and three plausible wrong readings.
 Typed = written in the text chat; voice = transcribed speech. Screened: nothing personal, no keys or private details."""
 import json
 

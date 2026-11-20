@@ -166,7 +166,7 @@ def person_reply(person, question):
 
 
 # %% [markdown]
-# ### Messy requests, in Keal's style
+# ### Messy requests, in a casual dictated style
 # Restarts and self-corrections hurt models most (VocalBench-DF), so those are in the mix, not just typos and "lol".
 
 # %%

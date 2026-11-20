@@ -8,7 +8,7 @@ const seg = (el, items, current, onPick) => {
 };
 
 // ---------------------------------------------------------------- how each runtime did in the 1.9 GB tab
-// (memtest.html exports from Safari 26.6.1 on Keal's iPhone 16, 9–10 Nov 2026; 4K context)
+// (memtest.html exports from Safari 26.6.1 on the test iPhone 16, 9–10 Nov 2026; 4K context)
 
 const ROUTES = [
   { name: "llama.cpp in WebAssembly (wllama), CPU", file: "1.0 GB GGUF", cls: "part",
@@ -118,7 +118,7 @@ const JOBS = [
   { n: 6, cls: "pass", min: 8.1, title: "It links",
     tried: "Object files, linked with em++.",
     log: "uploaded https://huggingface.co/kealjones/LFM3-1.7B-q4f16_1-MLC\nuploaded https://huggingface.co/kealjones/LFM3-1.7B-q4f32_1-MLC",
-    why: "A 6.7 MB model library and 973 MB of 4-bit weights, in a 16-bit build for phones (WebGPU's shader-f16) and a 32-bit one for GPUs without it. In Safari on Keal's iPhone 16 it greets correctly at 13.7 tokens a second.",
+    why: "A 6.7 MB model library and 973 MB of 4-bit weights, in a 16-bit build for phones (WebGPU's shader-f16) and a 32-bit one for GPUs without it. In Safari on an iPhone 16 it greets correctly at 13.7 tokens a second.",
     fix: "Nothing. But it sits at the edge of iPhone Safari's ~1.9 GB tab limit: a long task still crashes it." },
   { n: 7, cls: "part", min: 6.4, title: "A 3-bit build",
     tried: "The same build with MLC's 3-bit format (q3f16_1), 788 MB of weights, plus a 32-bit 3-bit for testing.",
@@ -263,7 +263,7 @@ function renderFlip() {
 }
 $("#flip-k").addEventListener("input", renderFlip);
 
-// ---------------------------------------------------------------- which build wrote this (Safari on Keal's iPhone 16 and llama.cpp, 9–10 Nov 2026)
+// ---------------------------------------------------------------- which build wrote this (Safari on the test iPhone 16 and llama.cpp, 9–10 Nov 2026)
 
 const BUILDS = { q4: "Our 4-bit (iPhone)", q3: "Our 3-bit (iPhone)", liquid: "Liquid's 4-bit (llama.cpp)" };
 const REPLIES = [
@@ -279,7 +279,7 @@ function renderHii() {
     return;
   }
   const r = REPLIES[round];
-  $("#hii").innerHTML = `<div class="reply"><p class="said">Keal: "${esc(r.said)}"</p><p class="think">${esc(r.think)}</p><p class="out">${esc(r.out)}</p></div>
+  $("#hii").innerHTML = `<div class="reply"><p class="said">Sent: "${esc(r.said)}"</p><p class="think">${esc(r.think)}</p><p class="out">${esc(r.out)}</p></div>
     <div class="guess-buttons">${Object.entries(BUILDS).map(([k, l]) => `<button type="button" class="primary" data-b="${k}">${esc(l)}</button>`).join("")}</div>
     <p class="tally" aria-live="polite">${answered ? "" : `Reply ${round + 1} of ${REPLIES.length}`}</p>`;
 }
@@ -301,7 +301,7 @@ const MEM = {
   weights: { q4: 973.0 * MB, q3: 788.1 * MB },
   scratch: { b128: (81.53 + 81.40) * MB, b1: (16.51 + 0.64) * MB },
   kvPerToken: 11 * 2 * 4 * 128 * 2, // 11 attention layers, keys and values, 4 KV heads of 128, fp16
-  budget: 1900 * MB, // memcap's lowest run on Keal's iPhone 16, Safari 26.6.1
+  budget: 1900 * MB, // memcap's lowest run on the test iPhone 16, Safari 26.6.1
 };
 const mstate = { w: "q4", lib: "b128", ctx: 4096 };
 function renderMem() {

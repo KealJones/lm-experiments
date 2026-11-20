@@ -9,7 +9,7 @@ For every model call it checks, with the app's code (sq/format.mjs -> engine-wll
   - the output parses: thinking opens and closes, at most one tool call, valid JSON, a tool Squiggle has; a final
     reply has no tool call; nothing loops (isLooping)
   - the Python checker's parser (families.parse_out) reads the same call the app reads
-  - Keal's quality bar (quality.py): labelled thinking for the kind of call, tool schema, find-before-use, done facts
+  - the quality bar (quality.py): labelled thinking for the kind of call, tool schema, find-before-use, done facts
 With --tokenizers, it also renders each example with each chat template and checks the prompt is a prefix of
 prompt+output (so the loss mask is exact), the prompt fits the phone's 4096 tokens and the output 1024.
 For episode results it re-runs the family checker and reports kept / not kept.

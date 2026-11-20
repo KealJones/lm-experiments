@@ -1,6 +1,6 @@
 # The 18 answer tests
 
-Each is one of Keal's real messages. The model answers in its own words; the pass rule was written before any model ran.
+Each is a real user message. The model answers in its own words; the pass rule was written before any model ran.
 
 ## 1. kill 8080
 

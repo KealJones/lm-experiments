@@ -1,4 +1,4 @@
-"""Keal's quality bar for teacher examples, checked mechanically (TEACHER.md explains it to teachers).
+"""The quality bar for teacher examples, checked mechanically (TEACHER.md explains it to teachers).
 
 An output that fails any rule is rejected; an episode with any rejected call is dropped, never patched up.
 

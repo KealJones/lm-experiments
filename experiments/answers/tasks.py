@@ -1,4 +1,4 @@
-"""Keal's real messages as tasks with checkable answers. The model answers in its own words; each task has a pass
+"""Real user messages as tasks with checkable answers. The model answers in its own words; each task has a pass
 rule written BEFORE any model ran. `auto` is a first-pass regex check (all must match, none of `fail_if`);
 Claude then grades every answer against `rule` by hand and publishes answer + verdict side by side."""
 import json

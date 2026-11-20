@@ -1,4 +1,4 @@
-"""Keal's grid idea, at toy scale: plant concepts in chosen neurons, then knock them out.
+"""The grid idea, at toy scale: plant concepts in chosen neurons, then knock them out.
 
 Stage 1 (toki pona) uses gradient routing: when the next word to predict is a
 concept word, only that concept's block of MLP neurons is allowed to learn from
@@ -33,7 +33,7 @@ from stages import Model, tp_corpus, en_corpus, to_ids, dict_lines, DICT, CTX, M
 from ewc import fisher
 
 SEEDS = list(range(int(sys.argv[1]) if len(sys.argv) > 1 else 6))
-# Pass --dict to run Keal's full three-stage plan: toki pona -> dictionary -> English.
+# Pass --dict to run the full three-stage plan: toki pona -> dictionary -> English.
 WITH_DICT = "--dict" in sys.argv
 CONDITIONS = (["routed+dict", "routed+dict+ewc", "unrouted+dict", "english"] if WITH_DICT
               else ["routed", "routed+ewc", "unrouted", "english"])

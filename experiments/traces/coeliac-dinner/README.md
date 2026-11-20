@@ -1,6 +1,6 @@
-# Trace: Keal plans a dinner for a coeliac guest
+# Trace: planning a dinner for a coeliac guest
 
-The second recorded trace (2026-10-23, about 28 minutes): an everyday problem with an unknown word, research, safety checks and a written answer. `transcript.md` is Keal's transcription; the final answer he wrote is in `answer.md`.
+The second recorded trace (2026-10-23, about 28 minutes): an everyday problem with an unknown word, research, safety checks and a written answer. `transcript.md` is the transcription; the final written answer is in `answer.md`.
 
 ## The loop, step by step
 
@@ -39,7 +39,7 @@ Missed, in roughly the order a coeliac guest would care:
 - **Source trust is checked explicitly**, which matches open question 3 in the paper.
 - **Blind spots come from the framing.** He checked "what is in it", not "what touches it". A model needs the habit of asking what the real failure mode is for this person.
 
-## Keal's own takeaway (afterwards)
+## The solver's takeaway (afterwards)
 
 > "I wouldn't have considered that... and probably should have looked up 'how to safely cook for a coeliac person' or something before starting."
 

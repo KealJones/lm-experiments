@@ -1,8 +1,8 @@
-# Follow-up: LoRA + slots learns to read Keal
+# Follow-up: LoRA + slots learns to read real user messages
 
-Qwen/Qwen3-0.6B on NVIDIA A10G, 28 min total. Trained on 6000 planning and 12000 reading examples; none of Keal's messages were in training.
+Qwen/Qwen3-0.6B on NVIDIA A10G, 28 min total. Trained on 6000 planning and 12000 reading examples; none of the real messages were in training.
 
-## Keal's real messages (45; pick what he meant out of four; chance 25%)
+## Real user messages (45; pick what was meant out of four; chance 25%)
 
 | | typed | voice | all |
 |---|---|---|---|

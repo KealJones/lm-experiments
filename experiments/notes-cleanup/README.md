@@ -50,7 +50,7 @@ how stale test 1 is. Tidying only saves 7% of the words: most of 4a's size is re
 ### On Hugging Face (`job.json`, not run yet)
 
 The embedding and LFM3 arms, plus answers on the newest-0.8 and lfm3 notes (4a's own answers are the raw control).
-a10g-small, 40-minute cap: at most $0.67. Waiting on Keal's go.
+a10g-small, 40-minute cap: at most $0.67. Waiting on a go-ahead.
 
 ## Spend
 

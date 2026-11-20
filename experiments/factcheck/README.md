@@ -1,13 +1,13 @@
 # Draft -> fact-check
 
-**Question (Keal, 2026-11-04):** small models are bad at most things, but can one get *one message* right if it answers
+**Question (2026-11-04):** small models are bad at most things, but can one get *one message* right if it answers
 first and then a second pass of the same model reviews that answer, looks things up, and fixes it? Does it actually
 catch its own mistakes, or just say "yeah, that's fine"? Also: does a structured source (Wikipedia / Wikidata) beat the
 generic web search Squiggle has now, which finds pages *about* Emma Stone rather than her latest film?
 
 ## Setup
 
-- **12 questions** ([`questions.json`](questions.json)) that a web lookup should settle easily, some in Keal's casual
+- **12 questions** ([`questions.json`](questions.json)) that a web lookup should settle easily, some in casual
   phrasing. Several are traps: "current" or "latest" facts that changed after the models' training (UK PM is now Andy
   Burnham, Spain won the 2026 World Cup, Emma Stone's latest is *Bugonia*, Saturn has the most moons, not Jupiter).
   Ground truth was checked on 2026-11-04.
@@ -17,7 +17,7 @@ generic web search Squiggle has now, which finds pages *about* Emma Stone rather
 - **Step 1, draft:** the model answers the question, up to 6 turns of tool use. 3 sampled drafts per question.
 - **Step 2, review:** a fresh chat with the same model gets the question and the draft, the same tools, and must end
   with `VERDICT: RIGHT/WRONG` and `FINAL ANSWER: ...`. Two styles:
-  - **plain**: Keal's words, "review this question and answer and tell me if it is good and right"
+  - **plain**: the original wording, "review this question and answer and tell me if it is good and right"
   - **strict**: "you are a strict fact-checker, assume it may be wrong or out of date, check every claim with the tools"
 - **Planted wrong answers:** each model also reviews one known-wrong answer per question ("The capital of Australia is
   Sydney"), so the catch rate is measurable even when a model's own drafts are all right (or all wrong).
@@ -115,7 +115,7 @@ Final answer right after review, own drafts only, vs. the draft:
 ### Other things that matter for Squiggle
 
 - **Qwen3 0.6B only searches with thinking on.** Thinking off: 0 tool calls in free and lookup, even when told
-  "ALWAYS look it up". Thinking on: 0.5 calls per draft (Keal's Squiggle chats show it calling tools most turns, with
+  "ALWAYS look it up". Thinking on: 0.5 calls per draft (real Squiggle chats show it calling tools most turns, with
   Squiggle's own prompt and tools).
 - **Nobody follows up.** In the force arm every Qwen draft made exactly one search and answered from the snippets,
   which rarely contain the answer. Qwen3 0.6B got results titled "2026 FIFA World Cup final" and answered Brazil; got

@@ -1,11 +1,11 @@
-"""Follow-up: can LoRA + state slots learn to read Keal, without ever seeing his messages?
+"""Follow-up: can LoRA + state slots learn to read real user messages, without ever seeing them?
 
 Qwen3-0.6B, frozen, with rank-16 LoRA patches and the self-taught every-word slots (the `lora-slots` setup from
 the fine-tune test). Trained on a mix of:
   - the planning task with the harness in the loop (so the skill stays)
-  - everyday requests (Dolly-15k instructions) roughed up the way Keal types and talks → the clean request
+  - everyday requests (Dolly-15k instructions) roughed up the way the real messages are typed and spoken → the clean request
   - real conversational speech with fillers, repeats and restarts (disfluency-sft) → the clean text
-Scored on all 45 of Keal's real messages (never in training): pick what he meant out of four, typed vs voice,
+Scored on all 45 real user messages (never in training): pick what was meant out of four, typed vs voice,
 before and after training, plus planning and English kept. It also writes its own reading of every message.
 
   python followup.py [--pilot]          runs everything; writes out/ (results.json, readings.json, RESULTS.md)
@@ -31,7 +31,7 @@ if BF16:                                    # A10G / L4 / A100: bf16 is safer th
     ft.AMP_ON = False                       # turns off the fp16 GradScaler; autocast above still runs in bf16
 
 
-# ---------------------------------------------------------------- roughing up clean requests, Keal-style
+# ---------------------------------------------------------------- roughing up clean requests, casual-style
 
 VOICE_FILL = ["um", "uh", "like", "so", "you know", "I mean", "kind of", "basically", "like literally", "or whatever"]
 VOICE_TAIL = [" You know what I mean?", " or whatever.", " if that makes sense.", " I don't know.", " Does that make sense?"]
@@ -204,10 +204,10 @@ def main():
 def write_report(res, rd):
     pct = lambda v: "–" if v is None else f"{v*100:.0f}%"
     b, a = res["before"], res["after"]
-    L = ["# Follow-up: LoRA + slots learns to read Keal", "",
+    L = ["# Follow-up: LoRA + slots learns to read real user messages", "",
          f"{res['model']} on {res['gpu']}, {res['total_s']/60:.0f} min total. Trained on {res['train_examples']['planning']} planning "
-         f"and {res['train_examples']['reading']} reading examples; none of Keal's messages were in training.", "",
-         f"## Keal's real messages ({a['messages']['n']}; pick what he meant out of four; chance 25%)", "",
+         f"and {res['train_examples']['reading']} reading examples; none of the real messages were in training.", "",
+         f"## Real user messages ({a['messages']['n']}; pick what was meant out of four; chance 25%)", "",
          "| | typed | voice | all |", "|---|---|---|---|",
          f"| before (untouched) | {pct(b['messages']['typed'])} | {pct(b['messages']['voice'])} | {pct(b['messages']['all'])} |",
          f"| after | {pct(a['messages']['typed'])} | {pct(a['messages']['voice'])} | {pct(a['messages']['all'])} |", "",

@@ -30,7 +30,7 @@ Qwen/Qwen3-0.6B, 6000 training episodes, 43.4 min. Untouched gets two worked exa
 
 untouched 36.25143420443961, patch on 195.1890002250256, patch off 36.25143420443961
 
-## Keal's three tasks in the harness
+## The three recorded tasks in the harness
 
 ### keal-mom, untouched (fail: {'found_need': False, 'adapted': False, 'connect': False, 'no_wrong_place': True, 'in_budget': True})
 
@@ -133,7 +133,7 @@ write a function that takes a number n and prints the numbers 1 to n² in a squa
 <answer>Here's how it works: start with the top row, then the row directly below it, then the row directly above, and finally the row directly below again. For a square grid, the lines alternate between left and right, so it doesn't need to be boustrophedon.</answer>
 ```
 
-## Keal's three tasks as plain chat (no tools, no system prompt)
+## The three recorded tasks as plain chat (no tools, no system prompt)
 
 ### keal-mom, untouched
 

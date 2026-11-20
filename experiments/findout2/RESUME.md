@@ -3,12 +3,12 @@
 Paste this into a new chat, with the repo https://github.com/KealJones/tp-parse attached.
 
 ## Goal
-A small (≤ 500 MB) "figure-it-out" model. It notices gaps and uses tools (search, calculator, ask the person, memory) instead of guessing. It checks that what it finds is about the right thing, and it handles Keal's messy writing.
+A small (≤ 500 MB) "figure-it-out" model. It notices gaps and uses tools (search, calculator, ask the person, memory) instead of guessing. It checks that what it finds is about the right thing, and it handles the owner's messy writing.
 
 - Full plan doc: https://claude.ai/artifact/G6ciovi1M9LaqeftgCUnhh ("Figure-it-out model plan").
 - Base model: LFM2.5-350M (379 MB at Q8_0).
 - Key research finding: small models should always search for facts, not decide when to.
-- Budget: Keal has ~$46 on Hugging Face. Use it, but keep it lean.
+- Budget: the owner has ~$46 on Hugging Face. Use it, but keep it lean.
 
 ## What the pilot is testing
 Run 1 (SmolLM2-135M, `experiments/findout/`) learned the tool loop. But it scored 0% on plans it hadn't seen, like comparing the cost of two items. The pilot asks whether LFM2.5-350M composes plans when trained on ~2,000 episodes. If yes, the $20–40 full plan goes ahead.
@@ -17,7 +17,7 @@ Run 1 (SmolLM2-135M, `experiments/findout/`) learned the tool loop. But it score
 - **`world2.py`** (invented worlds and tools):
   - Ten trained task types.
   - Five held-out combinations of trained parts: cost-compare, argmax4, bridge-compare, ask-diff, basket3.
-  - Keal-style noise: false starts, self-corrections, repeats.
+  - Noise in the owner's style: false starts, self-corrections, repeats.
   - Gold episodes, scoring (`ok` and `strict`), and the LFM render/parse.
   - `python world2.py` self-tests 4,500 gold episodes.
 - **`teacher.py`**: Qwen3-4B-Instruct-2507 solves tasks with the real tools and no answer key.
@@ -66,10 +66,10 @@ Run 1 (SmolLM2-135M, `experiments/findout/`) learned the tool loop. But it score
    - perplexity as an assistant reply rises by at most 15%;
    - at most 1 broken plain-chat reply;
    - messy requests score within 10 points of clean.
-4. **Write it up.** Add the results to `experiments/findout2/README.md` and tell Keal in plain words: whether to spend $20–40 on the full plan, and what the failures show.
+4. **Write it up.** Add the results to `experiments/findout2/README.md` and tell the owner in plain words: whether to spend $20–40 on the full plan, and what the failures show.
 5. **Pending sanity check:** if the raw-masked perplexity is sane (~20–60) while raw is ~2,000, the first method was buggy (no attention mask or cache).
 
-## Keal's preferences
+## The owner's preferences
 - Give times in his local time (Arizona, UTC-7). Never UTC alone.
 - Plain words, short updates, honest about failures.
 - Keep the maths in the calculator, not the weights. He doesn't care about toki pona.

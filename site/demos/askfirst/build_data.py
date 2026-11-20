@@ -22,8 +22,8 @@ import scenarios as S  # noqa: E402
 N_TEST = 30
 TAG = re.compile(r"<(think|ask|reply|fact|search|result|check|notes|answer)((?:\s+\w+=\"[^\"]*\")*)>(.*?)</\1>", re.S)
 FAMILIES = {"gift": "Gift", "dinner": "Dinner", "code": "Code help", "given": "Everything given",
-            "trip (unseen)": "Weekend trip (never trained)", "keal-mom": "Keal's mom", "keal-coeliac": "Keal's coeliac dinner",
-            "keal-boustrophedon": "Keal's boustrophedon"}
+            "trip (unseen)": "Weekend trip (never trained)", "keal-mom": "Recorded: mom's birthday", "keal-coeliac": "Recorded: coeliac dinner",
+            "keal-boustrophedon": "Recorded: boustrophedon"}
 
 
 def steps(text):

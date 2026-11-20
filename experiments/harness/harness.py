@@ -1,4 +1,4 @@
-"""The harness, first cut: an untouched model answers Keal's real messages with tools.
+"""The harness, first cut: an untouched model answers real user messages with tools.
 
 Each turn the model replies with one action line: SEARCH: <query> | FETCH: <url> | ASK: <question> | ANSWER: <answer>.
 The harness runs it and feeds the result back (up to MAX_TURNS), then forces an answer. Long messages are first

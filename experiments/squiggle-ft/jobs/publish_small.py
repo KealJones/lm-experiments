@@ -1,4 +1,4 @@
-"""Makes kealjones/squiggle-small public (Keal approved: "make squiggle-small public when you have a model worth
+"""Makes kealjones/squiggle-small public (approved: "make squiggle-small public when you have a model worth
 trying"): model-card front matter on README.md, an "experimental" line at the top, visibility public, then checks the
 GGUF downloads without a token. Touches only this repo. Run as a tiny HF job (the token lives there)."""
 import os, re, sys, urllib.error, urllib.parse, urllib.request

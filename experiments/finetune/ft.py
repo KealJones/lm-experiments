@@ -12,7 +12,7 @@ Versions (one model each):
 
 Each is scored on: planning in the world (clean, messy = no periods, filler = no periods plus "um", "like"…
 never seen in training), honest gaps (searching when a fact is missing), English kept (ARC-Easy, WikiText-2),
-Keal's real messages (pick what he meant out of four, voice vs typed), and for the fine-tunes the same again
+real user messages (pick what was meant out of four, voice vs typed), and for the fine-tunes the same again
 after squashing the weights to 4 bits.
 """
 import json, math, os, random, re, statistics as st, sys, time
@@ -880,7 +880,7 @@ def report():
                     why[k] = why.get(k, 0) + n_
             L.append(f"- {v}: " + (", ".join(f"{k} {n_}" for k, n_ in sorted(why.items(), key=lambda x: -x[1])) or "none"))
         nm = rows[order[0]]["messages"]["n"]
-        L += ["", f"## Keal's real messages ({nm}: pick what he meant out of four; chance 25%)", "",
+        L += ["", f"## Real user messages ({nm}: pick what was meant out of four; chance 25%)", "",
               "| version | typed | voice | all | 4-bit all |", "|---|---|---|---|---|"]
         for v in order:
             m, m4 = rows[v]["messages"], rows[v].get("messages_4bit")

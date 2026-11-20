@@ -27,7 +27,7 @@ Observations (not trained on, written by the world):
                                     they rest on, and anything that rests on a key that changed. It states no world facts.
 
 Every event has prov:
-  recorded       what Keal did or said, close to verbatim
+  recorded       what the solver did or said, close to verbatim
   condensed      recorded, but shortened or reworded
   reconstructed  recorded on screen but not in the narration (code rebuilt from the screen recording)
   added          not in the recording: a catch or fix inserted to teach recovery, written without the hidden brief
@@ -50,7 +50,7 @@ def added(kind, **kw):
 
 # ---------------------------------------------------------------- boustrophedon
 def ts(head, body, tail="", call=""):
-    """A full TypeScript program in the shape Keal's file had at that moment."""
+    """A full TypeScript program in the shape the solver's file had at that moment."""
     return f"function boustrophedonGrid(n: number) {{\n{head}{body}{tail}}}\n{call}"
 
 LOOP_ROW1 = ("  for (let row = 1; row <= n; row++) {\n    grid.push(new Array<number>());\n"

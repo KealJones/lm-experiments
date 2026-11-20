@@ -1,7 +1,7 @@
 """Harness v3: v2 (native tool calls, thinking on) with a better search tool.
 
 search(query) now:
-  1. runs the model's query AND a query built from the key words of Keal's own message (+ context), merging results;
+  1. runs the model's query AND a query built from the key words of the user's own message (+ context), merging results;
   2. opens the top two pages and returns the paragraphs that share the most words with the message and the query,
      so the model gets the relevant text itself, not just one-line snippets.
 

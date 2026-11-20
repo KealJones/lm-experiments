@@ -1,7 +1,7 @@
 """interstellarninja/hermes_reasoning_tool_use (Apache-2.0), converted to Squiggle's world.
 
 What the corpus has: 51k conversations from When2Call, ToolAce, Glaive, xLAM and Nous-Hermes. Their tools are made-up
-APIs (tmall_search_by_keyword, extract…) and their tool *results* are invented ("ABC Corporation", example.com). Keal's
+APIs (tmall_search_by_keyword, extract…) and their tool *results* are invented ("ABC Corporation", example.com). The
 rule is real data only, never invented facts, and Squiggle has its own fixed tools, so the conversations can't be
 copied over as they are. What carries over honestly:
 

@@ -17,7 +17,7 @@ Scored on:
 - **Planning:** clean, messy (no periods) and filler (no periods plus "um", "like", "you know"…, never seen in training), short and long problems.
 - **Honest gaps:** does it search when a fact is missing, rather than guess?
 - **English kept:** ARC-Easy accuracy and WikiText-2 perplexity, before and after fine-tuning.
-- **Keal's real messages** (`messages.json`, 24 typed and 21 spoken): pick what he meant out of four options by likelihood; chance is 25%.
+- **Real user messages** (`messages.json`, 24 typed and 21 spoken): pick what was meant out of four options by likelihood; chance is 25%.
 - **4-bit:** every decoder weight rounded to 4 bits (LoRA merged first), then planning, messages and English again.
 
 One seed per version; `messages.json` is built by `make_messages.py`; the notebooks are built from `ft.py` by `make_notebook.py`.

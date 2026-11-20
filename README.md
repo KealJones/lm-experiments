@@ -4,7 +4,7 @@ My small-language-model experiments: the models behind [Squiggle](https://github
 (a browser-only agent that runs on your own device), a cut-down Gemma 4 for phones, studies of how a small model
 learns to find things out, and the earlier toki pona transfer work.
 
-The write-ups are co-written with Claude, which ran most of the jobs, so "Keal" in them means me.
+The write-ups are co-written with Claude, which ran most of the jobs.
 
 Moved here on 2026-10-29 from [tp-parse](https://github.com/KealJones/tp-parse), which is now just the toki pona
 parser; the history of every moved file came along.

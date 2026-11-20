@@ -4,7 +4,7 @@ Follow-up to [context-packets](../context-packets/). There, a big model read the
 packet. Retrieval (BM25, embeddings, query rewriters, doc2query) couldn't replace it at that size: the facts that
 matter are throwaway corrections ("btw we moved the party") that share no words with the later question.
 
-So this moves the work to write time. Keal's design: a plain whiteboard file the assistant keeps in its own words,
+So this moves the work to write time. The design: a plain whiteboard file the assistant keeps in its own words,
 edited with the bash it already has, plus an end-of-turn instruction to update it. No new tools.
 
 ## Setup

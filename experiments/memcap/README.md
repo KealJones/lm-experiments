@@ -1,6 +1,6 @@
 # How much memory does a phone's browser tab get?
 
-**Question (Keal, 2026-11-09):** on-device models in Squiggle keep killing the Safari tab on Keal's iPhone 16. Apple
+**Question (2026-11-09):** on-device models in Squiggle keep killing the Safari tab on an iPhone 16. Apple
 doesn't publish how much memory a web page may use before iOS kills it. How much is it, is it one budget or separate
 ones for JavaScript, WebAssembly and the GPU, and is it the phone or the browser?
 

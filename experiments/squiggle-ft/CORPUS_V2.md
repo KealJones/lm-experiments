@@ -220,7 +220,7 @@ embedding changes):
 - Fine-tuning moved lfm25's trained-strict score from 0% to 36% and its plans from 0% to 51%.
 - **But on raw right-answer rates, training made some things worse:**
   - math: untouched lfm25 31% → tuned 6%. The tuned model routes every word problem through run_js and gets the
-    JavaScript wrong. This backs Keal's calculate rule (§2h).
+    JavaScript wrong. This backs the calculate rule (§2h).
   - web_fact: 12% → 0%.
   - recipe_compare: 65% → 48%. The untouched model answers well-known comparisons from memory, without the habit.
 - So v2's "worth it" bar compares against the untouched base on right-answer rates too, not only on strict scores.
@@ -329,7 +329,7 @@ change the answer. Families mark the key term in `gold`, so the checker knows wh
 memory_repo 30, past_chat 40 (the checker counts an answer that smart context already retrieved), refs 40. These are
 v1 families. Their v1 kept episodes are reused (§4).
 
-## 2h. Computation goes through `calculate`, never the model and never run_js (Keal)
+## 2h. Computation goes through `calculate`, never the model and never run_js
 
 The `calculate` tool is final on Squiggle main (commit d9cbfea and later; code in `app/src/calc.js` and
 `app/src/tools.js`).
@@ -463,7 +463,7 @@ of model loading; l4x1 $0.80/h):
 | export of the winner | l4x1 | about 5 min | about $0.07 |
 | **total** | | | **about $6.30** (caps $7.50) |
 
-About $7.4 has been spent, so this lands at about $13.7 of the $15 cap. It is above Keal's "under $5 per experiment".
+About $7.4 has been spent, so this lands at about $13.7 of the $15 cap. It is above the "under $5 per experiment" budget.
 A trimmed plan comes in at about $5.30:
 - drop the web_compare re-run (60) and the new chat (40)
 - web_fact 140 → 100

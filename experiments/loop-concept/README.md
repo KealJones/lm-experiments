@@ -1,6 +1,6 @@
 # Loop concept vs loop syntax
 
-**Question (Keal, 2026-10-31):** is knowing *what a for loop does* different from knowing *how to spell one*? If a small
+**Question (2026-10-31):** is knowing *what a for loop does* different from knowing *how to spell one*? If a small
 model already gets the concept (loop over this, step by that, body does X), then looking up a syntax snippet should be
 enough to write loops in a language it's never really seen. Free first test, no training.
 
@@ -55,7 +55,7 @@ Lenient numbers:
 
 ## Round 2: from scratch, with tools (Qwen3 0.6B only)
 
-Keal: skip the snippet, just ask plain Qwen to do it and let it use tools. [`agent.py`](agent.py): plain Qwen3 0.6B
+Next idea: skip the snippet, just ask plain Qwen to do it and let it use tools. [`agent.py`](agent.py): plain Qwen3 0.6B
 (thinking off) gets only the task, plus tools to `list_files`, `grep` and `read` the language's docs and `run` code,
 for up to 15 turns; 3 sampled attempts per task. Docs: the real Zig 0.17 language reference as plain text
 ([`docs/zig/langref.txt`](docs/zig/langref.txt), built by [`build_zig_docs.py`](build_zig_docs.py) from
@@ -82,11 +82,11 @@ and gave up without ever searching the docs.
   to train, not knowledge it lacks. That lines up with Squiggle's findout experiments (teach the loop, not the facts).
 
 
-## Round 3: same test, Gemma (Gemma 4 E2B and Keal's tiny Gemma 4)
+## Round 3: same test, Gemma (Gemma 4 E2B and the tiny Gemma 4)
 
 [`gemma_agent.py`](gemma_agent.py): identical task, system prompt, tools, docs, limits and grading as round 2, but the
 models run on llama.cpp (llama-server) in Gemma 4's native tool format: Gemma 4 E2B-it (unsloth Q8_0 GGUF) and
-Keal's tiny Gemma 4 from [`tiny-gemma4`](../tiny-gemma4/) (heal 3, 0.6B body, the `tiny-gemma4-heal3-v2-Q4_0.gguf`
+the tiny Gemma 4 from [`tiny-gemma4`](../tiny-gemma4/) (heal 3, 0.6B body, the `tiny-gemma4-heal3-v2-Q4_0.gguf`
 phone build; the full checkpoint is in a private dataset Kaggle can't reach). Sampling: Gemma's recommended
 temperature 1.0, top-p 0.95, top-k 64. Notebook: [`agent_gemma.ipynb`](agent_gemma.ipynb).
 

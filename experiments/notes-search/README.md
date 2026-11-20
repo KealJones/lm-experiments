@@ -1,6 +1,6 @@
 # Notes search: can LFM3's own notes plus a dumb search be Squiggle's fresh context?
 
-Follow-up to [whiteboard](../whiteboard/) and [context-packets](../context-packets/). Keal's design (voice, 2026-11-10):
+Follow-up to [whiteboard](../whiteboard/) and [context-packets](../context-packets/). The design (2026-11-10):
 the packet for each new message is the last exchange plus the relevant lines of notes the model keeps itself, with
 no chat history. Retrieval on the raw chat failed because throwaway corrections share no words with the later
 question; the notes are short, clean and written by the model, so maybe a search over them works.
@@ -23,7 +23,7 @@ question; the notes are short, clean and written by the model, so maybe a search
 - **Answers:** LFM3 with Squiggle PR 7's prompt and its real engine limits (1,024-token reply, 400-token thinking
   budget), handed the packet as the result of a `relevant_context` call it "already made". Arms: whole, BM25, hybrid,
   LFM3 query into BM25.
-- **Timing:** every call logs its prompt and output tokens. Phone time is estimated from Keal's iPhone measurements of
+- **Timing:** every call logs its prompt and output tokens. Phone time is estimated from the test iPhone's measurements of
   the LFM3 WebLLM build (13.7 tokens/s decode, first word in ~15 s with Squiggle's full prompt; lfm3-mlc README).
 
 ## Results
@@ -63,9 +63,9 @@ Answers, blind-graded ([hf-2/grades.json](hf-2/grades.json)), 11 chats:
 When the packet lacked the fact, LFM3 kept calling `find` with new words until it ran out of tool rounds (3 here)
 and never answered. Tags made no difference to BM25 (47% of facts with or without).
 
-### Run 3 (`notes-search-3`): Keal's fix for the changes
+### Run 3 (`notes-search-3`): a fix for the changes
 
-Keal's suggestion: tell it to be extra sure to update facts that changed, with an unrelated example (Billy's
+The suggested fix: tell it to be extra sure to update facts that changed, with an unrelated example (Billy's
 birthday, Mar 15 corrected to Dec 16), and let it delete lines. The prompt now says to write only new or changed
 facts, never repeat one, that most exchanges add 0-2 lines, and has `- CHANGE n:` / `- DELETE n` with the Billy
 example. The harness also skips exact repeats and, like the phone, fits the note prompt into 4K by hiding the oldest
@@ -125,7 +125,7 @@ instead of fixing. Next, one change each against run 3:
 
 ### Runs 4a and 4b (in parallel, one change each against run 3)
 
-Run 3's note pass put the notes in the *user* message, as a bulleted list, and asked for bullets back. Keal: notes
+Run 3's note pass put the notes in the *user* message, as a bulleted list, and asked for bullets back. The catch: notes
 can't be the user's message. Looking at a real turn (chat 1, turn 9), the exchange was only about the memory leak, yet
 LFM3 re-wrote the party lines after its memory-leak edit: it was continuing the list it was handed. The parser also let
 in junk (`NONE`, "Add new fact from latest exchange: …", cut-off lines).

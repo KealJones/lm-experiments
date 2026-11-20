@@ -1,6 +1,6 @@
 # Weird maths in a transformer
 
-Keal: "let's throw random math equations in front of and behind attention and MLP and just see what happens."
+The idea: "let's throw random math equations in front of and behind attention and MLP and just see what happens."
 
 A nanoGPT-style model (6 layers, width 384, about 30M parameters including the GPT-2 embedding) trained on **FineWeb-Edu**, the standard corpus for small-model experiments, with the GPT-2 tokenizer. Each variant sticks one odd function at one spot. Everything else is identical: the same batches in the same order, the same seed, steps and optimiser. The baseline runs with three seeds, so the noise level is measured, not guessed.
 

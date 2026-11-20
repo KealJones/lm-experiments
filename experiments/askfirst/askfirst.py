@@ -2,7 +2,7 @@
 
 Qwen3-0.6B, frozen, with a switchable rank-16 LoRA patch on every linear layer (the setup that learned planning
 perfectly in follow-up 2). Trained on scenarios.py: vague requests with a hidden brief, a simulated person who only
-answers what's asked, and gold trajectories in Keal's pattern (open broad, pull on the odd detail, look up what
+answers what's asked, and gold trajectories in the recorded pattern (open broad, pull on the odd detail, look up what
 you don't know, check against your notes, then answer). A fifth of the training needs no questions at all, so it
 learns when not to ask.
 
@@ -11,7 +11,7 @@ Scored, untouched (with two worked examples) vs patched, in the same harness:
     over budget, an oven when there isn't one)
   - found the real need, asked at all, asked when it didn't need to, checked before answering
   - families: gift, dinner, code (trained), given (shouldn't ask), trip (never trained on)
-  - Keal's three recorded tasks, in the harness and as plain chat, transcripts saved for comparing with what he did
+  - the three recorded tasks, in the harness and as plain chat, transcripts saved for comparing with what the person did
   - English kept (WikiText-2 perplexity), patch on and off
 
   python askfirst.py [--pilot]          writes out/ (RESULTS.md, results.json, transcripts.json)
@@ -304,12 +304,12 @@ def report(R, tr_base, tr_p, keal_plain):
         L.append(f"- {fam}: untouched {R['untouched'][fam]['parts']} | patched {R['patched'][fam]['parts']}")
     L += ["", "## English kept (WikiText-2 perplexity, lower is better)", "",
           f"untouched {R['ppl_before']}, patch on {R['ppl_patch_on']}, patch off {R['ppl_patch_off']}", "",
-          "## Keal's three tasks in the harness", ""]
+          "## The three recorded tasks in the harness", ""]
     for k in KEAL:
         for name, tr in (("untouched", tr_base), ("patched", tr_p)):
             t = tr[k][0]
             L += [f"### {k}, {name} ({'pass' if t['ok'] else 'fail'}: {t['parts']})", "", "```", t["request"], "", t["text"].strip()[-4000:], "```", ""]
-    L += ["## Keal's three tasks as plain chat (no tools, no system prompt)", ""]
+    L += ["## The three recorded tasks as plain chat (no tools, no system prompt)", ""]
     for k, v in keal_plain.items():
         for name in ("untouched", "patched"):
             L += [f"### {k}, {name}", "", "```", v[name][:3000], "```", ""]

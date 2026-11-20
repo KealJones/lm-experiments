@@ -9,7 +9,7 @@
 # in the asker's state instead of the recipient's, a price over budget, an oven when there isn't one.
 #
 # Families: gift, dinner, code (trained), trip (held out), plus "given": everything is in the request, so the
-# right move is not to ask. Keal's three recorded tasks are encoded as fixed held-out scenarios.
+# right move is not to ask. The three recorded tasks are encoded as fixed held-out scenarios.
 
 # %%
 import random, re
@@ -405,7 +405,7 @@ def trip(r):
 
 
 # %% [markdown]
-# ### Keal's three recorded tasks, as fixed test scenarios
+# ### The three recorded tasks, as fixed test scenarios
 
 # %%
 def keal_mom(r):
