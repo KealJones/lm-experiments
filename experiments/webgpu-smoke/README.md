@@ -4,7 +4,7 @@ Squiggle's evals (KealJones/squiggle `tests/eval`) drive the real app in headles
 which needs WebGPU, they have so far run only on an iPhone through the phone relay: one case at a time, one run per
 case, and only while the phone stays awake. This asks whether a Hugging Face GPU job can do it instead.
 
-One `t4-small` job (`hf/queue/webgpu-smoke-3.json`; -1 was refused for a reserved env var, -2 died in 4 s with no `xz` in the image) runs `tests/eval/hf-gpu-smoke.sh` from the squiggle branch
+One `t4-small` job (`hf/queue/webgpu-smoke-4.json`; -1 was refused for a reserved env var, -2 died in 4 s with no `xz` in the image, -3 found the T4 but no working Vulkan driver, so no WebGPU adapter) runs `tests/eval/hf-gpu-smoke.sh` from the squiggle branch
 `gpu-smoke`:
 
 1. `nvidia-smi` and `vulkaninfo`: is there a GPU, and does Vulkan see it? Hugging Face reserves
@@ -19,4 +19,4 @@ Spend: 45 min cap on a T4, so at most $0.30.
 
 ## Results
 
-Pending: `hf-3/` gets the job's log, the probe output and the case result.
+Pending: `hf-4/` gets the job's log, the probe output and the case result.
