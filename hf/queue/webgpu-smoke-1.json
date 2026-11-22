@@ -1,0 +1,14 @@
+{
+ "slug": "webgpu-smoke-1",
+ "flavor": "t4-small",
+ "timeout": "45m",
+ "image": "pytorch/pytorch:2.6.0-cuda12.4-cudnn9-runtime",
+ "env": {"NVIDIA_DRIVER_CAPABILITIES": "all"},
+ "files": [],
+ "pip": ["huggingface_hub"],
+ "upload_every": 120,
+ "outdir": "out",
+ "cmd": "mkdir -p out && python -c \"import urllib.request as u; u.urlretrieve('https://nodejs.org/dist/v22.11.0/node-v22.11.0-linux-x64.tar.xz','node.tar.xz'); u.urlretrieve('https://raw.githubusercontent.com/KealJones/squiggle/c274dc8/tests/eval/hf-gpu-smoke.sh','smoke.sh')\" && tar -xJf node.tar.xz && export PATH=$PWD/node-v22.11.0-linux-x64/bin:$PATH && node --version && bash smoke.sh 2>&1 | tee out/smoke.log; cp /tmp/probe.txt /tmp/case1.json out/ 2>/dev/null; true",
+ "out": "experiments/webgpu-smoke/hf-1",
+ "note": "Does Chrome's WebGPU get the T4 in a headless container (Vulkan via NVIDIA_DRIVER_CAPABILITIES=all), and how fast is LFM3 1.7B on Tilde there? 45 min cap: at most $0.30."
+}

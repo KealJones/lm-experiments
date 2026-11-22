@@ -6,7 +6,8 @@
 A job file in hf/queue/:
   {"slug": "followup-read-keal", "flavor": "a10g-small", "timeout": "60m",
    "files": ["experiments/finetune/ft.py", ...], "cmd": "python followup.py", "outdir": "out",
-   "out": "experiments/finetune/hf-out-followup", "pip": ["transformers>=4.51", "datasets"]}
+   "out": "experiments/finetune/hf-out-followup", "pip": ["transformers>=4.51", "datasets"],
+   "env": {"NVIDIA_DRIVER_CAPABILITIES": "all"}}      # optional: extra environment variables for the job
 """
 import datetime as dt, json, os, re, shutil, sys, tempfile
 from pathlib import Path
@@ -54,7 +55,7 @@ def start():
         cmd = ["bash", "-c", f"python -c \"import urllib.request as u; u.urlretrieve('{runner}', 'runner.py')\" && python runner.py"]
         try:
             info = api.run_job(image=job.get("image", IMAGE), command=cmd, flavor=flavor, timeout=timeout,
-                               env={"SPEC": json.dumps(spec)}, secrets={"HF_TOKEN": os.environ["HF_TOKEN"]})
+                               env={**job.get("env", {}), "SPEC": json.dumps(spec)}, secrets={"HF_TOKEN": os.environ["HF_TOKEN"]})
             job.update(job_id=info.id, url=info.url, started=now(), sha=spec["sha"])
             PENDING.mkdir(exist_ok=True)
             (PENDING / f.name).write_text(json.dumps(job, indent=1))
