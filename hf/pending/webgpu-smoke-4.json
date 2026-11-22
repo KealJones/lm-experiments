@@ -11,5 +11,9 @@
  "outdir": "out",
  "cmd": "(apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq xz-utils curl ca-certificates >/dev/null) && mkdir -p out && python -c \"import urllib.request as u; u.urlretrieve('https://nodejs.org/dist/v22.11.0/node-v22.11.0-linux-x64.tar.xz','node.tar.xz'); u.urlretrieve('https://raw.githubusercontent.com/KealJones/squiggle/f2a39e9/tests/eval/hf-gpu-smoke.sh','smoke.sh')\" && tar -xJf node.tar.xz && export PATH=$PWD/node-v22.11.0-linux-x64/bin:$PATH && node --version && bash smoke.sh > out/smoke.log 2>&1; s=$?; cat out/smoke.log; cp /tmp/probe.txt /tmp/case1.json out/ 2>/dev/null; exit $s",
  "out": "experiments/webgpu-smoke/hf-4",
- "note": "Fourth try. -3 ran: T4 there (driver 620.70.06) but HF gives the container compute,utility only, and its libGLX_nvidia loads without being able to create a Vulkan instance, so every Chrome set got no WebGPU adapter. Now the script installs the driver's graphics libraries from the same version's NVIDIA installer whenever vulkaninfo doesn't list the GPU. 45 min cap: at most $0.30."
+ "note": "Fourth try. -3 ran: T4 there (driver 620.70.06) but HF gives the container compute,utility only, and its libGLX_nvidia loads without being able to create a Vulkan instance, so every Chrome set got no WebGPU adapter. Now the script installs the driver's graphics libraries from the same version's NVIDIA installer whenever vulkaninfo doesn't list the GPU. 45 min cap: at most $0.30.",
+ "job_id": "6b0344408d268c0fbd228317",
+ "url": "https://huggingface.co/jobs/kealjones/6b0344408d268c0fbd228317",
+ "started": "2026-11-22T19:36:32+00:00",
+ "sha": "3a346e93d6634f1a1c77c4c46d50cf092762f0cf"
 }
