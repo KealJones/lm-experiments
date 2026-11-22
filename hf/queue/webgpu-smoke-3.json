@@ -1,0 +1,15 @@
+{
+ "slug": "webgpu-smoke-3",
+ "flavor": "t4-small",
+ "timeout": "45m",
+ "image": "pytorch/pytorch:2.6.0-cuda12.4-cudnn9-runtime",
+ "files": [],
+ "pip": [
+  "huggingface_hub"
+ ],
+ "upload_every": 120,
+ "outdir": "out",
+ "cmd": "(apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq xz-utils curl ca-certificates >/dev/null) && mkdir -p out && python -c \"import urllib.request as u; u.urlretrieve('https://nodejs.org/dist/v22.11.0/node-v22.11.0-linux-x64.tar.xz','node.tar.xz'); u.urlretrieve('https://raw.githubusercontent.com/KealJones/squiggle/3458ec3/tests/eval/hf-gpu-smoke.sh','smoke.sh')\" && tar -xJf node.tar.xz && export PATH=$PWD/node-v22.11.0-linux-x64/bin:$PATH && node --version && bash smoke.sh > out/smoke.log 2>&1; s=$?; cat out/smoke.log; cp /tmp/probe.txt /tmp/case1.json out/ 2>/dev/null; exit $s",
+ "out": "experiments/webgpu-smoke/hf-3",
+ "note": "Third try. webgpu-smoke-1: HF refused the reserved NVIDIA_DRIVER_CAPABILITIES. webgpu-smoke-2: the PyTorch image has no xz, so unpacking Node failed in 4 s (and a trailing '; true' reported it as a success). Now xz is installed first and the script's own exit code is the job's; smoke.log is in out/, so it uploads every 2 min. 45 min cap: at most $0.30."
+}
