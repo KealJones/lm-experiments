@@ -1,0 +1,6 @@
+{"set":"new headless + Vulkan","ms":2262,"error":"requestAdapter returned null"}
+{"set":"new headless + Vulkan + webgpu-developer","ms":1647,"error":"requestAdapter returned null"}
+{"set":"headless shell + Vulkan","ms":968,"error":"page.evaluate: OperationError: Failed to execute 'requestDevice' on 'GPUAdapter': A valid external Instance reference no longer exists."}
+{"set":"repo default","ms":60254,"error":"probe timed out (60 s)"}
+
+NO HARDWARE WEBGPU: every set came back with no adapter or a software one
