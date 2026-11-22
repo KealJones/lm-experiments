@@ -1,0 +1,7 @@
+{"set":"new headless + Vulkan","ms":863,"error":"requestAdapter returned null"}
+{"set":"new headless + Vulkan + webgpu-developer","ms":825,"error":"requestAdapter returned null"}
+{"set":"headless shell + Vulkan","ms":696,"vendor":"nvidia","architecture":"turing","device":"","description":"","fallback":false,"f16":true,"maxBuffer":4294967292,"maxStorage":2147483644,"matmulMs":15,"gflops":143}
+{"set":"repo default","ms":60125,"error":"probe timed out (60 s)"}
+
+HARDWARE WEBGPU: headless shell + Vulkan
+SQUIGGLE_CHROME_ARGS="--enable-unsafe-webgpu --ignore-gpu-blocklist --enable-features=Vulkan,VulkanFromANGLE,DefaultANGLEVulkan --use-angle=vulkan --use-vulkan=native --disable-vulkan-surface"

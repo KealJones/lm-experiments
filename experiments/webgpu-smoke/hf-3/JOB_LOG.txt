@@ -1,0 +1,86 @@
+job 6b03428b130a00b5aa80f0d5 on gpu: webgpu-smoke-3 at 5d2ac6a
+debconf: delaying package configuration, since apt-utils is not installed
+v22.11.0
+
+=== GPU (19:30:58)
+Sun Nov 22 19:30:58 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 620.70.06              KMD Version: 620.70.06     CUDA UMD Version: 13.5     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  Tesla T4                       On  |   00000000:00:1E.0 Off |                    0 |
+| N/A   28C    P8             16W /   70W |       0MiB /  15360MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+
+=== packages (19:30:58)
+installed
+NVIDIA_DRIVER_CAPABILITIES=compute,utility (HF reserves it: a job can't set it)
+wrote nvidia_icd.json
+
+=== vulkaninfo (19:31:13)
+ERROR: [Loader Message] Code 0 : loader_scanned_icd_add: Could not get 'vkCreateInstance' via 'vk_icdGetInstanceProcAddr' for ICD libGLX_nvidia.so.0
+ERROR: [Loader Message] Code 0 : loader_scanned_icd_add: Could not get 'vkCreateInstance' via 'vk_icdGetInstanceProcAddr' for ICD libGLX_nvidia.so.0
+WARNING: [Loader Message] Code 0 : terminator_CreateInstance: Failed to CreateInstance in ICD 4.  Skipping ICD.
+'DISPLAY' environment variable not set... skipping surface info
+error: XDG_RUNTIME_DIR not set in the environment.
+error: XDG_RUNTIME_DIR not set in the environment.
+error: XDG_RUNTIME_DIR not set in the environment.
+error: XDG_RUNTIME_DIR not set in the environment.
+error: XDG_RUNTIME_DIR not set in the environment.
+==========
+VULKANINFO
+==========
+
+Vulkan Instance Version: 1.3.204
+
+
+Instance Extensions: count = 20
+-------------------------------
+VK_EXT_acquire_drm_display             : extension revision 1
+VK_EXT_acquire_xlib_display            : extension revision 1
+VK_EXT_debug_report                    : extension revision 10
+VK_EXT_debug_utils                     : extension revision 2
+VK_EXT_direct_mode_display             : extension revision 1
+VK_EXT_display_surface_counter         : extension revision 1
+VK_EXT_swapchain_colorspace            : extension revision 4
+VK_KHR_device_group_creation           : extension revision 1
+VK_KHR_display                         : extension revision 23
+VK_KHR_external_fence_capabilities     : extension revision 1
+VK_KHR_external_memory_capabilities    : extension revision 1
+VK_KHR_external_semaphore_capabilities : extension revision 1
+VK_KHR_get_display_properties2         : extension revision 1
+VK_KHR_get_physical_device_properties2 : extension revision 2
+VK_KHR_get_surface_capabilities2       : extension revision 1
+VK_KHR_surface                         : extension revision 25
+VK_KHR_surface_protected_capabilities  : extension revision 1
+VK_KHR_wayland_surface                 : extension revision 6
+VK_KHR_xcb_surface                     : extension revision 6
+VK_KHR_xlib_surface                    : extension revision 6
+
+Instance Layers: count = 5
+
+=== squiggle@gpu-smoke (19:31:13)
+chromium installed
+
+=== WebGPU probe (19:31:45)
+{"set":"new headless + Vulkan","ms":1157,"error":"requestAdapter returned null"}
+{"set":"new headless + Vulkan + webgpu-developer","ms":1231,"error":"requestAdapter returned null"}
+{"set":"headless shell + Vulkan","ms":60184,"error":"probe timed out (60 s)"}
+{"set":"repo default","ms":60260,"error":"probe timed out (60 s)"}
+
+NO HARDWARE WEBGPU: every set came back with no adapter or a software one
+
+=== no hardware WebGPU: stopping here (19:34:19)
+exit code 2 after 3.7 min

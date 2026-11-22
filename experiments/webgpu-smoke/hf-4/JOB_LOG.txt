@@ -1,0 +1,168 @@
+job 6b0344408d268c0fbd228317 on gpu: webgpu-smoke-4 at 3a346e9
+debconf: delaying package configuration, since apt-utils is not installed
+v22.11.0
+
+=== GPU (19:36:53)
+Sun Nov 22 19:36:53 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 620.70.06              KMD Version: 620.70.06     CUDA UMD Version: 13.5     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  Tesla T4                       On  |   00000000:00:1E.0 Off |                    0 |
+| N/A   28C    P8             16W /   70W |       0MiB /  15360MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+
+=== packages (19:36:53)
+installed
+NVIDIA_DRIVER_CAPABILITIES=compute,utility (HF reserves it: a job can't set it)
+no Vulkan driver mounted: fetching NVIDIA 620.70.06 user-space libraries
+copied in: 39 libraries
+lrwxrwxrwx. 1 root root        26 Nov 22 19:37 libEGL_nvidia.so.0 -> libEGL_nvidia.so.620.70.06
+-rwxr-xr-x. 1 root root   1189840 Nov 22 19:37 libEGL_nvidia.so.620.70.06
+lrwxrwxrwx. 1 root root        32 Nov 22 19:37 libGLESv1_CM_nvidia.so.1 -> libGLESv1_CM_nvidia.so.620.70.06
+-rwxr-xr-x. 1 root root     63528 Nov 22 19:37 libGLESv1_CM_nvidia.so.620.70.06
+lrwxrwxrwx. 1 root root        29 Nov 22 19:37 libGLESv2_nvidia.so.2 -> libGLESv2_nvidia.so.620.70.06
+-rwxr-xr-x. 1 root root    112672 Nov 22 19:37 libGLESv2_nvidia.so.620.70.06
+lrwxrwxrwx. 1 root root        26 Nov 22 19:37 libGLX_nvidia.so.0 -> libGLX_nvidia.so.620.70.06
+-rwxr-xr-x. 1 root root   1216064 Nov 22 19:37 libGLX_nvidia.so.620.70.06
+-rwxr-xr-x. 1 root root   5747760 Nov 22 19:37 libglxserver_nvidia.so.620.70.06
+lrwxrwxrwx. 1 root root        32 Nov 22 19:37 libnvidia-allocator.so.1 -> libnvidia-allocator.so.620.70.06
+-rwxr-xr-x. 1 root root    152872 Nov 22 19:37 libnvidia-allocator.so.620.70.06
+lrwxrwxrwx. 1 root root        26 Nov 22 19:37 libnvidia-cfg.so.1 -> libnvidia-cfg.so.620.70.06
+-rwxr-xr-x. 1 root root    426944 Nov 22 19:37 libnvidia-cfg.so.620.70.06
+-rwxr-xr-x. 1 root root  33248816 Nov 22 19:37 libnvidia-eglcore.so.620.70.06
+lrwxrwxrwx. 1 root root        29 Nov 22 19:37 libnvidia-encode.so.1 -> libnvidia-encode.so.620.70.06
+-rwxr-xr-x. 1 root root    305944 Nov 22 19:37 libnvidia-encode.so.620.70.06
+lrwxrwxrwx. 1 root root        26 Nov 22 19:37 libnvidia-fbc.so.1 -> libnvidia-fbc.so.620.70.06
+-rwxr-xr-x. 1 root root    360240 Nov 22 19:37 libnvidia-fbc.so.620.70.06
+lrwxrwxrwx. 1 root root        28 Nov 22 19:37 libnvidia-fmdrv.so.1 -> libnvidia-fmdrv.so.620.70.06
+-rwxr-xr-x. 1 root root    444496 Nov 22 19:37 libnvidia-fmdrv.so.620.70.06
+
+=== vulkaninfo (19:37:50)
+ERROR: [Loader Message] Code 0 : loader_scanned_icd_add: Could not get 'vkCreateInstance' via 'vk_icdGetInstanceProcAddr' for ICD libGLX_nvidia.so.0
+ERROR: [Loader Message] Code 0 : loader_scanned_icd_add: Could not get 'vkCreateInstance' via 'vk_icdGetInstanceProcAddr' for ICD libGLX_nvidia.so.0
+WARNING: [Loader Message] Code 0 : terminator_CreateInstance: Failed to CreateInstance in ICD 4.  Skipping ICD.
+'DISPLAY' environment variable not set... skipping surface info
+==========
+VULKANINFO
+==========
+
+Vulkan Instance Version: 1.3.204
+
+
+Instance Extensions: count = 20
+-------------------------------
+VK_EXT_acquire_drm_display             : extension revision 1
+VK_EXT_acquire_xlib_display            : extension revision 1
+VK_EXT_debug_report                    : extension revision 10
+VK_EXT_debug_utils                     : extension revision 2
+VK_EXT_direct_mode_display             : extension revision 1
+VK_EXT_display_surface_counter         : extension revision 1
+VK_EXT_swapchain_colorspace            : extension revision 4
+VK_KHR_device_group_creation           : extension revision 1
+VK_KHR_display                         : extension revision 23
+VK_KHR_external_fence_capabilities     : extension revision 1
+VK_KHR_external_memory_capabilities    : extension revision 1
+VK_KHR_external_semaphore_capabilities : extension revision 1
+VK_KHR_get_display_properties2         : extension revision 1
+VK_KHR_get_physical_device_properties2 : extension revision 2
+VK_KHR_get_surface_capabilities2       : extension revision 1
+VK_KHR_surface                         : extension revision 25
+VK_KHR_surface_protected_capabilities  : extension revision 1
+VK_KHR_wayland_surface                 : extension revision 6
+VK_KHR_xcb_surface                     : extension revision 6
+VK_KHR_xlib_surface                    : extension revision 6
+
+Instance Layers: count = 5
+--------------------------
+VK_LAYER_INTEL_nullhw       INTEL NULL HW                1.1.73   version 1
+VK_LAYER_MESA_device_select Linux device selection layer 1.3.211  version 1
+VK_LAYER_MESA_overlay       Mesa Overlay layer           1.3.211  version 1
+VK_LAYER_NV_optimus         NVIDIA Optimus layer         1.4.357  version 1
+VK_LAYER_NV_present         NVIDIA Presentation Layer    1.4.357  version 1
+
+Devices:
+========
+GPU0:
+	apiVersion         = 4206847 (1.3.255)
+	driverVersion      = 1 (0x0001)
+	vendorID           = 0x10005
+	deviceID           = 0x0000
+	deviceType         = PHYSICAL_DEVICE_TYPE_CPU
+	deviceName         = llvmpipe (LLVM 15.0.7, 256 bits)
+	driverID           = DRIVER_ID_MESA_LLVMPIPE
+	driverName         = llvmpipe
+	driverInfo         = Mesa 23.2.1-1ubuntu3.1~22.04.4 (LLVM 15.0.7)
+	conformanceVersion = 1.3.1.1
+	deviceUUID         = 6d657361-3233-2e32-2e31-2d3175627500
+	driverUUID         = 6c6c766d-7069-7065-5555-494400000000
+
+=== squiggle@gpu-smoke (19:37:50)
+chromium installed
+
+=== WebGPU probe (19:38:22)
+{"set":"new headless + Vulkan","ms":841,"error":"requestAdapter returned null"}
+{"set":"new headless + Vulkan + webgpu-developer","ms":843,"error":"requestAdapter returned null"}
+{"set":"headless shell + Vulkan","ms":700,"vendor":"nvidia","architecture":"turing","device":"","description":"","fallback":false,"f16":true,"maxBuffer":4294967292,"maxStorage":2147483644,"matmulMs":15.1,"gflops":142}
+{"set":"repo default","ms":60171,"error":"probe timed out (60 s)"}
+
+HARDWARE WEBGPU: headless shell + Vulkan
+SQUIGGLE_CHROME_ARGS="--enable-unsafe-webgpu --ignore-gpu-blocklist --enable-features=Vulkan,VulkanFromANGLE,DefaultANGLEVulkan --use-angle=vulkan --use-vulkan=native --disable-vulkan-surface"
+
+=== case 1 on Tilde (LFM3 1.7B, Compress) (19:39:25)
+node:fs:441
+    return binding.readFileUtf8(path, stringToFlags(options.flag));
+                   ^
+
+Error: ENOENT: no such file or directory, open '/work/squiggle/tests/eval/cases-deliberation.json'
+    at readFileSync (node:fs:441:20)
+    at file:///work/squiggle/tests/eval/run.mjs:40:25
+    at ModuleJob.run (node:internal/modules/esm/module_job:268:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:543:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/work/squiggle/tests/eval/cases-deliberation.json'
+}
+
+Node.js v22.11.0
+wall for load + case: 1 s
+
+=== result (19:39:26)
+node:internal/modules/cjs/loader:1252
+  throw err;
+  ^
+
+Error: Cannot find module '/tmp/case1.json'
+Require stack:
+- /work/squiggle/[eval]
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1249:15)
+    at Function._load (node:internal/modules/cjs/loader:1075:27)
+    at TracingChannel.traceSync (node:diagnostics_channel:315:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:218:24)
+    at Module.require (node:internal/modules/cjs/loader:1340:12)
+    at require (node:internal/modules/helpers:141:16)
+    at [eval]:1:9
+    at runScriptInThisContext (node:internal/vm:209:10)
+    at node:internal/process/execution:118:14
+    at [eval]-wrapper:6:24 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [ '/work/squiggle/[eval]' ]
+}
+
+Node.js v22.11.0
+no result file
+exit code 0 after 2.8 min
