@@ -54,6 +54,8 @@ def start(files):
                     "enable_gpu": bool(job.get("gpu", True)), "enable_tpu": False,
                     "enable_internet": bool(job.get("internet", False)),
                     "dataset_sources": [], "competition_sources": [], "kernel_sources": [], "model_sources": []}
+            if job.get("machine_shape"):    # e.g. "NvidiaTeslaT4" (two T4s) or "NvidiaTeslaP100"
+                meta["machine_shape"] = job["machine_shape"]
             (Path(d) / "kernel-metadata.json").write_text(json.dumps(meta, indent=1))
             code, out = kaggle("kernels", "push", "-p", d)
         print(f"[{slug}] push exit {code}:\n{out}")
