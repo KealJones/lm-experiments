@@ -11,5 +11,9 @@
  "outdir": "out",
  "cmd": "(apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq xz-utils curl ca-certificates >/dev/null) && mkdir -p out && python -c \"import urllib.request as u; u.urlretrieve('https://nodejs.org/dist/v22.11.0/node-v22.11.0-linux-x64.tar.xz','node.tar.xz'); u.urlretrieve('https://raw.githubusercontent.com/KealJones/squiggle/01ad1e5/tests/eval/hf-gpu-smoke.sh','smoke.sh')\" && tar -xJf node.tar.xz && export PATH=$PWD/node-v22.11.0-linux-x64/bin:$PATH && node --version && bash smoke.sh > out/smoke.log 2>&1; s=$?; cat out/smoke.log; cp /tmp/probe.txt /tmp/case1.json out/ 2>/dev/null; exit $s",
  "out": "experiments/webgpu-smoke/hf-5",
- "note": "Fifth try. -4 worked up to the model: with the driver's graphics libraries copied in, Chrome's headless shell + Vulkan got the T4 (nvidia turing, shader-f16, 1024x1024 matmul 15 ms, ~142 GFLOPS); case 1 then failed only because the branch lacked cases-deliberation.json. gpu-smoke now has #26 merged in. 45 min cap: at most $0.30."
+ "note": "Fifth try. -4 worked up to the model: with the driver's graphics libraries copied in, Chrome's headless shell + Vulkan got the T4 (nvidia turing, shader-f16, 1024x1024 matmul 15 ms, ~142 GFLOPS); case 1 then failed only because the branch lacked cases-deliberation.json. gpu-smoke now has #26 merged in. 45 min cap: at most $0.30.",
+ "job_id": "6b0346c38d268c0fbd228905",
+ "url": "https://huggingface.co/jobs/kealjones/6b0346c38d268c0fbd228905",
+ "started": "2026-11-22T19:47:15+00:00",
+ "sha": "6dd2c20f7f2be5e28ac9758a184943e5dd08b7c3"
 }
