@@ -11,5 +11,9 @@
  "outdir": "out",
  "cmd": "mkdir -p out && python -c \"import urllib.request as u; u.urlretrieve('https://nodejs.org/dist/v22.11.0/node-v22.11.0-linux-x64.tar.xz','node.tar.xz'); u.urlretrieve('https://raw.githubusercontent.com/KealJones/squiggle/3458ec3/tests/eval/hf-gpu-smoke.sh','smoke.sh')\" && tar -xJf node.tar.xz && export PATH=$PWD/node-v22.11.0-linux-x64/bin:$PATH && node --version && bash smoke.sh 2>&1 | tee out/smoke.log; cp /tmp/probe.txt /tmp/case1.json out/ 2>/dev/null; true",
  "out": "experiments/webgpu-smoke/hf-2",
- "note": "Second try: HF refused webgpu-smoke-1 because NVIDIA_DRIVER_CAPABILITIES is reserved. Now the script installs the driver's Vulkan libraries from the same version's NVIDIA installer when they aren't mounted. 45 min cap: at most $0.30."
+ "note": "Second try: HF refused webgpu-smoke-1 because NVIDIA_DRIVER_CAPABILITIES is reserved. Now the script installs the driver's Vulkan libraries from the same version's NVIDIA installer when they aren't mounted. 45 min cap: at most $0.30.",
+ "job_id": "6b033d518d268c0fbd227228",
+ "url": "https://huggingface.co/jobs/kealjones/6b033d518d268c0fbd227228",
+ "started": "2026-11-22T19:06:57+00:00",
+ "sha": "3fd01bbbc8c03eb1775775e37a0c3dd5c74f4934"
 }
