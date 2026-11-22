@@ -25,5 +25,17 @@ but can't create an instance. Copying in the graphics libraries from the same dr
 fixes it. Of four Chrome switch sets, only Playwright's headless shell with Vulkan got the GPU: vendor `nvidia`,
 architecture `turing`, shader-f16, a 1024² f32 matmul in 15 ms (~142 GFLOPS; SwiftShader on a CPU box takes 6.5 s).
 
+**And LFM3 1.7B runs on Tilde there.** Deliberation case 1 ("Tell me about Olivia Rodrigo", Compress, the #26 build
+with the tools cutoff) through the real app in headless Chromium, the same weights as the phone:
 
-Pending: `hf-4/` gets the job's log, the probe output and the case result.
+| Where | Score | Rounds | Tool calls | Time for the case |
+|---|---|---|---|---|
+| HF T4 (webgpu-smoke-5) | 1.00 | 4 | 3 | 83 s |
+| Modal T4 (squiggle `gpu-smoke`, Actions) | 1.00 | 6 | 4 | 107 s |
+| iPhone 16, same build (phone relay) | 1.00 | 5 | 4 | 163 s |
+
+Both replies were sound biographies; both used nearly the whole 6K window (5,887 and 6,052 tokens). Modal's T4
+matmul was faster than HF's (10.6 ms vs 15 ms). Spend for all five HF tries: under $0.15.
+
+
+
