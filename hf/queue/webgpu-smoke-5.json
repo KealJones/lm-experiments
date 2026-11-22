@@ -1,0 +1,15 @@
+{
+ "slug": "webgpu-smoke-5",
+ "flavor": "t4-small",
+ "timeout": "45m",
+ "image": "pytorch/pytorch:2.6.0-cuda12.4-cudnn9-runtime",
+ "files": [],
+ "pip": [
+  "huggingface_hub"
+ ],
+ "upload_every": 120,
+ "outdir": "out",
+ "cmd": "(apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq xz-utils curl ca-certificates >/dev/null) && mkdir -p out && python -c \"import urllib.request as u; u.urlretrieve('https://nodejs.org/dist/v22.11.0/node-v22.11.0-linux-x64.tar.xz','node.tar.xz'); u.urlretrieve('https://raw.githubusercontent.com/KealJones/squiggle/01ad1e5/tests/eval/hf-gpu-smoke.sh','smoke.sh')\" && tar -xJf node.tar.xz && export PATH=$PWD/node-v22.11.0-linux-x64/bin:$PATH && node --version && bash smoke.sh > out/smoke.log 2>&1; s=$?; cat out/smoke.log; cp /tmp/probe.txt /tmp/case1.json out/ 2>/dev/null; exit $s",
+ "out": "experiments/webgpu-smoke/hf-5",
+ "note": "Fifth try. -4 worked up to the model: with the driver's graphics libraries copied in, Chrome's headless shell + Vulkan got the T4 (nvidia turing, shader-f16, 1024x1024 matmul 15 ms, ~142 GFLOPS); case 1 then failed only because the branch lacked cases-deliberation.json. gpu-smoke now has #26 merged in. 45 min cap: at most $0.30."
+}

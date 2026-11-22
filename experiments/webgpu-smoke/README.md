@@ -19,4 +19,11 @@ Spend: 45 min cap on a T4, so at most $0.30.
 
 ## Results
 
+**WebGPU works on a Hugging Face T4** (webgpu-smoke-4, 2026-11-22). Hugging Face gives containers
+`NVIDIA_DRIVER_CAPABILITIES=compute,utility` and refuses jobs that set it, so the driver's Vulkan library there loads
+but can't create an instance. Copying in the graphics libraries from the same driver version's installer (620.70.06)
+fixes it. Of four Chrome switch sets, only Playwright's headless shell with Vulkan got the GPU: vendor `nvidia`,
+architecture `turing`, shader-f16, a 1024² f32 matmul in 15 ms (~142 GFLOPS; SwiftShader on a CPU box takes 6.5 s).
+
+
 Pending: `hf-4/` gets the job's log, the probe output and the case result.
