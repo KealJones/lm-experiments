@@ -1,0 +1,137 @@
+[{"stream_name":"stderr","time":8.059032217,"data":"/usr/local/lib/python3.13/dist-packages/nbformat/validator.py:434: MissingIDFieldWarning: Cell is missing an id field, this will become a hard error in future nbformat versions. You may want to use `normalize()` on your notebooks before validations (available since nbformat 5.1.4). Previous versions of nbformat are fixing this issue transparently, and will stop doing so in the future.\n"}
+,{"stream_name":"stderr","time":8.059091652,"data":"  _validate(nbdict, ref, version, version_minor, relax_add_props)\n"}
+,{"stream_name":"stderr","time":9.14890712,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":9.148939692,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":9.148943572,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":9.14894611,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":9.797385013,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":9.797413579,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":9.7974184,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":9.797421984,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":11.004479029,"data":"+ nvidia-smi -L\n"}
+,{"stream_name":"stdout","time":11.035016321,"data":"GPU 0: Tesla T4 (UUID: GPU-9ce7e6e4-6d55-225e-0eac-72fe5597e0af)\n"}
+,{"stream_name":"stdout","time":11.035872195,"data":"GPU 1: Tesla T4 (UUID: GPU-9de970e9-3f17-6d45-9cb5-b2693e6ba2ff)\n"}
+,{"stream_name":"stdout","time":11.041065227,"data":"++ id -un\n"}
+,{"stream_name":"stdout","time":11.070746897,"data":"+ echo 'user=root NVIDIA_DRIVER_CAPABILITIES=compute,utility'\n"}
+,{"stream_name":"stdout","time":11.071661104,"data":"user=root NVIDIA_DRIVER_CAPABILITIES=compute,utility\n"}
+,{"stream_name":"stdout","time":11.072438211,"data":"+ command -v node\n"}
+,{"stream_name":"stdout","time":11.074319974,"data":"/tools/node/bin/node\n"}
+,{"stream_name":"stdout","time":11.075095828,"data":"+ node --version\n"}
+,{"stream_name":"stdout","time":11.333737241,"data":"v22.23.4\n"}
+,{"stream_name":"stdout","time":11.340552592,"data":"+ curl -fsSL https://raw.githubusercontent.com/KealJones/squiggle/gpu-smoke/tests/eval/hf-gpu-smoke.sh -o /tmp/smoke.sh\n"}
+,{"stream_name":"stdout","time":11.804939498,"data":"+ bash /tmp/smoke.sh\n"}
+,{"stream_name":"stdout","time":11.80663773,"data":"\n"}
+,{"stream_name":"stdout","time":11.811189049,"data":"=== GPU (22:05:48)\n"}
+,{"stream_name":"stdout","time":11.842351721,"data":"Sun Nov 22 22:05:48 2026       \n"}
+,{"stream_name":"stdout","time":11.843002797,"data":"+-----------------------------------------------------------------------------------------+\n"}
+,{"stream_name":"stdout","time":11.844271422,"data":"| NVIDIA-SMI 580.178.04             Driver Version: 580.178.04     CUDA Version: 13.0     |\n"}
+,{"stream_name":"stdout","time":11.845419137,"data":"+-----------------------------------------+------------------------+----------------------+\n"}
+,{"stream_name":"stdout","time":11.846762913,"data":"| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |\n"}
+,{"stream_name":"stdout","time":11.847915891,"data":"| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |\n"}
+,{"stream_name":"stdout","time":11.849073558,"data":"|                                         |                        |               MIG M. |\n"}
+,{"stream_name":"stdout","time":11.85027913,"data":"|=========================================+========================+======================|\n"}
+,{"stream_name":"stdout","time":11.873811852,"data":"|   0  Tesla T4                       Off |   00000000:00:04.0 Off |                    0 |\n"}
+,{"stream_name":"stdout","time":11.874784308,"data":"| N/A   55C    P8             10W /   70W |       0MiB /  15360MiB |      0%      Default |\n"}
+,{"stream_name":"stdout","time":11.875821218,"data":"|                                         |                        |                  N/A |\n"}
+,{"stream_name":"stdout","time":11.87673442,"data":"+-----------------------------------------+------------------------+----------------------+\n"}
+,{"stream_name":"stdout","time":11.877736041,"data":"|   1  Tesla T4                       Off |   00000000:00:05.0 Off |                    0 |\n"}
+,{"stream_name":"stdout","time":11.878737816,"data":"| N/A   46C    P8              9W /   70W |       0MiB /  15360MiB |      0%      Default |\n"}
+,{"stream_name":"stdout","time":11.879793882,"data":"|                                         |                        |                  N/A |\n"}
+,{"stream_name":"stdout","time":11.880794949,"data":"+-----------------------------------------+------------------------+----------------------+\n"}
+,{"stream_name":"stdout","time":11.881731349,"data":"\n"}
+,{"stream_name":"stdout","time":11.882746692,"data":"+-----------------------------------------------------------------------------------------+\n"}
+,{"stream_name":"stdout","time":11.88379043,"data":"| Processes:                                                                              |\n"}
+,{"stream_name":"stdout","time":11.884767826000001,"data":"|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |\n"}
+,{"stream_name":"stdout","time":11.885581427,"data":"|        ID   ID                                                               Usage      |\n"}
+,{"stream_name":"stdout","time":11.886374741000001,"data":"|=========================================================================================|\n"}
+,{"stream_name":"stdout","time":11.887198627,"data":"|  No running processes found                                                             |\n"}
+,{"stream_name":"stdout","time":11.888071805,"data":"+-----------------------------------------------------------------------------------------+\n"}
+,{"stream_name":"stdout","time":12.20305776,"data":"\n"}
+,{"stream_name":"stdout","time":12.204453318,"data":"=== packages (22:05:48)\n"}
+,{"stream_name":"stdout","time":18.534877243,"data":"W: Skipping acquire of configured file 'main/source/Sources' as repository 'https://r2u.stat.illinois.edu/ubuntu noble InRelease' does not seem to provide it (sources.list entry misspelt?)\n"}
+,{"stream_name":"stdout","time":32.714812317,"data":"installed\n"}
+,{"stream_name":"stdout","time":32.783283408,"data":"dbus started\n"}
+,{"stream_name":"stdout","time":32.78788079,"data":"NVIDIA_DRIVER_CAPABILITIES=compute,utility (HF reserves it: a job can't set it)\n"}
+,{"stream_name":"stdout","time":32.859503112,"data":"no Vulkan driver mounted: fetching NVIDIA 580.178.04 user-space libraries\n"}
+,{"stream_name":"stdout","time":39.708929316,"data":"/sbin/ldconfig.real: /usr/local/lib/libtbbbind_2_5.so.3 is not a symbolic link\n"}
+,{"stream_name":"stdout","time":39.710149734,"data":"\n"}
+,{"stream_name":"stdout","time":39.711199706,"data":"/sbin/ldconfig.real: /usr/local/lib/libur_adapter_level_zero.so.0 is not a symbolic link\n"}
+,{"stream_name":"stdout","time":39.712263292,"data":"\n"}
+,{"stream_name":"stdout","time":39.713261869,"data":"/sbin/ldconfig.real: /usr/local/lib/libtcm.so.1 is not a symbolic link\n"}
+,{"stream_name":"stdout","time":39.71439451,"data":"\n"}
+,{"stream_name":"stdout","time":39.71543704,"data":"/sbin/ldconfig.real: /usr/local/lib/libtbbbind.so.3 is not a symbolic link\n"}
+,{"stream_name":"stdout","time":39.716434339,"data":"\n"}
+,{"stream_name":"stdout","time":39.717443163,"data":"/sbin/ldconfig.real: /usr/local/lib/libur_adapter_level_zero_v2.so.0 is not a symbolic link\n"}
+,{"stream_name":"stdout","time":39.718513492,"data":"\n"}
+,{"stream_name":"stdout","time":39.719526137,"data":"/sbin/ldconfig.real: /usr/local/lib/libtbbbind_2_0.so.3 is not a symbolic link\n"}
+,{"stream_name":"stdout","time":39.720601268,"data":"\n"}
+,{"stream_name":"stdout","time":39.721598125,"data":"/sbin/ldconfig.real: /usr/local/lib/libur_loader.so.0 is not a symbolic link\n"}
+,{"stream_name":"stdout","time":39.722574643,"data":"\n"}
+,{"stream_name":"stdout","time":39.723557109,"data":"/sbin/ldconfig.real: /usr/local/lib/libtbb.so.12 is not a symbolic link\n"}
+,{"stream_name":"stdout","time":39.724480107,"data":"\n"}
+,{"stream_name":"stdout","time":39.725512493,"data":"/sbin/ldconfig.real: /usr/local/lib/libumf.so.1 is not a symbolic link\n"}
+,{"stream_name":"stdout","time":39.726433026,"data":"\n"}
+,{"stream_name":"stdout","time":39.727355054,"data":"/sbin/ldconfig.real: /usr/local/lib/libur_adapter_opencl.so.0 is not a symbolic link\n"}
+,{"stream_name":"stdout","time":39.728082977,"data":"\n"}
+,{"stream_name":"stdout","time":39.728733135,"data":"/sbin/ldconfig.real: /usr/local/lib/libtcm_debug.so.1 is not a symbolic link\n"}
+,{"stream_name":"stdout","time":39.729436318,"data":"\n"}
+,{"stream_name":"stdout","time":39.730177211,"data":"/sbin/ldconfig.real: /usr/local/lib/libtbbmalloc_proxy.so.2 is not a symbolic link\n"}
+,{"stream_name":"stdout","time":39.730892697,"data":"\n"}
+,{"stream_name":"stdout","time":39.731528443,"data":"/sbin/ldconfig.real: /usr/local/lib/libtbbmalloc.so.2 is not a symbolic link\n"}
+,{"stream_name":"stdout","time":39.732346803,"data":"\n"}
+,{"stream_name":"stdout","time":39.733042664,"data":"/sbin/ldconfig.real: /usr/local/lib/libhwloc.so.15 is not a symbolic link\n"}
+,{"stream_name":"stdout","time":39.733737922,"data":"\n"}
+,{"stream_name":"stdout","time":42.50249527,"data":"copied in: 36 libraries\n"}
+,{"stream_name":"stdout","time":42.503981175,"data":"wrote nvidia_icd.json\n"}
+,{"stream_name":"stdout","time":42.537907525,"data":"lrwxrwxrwx  1 root root        27 Nov 22 22:06 libEGL_nvidia.so.0 -\u003e libEGL_nvidia.so.580.178.04\n"}
+,{"stream_name":"stdout","time":42.538908305,"data":"-rwxr-xr-x  1 root root   1296640 Nov 22 22:06 libEGL_nvidia.so.580.178.04\n"}
+,{"stream_name":"stdout","time":42.54023959,"data":"lrwxrwxrwx  1 root root        33 Nov 22 22:06 libGLESv1_CM_nvidia.so.1 -\u003e libGLESv1_CM_nvidia.so.580.178.04\n"}
+,{"stream_name":"stdout","time":42.540867685,"data":"-rwxr-xr-x  1 root root     80336 Nov 22 22:06 libGLESv1_CM_nvidia.so.580.178.04\n"}
+,{"stream_name":"stdout","time":42.541780871,"data":"lrwxrwxrwx  1 root root        30 Nov 22 22:06 libGLESv2_nvidia.so.2 -\u003e libGLESv2_nvidia.so.580.178.04\n"}
+,{"stream_name":"stdout","time":42.542967669,"data":"-rwxr-xr-x  1 root root    129496 Nov 22 22:06 libGLESv2_nvidia.so.580.178.04\n"}
+,{"stream_name":"stdout","time":42.5439911,"data":"lrwxrwxrwx  1 root root        16 Oct  1 15:57 libGLX_indirect.so.0 -\u003e libGLX_mesa.so.0\n"}
+,{"stream_name":"stdout","time":42.545013759,"data":"lrwxrwxrwx  1 root root        20 Oct  1 15:57 libGLX_mesa.so.0 -\u003e libGLX_mesa.so.0.0.0\n"}
+,{"stream_name":"stdout","time":42.545909745,"data":"-rw-r--r--  1 root root    307608 Oct  1 15:57 libGLX_mesa.so.0.0.0\n"}
+,{"stream_name":"stdout","time":42.546919826,"data":"lrwxrwxrwx  1 root root        27 Nov 22 22:06 libGLX_nvidia.so.0 -\u003e libGLX_nvidia.so.580.178.04\n"}
+,{"stream_name":"stdout","time":42.54781183,"data":"-rwxr-xr-x  1 root root   1211968 Nov 22 22:06 libGLX_nvidia.so.580.178.04\n"}
+,{"stream_name":"stdout","time":42.548562314,"data":"-rwxr-xr-x  1 root root  13462128 Nov 22 22:06 libglxserver_nvidia.so.580.178.04\n"}
+,{"stream_name":"stdout","time":42.549335824,"data":"lrwxrwxrwx  1 root root        15 Apr  8  2024 libGLX.so.0 -\u003e libGLX.so.0.0.0\n"}
+,{"stream_name":"stdout","time":42.550112621,"data":"-rw-r--r--  1 root root    137792 Apr  8  2024 libGLX.so.0.0.0\n"}
+,{"stream_name":"stdout","time":42.551854304,"data":"lrwxrwxrwx  1 root root        33 Nov 22 22:06 libnvidia-allocator.so.1 -\u003e libnvidia-allocator.so.580.178.04\n"}
+,{"stream_name":"stdout","time":42.552864013,"data":"-rwxr-xr-x  1 root root    169064 Nov 22 22:06 libnvidia-allocator.so.580.178.04\n"}
+,{"stream_name":"stdout","time":42.553669899,"data":"lrwxrwxrwx  1 root root        27 Nov 22 22:06 libnvidia-cfg.so.1 -\u003e libnvidia-cfg.so.580.178.04\n"}
+,{"stream_name":"stdout","time":42.554744441,"data":"-rwxr-xr-x  1 root root    395384 Nov 22 22:06 libnvidia-cfg.so.580.178.04\n"}
+,{"stream_name":"stdout","time":42.555528386,"data":"-rwxr-xr-x  1 root root  35076592 Nov 22 22:06 libnvidia-eglcore.so.580.178.04\n"}
+,{"stream_name":"stdout","time":42.556283973,"data":"lrwxrwxrwx  1 root root        30 Nov 22 22:06 libnvidia-encode.so.1 -\u003e libnvidia-encode.so.580.178.04\n"}
+,{"stream_name":"stdout","time":42.5570732,"data":"\n"}
+,{"stream_name":"stdout","time":42.557819978,"data":"=== vulkaninfo (22:06:18)\n"}
+,{"stream_name":"stdout","time":43.670679392,"data":"ERROR: [Loader Message] Code 0 : loader_scanned_icd_add: Could not get 'vkCreateInstance' via 'vk_icdGetInstanceProcAddr' for ICD libGLX_nvidia.so.0\n"}
+,{"stream_name":"stdout","time":43.671670779,"data":"ERROR: [Loader Message] Code 0 : vkCreateInstance: Found no drivers!\n"}
+,{"stream_name":"stdout","time":43.67253541,"data":"Cannot create Vulkan instance.\n"}
+,{"stream_name":"stdout","time":43.673622214,"data":"This problem is often caused by a faulty installation of the Vulkan driver or attempting to use a GPU that does not support Vulkan.\n"}
+,{"stream_name":"stdout","time":43.674539521,"data":"ERROR at ./vulkaninfo/./vulkaninfo.h:458:vkCreateInstance failed with ERROR_INCOMPATIBLE_DRIVER\n"}
+,{"stream_name":"stdout","time":43.675551903,"data":"\n"}
+,{"stream_name":"stdout","time":43.676352646,"data":"=== squiggle@gpu-smoke (22:06:20)\n"}
+,{"stream_name":"stdout","time":120.32699591,"data":"chromium installed\n"}
+,{"stream_name":"stdout","time":151.968426151,"data":"google chrome installed\n"}
+,{"stream_name":"stdout","time":151.969491344,"data":"\n"}
+,{"stream_name":"stdout","time":151.970525131,"data":"=== WebGPU probe (22:08:08)\n"}
+,{"stream_name":"stdout","time":154.305873266,"data":"{\"set\":\"Google Chrome + Vulkan\",\"ms\":1963,\"error\":\"requestAdapter returned null\"}\n"}
+,{"stream_name":"stdout","time":157.298010537,"data":"{\"set\":\"new headless + Vulkan\",\"ms\":1117,\"error\":\"requestAdapter returned null\"}\n"}
+,{"stream_name":"stdout","time":160.17818028,"data":"{\"set\":\"new headless + Vulkan + webgpu-developer\",\"ms\":1055,\"error\":\"requestAdapter returned null\"}\n"}
+,{"stream_name":"stdout","time":162.712935994,"data":"{\"set\":\"headless shell + Vulkan\",\"ms\":748,\"error\":\"page.evaluate: OperationError: Failed to execute 'requestDevice' on 'GPUAdapter': A valid external Instance reference no longer exists.\"}\n"}
+,{"stream_name":"stdout","time":224.532133372,"data":"{\"set\":\"repo default\",\"ms\":60191,\"error\":\"probe timed out (60 s)\"}\n"}
+,{"stream_name":"stdout","time":226.20892168,"data":"\n"}
+,{"stream_name":"stdout","time":226.209956102,"data":"NO HARDWARE WEBGPU: every set came back with no adapter or a software one\n"}
+,{"stream_name":"stdout","time":226.219933644,"data":"\n"}
+,{"stream_name":"stdout","time":226.222122105,"data":"=== no hardware WebGPU: stopping here (22:09:22)\n"}
+,{"stream_name":"stdout","time":226.223705026,"data":"exit 2 after 3.6 min\n"}
+,{"stream_name":"stderr","time":228.677019106,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":228.677048124,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":228.841001749,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":228.841033572,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":229.606730123,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":229.69016718,"data":"[NbConvertApp] Writing 11140 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":232.159252738,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":232.658803482,"data":"[NbConvertApp] Writing 284792 bytes to __results__.html\n"}
+]
