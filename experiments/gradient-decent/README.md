@@ -1,4 +1,4 @@
-# Canvas blend: a language model run by colour blending on a 2D canvas
+# Gradient Decent: a language model run by colour blending on a 2D canvas
 
 Started as "a CSS-based LLM engine" and a hunt for native browser features that can do the maths of a small model
 without WebGPU. Two people had already done an LLM in CSS (qwennie, and Shubham Patil's GPT-2 in CSS with fonts), so
@@ -6,7 +6,7 @@ this went looking for an engine nobody had used.
 
 **Question:** can a 2D canvas, using only blend modes and image scaling, run a real language model fast enough to watch?
 
-The demo is [`site/demos/canvas-blend/`](../../site/demos/canvas-blend/index.html). The model is
+It now has its own repo, [KealJones/gradient-decent](https://github.com/KealJones/gradient-decent). A copy of the demo is [`site/demos/gradient-decent/`](../../site/demos/gradient-decent/index.html). The model is
 [hidude562/tiny-tiny-stories](https://huggingface.co/hidude562/tiny-tiny-stories) (MIT): 998,784 weights, 5 layers,
 width 128, a 192-token vocabulary, ternary {-1, 0, +1} weights in every attention and feed-forward matrix.
 
