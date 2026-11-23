@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gradient Descent</title>
+<style>
+  :root { --bg:#0d0d10; --fg:#ece8df; --dim:#8b877d; --line:#2a2a30; --hot:#ff5a36; --cool:#35e08a; }
+  * { box-sizing:border-box }
+  body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.5 ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+  main { max-width:1100px; margin:0 auto; padding:28px 20px 60px; }
+  h1 { font-size:28px; margin:0 0 4px; letter-spacing:-0.02em; font-weight:600 }
+  h1 span { background:linear-gradient(90deg,var(--hot),#ffd23f,var(--cool)); -webkit-background-clip:text; background-clip:text; color:transparent }
+  .sub { color:var(--dim); margin:0 0 22px; font-size:14px; max-width:70ch }
+  form { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px }
+  input[type=text] { flex:1 1 260px; min-width:0; background:#16161b; color:var(--fg); border:1px solid var(--line); border-radius:6px; padding:10px 12px; font:inherit }
+  button { background:var(--fg); color:var(--bg); border:0; border-radius:6px; padding:10px 16px; font:inherit; font-weight:600; cursor:pointer }
+  button.ghost { background:transparent; color:var(--fg); border:1px solid var(--line) }
+  button:disabled { opacity:.4; cursor:default }
+  #out { min-height:120px; white-space:pre-wrap; border:1px solid var(--line); border-radius:8px; padding:16px; font:18px/1.6 Georgia, "Iowan Old Style", serif; background:#121216 }
+  #out .p { color:var(--dim) }
+  #stat { color:var(--dim); font-size:13px; margin:8px 0 22px; min-height:1.5em }
+  h2 { font-size:13px; font-weight:600; color:var(--dim); text-transform:none; margin:22px 0 8px }
+  #lut { width:100%; height:26px; border-radius:6px; display:block; border:1px solid var(--line); image-rendering:pixelated }
+  #layers { display:grid; grid-template-columns:repeat(8, minmax(0,1fr)); gap:6px }
+  .tile { min-width:0 }
+  .tile canvas { width:100%; aspect-ratio:1; display:block; border-radius:4px; background:#000; image-rendering:pixelated }
+  .tile div { font-size:10px; color:var(--dim); text-align:center; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+  .rowlab { grid-column:1/-1; font-size:11px; color:var(--dim); margin-top:4px }
+  @media (max-width:700px){ #layers { grid-template-columns:repeat(4, minmax(0,1fr)) } }
+</style>
+</head>
+<body>
+<main>
+  <h1><span>Gradient Descent</span></h1>
+  <p class="sub">A language model where every matrix multiply is done by blending colours on a 2D canvas. The weights are pictures, the multiply is the multiply blend mode, the sums are images being squashed, and the activation function is a colour gradient. No WebGPU, no WebGL, no WASM.</p>
+  <form id="f">
+    <input type="text" id="prompt" value="Once upon a time" aria-label="Prompt" autocomplete="off">
+    <button id="go" disabled>Loading</button>
+    <button id="stop" type="button" class="ghost" disabled>Stop</button>
+  </form>
+  <div id="out" aria-live="polite"></div>
+  <div id="stat"></div>
+  <h2>The activation function (SiLU), stored as a gradient. Red is positive, green is negative.</h2>
+  <canvas id="lut" width="1024" height="1"></canvas>
+  <h2>Every layer's weights multiplied by its current input. Red and green are the two signs.</h2>
+  <div id="layers"></div>
+</main>
+<script>
+"use strict";
+const F16 = { colorType: 'float16' }, RD = { pixelFormat: 'rgba-float16' };
+const $ = id => document.getElementById(id);
+const f32 = s => { const b = atob(s), u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return new Float32Array(u.buffer); };
+const pow2 = m => { let p = 1; while (p < m) p *= 2; return p; };
+
+// One weight matrix as a picture. mul(x) = W·x computed by canvas blending.
+class Blend {
+  constructor(name, src, n, m, alpha) {
+    this.name = name; this.n = n; this.m = m; this.alpha = alpha;
+    const mp = this.mp = pow2(m);
+    this.w2 = new OffscreenCanvas(mp, 2 * n);
+    const wg = this.w2.getContext('2d', F16);
+    wg.imageSmoothingEnabled = false;
+    wg.drawImage(src, 0, 0); wg.drawImage(src, 0, n);
+    this.work = new OffscreenCanvas(mp, 2 * n); this.g = this.work.getContext('2d', F16);
+    this.strip = new OffscreenCanvas(mp, 2); this.sg = this.strip.getContext('2d', F16);
+    this.sd = new ImageData(mp, 2, RD);
+    for (let i = 0; i < mp * 2; i++) this.sd.data[i * 4 + 3] = 1;
+    this.chain = [];
+    for (let w = mp / 2; w >= 1; w /= 2) {
+      const c = new OffscreenCanvas(w, 2 * n), g = c.getContext('2d', w === 1 ? { ...F16, willReadFrequently: true } : F16);
+      g.imageSmoothingEnabled = true; g.globalCompositeOperation = 'copy';
+      this.chain.push({ c, g, w });
+    }
+    this.y = new Float32Array(n);
+  }
+  mul(x) {
+    const { n, m, mp, sd, g } = this, d = sd.data;
+    let s = 0; for (let j = 0; j < m; j++) { const a = Math.abs(x[j]); if (a > s) s = a; }
+    if (s === 0) { this.y.fill(0); return this.y; }
+    for (let j = 0; j < m; j++) {
+      const v = x[j] / s, p = v > 0 ? v : 0, q = v < 0 ? -v : 0;
+      d[j * 4] = p; d[j * 4 + 1] = q;
+      d[(mp + j) * 4] = q; d[(mp + j) * 4 + 1] = p;
+    }
+    this.sg.putImageData(sd, 0, 0);
+    g.globalCompositeOperation = 'copy'; g.drawImage(this.w2, 0, 0);
+    g.imageSmoothingEnabled = false; g.globalCompositeOperation = 'multiply';
+    g.drawImage(this.strip, 0, 0, mp, 2, 0, 0, mp, 2 * n);
+    let prev = this.work, pw = mp;
+    for (const { c, g: cg, w } of this.chain) { cg.drawImage(prev, 0, 0, pw, 2 * n, 0, 0, w, 2 * n); prev = c; pw = w; }
+    const r = this.chain[this.chain.length - 1].g.getImageData(0, 0, 1, 2 * n, RD).data;
+    const k = mp * s * this.alpha, y = this.y;
+    for (let i = 0; i < n; i++) y[i] = ((r[i * 4] + r[i * 4 + 1]) - (r[(n + i) * 4] + r[(n + i) * 4 + 1])) * k;
+    return y;
+  }
+}
+
+// SiLU as a canvas gradient, read back once and then eyedropped.
+function makeLut() {
+  const R = 12, LW = 4096, K = 1024;
+  const c = new OffscreenCanvas(LW, 1), g = c.getContext('2d', F16);
+  const gr = g.createLinearGradient(0, 0, LW, 0);
+  for (let i = 0; i <= K; i++) {
+    const x = -R + 2 * R * i / K, v = x / (1 + Math.exp(-x));
+    gr.addColorStop(i / K, `color(srgb ${Math.max(v, 0) / R} ${Math.max(-v, 0) / R} 0)`);
+  }
+  g.fillStyle = gr; g.fillRect(0, 0, LW, 1);
+  const d = g.getImageData(0, 0, LW, 1, RD).data;
+  const vis = $('lut').getContext('2d'); vis.drawImage(c, 0, 0, LW, 1, 0, 0, 1024, 1);
+  const boost = vis.getImageData(0, 0, 1024, 1);
+  for (let i = 0; i < 1024; i++) { boost.data[i * 4] = Math.min(255, Math.sqrt(boost.data[i * 4] / 255) * 255); boost.data[i * 4 + 1] = Math.min(255, Math.sqrt(boost.data[i * 4 + 1] / 255) * 255 * 3); }
+  vis.putImageData(boost, 0, 0);
+  return x => {
+    if (x >= R) return x; if (x <= -R) return 0;
+    const u = (x + R) / (2 * R) * LW - 0.5, i = Math.max(0, Math.min(LW - 2, Math.floor(u))), t = Math.max(0, Math.min(1, u - i));
+    const a = d[i * 4] - d[i * 4 + 1], b = d[(i + 1) * 4] - d[(i + 1) * 4 + 1];
+    return (a + (b - a) * t) * R;
+  };
+}
+
+const M = {};
+async function load() {
+  const B = await (await fetch('model.json')).json();
+  Object.assign(M, B.cfg); M.test = B.test; M.pieces = B.pieces; M.scores = B.scores;
+  M.emb = f32(B.emb); M.n1 = B.n1.map(f32); M.n2 = B.n2.map(f32); M.nf = f32(B.nf);
+  M.mats = {};
+  const grid = $('layers'); M.tiles = {};
+  const names = ['q', 'k', 'v', 'o', 'gate', 'up', 'down'];
+  const addTile = (key, label) => { const t = document.createElement('div'); t.className = 'tile'; const c = document.createElement('canvas'); c.width = c.height = 64; const l = document.createElement('div'); l.textContent = label; t.append(c, l); grid.append(t); M.tiles[key] = c.getContext('2d'); };
+  for (let l = 0; l < M.L; l++) for (const nm of names) {
+    const key = l + '.' + nm, e = B.mats[key], img = new Image(); img.src = e.png; await img.decode();
+    M.mats[key] = new Blend(key, img, e.n, e.m, e.alpha);
+    addTile(key, 'L' + (l + 1) + ' ' + nm);
+  }
+  // Output head: full-precision weights, same trick with a float picture.
+  let wmax = 0; for (const v of M.emb) wmax = Math.max(wmax, Math.abs(v));
+  const hd = new ImageData(M.D, M.V, RD);
+  for (let i = 0; i < M.V * M.D; i++) { const v = M.emb[i] / wmax; hd.data[i * 4] = v > 0 ? v : 0; hd.data[i * 4 + 1] = v < 0 ? -v : 0; hd.data[i * 4 + 3] = 1; }
+  const hc = new OffscreenCanvas(M.D, M.V); hc.getContext('2d', F16).putImageData(hd, 0, 0);
+  M.head = new Blend('head', hc, M.V, M.D, wmax);
+  addTile('head', 'head');
+  M.silu = makeLut();
+  M.freq = new Float32Array(M.HD / 2); for (let i = 0; i < M.HD / 2; i++) M.freq[i] = 1 / Math.pow(10000, 2 * i / M.HD);
+  M.show = true;
+}
+
+function rms(x, w, out) { let s = 0; for (let i = 0; i < x.length; i++) s += x[i] * x[i]; const r = 1 / Math.sqrt(s / x.length + 1e-6); for (let i = 0; i < x.length; i++) out[i] = x[i] * r * w[i]; return out; }
+function rope(x, pos) { const { H, HD, freq } = M, h2 = HD / 2, o = new Float32Array(x.length); for (let h = 0; h < H; h++) for (let i = 0; i < h2; i++) { const c = Math.cos(pos * freq[i]), s = Math.sin(pos * freq[i]), a = x[h * HD + i], b = x[h * HD + h2 + i]; o[h * HD + i] = a * c - b * s; o[h * HD + h2 + i] = b * c + a * s; } return o; }
+function mul(key, x) { const b = key === 'head' ? M.head : M.mats[key], y = b.mul(x); if (M.show) { const t = M.tiles[key]; t.globalCompositeOperation = 'copy'; t.imageSmoothingEnabled = false; t.filter = 'brightness(4)'; t.drawImage(b.work, 0, 0, b.mp, b.n, 0, 0, 64, 64); } return y; }
+
+function newState() { return { pos: 0, K: Array.from({ length: M.L }, () => []), V: Array.from({ length: M.L }, () => []) }; }
+function step(st, tok) {
+  const { D, H, HD, L, FF } = M, pos = st.pos++;
+  const x = Float32Array.from(M.emb.subarray(tok * D, tok * D + D)), h = new Float32Array(D), a = new Float32Array(D), t = new Float32Array(FF);
+  for (let l = 0; l < L; l++) {
+    rms(x, M.n1[l], h);
+    const q = rope(mul(l + '.q', h), pos), k = rope(mul(l + '.k', h), pos), v = Float32Array.from(mul(l + '.v', h));
+    st.K[l].push(k); st.V[l].push(v);
+    const T = st.K[l].length, sc = new Float32Array(T), isq = 1 / Math.sqrt(HD);
+    for (let hh = 0; hh < H; hh++) {
+      let mx = -Infinity;
+      for (let i = 0; i < T; i++) { const kk = st.K[l][i]; let s = 0; for (let d = 0; d < HD; d++) s += kk[hh * HD + d] * q[hh * HD + d]; sc[i] = s * isq; if (sc[i] > mx) mx = sc[i]; }
+      let z = 0; for (let i = 0; i < T; i++) { sc[i] = Math.exp(sc[i] - mx); z += sc[i]; }
+      for (let d = 0; d < HD; d++) { let s = 0; for (let i = 0; i < T; i++) s += sc[i] * st.V[l][i][hh * HD + d]; a[hh * HD + d] = s / z; }
+    }
+    const o = mul(l + '.o', a); for (let i = 0; i < D; i++) x[i] += o[i];
+    rms(x, M.n2[l], h);
+    const g = mul(l + '.gate', h); for (let i = 0; i < FF; i++) t[i] = M.silu(g[i]);
+    const u = mul(l + '.up', h); for (let i = 0; i < FF; i++) t[i] *= u[i];
+    const dn = mul(l + '.down', t); for (let i = 0; i < D; i++) x[i] += dn[i];
+  }
+  return Float32Array.from(mul('head', rms(x, M.nf, h)));
+}
+
+function encode(text) {
+  const s = '▁' + text.trim().replace(/ +/g, '▁'), n = s.length, best = new Float64Array(n + 1).fill(-Infinity), back = new Array(n + 1);
+  best[0] = 0; const map = new Map(M.pieces.map((p, i) => [p, i]));
+  for (let i = 0; i < n; i++) { if (best[i] === -Infinity) continue;
+    for (let j = i + 1; j <= Math.min(n, i + 16); j++) { const id = map.get(s.slice(i, j)); if (id !== undefined && id > 3) { const sc = best[i] + M.scores[id]; if (sc > best[j]) { best[j] = sc; back[j] = [i, id]; } } }
+    if (best[i] - 20 > best[i + 1]) { best[i + 1] = best[i] - 20; back[i + 1] = [i, 3]; } }
+  const ids = []; for (let j = n; j > 0; j = back[j][0]) ids.push(back[j][1]);
+  return [1, ...ids.reverse()];
+}
+const decode = id => id < 4 ? (id === 3 ? '\n' : '') : M.pieces[id].replace(/▁/g, ' ');
+function sample(lg, temp, topk) {
+  if (!temp) { let b = 0; for (let i = 1; i < lg.length; i++) if (lg[i] > lg[b]) b = i; return b; }
+  const idx = Array.from(lg.keys()).sort((a, b) => lg[b] - lg[a]).slice(0, topk), p = idx.map(i => Math.exp((lg[i] - lg[idx[0]]) / temp));
+  let r = Math.random() * p.reduce((a, b) => a + b, 0); for (let i = 0; i < idx.length; i++) { r -= p[i]; if (r <= 0) return idx[i]; } return idx[0];
+}
+
+let running = false;
+async function generate(prompt, max = 300, temp = 0.8) {
+  running = true; $('go').disabled = true; $('stop').disabled = false;
+  const out = $('out'); out.textContent = ''; const ps = document.createElement('span'); ps.className = 'p'; ps.textContent = prompt; const gs = document.createElement('span'); out.append(ps, gs);
+  const st = newState(), ids = encode(prompt); let lg, n = 0, first = true; const t0 = performance.now();
+  for (const id of ids) lg = step(st, id);
+  for (; n < max && running && st.pos < 500; n++) {
+    const tok = sample(lg, temp, 40); if (tok === 2) break;
+    let s = decode(tok); if (first && !prompt.endsWith(' ')) first = false; gs.textContent += s;
+    $('stat').textContent = `${n + 1} tokens, ${((n + 1 + ids.length) / ((performance.now() - t0) / 1000)).toFixed(1)} tokens/s, 36 canvas multiplies per token`;
+    await new Promise(r => setTimeout(r, 0));
+    lg = step(st, tok);
+  }
+  running = false; $('go').disabled = false; $('stop').disabled = true;
+}
+$('f').addEventListener('submit', e => { e.preventDefault(); if (!running && M.silu) generate($('prompt').value); });
+$('stop').addEventListener('click', () => { running = false; });
+
+// Test hook: compare against the reference run exported with the weights.
+window.selfTest = () => {
+  M.show = false; const st = newState(); let lg; for (const id of M.test.ids) lg = step(st, id);
+  let err = 0, mag = 0; for (let i = 0; i < lg.length; i++) { err = Math.max(err, Math.abs(lg[i] - M.test.firstLogits[i])); mag = Math.max(mag, Math.abs(M.test.firstLogits[i])); }
+  const got = []; const t0 = performance.now();
+  for (let i = 0; i < M.test.greedy.length; i++) { const t = sample(lg, 0); got.push(t); if (t === 2) break; lg = step(st, t); }
+  const ms = (performance.now() - t0) / got.length; let same = 0; while (same < got.length && got[same] === M.test.greedy[same]) same++;
+  let lutErr = 0; for (let x = -11.9; x < 11.9; x += 0.0137) lutErr = Math.max(lutErr, Math.abs(M.silu(x) - x / (1 + Math.exp(-x))));
+  M.show = true;
+  return { encodeOK: JSON.stringify(encode(M.test.prompt)) === JSON.stringify(M.test.ids), logitMaxErr: err, logitMag: mag, tokensMatched: same, of: M.test.greedy.length, msPerToken: ms, lutErr, text: got.map(decode).join('') };
+};
+
+load().then(() => { $('go').disabled = false; $('go').textContent = 'Write'; $('stat').textContent = 'Ready. About a million weights, loaded as 36 pictures.'; })
+  .catch(e => { $('stat').textContent = 'Could not start: ' + e.message + '. This needs a recent Chrome or Edge (float16 canvas).'; });
+</script>
+</body>
+</html>

@@ -14,6 +14,7 @@ parser; the history of every moved file came along.
 - [`answers`](experiments/answers/) — Answers: 18 of my real messages with pass rules written first; Qwen3 0.6B, 1.7B and 4B answer in their own words and are graded by hand
 - [`askfirst`](experiments/askfirst/) — Ask first: find out what someone needs before answering
 - [`basic-english`](experiments/basic-english/) — Basic English → toki pona hub map
+- [`canvas-blend`](experiments/canvas-blend/) — Canvas blend: a one-million-weight language model run by 2D canvas blend modes, with weights as pictures and the activation as a colour gradient
 - [`context-packets`](experiments/context-packets/) — Context packets: answer from a ~360-word packet instead of the whole conversation
 - [`context`](experiments/context/) — Context: how Qwen3 0.6B copes with running out of room, resuming, context picking, step size, a normal agent and a memdoor-style team (none made it a working coding agent; word-overlap context picking and harness-checked "done" helped most)
 - [`findout`](experiments/findout/) — Finding out: teach a small borrowed model the loop, not the facts
